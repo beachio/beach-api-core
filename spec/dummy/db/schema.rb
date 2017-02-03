@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170203101617) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "beach_api_core_assets", force: :cascade do |t|
     t.string   "file_id"
     t.string   "file_filename"
@@ -21,9 +24,9 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "entity_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.index ["entity_id", "entity_type"], name: "index_beach_api_core_assets_on_entity_id_and_entity_type"
-    t.index ["entity_type", "entity_id"], name: "index_beach_api_core_assets_on_entity_type_and_entity_id"
-    t.index ["file_content_type"], name: "index_beach_api_core_assets_on_file_content_type"
+    t.index ["entity_id", "entity_type"], name: "index_beach_api_core_assets_on_entity_id_and_entity_type", using: :btree
+    t.index ["entity_type", "entity_id"], name: "index_beach_api_core_assets_on_entity_type_and_entity_id", using: :btree
+    t.index ["file_content_type"], name: "index_beach_api_core_assets_on_file_content_type", using: :btree
   end
 
   create_table "beach_api_core_assignments", force: :cascade do |t|
@@ -31,9 +34,9 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["role_id", "user_id"], name: "index_beach_api_core_assignments_on_role_id_and_user_id", unique: true
-    t.index ["role_id"], name: "index_beach_api_core_assignments_on_role_id"
-    t.index ["user_id"], name: "index_beach_api_core_assignments_on_user_id"
+    t.index ["role_id", "user_id"], name: "index_beach_api_core_assignments_on_role_id_and_user_id", unique: true, using: :btree
+    t.index ["role_id"], name: "index_beach_api_core_assignments_on_role_id", using: :btree
+    t.index ["user_id"], name: "index_beach_api_core_assignments_on_user_id", using: :btree
   end
 
   create_table "beach_api_core_capabilities", force: :cascade do |t|
@@ -41,8 +44,8 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "application_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.index ["application_id"], name: "index_beach_api_core_capabilities_on_application_id"
-    t.index ["service_id"], name: "index_beach_api_core_capabilities_on_service_id"
+    t.index ["application_id"], name: "index_beach_api_core_capabilities_on_application_id", using: :btree
+    t.index ["service_id"], name: "index_beach_api_core_capabilities_on_service_id", using: :btree
   end
 
   create_table "beach_api_core_favourites", force: :cascade do |t|
@@ -51,16 +54,16 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "favouritable_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.index ["favouritable_type", "favouritable_id"], name: "indexfavourites_on_favouritable_type_and_favouritable_id"
-    t.index ["user_id", "favouritable_id", "favouritable_type"], name: "index_favourites_on_user_id_and_f_id_and_f_type", unique: true
-    t.index ["user_id"], name: "index_beach_api_core_favourites_on_user_id"
+    t.index ["favouritable_type", "favouritable_id"], name: "indexfavourites_on_favouritable_type_and_favouritable_id", using: :btree
+    t.index ["user_id", "favouritable_id", "favouritable_type"], name: "index_favourites_on_user_id_and_f_id_and_f_type", unique: true, using: :btree
+    t.index ["user_id"], name: "index_beach_api_core_favourites_on_user_id", using: :btree
   end
 
   create_table "beach_api_core_instances", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_beach_api_core_instances_on_name"
+    t.index ["name"], name: "index_beach_api_core_instances_on_name", using: :btree
   end
 
   create_table "beach_api_core_invitations", force: :cascade do |t|
@@ -70,8 +73,8 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_type", "group_id"], name: "index_beach_api_core_invitations_on_group_type_and_group_id"
-    t.index ["user_id"], name: "index_beach_api_core_invitations_on_user_id"
+    t.index ["group_type", "group_id"], name: "index_beach_api_core_invitations_on_group_type_and_group_id", using: :btree
+    t.index ["user_id"], name: "index_beach_api_core_invitations_on_user_id", using: :btree
   end
 
   create_table "beach_api_core_memberships", force: :cascade do |t|
@@ -82,8 +85,8 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.boolean  "owner"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["group_type", "group_id"], name: "index_beach_api_core_memberships_on_group_type_and_group_id"
-    t.index ["member_type", "member_id"], name: "index_beach_api_core_memberships_on_member_type_and_member_id"
+    t.index ["group_type", "group_id"], name: "index_beach_api_core_memberships_on_group_type_and_group_id", using: :btree
+    t.index ["member_type", "member_id"], name: "index_beach_api_core_memberships_on_member_type_and_member_id", using: :btree
   end
 
   create_table "beach_api_core_organisations", force: :cascade do |t|
@@ -91,7 +94,7 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "application_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.index ["application_id"], name: "index_beach_api_core_organisations_on_application_id"
+    t.index ["application_id"], name: "index_beach_api_core_organisations_on_application_id", using: :btree
   end
 
   create_table "beach_api_core_profile_attributes", force: :cascade do |t|
@@ -100,8 +103,8 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.string   "value"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.index ["profile_custom_field_id"], name: "index_profile_attributes_on_profile_custom_field_id"
-    t.index ["profile_id"], name: "index_beach_api_core_profile_attributes_on_profile_id"
+    t.index ["profile_custom_field_id"], name: "index_profile_attributes_on_profile_custom_field_id", using: :btree
+    t.index ["profile_id"], name: "index_beach_api_core_profile_attributes_on_profile_id", using: :btree
   end
 
   create_table "beach_api_core_profile_custom_fields", force: :cascade do |t|
@@ -112,7 +115,7 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "keeper_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["keeper_type", "keeper_id"], name: "index_profile_custom_fields_on_keeper_type_and_keeper_id"
+    t.index ["keeper_type", "keeper_id"], name: "index_profile_custom_fields_on_keeper_type_and_keeper_id", using: :btree
   end
 
   create_table "beach_api_core_profiles", force: :cascade do |t|
@@ -124,7 +127,7 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_beach_api_core_profiles_on_user_id"
+    t.index ["user_id"], name: "index_beach_api_core_profiles_on_user_id", using: :btree
   end
 
   create_table "beach_api_core_roles", force: :cascade do |t|
@@ -133,9 +136,9 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "keeper_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_roles_on_keeper_type_and_keeper_id"
-    t.index ["name", "keeper_id", "keeper_type"], name: "index_roles_on_name_and_keeper_id_and_keeper_type", unique: true
-    t.index ["name"], name: "index_beach_api_core_roles_on_name"
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_roles_on_keeper_type_and_keeper_id", using: :btree
+    t.index ["name", "keeper_id", "keeper_type"], name: "index_roles_on_name_and_keeper_id_and_keeper_type", unique: true, using: :btree
+    t.index ["name"], name: "index_beach_api_core_roles_on_name", using: :btree
   end
 
   create_table "beach_api_core_service_categories", force: :cascade do |t|
@@ -151,7 +154,7 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "service_category_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.index ["service_category_id"], name: "index_beach_api_core_services_on_service_category_id"
+    t.index ["service_category_id"], name: "index_beach_api_core_services_on_service_category_id", using: :btree
   end
 
   create_table "beach_api_core_teams", force: :cascade do |t|
@@ -159,7 +162,7 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "application_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.index ["application_id"], name: "index_beach_api_core_teams_on_application_id"
+    t.index ["application_id"], name: "index_beach_api_core_teams_on_application_id", using: :btree
   end
 
   create_table "beach_api_core_users", force: :cascade do |t|
@@ -169,8 +172,8 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.datetime "confirmed_at"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.index ["email"], name: "index_beach_api_core_users_on_email"
-    t.index ["username"], name: "index_beach_api_core_users_on_username"
+    t.index ["email"], name: "index_beach_api_core_users_on_email", using: :btree
+    t.index ["username"], name: "index_beach_api_core_users_on_username", using: :btree
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -182,7 +185,7 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.datetime "created_at",        null: false
     t.datetime "revoked_at"
     t.string   "scopes"
-    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
   end
 
   create_table "oauth_access_tokens", force: :cascade do |t|
@@ -195,9 +198,9 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.datetime "created_at",                          null: false
     t.string   "scopes"
     t.string   "previous_refresh_token", default: "", null: false
-    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
-    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
-    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
   end
 
   create_table "oauth_applications", force: :cascade do |t|
@@ -210,8 +213,11 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.datetime "updated_at",                null: false
     t.string   "owner_type"
     t.integer  "owner_id"
-    t.index ["owner_type", "owner_id"], name: "index_oauth_applications_on_owner_type_and_owner_id"
-    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+    t.index ["owner_type", "owner_id"], name: "index_oauth_applications_on_owner_type_and_owner_id", using: :btree
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
+  add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
 end

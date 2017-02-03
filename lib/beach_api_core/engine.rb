@@ -1,4 +1,5 @@
 require 'doorkeeper'
+require 'baby_squeel'
 
 module BeachApiCore
   class Engine < ::Rails::Engine

@@ -5,7 +5,7 @@ module BeachApiCore
     validates :name, :title, presence: true
 
     belongs_to :service_category
-    has_one :icon, class_name: 'Asset', as: :entity, inverse_of: :entity, dependent: :destroy
+    has_one :icon, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
     accepts_nested_attributes_for :icon, allow_destroy: true
     has_many :capabilities
   end

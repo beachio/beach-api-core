@@ -3,6 +3,8 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require 'rspec/rails'
 require 'factory_girl_rails'
+require 'refile/file_double'
+require 'pundit/rspec'
 
 Rails.backtrace_cleaner.remove_silencers!
 

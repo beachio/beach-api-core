@@ -9,6 +9,6 @@ module BeachApiCore::Concerns::UserRoles
   end
 
   def has_role?(role, keeper = nil)
-    roles.where(id: role, keeper: keeper || Instance.current).present?
+    roles.where(id: role, keeper: keeper || BeachApiCore::Instance.current).present?
   end
 end

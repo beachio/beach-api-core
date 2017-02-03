@@ -1,7 +1,20 @@
 require 'rails_helper'
 
 module BeachApiCore
-  RSpec.describe Organisation, type: :model do
-    pending "add some examples to (or delete) #{__FILE__}"
+  describe Organisation, type: :model do
+    subject { build(:organisation) }
+
+    it 'should be valid with basic factory attributes' do
+      expect(subject).to be_valid
+    end
+
+    it 'should have relations and basic validations' do
+      should validate_presence_of :name
+      should validate_presence_of :application
+      should belong_to :application
+      should have_many :users
+      should have_many :teams
+      should have_many :invitations
+    end
   end
 end

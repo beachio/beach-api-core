@@ -1,7 +1,7 @@
 class CreateBeachApiCoreFavourites < ActiveRecord::Migration[5.0]
   def change
     create_table :beach_api_core_favourites do |t|
-      t.references :user, foreign_key: true
+      t.references :user, foreign_key: {to_table: :beach_api_core_users}
       t.references :favouritable, polymorphic: true, index: { name: 'indexfavourites_on_favouritable_type_and_favouritable_id' }
       t.timestamps
     end

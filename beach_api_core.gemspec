@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "omniauth", "~> 1.3.2"
   s.add_dependency "doorkeeper", "~> 4.2.0"
 
+  s.add_dependency "pg"
   s.add_dependency "baby_squeel", "~> 1.0.1"
   s.add_dependency "pundit", "~> 1.1.0"
   s.add_dependency "active_model_serializers", "~> 0.10.4"

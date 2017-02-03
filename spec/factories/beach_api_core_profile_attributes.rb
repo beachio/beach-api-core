@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :beach_api_core_profile_attribute, class: 'BeachApiCore::ProfileAttribute' do
+  factory :profile_attribute, class: 'BeachApiCore::ProfileAttribute' do
     value { Faker::Name.title }
 
     after(:build) do |profile_attribute|

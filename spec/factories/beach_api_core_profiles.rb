@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :beach_api_core_profile, class: 'BeachApiCore::Profile' do
+  factory :profile, class: 'BeachApiCore::Profile' do
     first_name          { Faker::Name.first_name }
     last_name           { Faker::Name.last_name }
     sex                 { %w(male female).sample }

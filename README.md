@@ -29,6 +29,7 @@ $ rails beach_api_core:install:migrations
 ##Development
 run migrations:
 ```
+rake app:db:create
 rake app:db:migrate 
 rake app:db:test:prepare
 ```

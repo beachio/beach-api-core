@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :beach_api_core_service_category, class: 'BeachApiCore::ServiceCategory' do
+  factory :service_category, class: 'BeachApiCore::ServiceCategory' do
     name { Faker::Name.title }
 
     trait :with_services do
