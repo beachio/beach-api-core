@@ -1,8 +1,8 @@
 module BeachApiCore
   class User < ApplicationRecord
-    include BeachApiCore::Concerns::Downcasable
-    include BeachApiCore::Concerns::UserConfirm
-    include BeachApiCore::Concerns::UserRoles
+    include Concerns::Downcasable
+    include Concerns::UserConfirm
+    include Concerns::UserRoles
 
     has_one :profile
     has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'

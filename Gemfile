@@ -5,19 +5,10 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# oauth2
-gem 'omniauth'
-gem 'doorkeeper'
-
-# gems the app needs
 gem 'refile', require: 'refile/rails', git: 'https://github.com/manfe/refile.git'
-gem 'refile-s3'
-gem 'pundit'
-gem 'active_model_serializers'
-gem 'bcrypt'
-gem 'versionist'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'byebug', platform: :mri
