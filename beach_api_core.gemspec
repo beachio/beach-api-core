@@ -27,7 +27,9 @@ Gem::Specification.new do |s|
   s.add_dependency "pundit", "~> 1.1.0"
   s.add_dependency "active_model_serializers", "~> 0.10.4"
   s.add_dependency "bcrypt", "~> 3.1.11"
-  # s.add_dependency "versionist", "~> 1.5.0"
+  s.add_dependency "versionist", "~> 1.5.0"
   s.add_dependency "refile"
 
+  s.add_dependency "interactor", "~> 3.1.0"
+  s.add_dependency "interactor-rails", "~> 2.0.2"
 end

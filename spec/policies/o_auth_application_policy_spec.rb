@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BeachApiCore::OAuthApplicationPolicy do
+describe BeachApiCore::OAuthApplicationPolicy do
   subject { described_class }
 
   let(:user) { create :user }

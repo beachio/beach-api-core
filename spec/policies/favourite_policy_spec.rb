@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BeachApiCore::FavouritePolicy do
+describe BeachApiCore::FavouritePolicy do
   subject { described_class }
   let(:user) { create :user }
   let(:another_user) { create :user }

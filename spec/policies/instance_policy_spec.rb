@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BeachApiCore::InstancePolicy do
+describe BeachApiCore::InstancePolicy do
   subject { described_class }
 
   before { BeachApiCore::Instance.instance_variable_set('@_current', nil) }

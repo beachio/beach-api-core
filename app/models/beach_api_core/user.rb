@@ -16,8 +16,8 @@ module BeachApiCore
 
     has_many :invitations
     has_many :memberships, as: :member, inverse_of: :member, dependent: :destroy
-    has_many :organisations, through: :memberships, source: :group, source_type: 'Organisation'
-    has_many :teams, through: :memberships, source: :group, source_type: 'Team'
+    has_many :organisations, through: :memberships, source: :group, source_type: 'BeachApiCore::Organisation'
+    has_many :teams, through: :memberships, source: :group, source_type: 'BeachApiCore::Team'
 
     has_secure_password
     acts_as_downcasable_on [:email, :username]

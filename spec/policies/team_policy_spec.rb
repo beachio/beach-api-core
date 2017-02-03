@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BeachApiCore::TeamPolicy do
+describe BeachApiCore::TeamPolicy do
   subject { described_class }
 
   let!(:team) { create :team }

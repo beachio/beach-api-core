@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BeachApiCore::OrganisationPolicy do
+describe BeachApiCore::OrganisationPolicy do
   subject { described_class }
 
   let!(:organisation) { create :organisation }
