@@ -21,6 +21,13 @@ Or install it yourself as:
 $ gem install beach_api_core
 ```
 
+##Development
+run migrations:
+```
+rake app:db:migrate 
+rake app:db:test:prepare
+```
+
 ## Contributing
 Contribution directions go here.
 
