@@ -1,3 +1,5 @@
+require 'doorkeeper'
+
 module BeachApiCore
   class Engine < ::Rails::Engine
     isolate_namespace BeachApiCore
