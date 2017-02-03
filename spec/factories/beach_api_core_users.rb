@@ -6,16 +6,16 @@ FactoryGirl.define do
 
   factory :developer, parent: :user do
     after(:create) do |user|
-      role = Role.find_by(name: :developer, keeper: Instance.current) ||
-          create(:role, name: :developer, keeper: Instance.current)
+      role = BeachApiCore::Role.find_by(name: :developer, keeper: BeachApiCore::Instance.current) ||
+          create(:role, name: :developer, keeper: BeachApiCore::Instance.current)
       user.assignments.create(role: role)
     end
   end
 
   factory :admin, parent: :user do
     after(:create) do |user|
-      role = Role.find_by(name: :admin, keeper: Instance.current) ||
-          create(:role, name: :admin, keeper: Instance.current)
+      role = BeachApiCore::Role.find_by(name: :admin, keeper: BeachApiCore::Instance.current) ||
+          create(:role, name: :admin, keeper: BeachApiCore::Instance.current)
       user.assignments.create(role: role)
     end
   end

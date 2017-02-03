@@ -19,6 +19,17 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 5.0.1"
 
-  s.add_development_dependency "bcrypt"
-  s.add_development_dependency "sqlite3"
+  s.add_dependency "omniauth", "~> 1.3.2"
+  s.add_dependency "doorkeeper", "~> 4.2.0"
+
+  s.add_dependency "pg"
+  s.add_dependency "baby_squeel", "~> 1.0.1"
+  s.add_dependency "pundit", "~> 1.1.0"
+  s.add_dependency "active_model_serializers", "~> 0.10.4"
+  s.add_dependency "bcrypt", "~> 3.1.11"
+  s.add_dependency "versionist", "~> 1.5.0"
+  s.add_dependency "refile"
+
+  s.add_dependency "interactor", "~> 3.1.0"
+  s.add_dependency "interactor-rails", "~> 2.0.2"
 end

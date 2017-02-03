@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'beach_api_core'
+gem 'beach_api_core', git: 'https://github.com/beachio/beach-api-core'
 ```
 
 And then execute:
@@ -21,9 +21,15 @@ Or install it yourself as:
 $ gem install beach_api_core
 ```
 
+Next, you need to run the generator:
+```bash
+$ rails beach_api_core:install:migrations
+```
+
 ##Development
 run migrations:
 ```
+rake app:db:create
 rake app:db:migrate 
 rake app:db:test:prepare
 ```

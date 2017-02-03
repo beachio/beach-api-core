@@ -1,3 +1,10 @@
+require 'versionist'
+require 'doorkeeper'
+require 'baby_squeel'
+require 'active_model_serializers'
+require 'pundit'
+require 'interactor'
+
 module BeachApiCore
   class Engine < ::Rails::Engine
     isolate_namespace BeachApiCore
@@ -10,4 +17,5 @@ module BeachApiCore
     end
 
   end
+  Doorkeeper = ::Doorkeeper
 end
