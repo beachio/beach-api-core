@@ -1,5 +1,7 @@
 require 'doorkeeper'
 require 'baby_squeel'
+require 'active_model_serializers'
+require 'pundit'
 
 module BeachApiCore
   class Engine < ::Rails::Engine

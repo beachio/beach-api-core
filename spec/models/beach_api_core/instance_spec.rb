@@ -23,7 +23,7 @@ module BeachApiCore
     end
 
     describe 'class methods' do
-      before { Instance.instance_variable_set('@_current', nil) }
+      before { BeachApiCore::Instance.instance_variable_set('@_current', nil) }
 
       it 'should generate current' do
         expect(Instance.current).to be_present

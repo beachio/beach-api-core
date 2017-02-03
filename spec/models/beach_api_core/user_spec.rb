@@ -57,7 +57,7 @@ module BeachApiCore
 
     context 'when roles' do
       before do
-        Instance.instance_variable_set('@_current', nil)
+        BeachApiCore::Instance.instance_variable_set('@_current', nil)
         @user = create(:user)
         @role = create(:assignment, user: @user).role
       end
