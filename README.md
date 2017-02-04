@@ -1,4 +1,6 @@
-# BeachApiCore
+[ ![Codeship Status for beachio/beach-api-core](https://app.codeship.com/projects/0589cfb0-ccde-0134-cf09-32338ebbb7ed/status?branch=master)](https://app.codeship.com/projects/200292)
+
+# Beach Api Core Engine
 Short description and motivation.
 
 ## Usage
@@ -30,7 +32,7 @@ $ rails beach_api_core:install:migrations
 run migrations:
 ```
 rake app:db:create
-rake app:db:migrate 
+rake app:db:migrate
 rake app:db:test:prepare
 ```
 
