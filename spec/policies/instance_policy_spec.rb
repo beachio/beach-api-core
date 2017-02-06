@@ -6,7 +6,6 @@ describe BeachApiCore::InstancePolicy do
   before { BeachApiCore::Instance.instance_variable_set('@_current', nil) }
 
   let!(:instance) { create :instance }
-  let!(:developer_role) { create :role, name: :developer, keeper: instance }
   let(:user) { create :user }
   let(:developer) { create :developer }
   let(:admin) { create :admin }
