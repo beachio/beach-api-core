@@ -9,7 +9,6 @@ module BeachApiCore
     end
 
     it 'should have relations' do
-      should belong_to(:keeper)
       should have_many(:assignments).dependent(:destroy)
     end
     it 'should have methods' do
@@ -19,17 +18,17 @@ module BeachApiCore
     end
     it 'should have basic validations' do
       should validate_presence_of :name
-      should validate_presence_of :keeper
     end
+
     it 'should have uniqueness case insensitive' do
       create :role
-      should validate_uniqueness_of(:name).case_insensitive.scoped_to(:keeper_id, :keeper_type)
+      should validate_uniqueness_of(:name).case_insensitive
     end
 
     context 'when class methods' do
       before do
         [:admin, :developer, :user].each do |name|
-          create :role, name: name, keeper: Instance.current
+          create :role, name: name
         end
       end
       it 'should return role instance' do
