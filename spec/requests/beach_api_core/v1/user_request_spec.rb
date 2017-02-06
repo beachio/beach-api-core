@@ -1,3 +1,4 @@
+
 require 'rails_helper'
 
 module BeachApiCore
@@ -18,7 +19,7 @@ module BeachApiCore
             create_user_request
             create_user_request email: Faker::Internet.email
           end.to change(User, :count).by(2)
-                     # .and change(ActionMailer::Base.deliveries, :count).by(2)
+                     .and change(ActionMailer::Base.deliveries, :count).by(2)
         end
 
         it_behaves_like 'valid user response' do
