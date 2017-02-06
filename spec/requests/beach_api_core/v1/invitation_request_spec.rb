@@ -19,7 +19,7 @@ module BeachApiCore
                params: { invitation: { email: Faker::Internet.email }, group_id: team.id, group_type: 'Team' },
                headers: bearer_auth
         end.to change(Invitation, :count).by(1)
-           # .and change(ActionMailer::Base.deliveries, :count).by(1)
+           .and change(ActionMailer::Base.deliveries, :count).by(1)
         expect(Invitation.last.user).to eq(oauth_user)
       end
     end
