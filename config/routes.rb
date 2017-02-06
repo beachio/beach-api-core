@@ -16,5 +16,4 @@ BeachApiCore::Engine.routes.draw do
     resources :memberships, only: [:create, :destroy]
     resources :invitations, only: [:create]
   end
-
 end

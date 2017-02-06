@@ -32,4 +32,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "interactor", "~> 3.1.0"
   s.add_dependency "interactor-rails", "~> 2.0.2"
+
+  s.add_dependency "slim-rails", "~> 3.1.1"
 end

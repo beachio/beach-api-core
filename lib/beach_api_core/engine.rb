@@ -4,6 +4,7 @@ require 'baby_squeel'
 require 'active_model_serializers'
 require 'pundit'
 require 'interactor'
+require 'slim'
 
 module BeachApiCore
   class Engine < ::Rails::Engine
