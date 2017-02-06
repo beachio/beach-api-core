@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203101617) do
+ActiveRecord::Schema.define(version: 20170206094135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20170203101617) do
     t.integer  "entity_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "file_extension"
     t.index ["entity_id", "entity_type"], name: "index_beach_api_core_assets_on_entity_id_and_entity_type", using: :btree
     t.index ["entity_type", "entity_id"], name: "index_beach_api_core_assets_on_entity_type_and_entity_id", using: :btree
     t.index ["file_content_type"], name: "index_beach_api_core_assets_on_file_content_type", using: :btree

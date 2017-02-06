@@ -13,5 +13,15 @@ module BeachApiCore
       should validate_presence_of :file
       should validate_presence_of :entity
     end
+
+    it 'should grab file extension' do
+      [:jpg, :jpeg, :bmp, :png, :gif, :doc, :docx, :xls, :xlsx, :pdf, :txt].each do |extension|
+        asset = create :asset, file_filename: "filename.#{extension}"
+        expect(asset.file_extension).to eq extension.to_s
+      end
+      expect(Asset.images.count).to eq 5
+      expect(Asset.files.count).to eq 6
+    end
+
   end
 end
