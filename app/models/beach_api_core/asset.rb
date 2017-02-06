@@ -3,7 +3,14 @@ module BeachApiCore
     belongs_to :entity, polymorphic: true
 
     attachment :file
-    validates :file, :entity, presence: true
+    validates :file, :entity, :file_extension, presence: true
+
+    before_validation :set_file_extension
+
+    scope :images, -> { where(file_extension: IMAGE_EXTENSION) }
+    scope :files, -> { where.not(file_extension: IMAGE_EXTENSION) }
+
+    IMAGE_EXTENSION = [:jpg, :jpeg, :bmp, :png, :gif].freeze
 
     def base64=(value)
       partitions = value.partition(';base64,')
@@ -20,6 +27,12 @@ module BeachApiCore
                           file_content_type: content_type
         )
       end
+    end
+
+    private
+
+    def set_file_extension
+      self.file_extension = file_filename.split('.').last.to_s.downcase if file_filename
     end
   end
 end
