@@ -10,7 +10,7 @@ module BeachApiCore
 
     it 'should have basic validations' do
       should validate_presence_of :title
-      should define_enum_for(:status).with(active: 0, inactive: 1)
+      should define_enum_for(:status).with(enabled: 0, disabled: 1)
     end
 
     it 'should generate name' do

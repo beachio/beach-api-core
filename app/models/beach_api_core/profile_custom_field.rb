@@ -6,6 +6,6 @@ module BeachApiCore
     validates :name, presence: true, uniqueness: { scope: [:keeper_id, :keeper_type] }
     validates :title, presence: true
 
-    enum status: [:active, :inactive]
+    enum status: [:enabled, :disabled]
   end
 end
