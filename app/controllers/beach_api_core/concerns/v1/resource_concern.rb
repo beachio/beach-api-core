@@ -18,7 +18,7 @@ module BeachApiCore::Concerns::V1::ResourceConcern
   private
 
   def set_resource_name
-    @namespace = self.class.to_s.split(':').first
+    @namespace = self.class.to_s.split('::').first
     @resource_class = "#{self.class.to_s.gsub(/Controller/,'').gsub(/.*::/,'')}".singularize
     @resource_name = @resource_class.underscore
     @resource_class = "#{@namespace ? "#{@namespace}::" : ''}#{@resource_class}"
