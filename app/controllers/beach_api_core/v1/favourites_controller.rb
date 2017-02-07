@@ -31,6 +31,5 @@ module BeachApiCore
     def favourite_params
       params.require(:favourite).permit(:favouritable_id, :favouritable_type)
     end
-
   end
 end
