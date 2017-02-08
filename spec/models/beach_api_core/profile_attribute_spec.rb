@@ -12,6 +12,10 @@ module BeachApiCore
       should validate_presence_of :profile
       should validate_presence_of :profile_custom_field
       should validate_presence_of :value
+    end
+
+    it 'should have uniqueness' do
+      create :profile_attribute
       should validate_uniqueness_of(:profile).scoped_to(:profile_custom_field_id)
     end
   end
