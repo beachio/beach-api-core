@@ -19,7 +19,7 @@ module BeachApiCore
     it 'should have basic validations' do
       should validate_presence_of :email
       should validate_presence_of :username
-      should have_many :organisations
+      should have_one :organisation
       should have_many :teams
     end
     it 'should have uniqueness case insensitive' do

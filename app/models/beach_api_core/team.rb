@@ -3,8 +3,8 @@ module BeachApiCore
     validates :name, :application, presence: true
 
     belongs_to :application, class_name: 'Doorkeeper::Application'
-    has_one :organisation_memberships, as: :member, inverse_of: :member, class_name: 'BeachApiCore::Membership', dependent: :destroy
-    has_one :organisation, through: :organisation_memberships, source: :group, source_type: 'BeachApiCore::Organisation'
+    has_one :organisation_membership, as: :member, class_name: 'BeachApiCore::Membership', dependent: :destroy
+    has_one :organisation, through: :organisation_membership, source: :group, source_type: 'BeachApiCore::Organisation'
     has_many :memberships, as: :group, inverse_of: :group, dependent: :destroy
     has_many :members, through: :memberships, source_type: 'BeachApiCore::User'
     has_many :invitations, as: :group, inverse_of: :group
