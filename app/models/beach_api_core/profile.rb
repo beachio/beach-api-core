@@ -2,7 +2,7 @@ module BeachApiCore
   class Profile < ApplicationRecord
     belongs_to :user
     has_one :avatar, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
-    has_many :profile_attributes, autosave: true
+    has_many :profile_attributes, autosave: true, dependent: :destroy
     has_many :profile_custom_fields, through: :profile_attributes
 
     accepts_nested_attributes_for :avatar, allow_destroy: true

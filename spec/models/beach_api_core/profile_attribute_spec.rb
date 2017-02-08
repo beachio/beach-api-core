@@ -9,6 +9,8 @@ module BeachApiCore
     end
 
     it 'should have basic validations' do
+      should validate_presence_of :profile
+      should validate_presence_of :profile_custom_field
       should validate_presence_of :value
       should validate_uniqueness_of(:profile).scoped_to(:profile_custom_field_id)
     end

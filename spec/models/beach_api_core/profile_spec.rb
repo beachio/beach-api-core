@@ -8,6 +8,10 @@ module BeachApiCore
       expect(subject).to be_valid
     end
 
+    it 'should have relations' do
+      should have_many(:profile_attributes).dependent(:destroy)
+    end
+
     it 'should have basic validations' do
       should validate_uniqueness_of :user
       should have_many :profile_custom_fields

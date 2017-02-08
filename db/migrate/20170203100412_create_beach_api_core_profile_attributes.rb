@@ -6,5 +6,6 @@ class CreateBeachApiCoreProfileAttributes < ActiveRecord::Migration[5.0]
       t.string :value
       t.timestamps
     end
+    add_index :beach_api_core_profile_attributes, [:profile_id, :profile_custom_field_id], unique: true
   end
 end
