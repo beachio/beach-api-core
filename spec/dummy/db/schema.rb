@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20170206141646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "beach_api_core_assets", force: :cascade do |t|
     t.string   "file_id"
@@ -108,6 +109,7 @@ ActiveRecord::Schema.define(version: 20170206141646) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.index ["profile_custom_field_id"], name: "index_profile_attributes_on_profile_custom_field_id", using: :btree
+    t.index ["profile_id", "profile_custom_field_id"], name: "index_profile_attrs_on_profile_id_and_profile_custom_field_id", unique: true, using: :btree
     t.index ["profile_id"], name: "index_beach_api_core_profile_attributes_on_profile_id", using: :btree
   end
 
