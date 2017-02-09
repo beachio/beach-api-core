@@ -10,7 +10,7 @@ module BeachApiCore
     private
 
     def member_can_consist_only_in_one_organization
-      errors.add(:member, 'can join to more than one organization') if member &&
+      errors.add(:member, 'can not join more than one organization') if member &&
           group.is_a?(BeachApiCore::Organisation) &&
           member.organisation.present?
     end
