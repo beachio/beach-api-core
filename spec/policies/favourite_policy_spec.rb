@@ -10,5 +10,4 @@ describe BeachApiCore::FavouritePolicy do
     it { is_expected.to permit(user, favourite) }
     it { is_expected.to_not permit(another_user, favourite) }
   end
-
 end

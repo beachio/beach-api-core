@@ -60,9 +60,15 @@ module BeachApiCore
         BeachApiCore::Instance.instance_variable_set('@_current', nil)
         @user = create(:user)
         @role = create(:assignment, user: @user).role
+        @other_role = create(:assignment, user: @user).role
       end
       it { expect(@user.has_role?(@role)).to be_truthy }
       it { expect(@user.has_role?(create(:role))).to be_falsey }
+
+      it 'should add role to user' do
+        @user.add_role(@other_role)
+        expect(@user.has_role?(@other_role)).to be_truthy
+      end
     end
   end
 end

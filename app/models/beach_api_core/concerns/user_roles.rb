@@ -11,4 +11,8 @@ module BeachApiCore::Concerns::UserRoles
   def has_role?(role, keeper = nil)
     assignments.where(role: role, keeper: keeper || BeachApiCore::Instance.current).present?
   end
+
+  def add_role(role, keeper = nil)
+    assignments.create(role: role, keeper: keeper || BeachApiCore::Instance.current)
+  end
 end
