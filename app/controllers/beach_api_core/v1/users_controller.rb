@@ -30,6 +30,7 @@ module BeachApiCore
       param :first_name, String
       param :last_name, String
       param :sex, ['male', 'female']
+      param :'***', String, desc: 'Any custom field'
       param :avatar_attributes, Hash do
         param :file, File, desc: 'Postfield file'
         param :base64, String, desc: 'Encoded Base64 string'

@@ -6,13 +6,6 @@ GIT
       activesupport (>= 4.0.0)
 
 GIT
-  remote: https://github.com/gambala/apipie-rails
-  revision: 73a7690553e2383d65b2ed37afd66b7cb2ce8534
-  specs:
-    apipie-rails (0.3.7)
-      json
-
-GIT
   remote: https://github.com/manfe/refile.git
   revision: 46b4178654e60bb5846b1423acf6d0740cdecc25
   specs:
@@ -20,6 +13,13 @@ GIT
       mime-types
       rest-client (~> 2)
       sinatra (~> 2.0.0.beta2)
+
+GIT
+  remote: https://github.com/vitalinfo/apipie-rails
+  revision: ca6975b48bdf2059e341e5510e35bba1064f46f7
+  specs:
+    apipie-rails (0.3.7)
+      json
 
 PATH
   remote: .
