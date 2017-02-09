@@ -22,3 +22,5 @@ group :test do
   gem 'poltergeist'
   gem 'shoulda-matchers', git: 'https://github.com/Privy/shoulda-matchers'
 end
+
+gem 'apipie-rails', git: 'https://github.com/gambala/apipie-rails'

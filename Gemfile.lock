@@ -6,6 +6,13 @@ GIT
       activesupport (>= 4.0.0)
 
 GIT
+  remote: https://github.com/gambala/apipie-rails
+  revision: 73a7690553e2383d65b2ed37afd66b7cb2ce8534
+  specs:
+    apipie-rails (0.3.7)
+      json
+
+GIT
   remote: https://github.com/manfe/refile.git
   revision: 46b4178654e60bb5846b1423acf6d0740cdecc25
   specs:
@@ -19,6 +26,7 @@ PATH
   specs:
     beach_api_core (0.1.0)
       active_model_serializers (~> 0.10.4)
+      apipie-rails
       baby_squeel (~> 1.0.1)
       bcrypt (~> 3.1.11)
       doorkeeper (~> 4.2.0)
@@ -124,6 +132,7 @@ GEM
     interactor-rails (2.0.2)
       interactor (~> 3.0)
       rails (>= 3, < 5.1)
+    json (2.0.3)
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
       jsonapi-renderer (= 0.1.1.beta1)
@@ -255,6 +264,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  apipie-rails!
   beach_api_core!
   byebug
   database_cleaner

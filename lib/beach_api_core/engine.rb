@@ -5,6 +5,7 @@ require 'active_model_serializers'
 require 'pundit'
 require 'interactor'
 require 'slim'
+require 'apipie-rails'
 
 module BeachApiCore
   class Engine < ::Rails::Engine
@@ -19,4 +20,5 @@ module BeachApiCore
 
   end
   Doorkeeper = ::Doorkeeper
+  Apipie = ::Apipie
 end

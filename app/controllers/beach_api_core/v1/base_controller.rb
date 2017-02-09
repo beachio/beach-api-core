@@ -4,7 +4,14 @@ module BeachApiCore
   class V1::BaseController < ApplicationController
     include Pundit
     include BeachApiCore::Concerns::V1::RescueFromConcern
+    include BeachApiCore::Concerns::V1::ApipieConcern
     skip_before_action :verify_authenticity_token
+
+    resource_description do
+      api_version 'v1'
+      app_info 'Beach API Core v1 is currently the default API version'
+      formats ['json']
+    end
 
     private
 
