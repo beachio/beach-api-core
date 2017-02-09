@@ -6,6 +6,9 @@ module BeachApiCore
     param :email, String, required: true
     param :username, String
     param :password, String, required: true
+    example "\"user\": #{apipie_user_response}"
+    error code: 400, desc: 'Can not save user', meta: { message: 'Error description' }
+    error code: 401, desc: 'Unauthorized'
     def create
       result = BeachApiCore::SignUp.call(user_create_params.merge(headers: request.headers['HTTP_AUTHORIZATION']))
 
@@ -36,6 +39,9 @@ module BeachApiCore
         param :base64, String, desc: 'Encoded Base64 string'
       end
     end
+    error code: 400, desc: 'Can not save user', meta: { message: 'Error description' }
+    error code: 403, desc: 'Forbidden, token is invalid'
+    example "\"user\": #{apipie_user_response}"
     def update
       result = BeachApiCore::UserUpdate.call(user: current_user, params: user_update_params, keepers: [Instance.current, current_application])
 
