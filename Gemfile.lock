@@ -14,11 +14,19 @@ GIT
       rest-client (~> 2)
       sinatra (~> 2.0.0.beta2)
 
+GIT
+  remote: https://github.com/vitalinfo/apipie-rails
+  revision: ca6975b48bdf2059e341e5510e35bba1064f46f7
+  specs:
+    apipie-rails (0.3.7)
+      json
+
 PATH
   remote: .
   specs:
     beach_api_core (0.1.0)
       active_model_serializers (~> 0.10.4)
+      apipie-rails
       baby_squeel (~> 1.0.1)
       bcrypt (~> 3.1.11)
       doorkeeper (~> 4.2.0)
@@ -124,6 +132,7 @@ GEM
     interactor-rails (2.0.2)
       interactor (~> 3.0)
       rails (>= 3, < 5.1)
+    json (2.0.3)
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
       jsonapi-renderer (= 0.1.1.beta1)
@@ -255,6 +264,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  apipie-rails!
   beach_api_core!
   byebug
   database_cleaner
