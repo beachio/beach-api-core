@@ -27,6 +27,7 @@ module BeachApiCore
         create :membership, group: organisation
         create :membership, group: @team
         @organisation_owner_membership = create :membership, owner: true, group: organisation
+        @team.reload
       end
       it 'should return team owners' do
         expect(@team.owners).to contain_exactly(@owner_membership.member, @organisation_owner_membership.member)

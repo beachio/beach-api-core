@@ -15,8 +15,10 @@ module BeachApiCore
     validates :profile, presence: true
 
     has_many :invitations
+
+    has_one :organisation_membership, as: :member, class_name: 'BeachApiCore::Membership', dependent: :destroy
+    has_one :organisation, through: :organisation_membership, source: :group, source_type: 'BeachApiCore::Organisation'
     has_many :memberships, as: :member, inverse_of: :member, dependent: :destroy
-    has_many :organisations, through: :memberships, source: :group, source_type: 'BeachApiCore::Organisation'
     has_many :teams, through: :memberships, source: :group, source_type: 'BeachApiCore::Team'
 
     has_secure_password

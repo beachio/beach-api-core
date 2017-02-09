@@ -15,5 +15,15 @@ module BeachApiCore
       should validate_presence_of :member
       should validate_presence_of :group
     end
+
+    it 'user and team can consist only in one organization' do
+      organisation1 = create :organisation
+      organisation2 = create :organisation
+      [create(:user), create(:team)].each do |member|
+        create :membership, group: organisation1, member: member
+        member.reload
+        expect{ create(:membership, group: organisation2, member: member) }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
   end
 end
