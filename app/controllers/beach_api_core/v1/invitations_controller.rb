@@ -3,6 +3,13 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::GroupResourceConcern
     before_action :doorkeeper_authorize!, :find_group
 
+    api :POST, '/invitations', 'Create an invitation'
+    param :invitation, Hash, required: true do
+      param :email, String, required: true
+      param :group_type, String, required: true
+      param :group_id, String, required: true
+    end
+    example "\"invitation\": #{apipie_invitation_response}"
     def create
       result = BeachApiCore::InvitationCreate.call(params: invitation_params, group: @group, user: current_user)
       if result.success?

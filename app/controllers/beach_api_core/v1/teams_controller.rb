@@ -3,6 +3,11 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
 
+    api :POST, '/teams', 'Create a team'
+    param :team, Hash, required: true do
+      param :name, String, required: true
+    end
+    example "\"team\": #{apipie_team_response}"
     def create
       result = BeachApiCore::TeamCreate.call(params: team_params, user: current_user,
                                              application: current_application)
@@ -13,11 +18,18 @@ module BeachApiCore
       end
     end
 
+    api :GET, '/teams/:id', 'Get team'
+    example "\"team\": #{apipie_team_response}"
     def show
       authorize @team
       render_json_success(@team, :ok, root: :team)
     end
 
+    api :PATCH,  '/teams/:id', 'Update a team'
+    param :team, Hash, required: true do
+      param :name, String
+    end
+    example "\"team\": #{apipie_team_response}"
     def update
       authorize @team
       result = BeachApiCore::TeamUpdate.call(team: @team, params: team_params)
@@ -28,6 +40,7 @@ module BeachApiCore
       end
     end
 
+    api :DELETE, '/teams/:id', 'Remove team'
     def destroy
       authorize @team
       if @team.destroy

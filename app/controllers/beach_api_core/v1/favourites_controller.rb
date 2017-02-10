@@ -25,6 +25,7 @@ module BeachApiCore
       end
     end
 
+    api :DELETE, '/favourites', 'Remove favourite item'
     def destroy
       authorize @favourite
       if @favourite.destroy
