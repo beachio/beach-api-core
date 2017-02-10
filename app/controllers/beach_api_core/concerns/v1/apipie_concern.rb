@@ -35,6 +35,10 @@ module BeachApiCore::Concerns::V1::ApipieConcern
       pretty BeachApiCore::AppSerializer.new(BeachApiCore::Doorkeeper::Application.new)
     end
 
+    def apipie_organisation_response
+      pretty BeachApiCore::OrganisationSerializer.new(BeachApiCore::Organisation.new)
+    end
+
     def pretty(serializer)
       JSON.pretty_generate serializer.as_json
     end

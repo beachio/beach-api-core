@@ -3,6 +3,12 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
 
+    resource_description do
+      error code: 403, desc: 'Forbidden request'
+      error code: 401, desc: 'Unauthorized'
+      error code: 400, desc: 'Bad request'
+    end
+
     api :GET, '/services', 'Get list of services'
     example "\"services\": [#{apipie_service_response},...]"
     def index
@@ -10,6 +16,18 @@ module BeachApiCore
       render_json_success(current_application.services, :ok, each_serializer: ServiceSerializer, root: :services)
     end
 
+    api :PUT, '/services/:id', 'Update service'
+    param :service, Hash, required: true do
+      param :title, String, required: true
+      param :name, String
+      param :description, String
+      param :service_category_id, Integer, required: true
+      param :icon_attributes, Hash do
+        param :file, File, desc: 'Postfield file'
+        param :base64, String, desc: 'Encoded Base64 string'
+      end
+    end
+    example "\"service\": #{apipie_service_response} \n fail: 'Errors Description'"
     def update
       authorize current_application, :manage?
       result = BeachApiCore::ServiceUpdate.call(service: @service, params: service_params)

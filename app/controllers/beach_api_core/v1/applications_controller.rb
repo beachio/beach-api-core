@@ -3,9 +3,14 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
     before_action :get_resource, only: [:show, :update, :destroy]
 
+    resource_description do
+      error code: 403, desc: 'Forbidden request'
+      error code: 401, desc: 'Unauthorized'
+      error code: 400, desc: 'Bad request'
+    end
+
     api :GET, '/applications', 'Get list of applications'
     example "\"applications\": [#{apipie_application_response}, ...]"
-    error code: 403, desc: 'Forbidden request', meta: { message: 'You are not authorized to make this request' }
     def index
       authorize Instance.current, :developer?
       render_json_success(current_user.applications, :ok, each_serializer: AppSerializer, root: :applications)
@@ -16,8 +21,7 @@ module BeachApiCore
       param :name, String, required: true
       param :redirect_uri, String, required: true
     end
-    example "\"application\": #{apipie_application_response}"
-    error code: 403, desc: 'Forbidden request', meta: { message: 'You are not authorized to make this request' }
+    example "\"application\": #{apipie_application_response} \n fail: 'Errors Description'"
     def create
       authorize Instance.current, :developer?
 
@@ -33,7 +37,6 @@ module BeachApiCore
 
     api :GET, '/applications/:id', 'GET an application'
     example "\"application\": #{apipie_application_response}"
-    error code: 403, desc: 'Forbidden request', meta: { message: 'You are not authorized to make this request' }
     def show
       authorize Instance.current, :developer?
       authorize @application
@@ -42,11 +45,9 @@ module BeachApiCore
 
     api :PUT,' /applications/:id', 'Update an application'
     param :application, Hash, required: true do
-      param :id, Integer, required: true
       param :name, String
     end
-    example "\"application\": #{apipie_application_response}"
-    error code: 403, desc: 'Forbidden request', meta: { message: 'You are not authorized to make this request' }
+    example "\"application\": #{apipie_application_response} \n fail: 'Errors Description'"
     def update
       authorize Instance.current, :developer?
       authorize @application
@@ -61,6 +62,8 @@ module BeachApiCore
       end
     end
 
+    api :DELETE, '/applications/:id', 'Delete an application'
+    example "success: 'Application has been destroyed' \n fail: 'Could not remove application'"
     def destroy
       authorize Instance.current, :developer?
       authorize @application
