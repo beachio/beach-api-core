@@ -4,7 +4,7 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
 
     api :GET, '/services', 'Get list of services'
-    example "\"services\": #{apipie_service_response}"
+    example "\"services\": [#{apipie_service_response},...]"
     def index
       authorize current_application, :manage?
       render_json_success(current_application.services, :ok, each_serializer: ServiceSerializer, root: :services)
