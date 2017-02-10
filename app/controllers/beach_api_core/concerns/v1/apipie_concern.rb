@@ -28,5 +28,9 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     def apipie_service_response
       JSON.pretty_generate(BeachApiCore::ServiceSerializer.new(BeachApiCore::Service.new).as_json)
     end
+
+    def apipie_application_response
+      JSON.pretty_generate(BeachApiCore::AppSerializer.new(BeachApiCore::Doorkeeper::Application.new).as_json)
+    end
   end
 end
