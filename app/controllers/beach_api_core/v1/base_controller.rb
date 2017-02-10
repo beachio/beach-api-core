@@ -9,7 +9,6 @@ module BeachApiCore
 
     resource_description do
       api_version 'v1'
-      app_info 'Beach API Core v1 is currently the default API version'
       formats ['json']
     end
 

@@ -2,6 +2,7 @@ module BeachApiCore
   class V1::CapabilitiesController < BeachApiCore::V1::BaseController
     before_action :doorkeeper_authorize!, :find_service
 
+    api :POST, '/services/:service_id/capabilities', 'Create capability'
     def create
       authorize current_application, :manage?
       result = BeachApiCore::CapabilityCreate.call(service: @service, application: current_application)
@@ -13,6 +14,7 @@ module BeachApiCore
       end
     end
 
+    api :DELETE, '/services/:service_id/capabilities', 'Remove capability'
     def destroy
       authorize current_application, :manage?
       @capability = @service.capabilities.find_by(application: current_application)

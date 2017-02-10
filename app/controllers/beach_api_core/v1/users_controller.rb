@@ -3,12 +3,12 @@ module BeachApiCore
     before_action :doorkeeper_authorize!, except: [:create]
 
     api :POST, '/users', 'Create user'
-    param :email, String, required: true
-    param :username, String
-    param :password, String, required: true
+    param :user, Hash, required: true do
+      param :email, String, required: true
+      param :username, String
+      param :password, String, required: true
+    end
     example "\"user\": #{apipie_user_response}"
-    error code: 400, desc: 'Can not save user', meta: { message: 'Error description' }
-    error code: 401, desc: 'Unauthorized'
     def create
       result = BeachApiCore::SignUp.call(user_create_params.merge(headers: request.headers['HTTP_AUTHORIZATION']))
 
@@ -25,22 +25,22 @@ module BeachApiCore
       render_json_success(current_user, :ok, keepers: [Instance.current, current_application], root: :user)
     end
 
-    api :PUT, '/users', 'Update user'
-    param :email, String, required: true
-    param :username, String
-    param :profile_attributes, Hash do
-      param :id, Integer, required: true
-      param :first_name, String
-      param :last_name, String
-      param :sex, ['male', 'female']
-      param :'***', String, desc: 'Any custom field'
-      param :avatar_attributes, Hash do
-        param :file, File, desc: 'Postfield file'
-        param :base64, String, desc: 'Encoded Base64 string'
+    api :PUT, '/users/:id', 'Update user'
+    param :user, Hash, required: true do
+      param :email, String, required: true
+      param :username, String
+      param :profile_attributes, Hash do
+        param :id, Integer, required: true
+        param :first_name, String
+        param :last_name, String
+        param :sex, ['male', 'female']
+        param :'***', String, desc: 'Any custom field'
+        param :avatar_attributes, Hash do
+          param :file, File, desc: 'Postfield file'
+          param :base64, String, desc: 'Encoded Base64 string'
+        end
       end
     end
-    error code: 400, desc: 'Can not save user', meta: { message: 'Error description' }
-    error code: 403, desc: 'Forbidden, token is invalid'
     example "\"user\": #{apipie_user_response}"
     def update
       result = BeachApiCore::UserUpdate.call(user: current_user, params: user_update_params, keepers: [Instance.current, current_application])

@@ -3,10 +3,18 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
 
+    api :GET, '/favourites', 'List of user favourites items'
+    example "\"favourites\": [#{apipie_favorite_response}, ...]"
     def index
       render_json_success(current_user.favourites, :ok, root: :favourites)
     end
 
+    api :POST, '/favourites', 'Create favourite item'
+    param :favourite, Hash, required: true do
+      param :favouritable_id, String, required: true
+      param :favouritable_type, String, required: true
+    end
+    example "\"favourite\": #{apipie_favorite_response}"
     def create
       result = BeachApiCore::FavouriteCreate.call(user: current_user, params: favourite_params)
 
@@ -17,6 +25,7 @@ module BeachApiCore
       end
     end
 
+    api :DELETE, '/favourites', 'Remove favourite item'
     def destroy
       authorize @favourite
       if @favourite.destroy
