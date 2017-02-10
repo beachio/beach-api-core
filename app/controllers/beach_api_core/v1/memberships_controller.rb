@@ -4,6 +4,21 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
     before_action :find_group, only: [:create]
 
+    resource_description do
+      error code: 403, desc: 'Forbidden request'
+      error code: 401, desc: 'Unauthorized'
+      error code: 400, desc: 'Bad request'
+    end
+
+    api :POST, '/memberships', 'Create a membership'
+    param :membership, Hash, required: true do
+      param :member_id, String, required: true
+      param :member_type, %w(Team User), required: true
+      param :group_id, String, required: true
+      param :group_type, %w(Team Organisation), required: true
+      param :owner, [true, false]
+    end
+    example "\"team(or organisation)\": #{apipie_team_response} \n fail: 'Errors Description'"
     def create
       result = BeachApiCore::MembershipCreate.call(params: membership_params, group: @group)
 
@@ -14,6 +29,8 @@ module BeachApiCore
       end
     end
 
+    api :DELETE, '/memberships/:id', 'Destroy membership'
+    example "success: 'Membership was successfully deleted' \n fail: 'Could not remove membership'"
     def destroy
       @membership = Membership.find(params[:id])
       authorize @membership

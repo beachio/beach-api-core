@@ -8,7 +8,7 @@ module BeachApiCore
       param :username, String
       param :password, String, required: true
     end
-    example "\"user\": #{apipie_user_response}"
+    example "\"user\": #{apipie_user_response} \n fail: 'Errors Description'"
     def create
       result = BeachApiCore::SignUp.call(user_create_params.merge(headers: request.headers['HTTP_AUTHORIZATION']))
 
@@ -33,7 +33,7 @@ module BeachApiCore
         param :id, Integer, required: true
         param :first_name, String
         param :last_name, String
-        param :sex, ['male', 'female']
+        param :sex, %w(male female)
         param :'***', String, desc: 'Any custom field'
         param :avatar_attributes, Hash do
           param :file, File, desc: 'Postfield file'
@@ -41,7 +41,7 @@ module BeachApiCore
         end
       end
     end
-    example "\"user\": #{apipie_user_response}"
+    example "\"user\": #{apipie_user_response} \n fail: 'Errors Description'"
     def update
       result = BeachApiCore::UserUpdate.call(user: current_user, params: user_update_params, keepers: [Instance.current, current_application])
 

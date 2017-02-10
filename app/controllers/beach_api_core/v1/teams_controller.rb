@@ -3,11 +3,20 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
 
-    api :POST, '/teams', 'Create a team'
-    param :team, Hash, required: true do
-      param :name, String, required: true
+    resource_description do
+      error code: 403, desc: 'Forbidden request'
+      error code: 401, desc: 'Unauthorized'
+      error code: 400, desc: 'Bad request'
     end
-    example "\"team\": #{apipie_team_response}"
+    def_param_group :team do
+      param :team, Hash, required: true do
+        param :name, String, required: true
+      end
+    end
+
+    api :POST, '/teams', 'Create a team'
+    param_group :team
+    example "\"team\": #{apipie_team_response} \n fail: 'Errors Description'"
     def create
       result = BeachApiCore::TeamCreate.call(params: team_params, user: current_user,
                                              application: current_application)
@@ -26,10 +35,8 @@ module BeachApiCore
     end
 
     api :PUT,  '/teams/:id', 'Update a team'
-    param :team, Hash, required: true do
-      param :name, String
-    end
-    example "\"team\": #{apipie_team_response}"
+    param_group :team
+    example "\"team\": #{apipie_team_response} \n fail: 'Errors Description'"
     def update
       authorize @team
       result = BeachApiCore::TeamUpdate.call(team: @team, params: team_params)
@@ -41,6 +48,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/teams/:id', 'Remove team'
+    example "success: 'Team was successfully deleted' \n fail: 'Could not remove team'"
     def destroy
       authorize @team
       if @team.destroy

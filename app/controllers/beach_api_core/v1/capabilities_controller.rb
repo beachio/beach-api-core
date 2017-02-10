@@ -2,7 +2,14 @@ module BeachApiCore
   class V1::CapabilitiesController < BeachApiCore::V1::BaseController
     before_action :doorkeeper_authorize!, :find_service
 
+    resource_description do
+      error code: 403, desc: 'Forbidden request'
+      error code: 401, desc: 'Unauthorized'
+      error code: 400, desc: 'Bad request'
+    end
+
     api :POST, '/services/:service_id/capabilities', 'Create capability'
+    example "\"service\": #{apipie_service_response} \n fail: 'Errors Description'"
     def create
       authorize current_application, :manage?
       result = BeachApiCore::CapabilityCreate.call(service: @service, application: current_application)
@@ -15,6 +22,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/services/:service_id/capabilities', 'Remove capability'
+    example "success: 'Capability was successfully deleted' \n fail: 'Errors Description'"
     def destroy
       authorize current_application, :manage?
       @capability = @service.capabilities.find_by(application: current_application)

@@ -3,6 +3,11 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
 
+    resource_description do
+      error code: 403, desc: 'Forbidden request'
+      error code: 401, desc: 'Unauthorized'
+      error code: 400, desc: 'Bad request'
+    end
     def_param_group :service_category do
       param :service_category, Hash, required: true do
         param :name, String, required: true
@@ -18,7 +23,7 @@ module BeachApiCore
 
     api :POST, '/service_categories', 'Create service category'
     param_group :service_category
-    example "\"service_category\": #{apipie_service_category_response}"
+    example "\"service_category\": #{apipie_service_category_response} \n fail: 'Errors Description'"
     def create
       authorize current_application, :manage?
       result = BeachApiCore::ServiceCategoryCreate.call(params: service_category_params)
@@ -32,7 +37,7 @@ module BeachApiCore
 
     api :PUT, '/service_categories/:id', 'Update service category'
     param_group :service_category
-    example "\"service_category\": #{apipie_service_category_response}"
+    example "\"service_category\": #{apipie_service_category_response} \n fail: 'Errors Description'"
     def update
       authorize current_application, :manage?
       result = BeachApiCore::ServiceCategoryUpdate.call(service_category: @service_category, params: service_category_params)
@@ -49,6 +54,5 @@ module BeachApiCore
     def service_category_params
       params.require(:service_category).permit(:name)
     end
-
   end
 end

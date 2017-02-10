@@ -3,6 +3,12 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
 
+    resource_description do
+      error code: 403, desc: 'Forbidden request'
+      error code: 401, desc: 'Unauthorized'
+      error code: 400, desc: 'Bad request'
+    end
+
     api :GET, '/favourites', 'List of user favourites items'
     example "\"favourites\": [#{apipie_favorite_response}, ...]"
     def index
@@ -14,7 +20,7 @@ module BeachApiCore
       param :favouritable_id, String, required: true
       param :favouritable_type, String, required: true
     end
-    example "\"favourite\": #{apipie_favorite_response}"
+    example "\"favourite\": #{apipie_favorite_response} \n fail: 'Errors Description'"
     def create
       result = BeachApiCore::FavouriteCreate.call(user: current_user, params: favourite_params)
 
@@ -26,12 +32,13 @@ module BeachApiCore
     end
 
     api :DELETE, '/favourites', 'Remove favourite item'
+    example "success: 'Favourite item was successfully deleted' \n fail: 'This favourite item could not be deleted'"
     def destroy
       authorize @favourite
       if @favourite.destroy
         render_json_success({ message: 'Favourite item was successfully deleted' }, :ok)
       else
-        render_json_error({ message: "This favourite item can't be deleted" }, :bad_request)
+        render_json_error({ message: 'This favourite item could not be deleted' }, :bad_request)
       end
     end
 
