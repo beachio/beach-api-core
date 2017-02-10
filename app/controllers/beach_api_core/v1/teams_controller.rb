@@ -25,7 +25,7 @@ module BeachApiCore
       render_json_success(@team, :ok, root: :team)
     end
 
-    api :PATCH,  '/teams/:id', 'Update a team'
+    api :PUT,  '/teams/:id', 'Update a team'
     param :team, Hash, required: true do
       param :name, String
     end
