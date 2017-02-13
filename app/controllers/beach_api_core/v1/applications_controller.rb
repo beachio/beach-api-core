@@ -21,7 +21,7 @@ module BeachApiCore
       param :name, String, required: true
       param :redirect_uri, String, required: true
     end
-    example "\"application\": #{apipie_application_response} \n fail: 'Errors Description'"
+    example "\"application\": #{apipie_application_response} \nfail: 'Errors Description'"
     def create
       authorize Instance.current, :developer?
 
@@ -47,7 +47,7 @@ module BeachApiCore
     param :application, Hash, required: true do
       param :name, String
     end
-    example "\"application\": #{apipie_application_response} \n fail: 'Errors Description'"
+    example "\"application\": #{apipie_application_response} \nfail: 'Errors Description'"
     def update
       authorize Instance.current, :developer?
       authorize @application
@@ -63,7 +63,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/applications/:id', 'Delete an application'
-    example "success: 'Application has been destroyed' \n fail: 'Could not remove application'"
+    example "success: 'Application has been destroyed' \nfail: 'Could not remove application'"
     def destroy
       authorize Instance.current, :developer?
       authorize @application
