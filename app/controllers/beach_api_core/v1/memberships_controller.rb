@@ -18,7 +18,7 @@ module BeachApiCore
       param :group_type, %w(Team Organisation), required: true
       param :owner, [true, false]
     end
-    example "\"team(or organisation)\": #{apipie_team_response} \n fail: 'Errors Description'"
+    example "\"team(or organisation)\": #{apipie_team_response} \nfail: 'Errors Description'"
     def create
       result = BeachApiCore::MembershipCreate.call(params: membership_params, group: @group)
 
@@ -30,7 +30,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/memberships/:id', 'Destroy membership'
-    example "success: 'Membership was successfully deleted' \n fail: 'Could not remove membership'"
+    example "success: 'Membership was successfully deleted' \nfail: 'Could not remove membership'"
     def destroy
       @membership = Membership.find(params[:id])
       authorize @membership

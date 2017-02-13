@@ -4,7 +4,7 @@ module BeachApiCore
   class V1::BaseController < ApplicationController
     include Pundit
     include BeachApiCore::Concerns::V1::RescueFromConcern
-    include BeachApiCore::Concerns::V1::ApipieConcern
+    include BeachApiCore::Concerns::V1::ApipieResponseConcern
     skip_before_action :verify_authenticity_token
 
     resource_description do

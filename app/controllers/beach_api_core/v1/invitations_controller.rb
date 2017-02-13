@@ -15,7 +15,7 @@ module BeachApiCore
       param :group_type, %w(Team Organisation), required: true
       param :group_id, String, required: true
     end
-    example "\"invitation\": #{apipie_invitation_response} \n fail: 'Errors Description'"
+    example "\"invitation\": #{apipie_invitation_response} \nfail: 'Errors Description'"
     def create
       result = BeachApiCore::InvitationCreate.call(params: invitation_params, group: @group, user: current_user)
       if result.success?

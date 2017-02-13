@@ -6,6 +6,8 @@ require 'pundit'
 require 'interactor'
 require 'slim'
 require 'apipie-rails'
+require 'factory_girl_rails'
+require 'faker'
 
 module BeachApiCore
   class Engine < ::Rails::Engine

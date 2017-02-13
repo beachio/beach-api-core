@@ -27,7 +27,7 @@ module BeachApiCore
         param :base64, String, desc: 'Encoded Base64 string'
       end
     end
-    example "\"service\": #{apipie_service_response} \n fail: 'Errors Description'"
+    example "\"service\": #{apipie_service_response} \nfail: 'Errors Description'"
     def update
       authorize current_application, :manage?
       result = BeachApiCore::ServiceUpdate.call(service: @service, params: service_params)

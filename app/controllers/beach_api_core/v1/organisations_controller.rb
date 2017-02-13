@@ -16,7 +16,7 @@ module BeachApiCore
 
     api :POST, '/organisations', 'Create an organisation'
     param_group :organisation
-    example "\"organisation\": #{apipie_organisation_response} \n fail: 'Errors Description'"
+    example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
     def create
       result = BeachApiCore::OrganisationCreate.call(params: organisation_params, user: current_user,
                                                      application: current_application)
@@ -36,7 +36,7 @@ module BeachApiCore
 
     api :PUT, '/organisations/:id', 'Update organisation'
     param_group :organisation
-    example "\"organisation\": #{apipie_organisation_response} \n fail: 'Errors Description'"
+    example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
     def update
       authorize @organisation
       result = BeachApiCore::OrganisationUpdate.call(organisation: @organisation, params: organisation_params)
@@ -48,7 +48,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/organisations/:id', 'Remove organisation'
-    example "success: 'Organisation was successfully deleted' \n fail: 'Could not remove organisation'"
+    example "success: 'Organisation was successfully deleted' \nfail: 'Could not remove organisation'"
     def destroy
       authorize @organisation
       if @organisation.destroy

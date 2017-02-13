@@ -9,7 +9,7 @@ module BeachApiCore
     end
 
     api :POST, '/services/:service_id/capabilities', 'Create capability'
-    example "\"service\": #{apipie_service_response} \n fail: 'Errors Description'"
+    example "\"service\": #{apipie_service_response} \nfail: 'Errors Description'"
     def create
       authorize current_application, :manage?
       result = BeachApiCore::CapabilityCreate.call(service: @service, application: current_application)
@@ -22,7 +22,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/services/:service_id/capabilities', 'Remove capability'
-    example "success: 'Capability was successfully deleted' \n fail: 'Errors Description'"
+    example "success: 'Capability was successfully deleted' \nfail: 'Errors Description'"
     def destroy
       authorize current_application, :manage?
       @capability = @service.capabilities.find_by(application: current_application)
