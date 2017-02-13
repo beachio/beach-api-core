@@ -9,7 +9,7 @@ module BeachApiCore
     end
 
     it 'should have relations' do
-      should have_one(:profile)
+      should have_one(:profile).dependent(:destroy)
       should have_many(:assignments).dependent(:destroy)
       should have_many(:roles)
       should have_many(:applications)

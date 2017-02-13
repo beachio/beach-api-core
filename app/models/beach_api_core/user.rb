@@ -4,7 +4,7 @@ module BeachApiCore
     include Concerns::UserConfirm
     include Concerns::UserRoles
 
-    has_one :profile, inverse_of: :user
+    has_one :profile, inverse_of: :user, dependent: :destroy
     has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'
     has_many :favourites, inverse_of: :user, dependent: :destroy
 
