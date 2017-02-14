@@ -26,7 +26,7 @@ module BeachApiCore
 
     accepts_nested_attributes_for :profile
 
-    after_initialize :generate_profile
+    before_validation :generate_profile, on: :create
     before_validation :generate_username
 
     private
