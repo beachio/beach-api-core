@@ -23,7 +23,7 @@ module BeachApiCore
 
     api :POST, '/service_categories', 'Create service category'
     param_group :service_category
-    example "\"service_category\": #{apipie_service_category_response} \n fail: 'Errors Description'"
+    example "\"service_category\": #{apipie_service_category_response} \nfail: 'Errors Description'"
     def create
       authorize current_application, :manage?
       result = BeachApiCore::ServiceCategoryCreate.call(params: service_category_params)
@@ -37,7 +37,7 @@ module BeachApiCore
 
     api :PUT, '/service_categories/:id', 'Update service category'
     param_group :service_category
-    example "\"service_category\": #{apipie_service_category_response} \n fail: 'Errors Description'"
+    example "\"service_category\": #{apipie_service_category_response} \nfail: 'Errors Description'"
     def update
       authorize current_application, :manage?
       result = BeachApiCore::ServiceCategoryUpdate.call(service_category: @service_category, params: service_category_params)

@@ -11,8 +11,8 @@ gem 'refile', require: 'refile/rails', git: 'https://github.com/manfe/refile.git
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
   gem 'byebug', platform: :mri
+  gem 'factory_girl_rails'
 end
 
 group :test do

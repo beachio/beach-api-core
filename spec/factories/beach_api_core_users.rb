@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :user, class: 'BeachApiCore::User' do
     email { Faker::Internet.email }
     password { Faker::Internet.password(6) }
+
+    after(:build) do |user|
+      user.profile ||= build(:profile, user: user)
+    end
   end
 
   factory :developer, parent: :user do
