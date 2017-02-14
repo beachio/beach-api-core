@@ -28,6 +28,7 @@ module BeachApiCore
     accepts_nested_attributes_for :profile
     accepts_nested_attributes_for :organisation_membership, allow_destroy: true, reject_if: proc { |attr| attr[:group_id].blank? }
     accepts_nested_attributes_for :memberships, allow_destroy: true
+    accepts_nested_attributes_for :assignments, allow_destroy: true
 
     before_validation :generate_profile, on: :create
     before_validation :generate_username
