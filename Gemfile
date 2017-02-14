@@ -8,6 +8,7 @@ ruby '2.3.1'
 gemspec
 
 gem 'refile', require: 'refile/rails', git: 'https://github.com/manfe/refile.git'
+gem 'faker'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -16,7 +17,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'faker'
   gem 'database_cleaner'
   gem 'webmock'
   gem 'poltergeist'
