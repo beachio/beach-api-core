@@ -18,7 +18,8 @@ module BeachApiCore
 
     has_one :organisation_membership, as: :member, class_name: 'BeachApiCore::Membership', dependent: :destroy
     has_one :organisation, through: :organisation_membership, source: :group, source_type: 'BeachApiCore::Organisation'
-    has_many :memberships, as: :member, inverse_of: :member, dependent: :destroy
+    has_many :memberships, -> { where(group_type: 'BeachApiCore::Team') }, as: :member, inverse_of: :member, dependent: :destroy
+    accepts_nested_attributes_for :memberships, allow_destroy: true
     has_many :teams, through: :memberships, source: :group, source_type: 'BeachApiCore::Team'
 
     has_secure_password
