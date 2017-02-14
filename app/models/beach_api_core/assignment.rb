@@ -6,5 +6,8 @@ module BeachApiCore
 
     validates :role, :user, :keeper, presence: true
     validates :user, uniqueness: { scope: [:role_id, :keeper_id, :keeper_type] }
+
+    scope :developers, -> { where(role: BeachApiCore::Role.developer) }
+    scope :admins, -> { where(role: BeachApiCore::Role.admin) }
   end
 end

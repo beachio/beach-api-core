@@ -14,4 +14,4 @@ BeachApiCore::Instance.current
 end
 
 Doorkeeper::Application.create(name: Faker::Company.name, redirect_uri: Faker::Internet.redirect_uri,
-                               owner: BeachApiCore::User.developers.first)
+                               owner: BeachApiCore::Instance.current.developers.first)

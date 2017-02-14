@@ -29,14 +29,6 @@ module BeachApiCore
     before_validation :generate_profile, on: :create
     before_validation :generate_username
 
-    class << self
-      [:admin, :developer].each do |role|
-        define_method "#{role}s" do
-          where(id: BeachApiCore::Assignment.where(role: BeachApiCore::Role.send(role)).select(:user_id))
-        end
-      end
-    end
-
     private
 
     def generate_profile

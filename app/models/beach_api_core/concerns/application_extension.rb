@@ -1,5 +1,6 @@
 module BeachApiCore::Concerns::ApplicationExtension
   extend ActiveSupport::Concern
+  include BeachApiCore::Concerns::KeeperRoles
 
   included do
     belongs_to :owner, polymorphic: true
