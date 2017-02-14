@@ -35,7 +35,10 @@ rake app:db:create
 rake app:db:migrate
 rake app:db:test:prepare
 ```
-
+run seeds:
+```
+rake beach_api_core:seed
+```
 ## Contributing
 Contribution directions go here.
 
