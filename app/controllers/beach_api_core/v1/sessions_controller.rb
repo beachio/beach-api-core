@@ -12,10 +12,14 @@ module BeachApiCore
     example "\"user\": #{apipie_user_response}"
     error code: 400, desc: 'Can not authorize user', meta: { message: 'Error description' }
     def create
-      result = BeachApiCore::SignIn.call(session_params)
+      result = BeachApiCore::SignIn.call(session_params.merge(headers: request.headers['HTTP_AUTHORIZATION']))
 
       if result.success?
-        render_json_success(result.user, result.status, root: :user)
+        render_json_success(
+            { user: BeachApiCore::UserSerializer.new(result.user, root: :user),
+              access_token: result.access_token.token },
+            result.status
+        )
       else
         render_json_error({ message: result.message }, result.status)
       end
