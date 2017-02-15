@@ -17,7 +17,7 @@ module BeachApiCore
       if result.success?
         render_json_success(
             { user: BeachApiCore::UserSerializer.new(result.user, root: :user),
-              access_token: result.access_token.token },
+              access_token: result.access_token&.token },
             result.status
         )
       else
