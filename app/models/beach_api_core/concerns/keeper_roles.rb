@@ -7,13 +7,5 @@ module BeachApiCore::Concerns::KeeperRoles
                                                                       class_name: 'BeachApiCore::User'
     has_many :admins, -> { BeachApiCore::Assignment.admins }, through: :assignments, source: :user,
              class_name: 'BeachApiCore::User'
-
-    def display_name
-      case self.class.to_s
-      when 'BeachApiCore::Instance' then 'Current Instance'
-      when 'Doorkeeper::Application' then "Application - #{name}"
-      else name
-      end
-    end
   end
 end
