@@ -4,19 +4,28 @@ module BeachApiCore
   describe 'V1::Session', type: :request do
 
     context 'when valid' do
-      let(:user) { create :user }
+      include_context 'signed up developer'
+      include_context 'bearer token authentication'
 
       it 'should access the bearer token' do
         post beach_api_core.oauth_token_path, params: {
-            email: user.email,
-            password: user.password,
+            email: developer.email,
+            password: developer.password,
             grant_type: 'password'
         }
         expect(json_body[:access_token]).to be_present
       end
 
+      it 'should return the bearer token on signin' do
+        post beach_api_core.v1_sessions_path,
+             params: { session: { email: developer.email, password: developer.password } }, headers: application_auth
+        expect(response.status).to eq(200)
+        expect(json_body[:user]).to be_present
+        expect(json_body[:access_token]).to be_present
+      end
+
       it 'should authorize' do
-        post beach_api_core.v1_sessions_path, params: { session: { email: user.email, password: user.password } }
+        post beach_api_core.v1_sessions_path, params: { session: { email: developer.email, password: developer.password } }
         expect(response.status).to eq(200)
         expect(json_body[:user]).to be_present
       end

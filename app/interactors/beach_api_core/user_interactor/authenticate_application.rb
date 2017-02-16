@@ -13,6 +13,7 @@ module BeachApiCore::UserInteractor
           context.status = :unauthorized
           context.fail! message: ['Application ID and/or secret are not correct']
         end
+        context.application = application
         context.application_id = application.id
       end
     end
