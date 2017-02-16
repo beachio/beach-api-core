@@ -10,12 +10,14 @@ module BeachApiCore
     end
 
     api :GET, '/favourites', 'List of user favourites items'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     example "\"favourites\": [#{apipie_favourite_response}, ...]"
     def index
       render_json_success(current_user.favourites, :ok, root: :favourites)
     end
 
     api :POST, '/favourites', 'Create favourite item'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param :favourite, Hash, required: true do
       param :favouritable_id, String, required: true
       param :favouritable_type, String, required: true
@@ -32,6 +34,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/favourites', 'Remove favourite item'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     example "success: 'Favourite item was successfully deleted' \nfail: 'This favourite item could not be deleted'"
     def destroy
       authorize @favourite

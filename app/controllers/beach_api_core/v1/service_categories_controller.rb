@@ -15,6 +15,7 @@ module BeachApiCore
     end
 
     api :GET, '/service_categories', 'Service categories list'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     example "\"service_categories\": [#{apipie_service_category_response}, ...]"
     def index
       authorize current_application, :manage?
@@ -22,6 +23,7 @@ module BeachApiCore
     end
 
     api :POST, '/service_categories', 'Create service category'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param_group :service_category
     example "\"service_category\": #{apipie_service_category_response} \nfail: 'Errors Description'"
     def create
@@ -36,6 +38,7 @@ module BeachApiCore
     end
 
     api :PUT, '/service_categories/:id', 'Update service category'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param_group :service_category
     example "\"service_category\": #{apipie_service_category_response} \nfail: 'Errors Description'"
     def update

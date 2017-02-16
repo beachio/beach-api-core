@@ -15,6 +15,7 @@ module BeachApiCore
     end
 
     api :POST, '/teams', 'Create a team'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param_group :team
     example "\"team\": #{apipie_team_response} \nfail: 'Errors Description'"
     def create
@@ -35,6 +36,7 @@ module BeachApiCore
     end
 
     api :PUT,  '/teams/:id', 'Update a team'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param_group :team
     example "\"team\": #{apipie_team_response} \nfail: 'Errors Description'"
     def update
@@ -48,6 +50,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/teams/:id', 'Remove team'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     example "success: 'Team was successfully deleted' \nfail: 'Could not remove team'"
     def destroy
       authorize @team

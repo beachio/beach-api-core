@@ -10,6 +10,7 @@ module BeachApiCore
     end
 
     api :GET, '/services', 'Get list of services'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     example "\"services\": [#{apipie_service_response},...]"
     def index
       authorize current_application, :manage?
@@ -17,6 +18,7 @@ module BeachApiCore
     end
 
     api :PUT, '/services/:id', 'Update service'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param :service, Hash, required: true do
       param :title, String, required: true
       param :name, String

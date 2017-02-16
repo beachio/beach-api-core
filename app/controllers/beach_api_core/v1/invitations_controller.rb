@@ -10,6 +10,7 @@ module BeachApiCore
     end
 
     api :POST, '/invitations', 'Create an invitation'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param :invitation, Hash, required: true do
       param :email, String, required: true
       param :group_type, %w(Team Organisation), required: true

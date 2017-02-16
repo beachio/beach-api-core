@@ -17,6 +17,7 @@ module BeachApiCore
     api :POST, '/organisations', 'Create an organisation'
     param_group :organisation
     example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     def create
       result = BeachApiCore::OrganisationCreate.call(params: organisation_params, user: current_user,
                                                      application: current_application)
@@ -28,6 +29,7 @@ module BeachApiCore
     end
 
     api :GET, '/organisations/:id', 'Get organisation'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     example "\"organisation\": #{apipie_organisation_response}"
     def show
       authorize @organisation
@@ -35,6 +37,7 @@ module BeachApiCore
     end
 
     api :PUT, '/organisations/:id', 'Update organisation'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param_group :organisation
     example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
     def update
@@ -48,6 +51,7 @@ module BeachApiCore
     end
 
     api :DELETE, '/organisations/:id', 'Remove organisation'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     example "success: 'Organisation was successfully deleted' \nfail: 'Could not remove organisation'"
     def destroy
       authorize @organisation

@@ -19,13 +19,15 @@ module BeachApiCore
       end
     end
 
-    api :GET, '/users/:id', 'Get current user'
+    api :GET, '/user', 'Get current user'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     example "\"user\": #{apipie_user_response}"
     def show
       render_json_success(current_user, :ok, keepers: [Instance.current, current_application], root: :user)
     end
 
     api :PUT, '/user', 'Update current user'
+    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     param :user, Hash, required: true do
       param :email, String, required: true
       param :username, String
