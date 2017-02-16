@@ -25,7 +25,7 @@ module BeachApiCore
       render_json_success(current_user, :ok, keepers: [Instance.current, current_application], root: :user)
     end
 
-    api :PUT, '/users/:id', 'Update user'
+    api :PUT, '/user', 'Update current user'
     param :user, Hash, required: true do
       param :email, String, required: true
       param :username, String
