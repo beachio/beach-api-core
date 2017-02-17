@@ -1,6 +1,7 @@
 module BeachApiCore
   class V1::ServicesController < BeachApiCore::V1::BaseController
     include BeachApiCore::Concerns::V1::ResourceConcern
+    include ServicesDoc
     before_action :doorkeeper_authorize!
 
     resource_description do
@@ -9,27 +10,11 @@ module BeachApiCore
       error code: 400, desc: 'Bad request'
     end
 
-    api :GET, '/services', 'Get list of services'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    example "\"services\": [#{apipie_service_response},...]"
     def index
       authorize current_application, :manage?
       render_json_success(current_application.services, :ok, each_serializer: ServiceSerializer, root: :services)
     end
 
-    api :PUT, '/services/:id', 'Update service'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    param :service, Hash, required: true do
-      param :title, String, required: true
-      param :name, String
-      param :description, String
-      param :service_category_id, Integer, required: true
-      param :icon_attributes, Hash do
-        param :file, File, desc: 'Postfield file'
-        param :base64, String, desc: 'Encoded Base64 string'
-      end
-    end
-    example "\"service\": #{apipie_service_response} \nfail: 'Errors Description'"
     def update
       authorize current_application, :manage?
       result = BeachApiCore::ServiceUpdate.call(service: @service, params: service_params)

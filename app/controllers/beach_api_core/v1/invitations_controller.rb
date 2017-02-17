@@ -1,6 +1,7 @@
 module BeachApiCore
   class V1::InvitationsController < BeachApiCore::V1::BaseController
     include BeachApiCore::Concerns::V1::GroupResourceConcern
+    include InvitationsDoc
     before_action :doorkeeper_authorize!, :find_group
 
     resource_description do
@@ -9,14 +10,6 @@ module BeachApiCore
       error code: 400, desc: 'Bad request'
     end
 
-    api :POST, '/invitations', 'Create an invitation'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    param :invitation, Hash, required: true do
-      param :email, String, required: true
-      param :group_type, %w(Team Organisation), required: true
-      param :group_id, String, required: true
-    end
-    example "\"invitation\": #{apipie_invitation_response} \nfail: 'Errors Description'"
     def create
       result = BeachApiCore::InvitationCreate.call(params: invitation_params, group: @group, user: current_user)
       if result.success?

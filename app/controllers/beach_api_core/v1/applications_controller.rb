@@ -1,5 +1,6 @@
 module BeachApiCore
   class V1::ApplicationsController < BeachApiCore::V1::BaseController
+    include ApplicationsDoc
     before_action :doorkeeper_authorize!
     before_action :get_resource, only: [:show, :update, :destroy]
 
@@ -9,19 +10,11 @@ module BeachApiCore
       error code: 400, desc: 'Bad request'
     end
 
-    api :GET, '/applications', 'Get list of applications'
-    example "\"applications\": [#{apipie_application_response}, ...]"
     def index
       authorize Instance.current, :developer?
       render_json_success(current_user.applications, :ok, each_serializer: AppSerializer, root: :applications)
     end
 
-    api :POST, '/applications', 'Create an application'
-    param :application, Hash, required: true do
-      param :name, String, required: true
-      param :redirect_uri, String, required: true
-    end
-    example "\"application\": #{apipie_application_response} \nfail: 'Errors Description'"
     def create
       authorize Instance.current, :developer?
 
@@ -35,19 +28,12 @@ module BeachApiCore
       end
     end
 
-    api :GET, '/applications/:id', 'GET an application'
-    example "\"application\": #{apipie_application_response}"
     def show
       authorize Instance.current, :developer?
       authorize @application
       render_json_success(@application, :ok, serializer: AppSerializer, root: :application)
     end
 
-    api :PUT,' /applications/:id', 'Update an application'
-    param :application, Hash, required: true do
-      param :name, String
-    end
-    example "\"application\": #{apipie_application_response} \nfail: 'Errors Description'"
     def update
       authorize Instance.current, :developer?
       authorize @application
@@ -62,8 +48,6 @@ module BeachApiCore
       end
     end
 
-    api :DELETE, '/applications/:id', 'Delete an application'
-    example "success: 'Application has been destroyed' \nfail: 'Could not remove application'"
     def destroy
       authorize Instance.current, :developer?
       authorize @application

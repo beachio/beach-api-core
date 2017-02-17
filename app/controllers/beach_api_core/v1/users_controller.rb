@@ -1,14 +1,9 @@
 module BeachApiCore
   class V1::UsersController < BeachApiCore::V1::BaseController
+    include ::UsersDoc
+
     before_action :doorkeeper_authorize!, except: [:create]
 
-    api :POST, '/users', 'Create user'
-    param :user, Hash, required: true do
-      param :email, String, required: true
-      param :username, String
-      param :password, String, required: true
-    end
-    example "\"user\": #{apipie_user_response} \nfail: 'Errors Description'"
     def create
       result = BeachApiCore::SignUp.call(user_create_params.merge(headers: request.headers['HTTP_AUTHORIZATION']))
 
@@ -19,31 +14,10 @@ module BeachApiCore
       end
     end
 
-    api :GET, '/user', 'Get current user'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    example "\"user\": #{apipie_user_response}"
     def show
       render_json_success(current_user, :ok, keepers: [Instance.current, current_application], root: :user)
     end
 
-    api :PUT, '/user', 'Update current user'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    param :user, Hash, required: true do
-      param :email, String, required: true
-      param :username, String
-      param :profile_attributes, Hash do
-        param :id, Integer, required: true
-        param :first_name, String
-        param :last_name, String
-        param :sex, %w(male female)
-        param :'***', String, desc: 'Any custom field'
-        param :avatar_attributes, Hash do
-          param :file, File, desc: 'Postfield file'
-          param :base64, String, desc: 'Encoded Base64 string'
-        end
-      end
-    end
-    example "\"user\": #{apipie_user_response} \nfail: 'Errors Description'"
     def update
       result = BeachApiCore::UserUpdate.call(user: current_user, params: user_update_params, keepers: [Instance.current, current_application])
 

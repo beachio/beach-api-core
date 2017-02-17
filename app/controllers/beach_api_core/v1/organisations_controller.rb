@@ -1,6 +1,7 @@
 module BeachApiCore
   class V1::OrganisationsController < BeachApiCore::V1::BaseController
     include BeachApiCore::Concerns::V1::ResourceConcern
+    include OrganisationsDoc
     before_action :doorkeeper_authorize!
 
     resource_description do
@@ -8,16 +9,7 @@ module BeachApiCore
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'
     end
-    def_param_group :organisation do
-      param :organisation, Hash, required: true do
-        param :name, String, required: true
-      end
-    end
 
-    api :POST, '/organisations', 'Create an organisation'
-    param_group :organisation
-    example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
     def create
       result = BeachApiCore::OrganisationCreate.call(params: organisation_params, user: current_user,
                                                      application: current_application)
@@ -28,18 +20,11 @@ module BeachApiCore
       end
     end
 
-    api :GET, '/organisations/:id', 'Get organisation'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    example "\"organisation\": #{apipie_organisation_response}"
     def show
       authorize @organisation
       render_json_success(@organisation, :ok, root: :organisation)
     end
 
-    api :PUT, '/organisations/:id', 'Update organisation'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    param_group :organisation
-    example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
     def update
       authorize @organisation
       result = BeachApiCore::OrganisationUpdate.call(organisation: @organisation, params: organisation_params)
@@ -50,9 +35,6 @@ module BeachApiCore
       end
     end
 
-    api :DELETE, '/organisations/:id', 'Remove organisation'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    example "success: 'Organisation was successfully deleted' \nfail: 'Could not remove organisation'"
     def destroy
       authorize @organisation
       if @organisation.destroy

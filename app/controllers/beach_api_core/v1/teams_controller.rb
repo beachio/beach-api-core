@@ -1,6 +1,8 @@
 module BeachApiCore
   class V1::TeamsController < BeachApiCore::V1::BaseController
     include BeachApiCore::Concerns::V1::ResourceConcern
+    include TeamsDoc
+
     before_action :doorkeeper_authorize!
 
     resource_description do
@@ -8,16 +10,7 @@ module BeachApiCore
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'
     end
-    def_param_group :team do
-      param :team, Hash, required: true do
-        param :name, String, required: true
-      end
-    end
 
-    api :POST, '/teams', 'Create a team'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    param_group :team
-    example "\"team\": #{apipie_team_response} \nfail: 'Errors Description'"
     def create
       result = BeachApiCore::TeamCreate.call(params: team_params, user: current_user,
                                              application: current_application)
@@ -28,17 +21,11 @@ module BeachApiCore
       end
     end
 
-    api :GET, '/teams/:id', 'Get team'
-    example "\"team\": #{apipie_team_response}"
     def show
       authorize @team
       render_json_success(@team, :ok, root: :team)
     end
 
-    api :PUT,  '/teams/:id', 'Update a team'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    param_group :team
-    example "\"team\": #{apipie_team_response} \nfail: 'Errors Description'"
     def update
       authorize @team
       result = BeachApiCore::TeamUpdate.call(team: @team, params: team_params)
@@ -49,9 +36,6 @@ module BeachApiCore
       end
     end
 
-    api :DELETE, '/teams/:id', 'Remove team'
-    header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-    example "success: 'Team was successfully deleted' \nfail: 'Could not remove team'"
     def destroy
       authorize @team
       if @team.destroy
