@@ -8,6 +8,7 @@ module SessionsDoc
     param :password, String, required: true
   end
   example "\"user\": #{apipie_user_response}"
+  header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   error code: 400, desc: 'Can not authorize user', meta: { message: 'Error description' }
   def create
   end
