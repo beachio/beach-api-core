@@ -15,6 +15,5 @@ class BeachApiCore::Authorization::CreateAccessToken
       end
     end
   end
-
 end
 

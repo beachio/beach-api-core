@@ -48,7 +48,8 @@ module BeachApiCore
         it 'creates a bearer token for authorized application' do
           expect { create_user_request(headers: application_auth) }
               .to change(Doorkeeper::AccessToken, :count).by(1)
-                      .and change(User, :count).by(1)
+              .and change(User, :count).by(1)
+          expect(json_body[:access_token]).to be_present
         end
 
         it 'does not create a user and return an error if incorrect application credentials' do

@@ -7,7 +7,7 @@ module SessionsDoc
     param :email, String, required: true
     param :password, String, required: true
   end
-  example "\"user\": #{apipie_user_response} \naccess_token: #{SecureRandom.hex(16)}"
+  example "\"user\": #{apipie_user_response}, \n\"access_token\": \"#{SecureRandom.hex(16)}\""
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   error code: 400, desc: 'Can not authorize user', meta: { message: 'Error description' }
   def create

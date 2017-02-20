@@ -8,7 +8,7 @@ module UsersDoc
     param :username, String
     param :password, String, required: true
   end
-  example "\"user\": #{apipie_user_response} \nfail: 'Errors Description'"
+  example "\"user\": #{apipie_user_response}, \n\"access_token\": \"#{SecureRandom.hex(16)}\"\nfail: 'Errors Description'"
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   def create
   end
