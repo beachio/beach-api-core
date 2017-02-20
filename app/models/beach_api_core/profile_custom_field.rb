@@ -7,5 +7,13 @@ module BeachApiCore
     validates :title, presence: true
 
     enum status: [:enabled, :disabled]
+
+    after_initialize :set_defaults
+
+    private
+
+    def set_defaults
+      self.status ||= :enabled
+    end
   end
 end
