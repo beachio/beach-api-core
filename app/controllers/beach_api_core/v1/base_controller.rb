@@ -1,4 +1,4 @@
-require_dependency "beach_api_core/application_controller"
+require_dependency 'beach_api_core/application_controller'
 
 module BeachApiCore
   class V1::BaseController < ApplicationController

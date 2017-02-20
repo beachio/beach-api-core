@@ -19,6 +19,13 @@ module BeachApiCore
       it_behaves_like 'an authenticated resource' do
         before { post beach_api_core.v1_organisations_path, params: { organisation: { name: Faker::Name.title } } }
       end
+
+      it 'should create an ownership record' do
+        post beach_api_core.v1_organisations_path, params: { organisation: { name: Faker::Name.title } },
+             headers: bearer_auth
+        expect(oauth_user.organisation).to eq(Organisation.last)
+        expect(Organisation.last.owners).to include(oauth_user)
+      end
     end
 
     describe 'when update' do

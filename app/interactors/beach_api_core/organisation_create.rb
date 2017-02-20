@@ -4,7 +4,7 @@ class BeachApiCore::OrganisationCreate
   def call
     context.organisation = BeachApiCore::Organisation.new context.params
     context.organisation.assign_attributes(application: context.application)
-
+    context.organisation.memberships.build member: context.user, owner: true
     if context.organisation.save
       context.status = :created
     else
