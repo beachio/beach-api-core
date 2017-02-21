@@ -19,8 +19,10 @@ module BeachApiCore
     it 'should have basic validations' do
       should validate_presence_of :email
       should validate_presence_of :username
+      should validate_presence_of :status
       should have_one :organisation
       should have_many :teams
+      should define_enum_for(:status).with(active: 0, invitee: 1)
     end
     it 'should have uniqueness case insensitive' do
       create :user

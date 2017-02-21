@@ -12,7 +12,7 @@ module BeachApiCore
         with: /\A(|(([a-z0-9]+_+)|([a-z0-9]+\-+)|([a-z0-9]+\.+)|([a-z0-9]+\++))*[a-z0-9]+@(([a-z0-9]+\-+)|([a-z0-9]+\.))*[a-z0-9]{1,63}\.[a-z]{2,6})\z/i },
               if: proc { errors[:email].empty? }
     validates :username, presence: true, uniqueness: true
-    validates :profile, presence: true
+    validates :profile, :status, presence: true
 
     has_many :invitations
 
@@ -32,8 +32,15 @@ module BeachApiCore
 
     before_validation :generate_profile, on: :create
     before_validation :generate_username
+    after_initialize :set_defaults
+
+    enum status: [:active, :invitee]
 
     private
+
+    def set_defaults
+      self.status ||= :active
+    end
 
     def generate_profile
       self.profile ||= build_profile(user: self)
