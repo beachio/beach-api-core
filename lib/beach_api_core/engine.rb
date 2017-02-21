@@ -6,6 +6,7 @@ require 'pundit'
 require 'interactor'
 require 'slim'
 require 'apipie-rails'
+require 'activerecord_lookup_or_initialize'
 
 module BeachApiCore
   class Engine < ::Rails::Engine

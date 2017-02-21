@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency "bcrypt", "~> 3.1.11"
   s.add_dependency "versionist", "~> 1.5.0"
   s.add_dependency "refile"
+  s.add_dependency 'activerecord_lookup_or_initialize'
 
   s.add_dependency "interactor", "~> 3.1.0"
   s.add_dependency "interactor-rails", "~> 2.0.2"
