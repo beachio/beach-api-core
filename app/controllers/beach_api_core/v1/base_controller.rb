@@ -13,12 +13,20 @@ module BeachApiCore
 
     private
 
+    def current_keepers
+      [current_application, current_organisation, Instance.current].compact
+    end
+
     def current_user
       @current_user ||= User.find(doorkeeper_token[:resource_owner_id]) if doorkeeper_token
     end
 
     def current_application
       @current_application ||= Doorkeeper::Application.find(doorkeeper_token[:application_id])
+    end
+
+    def current_organisation
+      @current_organisation ||= current_user.organisation
     end
 
     def render_json_success(json = {}, status = :ok, params = {})

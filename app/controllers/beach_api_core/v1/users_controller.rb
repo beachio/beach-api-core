@@ -17,14 +17,14 @@ module BeachApiCore
     end
 
     def show
-      render_json_success(current_user, :ok, keepers: [Instance.current, current_application], root: :user)
+      render_json_success(current_user, :ok, keepers: current_keepers, root: :user)
     end
 
     def update
-      result = BeachApiCore::UserUpdate.call(user: current_user, params: user_update_params, keepers: [Instance.current, current_application])
+      result = BeachApiCore::UserUpdate.call(user: current_user, params: user_update_params, keepers: current_keepers)
 
       if result.success?
-        render_json_success(current_user, result.status, keepers: [Instance.current, current_application], root: :user)
+        render_json_success(current_user, result.status, keepers: current_keepers, root: :user)
       else
         render_json_error({ message: result.message }, result.status)
       end
@@ -37,7 +37,6 @@ module BeachApiCore
     end
 
     def user_update_params
-
       params.require(:user).permit(:email, :username,
                                    profile_attributes: custom_profile_fields.concat([:id, :first_name,
                                                                                      :last_name, :sex,
@@ -45,7 +44,7 @@ module BeachApiCore
     end
 
     def custom_profile_fields
-      @_custom_fields ||= ProfileCustomField.where(keeper: [Instance.current, current_application]).pluck(:name)
+      @_custom_fields ||= ProfileCustomField.where(keeper: current_keepers).pluck(:name)
     end
   end
 end
