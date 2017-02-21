@@ -17,7 +17,9 @@ module BeachApiCore
       public_send("#{k}=", v)
     rescue NoMethodError, NameError
       if (profile_custom_field = ProfileCustomField.find_by(keeper: keepers, name: k)).present?
-        profile_attribute = profile_attributes.find_or_initialize_by(profile_custom_field: profile_custom_field)
+        # @fixme: change to a more elegant solution
+        profile_attribute = profile_attributes.detect { |c| c.profile_custom_field ==  profile_custom_field } ||
+          profile_attributes.build(profile_custom_field: profile_custom_field)
         profile_attribute.assign_attributes(value: v)
       else
         if respond_to?("#{k}=")
