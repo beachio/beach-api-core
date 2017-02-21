@@ -30,7 +30,7 @@ module BeachApiCore
     accepts_nested_attributes_for :memberships, allow_destroy: true
     accepts_nested_attributes_for :assignments, allow_destroy: true
 
-    before_validation :generate_profile, on: :create
+    after_initialize :generate_profile
     before_validation :generate_username
 
     private
