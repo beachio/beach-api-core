@@ -14,7 +14,6 @@ module BeachApiCore
     enum sex: [:male, :female]
 
     def _assign_attribute(k, v)
-      self.keepers ||= [BeachApiCore::Instance.current]
       public_send("#{k}=", v)
     rescue NoMethodError, NameError
       if (profile_custom_field = ProfileCustomField.find_by(keeper: keepers, name: k)).present?
