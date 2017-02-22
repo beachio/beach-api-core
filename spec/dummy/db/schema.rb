@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222135825) do
+ActiveRecord::Schema.define(version: 20170222154232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 20170222135825) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_beach_api_core_instances_on_name", using: :btree
+  end
+
+  create_table "beach_api_core_interaction_attributes", force: :cascade do |t|
+    t.integer  "interaction_id"
+    t.string   "key",                         null: false
+    t.hstore   "values",         default: {}
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["interaction_id"], name: "index_beach_api_core_interaction_attributes_on_interaction_id", using: :btree
   end
 
   create_table "beach_api_core_interactions", force: :cascade do |t|
@@ -232,6 +241,7 @@ ActiveRecord::Schema.define(version: 20170222135825) do
   end
 
   add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
+  add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
