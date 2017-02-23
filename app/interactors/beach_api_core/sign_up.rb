@@ -5,7 +5,7 @@ class BeachApiCore::SignUp
                BeachApiCore::UserInteractor::AuthenticateApplication,
                BeachApiCore::UserInteractor::Create,
                BeachApiCore::UserInteractor::Email,
-               BeachApiCore::UserInteractor::CreateAccessToken
+               BeachApiCore::Authorization::CreateAccessToken
            ]
 
 end
