@@ -8,6 +8,8 @@ module BeachApiCore
     has_many :teams, through: :memberships, source: :member, source_type: 'BeachApiCore::Team'
     has_many :invitations, as: :group, inverse_of: :group
 
+    has_one :logo_image, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
+
     def owners
       users.where(Membership.table_name => { owner: true })
     end

@@ -15,6 +15,7 @@ module BeachApiCore
       should have_many :users
       should have_many :teams
       should have_many :invitations
+      should have_one :logo_image
     end
   end
 end
