@@ -5,6 +5,11 @@ module OrganisationsDoc
   def_param_group :organisation do
     param :organisation, Hash, required: true do
       param :name, String, required: true
+      param :logo_properties, Hash
+      param :logo_image_attributes, Hash do
+        param :file, File, desc: 'Postfield file'
+        param :base64, String, desc: 'Encoded Base64 string'
+      end
     end
   end
 

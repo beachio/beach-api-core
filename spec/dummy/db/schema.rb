@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222154232) do
+ActiveRecord::Schema.define(version: 20170223095116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,8 +117,9 @@ ActiveRecord::Schema.define(version: 20170222154232) do
   create_table "beach_api_core_organisations", force: :cascade do |t|
     t.string   "name"
     t.integer  "application_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.hstore   "logo_properties"
     t.index ["application_id"], name: "index_beach_api_core_organisations_on_application_id", using: :btree
   end
 
