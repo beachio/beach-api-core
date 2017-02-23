@@ -9,12 +9,16 @@ module BeachApiCore
     end
 
     it 'should have basic validations' do
-      should belong_to :user
-      should belong_to :keeper
-      should have_many :interaction_attributes
       should validate_presence_of :user
       should validate_presence_of :keeper
       should validate_presence_of :kind
+    end
+
+    it 'should have relations' do
+      should belong_to :user
+      should belong_to :keeper
+      should have_many :interaction_attributes
+      should have_many :attachments
       should accept_nested_attributes_for :interaction_attributes
     end
   end
