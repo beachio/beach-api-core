@@ -40,7 +40,9 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
     def apipie_organisation
       @_apipie_organisation ||= BeachApiCore::Organisation.new(name: Faker::Company.name,
-                                                               application: apipie_oauth_application)
+                                                               application: apipie_oauth_application,
+                                                               logo_image: apipie_asset,
+                                                               logo_properties: { color: Faker::Color.hex_color })
     end
 
     def apipie_oauth_application
