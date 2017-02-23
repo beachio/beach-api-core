@@ -8,12 +8,20 @@ module BeachApiCore
     include_context 'bearer token authentication'
 
     describe 'when create' do
+      let!(:logo_image) { fixture_file_upload('spec/uploads/test.png', 'image/png') }
 
       context 'when valid' do
-        before { post beach_api_core.v1_organisations_path, params: { organisation: { name: Faker::Name.title } },
+        before { post beach_api_core.v1_organisations_path,
+                      params: { organisation: { name: Faker::Name.title, logo_image_attributes: { file: logo_image },
+                                                logo_properties: { color: Faker::Lorem.word } } },
                       headers: bearer_auth }
         it { expect(response.status).to eq(201) }
-        it_behaves_like 'valid organisation response'
+        it_behaves_like 'valid organisation response' do
+          it do
+            expect(json_body[:organisation][:logo_properties]).to be_present
+            expect(json_body[:organisation][:logo_url]).to be_present
+          end
+        end
       end
 
       it_behaves_like 'an authenticated resource' do

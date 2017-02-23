@@ -30,6 +30,6 @@ end
 shared_examples 'valid organisation response' do
   it do
     expect(json_body[:organisation]).to be_present
-    expect(json_body[:organisation].keys).to contain_exactly(:id, :name)
+    expect(json_body[:organisation].keys).to contain_exactly(:id, :name, :logo_url, :logo_properties)
   end
 end

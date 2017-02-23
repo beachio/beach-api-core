@@ -9,6 +9,7 @@ module BeachApiCore
     has_many :invitations, as: :group, inverse_of: :group
 
     has_one :logo_image, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
+    accepts_nested_attributes_for :logo_image, allow_destroy: true
 
     def owners
       users.where(Membership.table_name => { owner: true })
