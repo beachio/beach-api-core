@@ -71,6 +71,26 @@ ActiveRecord::Schema.define(version: 20170223095116) do
     t.index ["name"], name: "index_beach_api_core_instances_on_name", using: :btree
   end
 
+  create_table "beach_api_core_interaction_attributes", force: :cascade do |t|
+    t.integer  "interaction_id"
+    t.string   "key",                         null: false
+    t.hstore   "values",         default: {}
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["interaction_id"], name: "index_beach_api_core_interaction_attributes_on_interaction_id", using: :btree
+  end
+
+  create_table "beach_api_core_interactions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "keeper_type"
+    t.integer  "keeper_id"
+    t.string   "kind",        null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_interactions_on_keeper_type_and_keeper_id", using: :btree
+    t.index ["user_id"], name: "index_beach_api_core_interactions_on_user_id", using: :btree
+  end
+
   create_table "beach_api_core_invitations", force: :cascade do |t|
     t.string   "email"
     t.integer  "user_id"
@@ -222,6 +242,8 @@ ActiveRecord::Schema.define(version: 20170223095116) do
   end
 
   add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
+  add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
+  add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
 end
