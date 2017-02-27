@@ -36,10 +36,13 @@ module BeachApiCore
 
     enum status: [:active, :invitee]
 
-    scope :search, -> (text) do
-      text.present? ?
-          where('email ILIKE :text OR username ILIKE :text OR first_name ILIKE :text OR last_name ILIKE :text',
-                text: "%#{text.downcase}%") : all
+    class << self
+      def search(term)
+        joins(:profile)
+          .where("beach_api_core_users.email ILIKE :term OR beach_api_core_users.username ILIKE :term OR \
+            beach_api_core_profiles.first_name ILIKE :term OR beach_api_core_profiles.last_name ILIKE :term",
+             term: "%#{term.downcase}%")
+      end
     end
 
     private

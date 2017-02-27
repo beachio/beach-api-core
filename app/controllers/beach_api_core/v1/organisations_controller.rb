@@ -43,7 +43,7 @@ module BeachApiCore
         render_json_error({ message: 'Could not remove organisation' }, :bad_request)
       end
     end
-
+    
     private
 
     def organisation_params
