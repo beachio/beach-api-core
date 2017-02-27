@@ -36,6 +36,12 @@ module BeachApiCore
 
     enum status: [:active, :invitee]
 
+    scope :search, -> (text) do
+      text.present? ?
+          where('email ILIKE :text OR username ILIKE :text OR first_name ILIKE :text OR last_name ILIKE :text',
+                text: "%#{text.downcase}%") : all
+    end
+
     private
 
     def set_defaults
