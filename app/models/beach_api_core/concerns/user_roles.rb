@@ -5,7 +5,7 @@ module BeachApiCore::Concerns::UserRoles
     has_many :assignments, inverse_of: :user, dependent: :destroy
     has_many :roles, through: :assignments
 
-    scope :with_role, -> (*roles) { includes(:roles).where(roles: { name: roles }) }
+    scope :with_role, -> (*roles) { includes(:assignments).where(beach_api_core_assignments: { role_id: roles }) }
   end
 
   def has_role?(role, keeper = nil)
