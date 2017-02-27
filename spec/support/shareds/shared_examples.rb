@@ -13,7 +13,7 @@ end
 shared_examples 'valid user response' do
   it do
     expect(json_body[:user]).to be_present
-    expect(json_body[:user].keys).to contain_exactly(:id, :email, :username, :status, :profile)
+    expect(json_body[:user].keys).to contain_exactly(:id, :email, :username, :status, :profile, :assignments)
     expect(json_body[:user][:profile].keys).to include(:id, :first_name, :last_name,
                                                        :birth_date, :sex, :time_zone,
                                                        :avatar_url)
