@@ -3,7 +3,7 @@ module BeachApiCore
     belongs_to :profile
     belongs_to :profile_custom_field
 
-    validates :profile, :profile_custom_field, :value, presence: true
+    validates :profile, :profile_custom_field, presence: true
     validates :profile, uniqueness: { scope: :profile_custom_field_id }
   end
 end
