@@ -45,9 +45,8 @@ module BeachApiCore
     end
 
     def inventors
-      get_resource
-      authorize @organisation, :show?
-      inventors = @organisation.users
+      authorize current_organisation, :show?
+      inventors = current_organisation.users
       inventors = inventors.where.not(id: current_user.id).search(params[:term]) if params[:term].present?
       render_json_success(inventors, :ok, each_serializer: BeachApiCore::UserSerializer, root: :inventors)
     end

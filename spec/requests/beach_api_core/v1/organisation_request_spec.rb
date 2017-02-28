@@ -112,7 +112,7 @@ module BeachApiCore
       end
 
       it 'should return all available inventors for organisation' do
-        get beach_api_core.inventors_v1_organisation_path(organisation), headers: bearer_auth
+        get beach_api_core.inventors_v1_organisations_path, headers: bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:inventors]).to be_present
         expect(json_body[:inventors].length).to eq 3
@@ -120,7 +120,7 @@ module BeachApiCore
 
       it 'should autocomplete available inventors for organisation' do
         request = -> (term) do
-          get beach_api_core.inventors_v1_organisation_path(organisation), params: { term: term }, headers: bearer_auth
+          get beach_api_core.inventors_v1_organisations_path, params: { term: term }, headers: bearer_auth
         end
         request.call('test')
         expect(response.status).to eq 200
