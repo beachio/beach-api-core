@@ -36,6 +36,15 @@ module BeachApiCore
 
     enum status: [:active, :invitee]
 
+    class << self
+      def search(term)
+        joins(:profile)
+          .where("beach_api_core_users.email ILIKE :term OR beach_api_core_users.username ILIKE :term OR \
+            beach_api_core_profiles.first_name ILIKE :term OR beach_api_core_profiles.last_name ILIKE :term",
+             term: "%#{term.downcase}%")
+      end
+    end
+
     private
 
     def set_defaults
