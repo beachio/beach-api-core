@@ -20,6 +20,7 @@ module BeachApiCore
       should have_many :interaction_attributes
       should have_many :attachments
       should accept_nested_attributes_for :interaction_attributes
+      should accept_nested_attributes_for :attachments
     end
   end
 end
