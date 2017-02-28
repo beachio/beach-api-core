@@ -43,7 +43,15 @@ module BeachApiCore
         render_json_error({ message: 'Could not remove organisation' }, :bad_request)
       end
     end
-    
+
+    def inventors
+      get_resource
+      authorize @organisation, :show?
+      inventors = @organisation.users
+      inventors = inventors.where.not(id: current_user.id).search(params[:term]) if params[:term].present?
+      render_json_success(inventors, :ok, each_serializer: BeachApiCore::UserSerializer, root: :inventors)
+    end
+
     private
 
     def organisation_params

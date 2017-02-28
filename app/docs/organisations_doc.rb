@@ -38,4 +38,11 @@ module OrganisationsDoc
   example "success: 'Organisation was successfully deleted' \nfail: 'Could not remove organisation'"
   def destroy
   end
+
+  api :GET, '/organisations/:id/inventors', 'Get available invenrors'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  param :term, String, desc: 'Term for autocomplete'
+  example "\"inventors\": [#{apipie_user_response}, ...]"
+  def inventors
+  end
 end
