@@ -13,7 +13,7 @@ BeachApiCore::Engine.routes.draw do
     resources :service_categories, only: [:create, :update, :index]
     resources :teams, only: [:show, :create, :update, :destroy]
     resources :organisations, only: [:show, :create, :update, :destroy] do
-      get :inventors, on: :collection
+      get :users, on: :collection
     end
     resources :memberships, only: [:create, :destroy]
     resources :invitations, only: [:create]
