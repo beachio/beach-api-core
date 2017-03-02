@@ -39,10 +39,10 @@ module OrganisationsDoc
   def destroy
   end
 
-  api :GET, '/organisations/inventors', 'Get available inventors'
+  api :GET, '/organisations/inventors', 'Get organisation users'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :term, String, desc: 'Term for autocomplete'
-  example "\"inventors\": [#{apipie_user_response}, ...]"
-  def inventors
+  example "\"users\": [#{apipie_user_response}, ...]"
+  def users
   end
 end
