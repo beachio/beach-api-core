@@ -14,6 +14,8 @@ module BeachApiCore
       should have_many(:roles)
       should have_many(:applications)
       should have_many(:favourites).dependent(:destroy)
+      should respond_to(:first_name)
+      should respond_to(:last_name)
     end
 
     it 'should have basic validations' do

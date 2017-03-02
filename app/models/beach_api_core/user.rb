@@ -34,6 +34,8 @@ module BeachApiCore
     before_validation :generate_username
     after_initialize :set_defaults
 
+    delegate :first_name, :last_name, to: :profile
+
     enum status: [:active, :invitee]
 
     class << self
