@@ -7,14 +7,15 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
     def apipie_user
       return @_apipie_user if @_apipie_user
-      @_apipie_user = BeachApiCore::User.new(email: Faker::Internet.email)
+      @_apipie_user = BeachApiCore::User.new(id: rand(1..100), email: Faker::Internet.email)
       @_apipie_user.build_profile(first_name: Faker::Name.first_name,
                                   last_name: Faker::Name.last_name,
                                   sex: BeachApiCore::Profile.sexes.keys.sample,
                                   birth_date: Time.now - rand(50 * 365).days,
                                   avatar: apipie_asset
       )
-      @_apipie_user.assignments.build(keeper: apipie_organisation, role: BeachApiCore::Role.developer)
+      @_apipie_user.organisation = apipie_organisation
+      @_apipie_user.assignments.build(keeper: @_apipie_user.organisation, role: BeachApiCore::Role.developer)
       @_apipie_user.valid?
       @_apipie_user
     end
@@ -40,7 +41,8 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     end
 
     def apipie_organisation
-      @_apipie_organisation ||= BeachApiCore::Organisation.new(name: Faker::Company.name,
+      @_apipie_organisation ||= BeachApiCore::Organisation.new(id: rand(1..100),
+                                                               name: Faker::Company.name,
                                                                application: apipie_oauth_application,
                                                                logo_image: apipie_asset,
                                                                logo_properties: { color: Faker::Color.hex_color })
@@ -72,6 +74,5 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     def pretty(serializer)
       JSON.pretty_generate serializer.as_json
     end
-
   end
 end

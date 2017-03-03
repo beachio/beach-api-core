@@ -26,7 +26,7 @@ module BeachApiCore
     end
 
     def current_organisation
-      @current_organisation ||= current_user.organisation
+      @current_organisation ||= current_user&.organisation
     end
 
     def render_json_success(json = {}, status = :ok, params = {})

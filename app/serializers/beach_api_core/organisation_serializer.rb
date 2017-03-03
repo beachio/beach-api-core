@@ -7,11 +7,11 @@ module BeachApiCore
     end
 
     def current_user_roles
-      Role.where.has { |r|
-        (r.id.in user.assignments
-                     .where.has{ keeper == object}
-                     .select(:role_id)) }
-          .selecting { name }
+      return [] unless user
+      current_user = user
+      current_organisation = object
+      Role.joins(:assignments).where.has { (assignments.user_id == current_user.id) &
+          (assignments.keeper == current_organisation) }.pluck(:name)
     end
 
     private

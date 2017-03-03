@@ -7,7 +7,9 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     private
 
     def apipie_user_response
-      pretty BeachApiCore::UserSerializer.new(apipie_user)
+      pretty BeachApiCore::UserSerializer.new(apipie_user,
+                                              keepers: [BeachApiCore::Instance.current],
+                                              current_user: apipie_user).as_json
     end
 
     def apipie_favourite_response
@@ -35,7 +37,7 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     end
 
     def apipie_organisation_response
-      pretty BeachApiCore::OrganisationSerializer.new(apipie_organisation)
+      pretty BeachApiCore::OrganisationSerializer.new(apipie_organisation, current_user: apipie_user)
     end
   end
 end

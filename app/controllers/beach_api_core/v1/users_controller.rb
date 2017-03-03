@@ -1,7 +1,6 @@
 module BeachApiCore
   class V1::UsersController < BeachApiCore::V1::BaseController
     include ::UsersDoc
-q
     before_action :doorkeeper_authorize!, except: [:create]
 
     def create
