@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223095116) do
+ActiveRecord::Schema.define(version: 20170302134825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,17 @@ ActiveRecord::Schema.define(version: 20170223095116) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.index ["service_category_id"], name: "index_beach_api_core_services_on_service_category_id", using: :btree
+  end
+
+  create_table "beach_api_core_settings", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.string   "value"
+    t.string   "keeper_type"
+    t.integer  "keeper_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_settings_on_keeper_type_and_keeper_id", using: :btree
+    t.index ["name"], name: "index_beach_api_core_settings_on_name", using: :btree
   end
 
   create_table "beach_api_core_teams", force: :cascade do |t|
