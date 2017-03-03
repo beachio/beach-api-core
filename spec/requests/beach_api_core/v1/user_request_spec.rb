@@ -86,6 +86,14 @@ module BeachApiCore
                                                                        :custom_instance_field, :custom_application_field)
           end
         end
+        it 'returns organisation with roles' do
+          organisation = create :organisation
+          create :membership, member: oauth_user, group: organisation
+          assignment = create :assignment, keeper: organisation, user: oauth_user, role: (create :role)
+          get beach_api_core.v1_user_path, headers: bearer_auth
+          expect(json_body[:user][:organisation]).to be_present
+          expect(json_body[:user][:organisation][:current_user_roles]).to eq([assignment.role.name])
+        end
       end
     end
 

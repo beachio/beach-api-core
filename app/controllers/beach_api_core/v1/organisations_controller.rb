@@ -14,7 +14,7 @@ module BeachApiCore
       result = BeachApiCore::OrganisationCreate.call(params: organisation_params, user: current_user,
                                                      application: current_application)
       if result.success?
-        render_json_success(result.organisation, result.status, root: :organisation)
+        render_json_success(result.organisation, result.status, current_user: current_user, root: :organisation)
       else
         render_json_error({ message: result.message }, result.status)
       end
@@ -22,14 +22,14 @@ module BeachApiCore
 
     def show
       authorize @organisation
-      render_json_success(@organisation, :ok, root: :organisation)
+      render_json_success(@organisation, :ok, current_user: current_user, root: :organisation)
     end
 
     def update
       authorize @organisation
       result = BeachApiCore::OrganisationUpdate.call(organisation: @organisation, params: organisation_params)
       if result.success?
-        render_json_success(@organisation, result.status, root: :organisation)
+        render_json_success(@organisation, result.status, current_user: current_user, root: :organisation)
       else
         render_json_error({ message: result.message }, result.status)
       end
@@ -48,7 +48,8 @@ module BeachApiCore
       authorize current_organisation, :show?
       users = current_organisation.users
       users = users.where.not(id: current_user.id).search(params[:term]) if params[:term].present?
-      render_json_success(users, :ok, each_serializer: BeachApiCore::UserSerializer, root: :users)
+      render_json_success(users, :ok, each_serializer: BeachApiCore::UserSerializer, keepers: current_keepers,
+                          current_user: current_user, root: :users)
     end
 
     private
