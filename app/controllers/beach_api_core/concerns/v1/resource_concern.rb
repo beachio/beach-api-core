@@ -11,14 +11,14 @@ module BeachApiCore::Concerns::V1::ResourceConcern
       raise ActiveRecord::RecordNotFound.new('Not Found')
     end
 
-    eval "@#{@resource_name} = #{resource_scope}.find(params[:id])"
+    eval "@#{@resource_name} = resource_scope.find(params[:id])"
     eval "@resource = @#{@resource_name}"
   end
 
   private
 
   def resource_scope
-    @resource_class
+    @resource_class.constantize
   end
 
   def set_resource_name
