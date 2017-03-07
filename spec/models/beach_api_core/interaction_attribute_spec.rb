@@ -9,8 +9,10 @@ module BeachApiCore
     end
 
     it 'should have basic validations' do
+      create :interaction_attribute
       should belong_to :interaction
       should validate_presence_of :key
+      should validate_uniqueness_of(:key).case_insensitive
     end
   end
 end
