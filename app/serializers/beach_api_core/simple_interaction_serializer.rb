@@ -1,5 +1,7 @@
 module BeachApiCore
   class SimpleInteractionSerializer < ActiveModel::Serializer
+    include BeachApiCore::Concerns::DocIdAbsSerializerConcern
+
     attributes :id, :keeper_type, :keeper_id, :kind, :created_at
     belongs_to :user
   end
