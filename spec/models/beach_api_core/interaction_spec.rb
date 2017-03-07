@@ -22,5 +22,12 @@ module BeachApiCore
       should accept_nested_attributes_for :interaction_attributes
       should accept_nested_attributes_for :attachments
     end
+
+    it 'should remove interaction attributes' do
+      interaction = create :interaction
+      create_list :interaction_attribute, 2, interaction: interaction
+      expect { interaction.destroy }.to change(BeachApiCore::Interaction, :count)
+                                            .and change(BeachApiCore::InteractionAttribute, :count)
+    end
   end
 end
