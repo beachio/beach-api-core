@@ -13,7 +13,7 @@ module BeachApiCore
       errors.add(:member, 'can not join more than one organization') if member &&
           group.is_a?(BeachApiCore::Organisation) &&
           member.organisation.present? &&
-          member.organisation != group
+          (member.organisation != group && new_record?)
     end
   end
 end
