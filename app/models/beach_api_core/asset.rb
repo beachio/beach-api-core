@@ -20,7 +20,7 @@ module BeachApiCore
       Tempfile.new('asset').tap do |f|
         f.binmode
         f.write(decoded_image)
-        f.unlink
+        f.rewind
         assign_attributes(file: f,
                           file_filename: "asset.#{content_type.gsub(/image\//, '')}",
                           file_size: decoded_image.size,
