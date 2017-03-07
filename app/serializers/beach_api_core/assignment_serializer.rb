@@ -1,5 +1,7 @@
 module BeachApiCore
   class AssignmentSerializer < ActiveModel::Serializer
+    include BeachApiCore::Concerns::DocIdAbsSerializerConcern
+
     attributes :keeper_type, :keeper_name, :role_name
 
     def keeper_type

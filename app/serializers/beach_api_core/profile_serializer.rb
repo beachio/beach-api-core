@@ -1,5 +1,7 @@
 module BeachApiCore
   class ProfileSerializer < ActiveModel::Serializer
+    include BeachApiCore::Concerns::DocIdAbsSerializerConcern
+
     attributes :id, :first_name, :last_name, :birth_date, :sex, :time_zone, :avatar_url
 
     def attributes(*)

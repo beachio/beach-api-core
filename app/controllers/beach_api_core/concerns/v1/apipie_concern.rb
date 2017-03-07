@@ -7,7 +7,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
     def apipie_user
       return @_apipie_user if @_apipie_user
-      @_apipie_user = BeachApiCore::User.new(id: rand(1..100), email: Faker::Internet.email)
+      @_apipie_user = BeachApiCore::User.new(id: rand(1..100) * (-1), email: Faker::Internet.email)
       @_apipie_user.build_profile(first_name: Faker::Name.first_name,
                                   last_name: Faker::Name.last_name,
                                   sex: BeachApiCore::Profile.sexes.keys.sample,
@@ -41,7 +41,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     end
 
     def apipie_organisation
-      @_apipie_organisation ||= BeachApiCore::Organisation.new(id: rand(1..100),
+      @_apipie_organisation ||= BeachApiCore::Organisation.new(id: rand(1..100) * (-1),
                                                                name: Faker::Company.name,
                                                                application: apipie_oauth_application,
                                                                logo_image: apipie_asset,
