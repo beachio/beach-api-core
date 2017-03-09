@@ -12,6 +12,10 @@ module BeachApiCore
 
     IMAGE_EXTENSION = [:jpg, :jpeg, :bmp, :png, :gif].freeze
 
+    def name=(value)
+      self.file_filename = value
+    end
+
     def base64=(value)
       partitions = value.partition(';base64,')
       decoded_image = Base64.decode64(partitions.last)
@@ -22,7 +26,7 @@ module BeachApiCore
         f.write(decoded_image)
         f.rewind
         assign_attributes(file: f,
-                          file_filename: "asset.#{content_type.gsub(/image\//, '')}",
+                          file_filename: self.file_filename || "asset.#{content_type.gsub(/image\//, '')}",
                           file_size: decoded_image.size,
                           file_content_type: content_type
         )
