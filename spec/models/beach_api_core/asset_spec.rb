@@ -42,7 +42,6 @@ module BeachApiCore
           asset = create(:asset, base64: base64, name: filename)
           expect(asset.file_filename).to eq filename
         end
-
       end
     end
 
