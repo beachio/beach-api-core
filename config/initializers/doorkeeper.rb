@@ -113,6 +113,9 @@ Doorkeeper.configure do
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
 end
-# Extend Doorkeeper models
-Doorkeeper::Application.send :include, BeachApiCore::Concerns::ApplicationExtension
-Doorkeeper.configuration.token_grant_types << 'password'
+
+ActiveSupport::Reloader.to_prepare do
+  # Extend Doorkeeper models
+  Doorkeeper::Application.send :include, BeachApiCore::Concerns::ApplicationExtension
+  Doorkeeper.configuration.token_grant_types << 'password'
+end
