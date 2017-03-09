@@ -12,7 +12,7 @@ module BeachApiCore
       create :interaction_attribute
       should belong_to :interaction
       should validate_presence_of :key
-      should validate_uniqueness_of(:key).case_insensitive
+      should validate_uniqueness_of(:interaction).scoped_to(:key)
     end
   end
 end
