@@ -15,7 +15,7 @@ module BeachApiCore
 
     def _assign_attribute(k, v)
       public_send("#{k}=", v)
-    rescue NoMethodError, NameError
+    rescue NoMethodError, NameError, ActiveModel::UnknownAttributeError
       if (profile_custom_field = ProfileCustomField.find_by(keeper: keepers, name: k)).present?
         profile_attribute = profile_attributes.lookup_or_initialize_by(profile_custom_field: profile_custom_field)
         profile_attribute.assign_attributes(value: v)
