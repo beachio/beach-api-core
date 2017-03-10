@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: https://github.com/vitalinfo/apipie-rails
-  revision: ca6975b48bdf2059e341e5510e35bba1064f46f7
+  revision: 1c12fff19b36bb0354e3446c2c706e154d96ad6d
   specs:
     apipie-rails (0.3.7)
       json
