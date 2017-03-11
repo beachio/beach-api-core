@@ -4,5 +4,6 @@ module BeachApiCore
     belongs_to :keeper, polymorphic: true
 
     validates :interaction, :keeper, presence: true
+    validates :interaction, uniqueness: { scope: [:keeper_id, :keeper_type] }
   end
 end

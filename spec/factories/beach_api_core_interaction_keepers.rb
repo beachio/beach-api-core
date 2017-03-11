@@ -1,5 +1,6 @@
 FactoryGirl.define do
-  factory :beach_api_core_interaction_keeper, class: 'BeachApiCore::InteractionKeeper' do
-    
+  factory :interaction_keeper, class: 'BeachApiCore::InteractionKeeper' do
+    interaction
+    keeper { build(:instance) }
   end
 end
