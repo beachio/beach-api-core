@@ -10,6 +10,9 @@ gemspec
 gem 'refile', require: 'refile/rails', git: 'https://github.com/manfe/refile.git'
 gem 'faker'
 
+gem 'elasticsearch-model', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'elasticsearch-rails', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'byebug', platform: :mri
