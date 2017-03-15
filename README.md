@@ -6,6 +6,14 @@ Short description and motivation.
 ## Usage
 How to use my plugin.
 
+## Requirements
+If you want to use [elasticsearch](#elasticsearch) you need to start sidekiq in your main app with query `elsaticsearch`.
+For cloud66 you can add to your main project's Procfile:
+
+```
+worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q elasticsearch
+```
+
 ## Installation
 Add this line to your application's Gemfile:
 
@@ -28,7 +36,7 @@ Next, you need to run the generator:
 $ rails beach_api_core:install:migrations
 ```
 
-##Elasticsearch
+## Elasticsearch
 To use elasticsearch for storing models data and for search you need to set `ELASTICSEARCH_ENABLED` ENV variable to `"true"` inside of your main app.
 
 After that you can include `::BeachApiCore::Concerns::ElasticsearchIndexable` module to your model to trigger sidekiq to reindex elasticsearch data.
@@ -37,7 +45,7 @@ You can specify serializer class for elasticsearch index inside of your model as
 elasticsearch_serializer '::SomeNamespace::SomeSerializer'
 ```
 
-##Development
+## Development
 run migrations:
 ```
 rake app:db:create
