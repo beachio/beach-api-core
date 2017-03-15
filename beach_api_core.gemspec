@@ -31,6 +31,10 @@ Gem::Specification.new do |s|
   s.add_dependency "refile"
   s.add_dependency 'activerecord_lookup_or_initialize'
 
+  s.add_dependency 'elasticsearch-rails'
+  s.add_dependency 'elasticsearch-model'
+  s.add_dependency 'sidekiq', '~> 4.2.9'
+
   s.add_dependency "interactor", "~> 3.1.0"
   s.add_dependency "interactor-rails", "~> 2.0.2"
 
