@@ -8,6 +8,7 @@ module BeachApiCore
     has_many :interaction_keepers, class_name: 'BeachApiCore::InteractionKeeper', inverse_of: :interaction, dependent: :destroy
 
     accepts_nested_attributes_for :interaction_attributes, allow_destroy: true
+    accepts_nested_attributes_for :interaction_keepers, allow_destroy: true
     accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: :file_blank?
 
     validates :user, :interaction_keepers, :kind, presence: true
