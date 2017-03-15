@@ -18,9 +18,9 @@ module BeachApiCore
       should belong_to :user
       should have_many :interaction_attributes
       should have_many :interaction_keepers
-      should have_many :attachments
+      should have_many :assets
       should accept_nested_attributes_for :interaction_attributes
-      should accept_nested_attributes_for :attachments
+      should accept_nested_attributes_for :assets
     end
 
     it 'should remove interaction attributes' do
