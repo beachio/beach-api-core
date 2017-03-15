@@ -7,6 +7,11 @@ module BeachApiCore::Concerns::ElasticsearchIndexable
     after_commit :update_index, on: [:create, :update], if: '::BeachApiCore::Engine.elasticsearch_enabled'
     after_commit :destroy_index, on: :destroy, if: '::BeachApiCore::Engine.elasticsearch_enabled'
 
+    def as_indexed_json(options = {})
+      return self.as_json(options.merge root: false) unless self.class.elasticserach_serializer_value
+      self.class.elasticserach_serializer_value.new(self).as_json
+    end
+
     private
 
     class << self
@@ -20,9 +25,7 @@ module BeachApiCore::Concerns::ElasticsearchIndexable
     end
 
     def update_index
-      opts = {}
-      opts[:serializer] = self.class.elasticserach_serializer_value if self.class.elasticserach_serializer_value
-      ::BeachApiCore::ElasticsearchIndexer.perform_async(self.class, id, opts)
+      ::BeachApiCore::ElasticsearchIndexer.perform_async(self.class, id)
     end
 
     def destroy_index
