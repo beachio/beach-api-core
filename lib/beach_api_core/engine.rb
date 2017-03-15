@@ -11,6 +11,9 @@ require 'activerecord_lookup_or_initialize'
 module BeachApiCore
   class Engine < ::Rails::Engine
     isolate_namespace BeachApiCore
+    class << self
+      attr_accessor :elasticsearch_enabled
+    end
 
     config.generators do |g|
       g.test_framework :rspec, fixture: false
@@ -19,6 +22,9 @@ module BeachApiCore
       g.helper false
     end
 
+    config.after_initialize do
+      @elasticsearch_enabled = ENV['ELASTICSEARCH_ENABLED'] == 'true'
+    end
   end
   Doorkeeper = ::Doorkeeper
   Apipie = ::Apipie

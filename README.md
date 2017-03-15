@@ -28,6 +28,15 @@ Next, you need to run the generator:
 $ rails beach_api_core:install:migrations
 ```
 
+##Elasticsearch
+To use elasticsearch for storing models data and for search you need to set `ELASTICSEARCH_ENABLED` ENV variable to `"true"` inside of your main app.
+
+After that you can include `::BeachApiCore::Concerns::ElasticsearchIndexable` module to your model to trigger sidekiq to reindex elasticsearch data.
+You can specify serializer class for elasticsearch index inside of your model as:
+```ruby
+elasticsearch_serializer '::SomeNamespace::SomeSerializer'
+```
+
 ##Development
 run migrations:
 ```
