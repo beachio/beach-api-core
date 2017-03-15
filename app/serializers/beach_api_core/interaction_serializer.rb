@@ -4,7 +4,7 @@ module BeachApiCore
 
     attributes :id, :created_at, :kind
     belongs_to :user
-    has_many :attachments
+    has_many :assets
     has_many :interaction_attributes
     has_many :interaction_keepers
   end
