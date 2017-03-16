@@ -7,7 +7,7 @@ require "beach_api_core/version"
 Gem::Specification.new do |s|
   s.name        = 'beach_api_core'
   s.version     = BeachApiCore::VERSION
-  s.authors     = ['Vital Ryabchinskiy']
+  s.authors     = ['Vital Ryabchinskiy', 'Kate Karpycheva']
   s.email       = ['vital.ryabchinskiy@gmail.com']
   s.homepage    = 'https://github.com/beachio/beach-api-core'
   s.summary     = 'Summary of BeachApiCore.'
