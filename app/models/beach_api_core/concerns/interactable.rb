@@ -11,12 +11,11 @@ module BeachApiCore::Concerns::Interactable
     def create_interaction
       return unless self.class.interactable_attrs && current_user
       self.class.interactable_attrs.each do |attr|
-        if send(:"#{attr}_changed?")
-          kind = "#{attr}_changed"
-          interactions.create(kind: kind, user: current_user,
-                              interaction_attributes_attributes: [{ key: 'new_value',
-                                                                    values: { value: send(attr) } }])
-        end
+        next unless send(:"#{attr}_changed?")
+        kind = "#{attr}_changed"
+        interactions.create(kind: kind, user: current_user,
+                            interaction_attributes_attributes: [{ key: 'new_value',
+                                                                  values: { value: send(attr) } }])
       end
     end
 
