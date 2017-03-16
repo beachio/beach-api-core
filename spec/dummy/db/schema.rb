@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310213442) do
+ActiveRecord::Schema.define(version: 20170316191301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,16 @@ ActiveRecord::Schema.define(version: 20170310213442) do
     t.index ["role_id", "user_id", "keeper_id", "keeper_type"], name: "index_bac_assignments_on_r_id_and_u_id_and_k_id_and_k_type", unique: true, using: :btree
     t.index ["role_id"], name: "index_beach_api_core_assignments_on_role_id", using: :btree
     t.index ["user_id"], name: "index_beach_api_core_assignments_on_user_id", using: :btree
+  end
+
+  create_table "beach_api_core_atoms", force: :cascade do |t|
+    t.string   "name"
+    t.string   "title"
+    t.string   "kind"
+    t.integer  "atom_parent_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["name"], name: "index_beach_api_core_atoms_on_name", unique: true, using: :btree
   end
 
   create_table "beach_api_core_capabilities", force: :cascade do |t|
