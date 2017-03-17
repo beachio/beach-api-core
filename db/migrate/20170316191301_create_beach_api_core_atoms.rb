@@ -4,7 +4,7 @@ class CreateBeachApiCoreAtoms < ActiveRecord::Migration[5.0]
       t.string :name, index: { unique: true }
       t.string :title
       t.string :kind
-      t.integer :atom_parent_id
+      t.references :atom_parent, foreign_key: { to_table: :beach_api_core_atoms }
       t.timestamps
     end
   end

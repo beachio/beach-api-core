@@ -11,10 +11,10 @@ module BeachApiCore
 
     private
 
-    def check_looped_tree(parent = nil, is_first = true)
-      parent ||= atom_parent if is_first
+    def check_looped_tree(parent = nil)
+      parent ||= atom_parent
       errors.add(:atom_parent_id, 'can not be a parent') and return if parent == self
-      check_looped_tree(parent.atom_parent, false) if parent
+      check_looped_tree(parent.atom_parent) if parent&.atom_parent
     end
   end
 end
