@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316191301) do
+ActiveRecord::Schema.define(version: 20170317183807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,17 @@ ActiveRecord::Schema.define(version: 20170316191301) do
     t.datetime "updated_at",      null: false
     t.hstore   "logo_properties"
     t.index ["application_id"], name: "index_beach_api_core_organisations_on_application_id", using: :btree
+  end
+
+  create_table "beach_api_core_permissions", force: :cascade do |t|
+    t.integer  "atom_id"
+    t.string   "keeper_type"
+    t.integer  "keeper_id"
+    t.hstore   "actions",     default: {}
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["atom_id"], name: "index_beach_api_core_permissions_on_atom_id", using: :btree
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_permissions_on_keeper_type_and_keeper_id", using: :btree
   end
 
   create_table "beach_api_core_profile_attributes", force: :cascade do |t|
