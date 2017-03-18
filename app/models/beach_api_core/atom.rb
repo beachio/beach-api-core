@@ -3,6 +3,7 @@ module BeachApiCore
     include Concerns::NameGenerator
 
     belongs_to :atom_parent, class_name: 'BeachApiCore::Atom', foreign_key: :atom_parent_id
+    has_many :permissions, class_name: 'BeachApiCore::Permission', inverse_of: :atom
 
     validates :name, presence: true, uniqueness: true
     validates :title, :kind, presence: true

@@ -63,8 +63,8 @@ module BeachApiCore
       before do
         BeachApiCore::Instance.instance_variable_set('@_current', nil)
         @user = create(:user)
-        @role = create(:assignment, user: @user).role
-        @other_role = create(:assignment, user: @user).role
+        @role = create(:assignment, user: @user, keeper: BeachApiCore::Instance.current).role
+        @other_role = create(:assignment, user: @user, keeper: BeachApiCore::Instance.current).role
       end
       it { expect(@user.has_role?(@role)).to be_truthy }
       it { expect(@user.has_role?(create(:role))).to be_falsey }
@@ -73,6 +73,30 @@ module BeachApiCore
         @user.add_role(@other_role)
         expect(@user.has_role?(@other_role)).to be_truthy
       end
+    end
+
+    context 'when permission' do
+      before do
+        @atom = create :atom
+        @user = create :user
+        @role1 = create(:assignment, user: @user, keeper: BeachApiCore::Instance.current).role
+        @role2 = create(:assignment, user: @user, keeper: BeachApiCore::Instance.current).role
+        @team1 = create :team
+        create :membership, group: @team1, member: @user
+        @team2 = create :team
+        create :membership, group: @team2, member: @user
+
+        create :permission, atom: @atom, keeper: @user, actions: { create: true, read: false }
+        create :permission, atom: @atom, keeper: @role1, actions: { read: true, create: false }
+        create :permission, atom: @atom, keeper: @role2, actions: { execute: false }
+        create :permission, atom: @atom, keeper: @team1, actions: { update: true, delete: false }
+        create :permission, atom: @atom, keeper: @team2, actions: { delete: true, update: false }
+      end
+      it do
+        actions = { create: true, read: true, update: true, delete: true, execute: false }
+        expect(@user.permissions_for(@atom)).to eq actions
+      end
+
     end
   end
 end

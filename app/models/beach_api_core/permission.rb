@@ -1,6 +1,6 @@
 module BeachApiCore
   class Permission < ApplicationRecord
-    belongs_to :atom, class_name: 'BeachApiCore::Atom'
+    belongs_to :atom, class_name: 'BeachApiCore::Atom', inverse_of: :permissions
     belongs_to :keeper, polymorphic: true
 
     validates :atom, :keeper, presence: true
