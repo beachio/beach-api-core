@@ -79,7 +79,9 @@ module BeachApiCore
       before do
         @atom = create :atom
         @user = create :user
-        @role1 = create(:assignment, user: @user, keeper: BeachApiCore::Instance.current).role
+        @organisation = create :organisation
+        create :membership, member: @user, group: @organisation
+        @role1 = create(:assignment, user: @user, keeper: @organisation).role
         @role2 = create(:assignment, user: @user, keeper: BeachApiCore::Instance.current).role
         @team1 = create :team
         create :membership, group: @team1, member: @user
@@ -87,13 +89,18 @@ module BeachApiCore
         create :membership, group: @team2, member: @user
 
         create :permission, atom: @atom, keeper: @user, actions: { create: true, read: false }
-        create :permission, atom: @atom, keeper: @role1, actions: { read: true, create: false }
-        create :permission, atom: @atom, keeper: @role2, actions: { execute: false }
+        create :permission, atom: @atom, keeper: @role1, actions: { read: true, create: false, execute: false }
+        create :permission, atom: @atom, keeper: @role2, actions: { execute: true }
         create :permission, atom: @atom, keeper: @team1, actions: { update: true, delete: false }
         create :permission, atom: @atom, keeper: @team2, actions: { delete: true, update: false }
       end
-      it do
+      it 'for organisation keeper' do
         actions = { create: true, read: true, update: true, delete: true, execute: false }
+        expect(@user.permissions_for(@atom, @organisation)).to eq actions
+      end
+
+      it 'for current instance keeper' do
+        actions = { create: true, read: false, update: true, delete: true, execute: true }
         expect(@user.permissions_for(@atom)).to eq actions
       end
 
