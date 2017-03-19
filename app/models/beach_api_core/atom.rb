@@ -2,7 +2,7 @@ module BeachApiCore
   class Atom < ApplicationRecord
     include Concerns::NameGenerator
 
-    belongs_to :atom_parent, class_name: 'BeachApiCore::Atom', foreign_key: :atom_parent_id
+    belongs_to :atom_parent, class_name: 'BeachApiCore::Atom', foreign_key: :atom_parent_id, optional: true
     has_many :permissions, class_name: 'BeachApiCore::Permission', inverse_of: :atom
 
     validates :name, presence: true, uniqueness: true
