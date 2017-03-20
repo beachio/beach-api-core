@@ -3,6 +3,7 @@ module BeachApiCore
     include Concerns::Downcasable
     include Concerns::UserConfirm
     include Concerns::UserRoles
+    include Concerns::UserPermissions
 
     has_one :profile, inverse_of: :user, dependent: :destroy, class_name: 'BeachApiCore::Profile'
     has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'

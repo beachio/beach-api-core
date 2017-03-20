@@ -39,5 +39,13 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     def apipie_organisation_response
       pretty BeachApiCore::OrganisationSerializer.new(apipie_organisation, current_user: apipie_user)
     end
+
+    def apipie_actions_response
+      pretty(create:  [true, false].sample,
+             read:    [true, false].sample,
+             update:  [true, false].sample,
+             delete:  [true, false].sample,
+             execute: [true, false].sample)
+    end
   end
 end

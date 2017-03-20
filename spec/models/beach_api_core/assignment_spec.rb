@@ -19,7 +19,7 @@ module BeachApiCore
     end
 
     it 'should have uniqueness' do
-      create :role
+      create :assignment
       should validate_uniqueness_of(:user).scoped_to(:role_id, :keeper_id, :keeper_type)
     end
   end

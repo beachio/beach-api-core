@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310213442) do
+ActiveRecord::Schema.define(version: 20170317183807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,17 @@ ActiveRecord::Schema.define(version: 20170310213442) do
     t.index ["role_id", "user_id", "keeper_id", "keeper_type"], name: "index_bac_assignments_on_r_id_and_u_id_and_k_id_and_k_type", unique: true, using: :btree
     t.index ["role_id"], name: "index_beach_api_core_assignments_on_role_id", using: :btree
     t.index ["user_id"], name: "index_beach_api_core_assignments_on_user_id", using: :btree
+  end
+
+  create_table "beach_api_core_atoms", force: :cascade do |t|
+    t.string   "name"
+    t.string   "title"
+    t.string   "kind"
+    t.integer  "atom_parent_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["atom_parent_id"], name: "index_beach_api_core_atoms_on_atom_parent_id", using: :btree
+    t.index ["name"], name: "index_beach_api_core_atoms_on_name", unique: true, using: :btree
   end
 
   create_table "beach_api_core_capabilities", force: :cascade do |t|
@@ -128,6 +139,17 @@ ActiveRecord::Schema.define(version: 20170310213442) do
     t.datetime "updated_at",      null: false
     t.hstore   "logo_properties"
     t.index ["application_id"], name: "index_beach_api_core_organisations_on_application_id", using: :btree
+  end
+
+  create_table "beach_api_core_permissions", force: :cascade do |t|
+    t.integer  "atom_id"
+    t.string   "keeper_type"
+    t.integer  "keeper_id"
+    t.hstore   "actions",     default: {}
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["atom_id"], name: "index_beach_api_core_permissions_on_atom_id", using: :btree
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_permissions_on_keeper_type_and_keeper_id", using: :btree
   end
 
   create_table "beach_api_core_profile_attributes", force: :cascade do |t|
@@ -259,6 +281,7 @@ ActiveRecord::Schema.define(version: 20170310213442) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
+  add_foreign_key "beach_api_core_atoms", "beach_api_core_atoms", column: "atom_parent_id"
   add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interaction_keepers", "beach_api_core_interactions", column: "interaction_id"
