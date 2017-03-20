@@ -51,5 +51,9 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
              delete:  [true, false].sample,
              execute: [true, false].sample)
     end
+
+    def apipie_roles_response
+      pretty([:developer, :user])
+    end
   end
 end

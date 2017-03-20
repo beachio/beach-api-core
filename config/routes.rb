@@ -20,5 +20,6 @@ BeachApiCore::Engine.routes.draw do
     resources :atoms, only: [] do
       resources :permission, only: [:index]
     end
+    resources :roles, only: [:index]
   end
 end
