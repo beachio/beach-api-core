@@ -12,8 +12,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                   last_name: Faker::Name.last_name,
                                   sex: BeachApiCore::Profile.sexes.keys.sample,
                                   birth_date: Time.now - rand(50 * 365).days,
-                                  avatar: apipie_asset
-      )
+                                  avatar: apipie_asset)
       @_apipie_user.organisation = apipie_organisation
       @_apipie_user.assignments.build(keeper: @_apipie_user.organisation, role: BeachApiCore::Role.developer)
       @_apipie_user.valid?
@@ -30,9 +29,11 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     end
 
     def apipie_invitation
-      @_apipie_invitation ||= BeachApiCore::Invitation.new(user: apipie_user,
+      @_apipie_invitation ||= BeachApiCore::Invitation.new(id: rand(1..100) * (-1),
+                                                           user: apipie_user,
                                                            email: Faker::Internet.email,
-                                                           group: apipie_team)
+                                                           group: apipie_team,
+                                                           created_at: Time.now)
     end
 
     def apipie_team

@@ -8,6 +8,7 @@ module BeachApiCore
       organisation_owner?
     end
     alias destroy? update?
+    alias manage_invitations? update?
 
     private
 

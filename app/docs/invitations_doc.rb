@@ -2,6 +2,12 @@ module InvitationsDoc
   extend Apipie::DSL::Concern
   include BeachApiCore::Concerns::V1::ApipieResponseConcern
 
+  api :GET, '/invitations', 'Get a list of pending invitations for current organisation'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example "\"invitations\": [#{apipie_organisation_invitation_response}, ...]"
+  def index
+  end
+
   api :POST, '/invitations', 'Create an invitation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :invitation, Hash, required: true do
@@ -11,5 +17,11 @@ module InvitationsDoc
   param :group_id, String, required: true
   example "\"invitation\": #{apipie_invitation_response} \nfail: 'Errors Description'"
   def create
+  end
+
+  api :DELETE, '/invitations/:id', 'Revoke an invitation'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example "\"invitation\": #{apipie_organisation_invitation_response}"
+  def destroy
   end
 end
