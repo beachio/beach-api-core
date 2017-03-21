@@ -17,10 +17,10 @@ module BeachApiCore
       should validate_presence_of :group
     end
 
-    it 'should validate presence of invitee' do
+    it 'should validate invitee' do
       invitation = build :invitation, email: ''
       expect(invitation).to be_invalid
-      expect(invitation.errors.messages).to include(:invitee)
+      expect(invitation.errors.messages).to include(:'invitee.email')
     end
 
     it 'should initialize an invitee on create' do

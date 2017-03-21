@@ -52,8 +52,8 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
              execute: [true, false].sample)
     end
 
-    def apipie_roles_response
-      pretty([:developer, :user])
+    def apipie_role_response
+      pretty BeachApiCore::RoleSerializer.new(apipie_role)
     end
   end
 end

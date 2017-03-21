@@ -4,7 +4,7 @@ module RolesDoc
 
   api :GET, '/roles', 'Get list of available roles'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "\"roles\": #{apipie_roles_response}"
+  example "\"roles\": [#{apipie_role_response}, ...]"
   def index
   end
 end

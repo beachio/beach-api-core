@@ -5,7 +5,7 @@ module BeachApiCore
 
     def index
       # @todo: some more complex logic for roles?
-      render_json_success({ roles: Role.all.pluck(:name) }, :ok)
+      render_json_success(Role.all, :ok, each_serializer: RoleSerializer, root: :roles)
     end
   end
 end

@@ -1,6 +1,6 @@
 module BeachApiCore
   class Invitation < ApplicationRecord
-    validates :email, :group, :user, :invitee, presence: true
+    validates :email, :group, :user, presence: true
 
     belongs_to :user, class_name: 'BeachApiCore::User'
     belongs_to :invitee, class_name: 'BeachApiCore::User', autosave: true
@@ -13,7 +13,7 @@ module BeachApiCore
     private
 
     def set_invitee
-      invitee = BeachApiCore::User.create_with(
+      self.invitee = BeachApiCore::User.create_with(
         status: BeachApiCore::User.statuses[:invitee],
         password: SecureRandom.hex,
         profile_attributes: {
@@ -21,7 +21,6 @@ module BeachApiCore
           last_name: last_name
         }
       ).find_or_initialize_by(email: email)
-      self.invitee = invitee if invitee.valid?
     end
   end
 end
