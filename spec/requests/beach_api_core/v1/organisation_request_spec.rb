@@ -102,39 +102,37 @@ module BeachApiCore
     end
 
     describe 'when users' do
-      let(:organisation) { (create :membership, member: oauth_user, group: (create :organisation)).group }
+      context 'when organisation member' do
+        let!(:organisation) do
+          (create :membership, member: oauth_user, group: (create :organisation)).group
+        end
 
-      before do
-        2.times do |i|
-          user = create :user, email: "test#{i}@i.com"
-          create :membership, group: organisation, member: user
+        it 'should should respond with forbidden status' do
+          get beach_api_core.users_v1_organisations_path, headers: bearer_auth
+          expect(response.status).to eq 403
         end
       end
 
-      it 'should return all available inventors for organisation' do
-        get beach_api_core.users_v1_organisations_path, headers: bearer_auth
-        expect(response.status).to eq 200
-        expect(json_body[:users]).to be_present
-        expect(json_body[:users].length).to eq 3
-      end
-
-      it 'should autocomplete available inventors for organisation' do
-        request = -> (term) do
-          get beach_api_core.users_v1_organisations_path, params: { term: term }, headers: bearer_auth
+      context 'when organisation owner' do
+        let!(:owned_organisation) do
+          (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
         end
-        request.call('test')
-        expect(response.status).to eq 200
-        expect(json_body[:users]).to be_present
-        expect(json_body[:users].length).to eq 2
-        request.call('test1')
-        expect(response.status).to eq 200
-        expect(json_body[:users]).to be_present
-        expect(json_body[:users].length).to eq 1
-        request.call('fail')
-        expect(response.status).to eq 200
-        expect(json_body[:users].length).to eq 0
-      end
 
+        before do
+          2.times { create :membership, group: owned_organisation }
+        end
+
+        it_behaves_like 'an authenticated resource' do
+          before { get beach_api_core.users_v1_organisations_path }
+        end
+
+        it 'should return additional information for users' do
+          get beach_api_core.users_v1_organisations_path, headers: bearer_auth
+          expect(response.status).to eq 200
+          expect(json_body[:users]).to be_present
+          expect(json_body[:users].first).to include(:joined_at, :role, :profile)
+        end
+      end
     end
   end
 end

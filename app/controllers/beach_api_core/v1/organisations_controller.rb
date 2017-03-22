@@ -45,11 +45,11 @@ module BeachApiCore
     end
 
     def users
-      authorize current_organisation, :show?
+      authorize current_organisation, :update?
+      # @todo: exclude current user from response?
       users = current_organisation.users
-      users = users.where.not(id: current_user.id).search(params[:term]) if params[:term].present?
-      render_json_success(users, :ok, each_serializer: BeachApiCore::UserSerializer, keepers: current_keepers,
-                          current_user: current_user, root: :users)
+      render_json_success(users, :ok, each_serializer: BeachApiCore::OrganisationUserSerializer,
+                          keepers: current_keepers, current_user: current_user, root: :users)
     end
 
     private

@@ -9,6 +9,7 @@ module BeachApiCore
     attr_accessor :first_name, :last_name
 
     before_validation :set_invitee, on: :create
+    after_destroy :destroy_invitee, if: 'invitee.invitee?'
 
     private
 
@@ -21,6 +22,10 @@ module BeachApiCore
           last_name: last_name
         }
       ).find_or_initialize_by(email: email)
+    end
+
+    def destroy_invitee
+      invitee.destroy
     end
   end
 end

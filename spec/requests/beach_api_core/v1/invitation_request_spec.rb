@@ -43,7 +43,9 @@ module BeachApiCore
       it 'should create an invitation' do
         expect do
           post beach_api_core.v1_invitations_path,
-               params: { invitation: { email: Faker::Internet.email }, group_id: team.id, group_type: 'Team' },
+               params: { invitation: { email: Faker::Internet.email },
+                         group_id: team.id,
+                         group_type: 'Team' },
                headers: bearer_auth
         end.to change(Invitation, :count).by(1)
            .and change(ActionMailer::Base.deliveries, :count).by(1)
@@ -55,16 +57,25 @@ module BeachApiCore
       let!(:organisation) do
         (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
       end
-      let!(:invitation) { create :invitation, group: organisation }
+      before { @invitation = create :invitation, group: organisation }
 
       it_behaves_like 'an authenticated resource' do
-        before { delete beach_api_core.v1_invitation_path(invitation) }
+        before { delete beach_api_core.v1_invitation_path(@invitation) }
       end
 
-      it 'should destroy an invitation and return it' do
-        delete beach_api_core.v1_invitation_path(invitation), headers: bearer_auth
-        expect(json_body[:invitation]).to be_present
-        expect(json_body[:invitation][:id]).to eq invitation.id
+      it 'should destroy an invitation and invitee' do
+        expect do
+          delete beach_api_core.v1_invitation_path(@invitation), headers: bearer_auth
+        end.to change(Invitation, :count).by(-1).and change(User, :count).by(-1)
+        expect(response.status).to eq 200
+        expect(json_body[:message]).to be_present
+      end
+
+      it 'should not destroy an active user' do
+        @invitation.invitee.active!
+        expect do
+          delete beach_api_core.v1_invitation_path(@invitation), headers: bearer_auth
+        end.to change(Invitation, :count).by(-1).and change(User, :count).by(0)
       end
     end
   end

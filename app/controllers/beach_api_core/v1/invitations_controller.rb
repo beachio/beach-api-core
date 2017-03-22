@@ -31,9 +31,9 @@ module BeachApiCore
       authorize current_organisation, :manage_invitations?
       invitation = current_organisation.invitations.find(params[:id])
       if invitation.destroy
-        render_json_success(BeachApiCore::OrganisationInvitationSerializer.new(invitation), :ok, root: :invitation)
+        render_json_success({ message: 'Invitation was revoked successfully' }, :ok)
       else
-        render_json_error( { message: 'Cannot revoke an invitation' }, :unprocessable_entity)
+        render_json_error({ message: 'Could not revoke an invitation' }, :bad_request)
       end
     end
 
