@@ -39,7 +39,7 @@ module OrganisationsDoc
   def destroy
   end
 
-  api :GET, '/organisations/users', 'Get organisation users'
+  api :GET, '/organisations/users', 'Get organisation users for organisation owner'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :term, String, desc: 'Term for autocomplete'
   example "\"users\": [#{apipie_user_response}, ...]"
