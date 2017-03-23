@@ -14,6 +14,8 @@ module BeachApiCore
       should have_many(:roles)
       should have_many(:applications)
       should have_many(:favourites).dependent(:destroy)
+      should have_many :organisations
+      should have_many :teams
       should respond_to(:first_name)
       should respond_to(:last_name)
     end
@@ -22,8 +24,6 @@ module BeachApiCore
       should validate_presence_of :email
       should validate_presence_of :username
       should validate_presence_of :status
-      should have_one :organisation
-      should have_many :teams
       should define_enum_for(:status).with(active: 0, invitee: 1)
     end
     it 'should have uniqueness case insensitive' do
