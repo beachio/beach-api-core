@@ -26,7 +26,8 @@ module BeachApiCore
     end
 
     def current_organisation
-      @current_organisation ||= current_user&.organisation
+      @current_organisation ||= current_user.organisations
+                                    .where(organisation_id: doorkeeper_token[:organisation_id])
     end
 
     def render_json_success(json = {}, status = :ok, params = {})

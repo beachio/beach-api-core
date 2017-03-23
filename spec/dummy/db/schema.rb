@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317183807) do
+ActiveRecord::Schema.define(version: 20170323201047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,7 +116,9 @@ ActiveRecord::Schema.define(version: 20170317183807) do
     t.integer  "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "invitee_id"
     t.index ["group_type", "group_id"], name: "index_beach_api_core_invitations_on_group_type_and_group_id", using: :btree
+    t.index ["invitee_id"], name: "index_beach_api_core_invitations_on_invitee_id", using: :btree
     t.index ["user_id"], name: "index_beach_api_core_invitations_on_user_id", using: :btree
   end
 
@@ -262,6 +264,7 @@ ActiveRecord::Schema.define(version: 20170317183807) do
     t.datetime "created_at",                          null: false
     t.string   "scopes"
     t.string   "previous_refresh_token", default: "", null: false
+    t.integer  "organisation_id"
     t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
     t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
     t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
@@ -286,6 +289,7 @@ ActiveRecord::Schema.define(version: 20170317183807) do
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interaction_keepers", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
+  add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
 end
