@@ -33,7 +33,7 @@ module BeachApiCore
 
     it 'when invalid' do
       user  = create :user
-      [{ params: { email: Faker::Internet.email, password: Faker::Internet.password }, status: 404 },
+      [{ params: { email: Faker::Internet.email, password: Faker::Internet.password }, status: 401 },
        { params: { email: user.email, password: Faker::Internet.password }, status: 401 },
        { params: { email: user.email }, status: 400 },
        { params: { email: Faker::Internet.email }, status: 400 },
@@ -43,6 +43,5 @@ module BeachApiCore
         expect(json_body[:error][:message]).to_not be_nil
       end
     end
-
   end
 end
