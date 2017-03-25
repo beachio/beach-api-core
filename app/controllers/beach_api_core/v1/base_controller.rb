@@ -23,7 +23,7 @@ module BeachApiCore
 
     def current_application
       @current_application ||= Doorkeeper::Application
-                                   .find_by(doorkeeper_token&.application_id) if doorkeeper_token&.application_id
+                                   .find_by(id: doorkeeper_token&.application_id) if doorkeeper_token&.application_id
     end
 
     def current_organisation
