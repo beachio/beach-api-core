@@ -31,7 +31,7 @@ module BeachApiCore
       it 'should create an ownership record' do
         post beach_api_core.v1_organisations_path, params: { organisation: { name: Faker::Name.title } },
              headers: bearer_auth
-        expect(oauth_user.organisation).to eq(Organisation.last)
+        expect(oauth_user.organisations.first).to eq(Organisation.last)
         expect(Organisation.last.owners).to include(oauth_user)
       end
     end
@@ -109,6 +109,7 @@ module BeachApiCore
           user = create :user, email: "test#{i}@i.com"
           create :membership, group: organisation, member: user
         end
+        access_token.update(organisation: organisation)
       end
 
       it 'should return all available inventors for organisation' do

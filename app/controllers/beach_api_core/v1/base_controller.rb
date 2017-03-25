@@ -18,7 +18,7 @@ module BeachApiCore
     end
 
     def current_user
-      @current_user ||= User.find(doorkeeper_token[:resource_owner_id]) if doorkeeper_token
+      @current_user ||= User.find_by(id: doorkeeper_token&.resource_owner_id)
     end
 
     def current_application
@@ -27,7 +27,7 @@ module BeachApiCore
 
     def current_organisation
       @current_organisation ||= current_user.organisations
-                                    .where(organisation_id: doorkeeper_token[:organisation_id])
+                                    .find_by(id: doorkeeper_token&.organisation_id)
     end
 
     def render_json_success(json = {}, status = :ok, params = {})

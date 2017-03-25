@@ -1,7 +1,7 @@
 module BeachApiCore
   class OrganisationPolicy < ApplicationPolicy
     def show?
-      user.organisation == record
+      user.organisations.include?(record)
     end
 
     def update?
