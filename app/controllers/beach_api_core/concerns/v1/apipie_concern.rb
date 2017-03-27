@@ -71,6 +71,13 @@ module BeachApiCore::Concerns::V1::ApipieConcern
       @_apipie_instance ||= BeachApiCore::Instance.new(name: SecureRandom.uuid)
     end
 
+    def apipie_atom
+      @_apipie_atom ||= BeachApiCore::Atom.new(id: rand(1..100) * (-1),
+                                               title: Faker::Name.title,
+                                               kind: Faker::Lorem.word,
+                                               atom_parent_id: (rand(1..100) * (-1)).abs)
+    end
+
     def pretty(serializer)
       JSON.pretty_generate serializer.as_json
     end
