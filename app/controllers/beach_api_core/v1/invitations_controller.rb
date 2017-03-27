@@ -14,7 +14,7 @@ module BeachApiCore
     def index
       authorize current_organisation, :manage_invitations?
       render_json_success(current_organisation.invitations, :ok,
-                          each_serializer: BeachApiCore::OrganisationInvitationSerializer,
+                          each_serializer: BeachApiCore::InvitationSerializer,
                           root: :invitations)
     end
 

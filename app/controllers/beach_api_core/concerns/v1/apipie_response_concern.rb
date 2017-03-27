@@ -23,7 +23,7 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     end
 
     def apipie_organisation_invitation_response
-      pretty BeachApiCore::OrganisationInvitationSerializer.new(apipie_invitation)
+      pretty BeachApiCore::InvitationSerializer.new(apipie_invitation)
     end
 
     def apipie_team_response
