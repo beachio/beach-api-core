@@ -52,8 +52,10 @@ module BeachApiCore
       authorize current_organisation, :update?
       # @todo: exclude current user from response?
       users = current_organisation.users
-      render_json_success(users, :ok, each_serializer: BeachApiCore::OrganisationUserSerializer,
-                          keepers: current_keepers, current_user: current_user, root: :users)
+      render_json_success(users, :ok,
+                          each_serializer: BeachApiCore::OrganisationUserSerializer,
+                          current_organisation: current_organisation,
+                          root: :users)
     end
 
     def current
