@@ -140,7 +140,7 @@ module BeachApiCore
         get beach_api_core.users_v1_organisations_path, headers: bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:users]).to be_present
-        expect(json_body[:users].length).to eq 3
+        expect(json_body[:users].size).to eq 3
       end
 
       it 'should autocomplete available inventors for organisation' do
@@ -150,14 +150,14 @@ module BeachApiCore
         request.call('test')
         expect(response.status).to eq 200
         expect(json_body[:users]).to be_present
-        expect(json_body[:users].length).to eq 2
+        expect(json_body[:users].size).to eq 2
         request.call('test1')
         expect(response.status).to eq 200
         expect(json_body[:users]).to be_present
-        expect(json_body[:users].length).to eq 1
+        expect(json_body[:users].size).to eq 1
         request.call('fail')
         expect(response.status).to eq 200
-        expect(json_body[:users].length).to eq 0
+        expect(json_body[:users].size).to eq 0
       end
     end
 
