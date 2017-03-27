@@ -17,17 +17,21 @@ module BeachApiCore
 
     has_many :invitations
 
-    has_one :organisation_membership, -> { where(group_type: 'BeachApiCore::Organisation') }, as: :member, inverse_of: :member,
-            class_name: 'BeachApiCore::Membership', dependent: :destroy
-    has_one :organisation, through: :organisation_membership, source: :group, source_type: 'BeachApiCore::Organisation'
-    has_many :memberships, -> { where(group_type: 'BeachApiCore::Team') }, as: :member, inverse_of: :member, dependent: :destroy
-    has_many :teams, through: :memberships, source: :group, source_type: 'BeachApiCore::Team'
+    has_many :memberships, as: :member, inverse_of: :member, dependent: :destroy
+
+    has_many :organisation_memberships, -> { where(group_type: 'BeachApiCore::Organisation') },
+             as: :member, inverse_of: :member, class_name: 'BeachApiCore::Membership'
+    has_many :organisations, through: :organisation_memberships, source: :group, source_type: 'BeachApiCore::Organisation'
+
+    has_many :team_memberships, -> { where(group_type: 'BeachApiCore::Team') },
+             as: :member, inverse_of: :member, class_name: 'BeachApiCore::Membership'
+    has_many :teams, through: :team_memberships, source: :group, source_type: 'BeachApiCore::Team'
 
     has_secure_password
     acts_as_downcasable_on [:email, :username]
 
     accepts_nested_attributes_for :profile
-    accepts_nested_attributes_for :organisation_membership, allow_destroy: true, reject_if: proc { |attr| attr[:group_id].blank? }
+    accepts_nested_attributes_for :organisation_memberships, allow_destroy: true, reject_if: proc { |attr| attr[:group_id].blank? }
     accepts_nested_attributes_for :memberships, allow_destroy: true
     accepts_nested_attributes_for :assignments, allow_destroy: true
 

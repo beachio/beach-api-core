@@ -10,6 +10,10 @@ module BeachApiCore
       error code: 400, desc: 'Bad request'
     end
 
+    def index
+      render_json_success(current_user.organisations, :ok, current_user: current_user, root: :organisations)
+    end
+
     def create
       result = BeachApiCore::OrganisationCreate.call(params: organisation_params, user: current_user,
                                                      application: current_application)
@@ -50,6 +54,13 @@ module BeachApiCore
       users = users.where.not(id: current_user.id).search(params[:term]) if params[:term].present?
       render_json_success(users, :ok, each_serializer: BeachApiCore::UserSerializer, keepers: current_keepers,
                           current_user: current_user, root: :users)
+    end
+
+    def current
+      get_resource
+      authorize @organisation, :show?
+      doorkeeper_token.update(organisation: @organisation)
+      render_json_success
     end
 
     private

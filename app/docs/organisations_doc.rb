@@ -13,6 +13,12 @@ module OrganisationsDoc
     end
   end
 
+  api :GET, '/organisations', 'List of user organisations'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example "\"organisations\": [#{apipie_organisation_response}, ...]"
+  def index
+  end
+
   api :POST, '/organisations', 'Create an organisation'
   param_group :organisation
   example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
@@ -44,5 +50,10 @@ module OrganisationsDoc
   param :term, String, desc: 'Term for autocomplete'
   example "\"users\": [#{apipie_user_response}, ...]"
   def users
+  end
+
+  api :PUT, '/organisations/:id/current', 'Set organisation context'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  def current
   end
 end

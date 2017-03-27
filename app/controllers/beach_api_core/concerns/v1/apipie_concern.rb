@@ -14,8 +14,8 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                   birth_date: Time.now - rand(50 * 365).days,
                                   avatar: apipie_asset
       )
-      @_apipie_user.organisation = apipie_organisation
-      @_apipie_user.assignments.build(keeper: @_apipie_user.organisation, role: BeachApiCore::Role.developer)
+      @_apipie_user.organisations = [apipie_organisation]
+      @_apipie_user.assignments.build(keeper: @_apipie_user.organisations.first, role: BeachApiCore::Role.developer)
       @_apipie_user.valid?
       @_apipie_user
     end
