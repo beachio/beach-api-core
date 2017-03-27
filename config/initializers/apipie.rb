@@ -6,5 +6,6 @@ Apipie.configure do |config|
   config.api_base_url['v1']      = '/v1'
   config.doc_base_url            = '/api'
   config.validate                = false
+  config.layout                  = 'apipie'
   config.default_version         = 'v1'
 end

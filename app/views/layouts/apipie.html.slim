@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= t('apipie.api_documentation')
+    meta content='text/html; charset=UTF-8' http-equiv="Content-Type"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    = Apipie.include_stylesheets
+    link href=(Apipie.full_url('stylesheets/application.css')) rel="stylesheet" type="text/css"
+  /! IE6-8 support of HTML5 elements
+  /![if lt IE 9]
+    | <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  body
+    .container-fluid
+      .row-fluid
+        #container
+          = yield
+          - unless params[:resource].present? || params[:method].present?
+            = render 'beach_api_core/apipie/websockets'
+          = render 'disqus' if Apipie.configuration.use_disqus?
+      hr
+      footer= yield :apipie_footer
+    = Apipie.include_javascripts
