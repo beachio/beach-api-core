@@ -8,7 +8,7 @@ module BeachApiCore
     end
 
     def index
-      actions = current_user.permissions_for(@atom, current_user.organisation)
+      actions = current_user.permissions_for(@atom, current_organisation)
       render_json_success({ actions: actions }, :ok)
     end
 

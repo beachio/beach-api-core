@@ -22,7 +22,9 @@ module BeachApiCore
         create :permission, atom: @atom, keeper: @role1, actions: { read: true, create: false, execute: false }
         create :permission, atom: @atom, keeper: @role2, actions: { execute: true }
         create :permission, atom: @atom, keeper: @team1, actions: { update: true, delete: false }
-        create :permission, atom: @atom, keeper: @team2, actions: { delete: true, update: false }        
+        create :permission, atom: @atom, keeper: @team2, actions: { delete: true, update: false }
+
+        access_token.update(organisation: @organisation)
       end
 
       it 'should return services categories' do

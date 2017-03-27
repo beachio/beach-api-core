@@ -14,7 +14,7 @@ class BeachApiCore::Authorization::AuthorizeUser
   end
 
   def call
-    if user.authenticate context.password
+    if user&.authenticate context.password
       context.user = user
       context.status = :ok
     else
@@ -26,8 +26,7 @@ class BeachApiCore::Authorization::AuthorizeUser
   private
 
   def user
-    @_user ||= BeachApiCore::User.find_by!(email: context.email)
+    @_user ||= BeachApiCore::User.find_by(email: context.email)
   end
-
 end
 
