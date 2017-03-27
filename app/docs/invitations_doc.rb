@@ -4,7 +4,7 @@ module InvitationsDoc
 
   api :GET, '/invitations', 'Get a list of pending invitations for current organisation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "\"invitations\": [#{apipie_organisation_invitation_response}, ...]"
+  example "\"invitations\": [#{apipie_invitation_response}, ...]"
   def index
   end
 
@@ -21,7 +21,7 @@ module InvitationsDoc
 
   api :DELETE, '/invitations/:id', 'Revoke an invitation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "\"invitation\": #{apipie_organisation_invitation_response}"
+  example "\"invitation\": #{apipie_invitation_response}"
   def destroy
   end
 end
