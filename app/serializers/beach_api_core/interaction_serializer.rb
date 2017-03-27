@@ -1,6 +1,7 @@
 module BeachApiCore
   class InteractionSerializer < ActiveModel::Serializer
     include BeachApiCore::Concerns::DocIdAbsSerializerConcern
+    acts_as_abs_doc_id
 
     attributes :id, :created_at, :kind
     belongs_to :user
