@@ -11,9 +11,7 @@ module BeachApiCore
     end
 
     def role
-      object.roles
-        .find_by(beach_api_core_assignments: { keeper_id: organisation.id,
-                                               keeper_type: organisation.class.name })
+      object.roles.where.has { |u| u.assignments.keeper == organisation }.first
     end
 
     private

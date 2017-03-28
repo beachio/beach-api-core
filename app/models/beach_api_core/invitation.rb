@@ -30,7 +30,7 @@ module BeachApiCore
     def set_token
       self.token = loop do
         token = SecureRandom.urlsafe_base64
-        break token if Invitation.where(token: token).empty?
+        break token unless self.class.where(token: token).exists?
       end
     end
 

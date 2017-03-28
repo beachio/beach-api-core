@@ -17,7 +17,7 @@ module BeachApiCore
           get beach_api_core.v1_roles_path, headers: bearer_auth
           expect(json_body[:roles]).to be_present
           # 2 new roles + developer role
-          expect(json_body[:roles].length).to eq 3
+          expect(json_body[:roles].size).to eq 3
         end
       end
     end
