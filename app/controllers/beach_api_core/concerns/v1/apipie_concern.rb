@@ -12,8 +12,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                   last_name: Faker::Name.last_name,
                                   sex: BeachApiCore::Profile.sexes.keys.sample,
                                   birth_date: Time.now - rand(50 * 365).days,
-                                  avatar: apipie_asset
-      )
+                                  avatar: apipie_asset)
       @_apipie_user.organisations = [apipie_organisation]
       @_apipie_user.assignments.build(keeper: @_apipie_user.organisations.first, role: BeachApiCore::Role.developer)
       @_apipie_user.valid?
@@ -33,9 +32,11 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     end
 
     def apipie_invitation
-      @_apipie_invitation ||= BeachApiCore::Invitation.new(user: apipie_user,
+      @_apipie_invitation ||= BeachApiCore::Invitation.new(id: fake_id,
+                                                           user: apipie_user,
                                                            email: Faker::Internet.email,
-                                                           group: apipie_team)
+                                                           group: apipie_team,
+                                                           created_at: Time.now)
     end
 
     def apipie_team
@@ -80,6 +81,11 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                title: Faker::Name.title,
                                                kind: Faker::Lorem.word,
                                                atom_parent_id: fake_id)
+    end
+
+    def apipie_role
+      @_apipie_role ||= BeachApiCore::Role.new(id: fake_id,
+                                               name: Faker::Lorem.word)
     end
 
     def pretty(serializer)

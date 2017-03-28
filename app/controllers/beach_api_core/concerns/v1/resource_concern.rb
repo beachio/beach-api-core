@@ -7,7 +7,7 @@ module BeachApiCore::Concerns::V1::ResourceConcern
 
   def get_resource
     set_resource_name
-    if !@resource_class.constantize.exists?(params[:id])
+    unless @resource_class.constantize.exists?(params[:id])
       raise ActiveRecord::RecordNotFound.new('Not Found')
     end
 

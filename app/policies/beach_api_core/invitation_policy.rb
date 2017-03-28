@@ -1,7 +1,7 @@
 module BeachApiCore
-  class MembershipPolicy < ApplicationPolicy
+  class InvitationPolicy < ApplicationPolicy
     def destroy?
-      group_owner?
+      record.user == user || group_owner?
     end
 
     private
