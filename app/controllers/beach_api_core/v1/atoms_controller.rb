@@ -4,6 +4,7 @@ module BeachApiCore
     include AtomsDoc
 
     before_action :doorkeeper_authorize!, :authorize_instance_owner
+    skip_before_action :get_resource, only: [:update, :destroy]
 
     resource_description do
       error code: 403, desc: 'Forbidden request'
@@ -25,7 +26,7 @@ module BeachApiCore
     end
 
     def update
-      result = BeachApiCore::AtomUpdate.call(atom: @atom, params: atom_params)
+      result = BeachApiCore::AtomUpdate.call(atom: atom, params: atom_params)
       if result.success?
         render_json_success(result.atom, result.status, root: :atom)
       else
@@ -38,7 +39,7 @@ module BeachApiCore
     end
 
     def destroy
-      if @atom.destroy
+      if atom.destroy
         render_json_success({ message: 'Atom was successfully deleted' }, :ok)
       else
         render_json_error({ message: 'Could not remove atom' }, :bad_request)
@@ -46,6 +47,11 @@ module BeachApiCore
     end
 
     private
+
+    def atom
+      return BeachApiCore::Atom.find_by!(name: params[:name]) if params[:name]
+      BeachApiCore::Atom.find(params[:id])
+    end
 
     def authorize_instance_owner
       authorize Instance.current, :admin?

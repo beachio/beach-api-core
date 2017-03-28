@@ -32,19 +32,31 @@ module BeachApiCore
     describe 'when update' do
       let!(:atom) { create :atom }
       let(:new_title) { Faker::Name.title }
+      let(:new_kind) { Faker::Lorem.word }
+
       it_behaves_like 'an authenticated resource' do
-        before { put beach_api_core.v1_atom_path(atom) }
+        before { put beach_api_core.v1_atoms_path, params: { id: atom.id } }
       end
 
       it_behaves_like 'an forbidden resource' do
-        before { put beach_api_core.v1_atom_path(atom), params: { atom: { title: new_title } },
-                      headers: developer_bearer_auth }
+        before { put beach_api_core.v1_atoms_path, params: { id: atom.id, atom: { title: new_title } },
+                     headers: developer_bearer_auth }
       end
 
       it 'should successfully update an atom' do
-        put beach_api_core.v1_atom_path(atom), params: { atom: { title: new_title } }, headers: bearer_auth
+        put beach_api_core.v1_atoms_path, params: { id: atom.id, atom: { title: new_title } }, headers: bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:atom][:title]).to eq new_title
+        put beach_api_core.v1_atoms_path, params: { name: atom.name, atom: { kind: new_kind } }, headers: bearer_auth
+        expect(response.status).to eq 200
+        expect(json_body[:atom][:kind]).to eq new_kind
+      end
+
+      it 'should return 404' do
+        put beach_api_core.v1_atoms_path, params: { name: 'some_name', atom: { title: new_title } }, headers: bearer_auth
+        expect(response.status).to eq 404
+        put beach_api_core.v1_atoms_path, params: { id: '', atom: { title: new_title } }, headers: bearer_auth
+        expect(response.status).to eq 404
       end
     end
 
@@ -68,15 +80,19 @@ module BeachApiCore
 
     describe 'when destroy' do
       let!(:atom) { create :atom }
+      let(:other_atom) { create :atom }
 
       it 'should successfully destroy an atom' do
-        delete beach_api_core.v1_atom_path(atom), headers: bearer_auth
+        delete beach_api_core.v1_atoms_path, params: { id: atom.id }, headers: bearer_auth
         expect(response.status).to eq(200)
         expect(Atom.find_by(id: atom.id)).to be_blank
+        delete beach_api_core.v1_atoms_path, params: { name: other_atom.name }, headers: bearer_auth
+        expect(response.status).to eq(200)
+        expect(Atom.find_by(id: other_atom.id)).to be_blank
       end
 
       it_behaves_like 'an forbidden resource' do
-        before { delete beach_api_core.v1_atom_path(atom), headers: developer_bearer_auth }
+        before { delete beach_api_core.v1_atoms_path, params: { id: atom.id }, headers: developer_bearer_auth }
       end
     end
 
