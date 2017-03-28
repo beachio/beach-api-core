@@ -10,6 +10,13 @@ module BeachApiCore
 
     validate :check_looped_tree
 
+    scope :only_with_actions, -> (actions) do
+      joins(:permissions)
+          .where(actions.map{ |action| "actions -> '#{action}' = 'true'" }.join(' AND '))
+          .distinct
+    end
+
+
     class << self
       def lookup!(name_or_id)
         atom = where.has{ |a| (a.id == name_or_id) | (a.name == name_or_id) }.first
