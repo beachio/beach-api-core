@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323201047) do
+ActiveRecord::Schema.define(version: 20170328120639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,8 @@ ActiveRecord::Schema.define(version: 20170323201047) do
     t.hstore   "actions",     default: {}
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "actor"
+    t.index ["atom_id", "actor", "keeper_id", "keeper_type"], name: "index_bac_permissions_on_atom_id_and_actor_and_k_id_and_k_type", unique: true, using: :btree
     t.index ["atom_id"], name: "index_beach_api_core_permissions_on_atom_id", using: :btree
     t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_permissions_on_keeper_type_and_keeper_id", using: :btree
   end

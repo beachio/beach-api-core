@@ -51,10 +51,6 @@ module BeachApiCore
       @atom ||= BeachApiCore::Atom.lookup!(params[:id])
     end
 
-    def authorize_instance_owner!
-      authorize Instance.current, :admin?
-    end
-
     def atom_params
       params.require(:atom).permit(:kind, :atom_parent_id, :title)
     end

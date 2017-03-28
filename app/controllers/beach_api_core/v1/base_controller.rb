@@ -5,5 +5,11 @@ module BeachApiCore
     include Pundit
     include BeachApiCore::Concerns::V1::RescueFromConcern
     include BeachApiCore::Concerns::V1::BaseControllerConcern
+
+    private
+
+    def authorize_instance_owner!
+      authorize Instance.current, :admin?
+    end
   end
 end

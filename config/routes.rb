@@ -23,7 +23,9 @@ BeachApiCore::Engine.routes.draw do
         put :update
         delete :destroy
       end
-      resources :permission, only: [:index]
+      resource :permission, only: [:show] do
+        post :set
+      end
     end
   end
 end
