@@ -97,14 +97,27 @@ module BeachApiCore
     end
 
     describe 'when index' do
-      before { create_list :atom, 3 }
+      let(:user) { create :user }
+      let(:atoms) { create_list :atom, 2, kind: 'simple_item' }
+      before do
+        create :permission, atom: (create :atom), actions: { update: true }, keeper: user
+        create :permission, atom: (create :atom), actions: { update: true, execute: true }, keeper: (create :role)
+        create :permission, atom: (create :atom), actions: { create: true }, keeper: (create :user)
+        create :permission, atom: (create :atom, kind: 'simple_item'), actions: { create: true, update: true }, keeper: (create :user)
+        atoms.each { |a| create :permission, atom: a, actions: { create: true, update: true }, keeper: user }
+      end
 
       it_behaves_like 'an forbidden resource' do
         before { get beach_api_core.v1_atoms_path, headers: developer_bearer_auth }
       end
 
       it 'should return list of atoms' do
-        get beach_api_core.v1_atoms_path, headers: bearer_auth
+        get beach_api_core.v1_atoms_path,
+            params: { user_id: user.id, kind: 'simple_item', actions: %w(create update) }, headers: bearer_auth
+        expect(response.status).to eq(200)
+        expect(json_body[:atoms].size).to eq 2
+        get beach_api_core.v1_atoms_path,
+            params: { kind: 'simple_item', actions: %w(create update) }, headers: bearer_auth
         expect(response.status).to eq(200)
         expect(json_body[:atoms].size).to eq 3
       end

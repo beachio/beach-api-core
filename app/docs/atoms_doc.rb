@@ -33,6 +33,9 @@ module AtomsDoc
 
   api :GET, '/atoms', 'List of atoms'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  param :user_id, Integer
+  param :kind, String, required: true
+  param :actions, Array, required: true
   example "\"atoms\": [#{apipie_atom_response}, ...]"
   def index
   end

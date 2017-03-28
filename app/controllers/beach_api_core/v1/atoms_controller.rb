@@ -12,7 +12,13 @@ module BeachApiCore
     end
 
     def index
-      render_json_success({ atoms: BeachApiCore::Atom.all }, :ok)
+      atoms = BeachApiCore::Atom.where(kind: params[:kind])
+                                .joins(:permissions)
+                                .where(params[:actions].map{ |action| "actions -> '#{action}' = 'true'" }.join(' AND '))
+                                .distinct
+      atoms = atoms.where(beach_api_core_permissions: { keeper_id: params[:user_id],
+                                                        keeper_type: 'BeachApiCore::User' }) if params[:user_id]
+      render_json_success({ atoms: atoms }, :ok)
     end
 
     def create
