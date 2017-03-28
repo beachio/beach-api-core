@@ -114,11 +114,14 @@ ActiveRecord::Schema.define(version: 20170323201047) do
     t.integer  "user_id"
     t.string   "group_type"
     t.integer  "group_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "invitee_id"
+    t.integer  "role_id"
+    t.string   "token",      default: "", null: false
     t.index ["group_type", "group_id"], name: "index_beach_api_core_invitations_on_group_type_and_group_id", using: :btree
     t.index ["invitee_id"], name: "index_beach_api_core_invitations_on_invitee_id", using: :btree
+    t.index ["role_id"], name: "index_beach_api_core_invitations_on_role_id", using: :btree
     t.index ["user_id"], name: "index_beach_api_core_invitations_on_user_id", using: :btree
   end
 
@@ -289,6 +292,7 @@ ActiveRecord::Schema.define(version: 20170323201047) do
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interaction_keepers", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
+  add_foreign_key "beach_api_core_invitations", "beach_api_core_roles", column: "role_id"
   add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"

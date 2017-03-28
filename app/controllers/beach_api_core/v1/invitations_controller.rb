@@ -3,7 +3,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::GroupResourceConcern
     include InvitationsDoc
     before_action :doorkeeper_authorize!
-    before_action :find_group, only: [:create]
+    before_action :find_group, except: [:destroy]
 
     resource_description do
       error code: 403, desc: 'Forbidden request'
@@ -12,8 +12,8 @@ module BeachApiCore
     end
 
     def index
-      authorize current_organisation, :manage_invitations?
-      render_json_success(current_organisation.invitations, :ok,
+      authorize @group, :update?
+      render_json_success(@group.invitations, :ok,
                           each_serializer: BeachApiCore::InvitationSerializer,
                           root: :invitations)
     end
@@ -28,8 +28,8 @@ module BeachApiCore
     end
 
     def destroy
-      authorize current_organisation, :manage_invitations?
       invitation = current_organisation.invitations.find(params[:id])
+      authorize invitation
       if invitation.destroy
         render_json_success({ message: 'Invitation was revoked successfully' }, :ok)
       else
@@ -40,7 +40,7 @@ module BeachApiCore
     private
 
     def invitation_params
-      params.require(:invitation).permit(:email, :first_name, :last_name)
+      params.require(:invitation).permit(:email, :first_name, :last_name, :role_id)
     end
   end
 end
