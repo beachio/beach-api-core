@@ -16,7 +16,6 @@ module PermissionsDoc
     param :actor, String, required: true
     param :actions, Array, required: true
   end
-  example "{}"
   def set
   end
 end
