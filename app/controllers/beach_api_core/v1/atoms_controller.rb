@@ -3,7 +3,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     include AtomsDoc
 
-    before_action :doorkeeper_authorize!
+    before_action :doorkeeper_authorize!, :authorize_instance_owner
 
     resource_description do
       error code: 403, desc: 'Forbidden request'
@@ -11,8 +11,11 @@ module BeachApiCore
       error code: 400, desc: 'Bad request'
     end
 
+    def index
+      render_json_success({ atoms: BeachApiCore::Atom.all }, :ok)
+    end
+
     def create
-      authorize Instance.current, :admin?
       result = BeachApiCore::AtomCreate.call(params: atom_params)
       if result.success?
         render_json_success(result.atom, result.status, root: :atom)
@@ -22,7 +25,6 @@ module BeachApiCore
     end
 
     def update
-      authorize Instance.current, :admin?
       result = BeachApiCore::AtomUpdate.call(atom: @atom, params: atom_params)
       if result.success?
         render_json_success(result.atom, result.status, root: :atom)
@@ -32,12 +34,10 @@ module BeachApiCore
     end
 
     def show
-      authorize Instance.current, :admin?
       render_json_success(@atom, :ok, root: :atom)
     end
 
     def destroy
-      authorize Instance.current, :admin?
       if @atom.destroy
         render_json_success({ message: 'Atom was successfully deleted' }, :ok)
       else
@@ -46,6 +46,10 @@ module BeachApiCore
     end
 
     private
+
+    def authorize_instance_owner
+      authorize Instance.current, :admin?
+    end
 
     def atom_params
       params.require(:atom).permit(:kind, :atom_parent_id, :title)

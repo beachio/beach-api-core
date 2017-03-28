@@ -24,9 +24,9 @@ module AtomsDoc
   def update
   end
 
-  api :GET, '/atoms/:id', 'Get an atom'
+  api :DELETE, '/atoms/:id', 'Remove an atom'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "\"atom\": #{apipie_atom_response} \nfail: 'Errors Description'"
+  example "success: 'Atom was successfully deleted' \nfail: 'Could not remove atom'"
   def show
   end
 
@@ -34,5 +34,11 @@ module AtomsDoc
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "success: 'Atom was successfully deleted' \nfail: 'Could not remove atom'"
   def destroy
+  end
+
+  api :GET, '/atoms', 'List of atoms'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example "\"atoms\": [#{apipie_atom_response}, ...]"
+  def index
   end
 end

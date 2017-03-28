@@ -79,5 +79,19 @@ module BeachApiCore
         before { delete beach_api_core.v1_atom_path(atom), headers: developer_bearer_auth }
       end
     end
+
+    describe 'when index' do
+      before { create_list :atom, 3 }
+
+      it_behaves_like 'an forbidden resource' do
+        before { get beach_api_core.v1_atoms_path, headers: developer_bearer_auth }
+      end
+
+      it 'should return list of atoms' do
+        get beach_api_core.v1_atoms_path, headers: bearer_auth
+        expect(response.status).to eq(200)
+        expect(json_body[:atoms].size).to eq 3
+      end
+    end
   end
 end
