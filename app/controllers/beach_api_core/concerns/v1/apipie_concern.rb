@@ -76,10 +76,10 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     end
 
     def apipie_atom
-      @_apipie_atom ||= BeachApiCore::Atom.new(id: rand(1..100) * (-1),
+      @_apipie_atom ||= BeachApiCore::Atom.new(id: fake_id,
                                                title: Faker::Name.title,
                                                kind: Faker::Lorem.word,
-                                               atom_parent_id: rand(1..100))
+                                               atom_parent_id: fake_id)
     end
 
     def pretty(serializer)
