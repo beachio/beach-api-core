@@ -3,7 +3,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     include AtomsDoc
 
-    before_action :doorkeeper_authorize!, :authorize_instance_owner
+    before_action :doorkeeper_authorize!, :authorize_instance_owner!
 
     resource_description do
       error code: 403, desc: 'Forbidden request'
@@ -51,7 +51,7 @@ module BeachApiCore
       @atom ||= BeachApiCore::Atom.lookup!(params[:id])
     end
 
-    def authorize_instance_owner
+    def authorize_instance_owner!
       authorize Instance.current, :admin?
     end
 
