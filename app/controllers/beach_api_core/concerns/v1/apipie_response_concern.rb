@@ -46,6 +46,10 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
       pretty BeachApiCore::OrganisationSerializer.new(apipie_organisation, current_user: apipie_user)
     end
 
+    def apipie_atom_response
+      pretty BeachApiCore::AtomSerializer.new(apipie_atom)
+    end
+
     def apipie_actions_response
       pretty(create:  [true, false].sample,
              read:    [true, false].sample,

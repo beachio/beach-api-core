@@ -32,7 +32,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     end
 
     def apipie_invitation
-      @_apipie_invitation ||= BeachApiCore::Invitation.new(id: rand(1..100) * (-1),
+      @_apipie_invitation ||= BeachApiCore::Invitation.new(id: fake_id,
                                                            user: apipie_user,
                                                            email: Faker::Internet.email,
                                                            group: apipie_team,
@@ -76,8 +76,15 @@ module BeachApiCore::Concerns::V1::ApipieConcern
       @_apipie_instance ||= BeachApiCore::Instance.new(name: SecureRandom.uuid)
     end
 
+    def apipie_atom
+      @_apipie_atom ||= BeachApiCore::Atom.new(id: fake_id,
+                                               title: Faker::Name.title,
+                                               kind: Faker::Lorem.word,
+                                               atom_parent_id: fake_id)
+    end
+
     def apipie_role
-      @_apipie_role ||= BeachApiCore::Role.new(id: rand(1..100) * (-1),
+      @_apipie_role ||= BeachApiCore::Role.new(id: fake_id,
                                                name: Faker::Lorem.word)
     end
 

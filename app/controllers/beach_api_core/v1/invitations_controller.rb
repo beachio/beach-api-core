@@ -28,7 +28,7 @@ module BeachApiCore
     end
 
     def destroy
-      invitation = current_organisation.invitations.find(params[:id])
+      invitation = Invitation.find(params[:id])
       authorize invitation
       if invitation.destroy
         render_json_success({ message: 'Invitation was revoked successfully' }, :ok)
