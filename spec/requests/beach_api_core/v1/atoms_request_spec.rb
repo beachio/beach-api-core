@@ -47,13 +47,13 @@ module BeachApiCore
         put beach_api_core.v1_atoms_path, params: { id: atom.id, atom: { title: new_title } }, headers: bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:atom][:title]).to eq new_title
-        put beach_api_core.v1_atoms_path, params: { name: atom.name, atom: { kind: new_kind } }, headers: bearer_auth
+        put beach_api_core.v1_atoms_path, params: { id: atom.name, atom: { kind: new_kind } }, headers: bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:atom][:kind]).to eq new_kind
       end
 
       it 'should return 404' do
-        put beach_api_core.v1_atoms_path, params: { name: 'some_name', atom: { title: new_title } }, headers: bearer_auth
+        put beach_api_core.v1_atoms_path, params: { id: 'some_name', atom: { title: new_title } }, headers: bearer_auth
         expect(response.status).to eq 404
         put beach_api_core.v1_atoms_path, params: { id: '', atom: { title: new_title } }, headers: bearer_auth
         expect(response.status).to eq 404
@@ -86,7 +86,7 @@ module BeachApiCore
         delete beach_api_core.v1_atoms_path, params: { id: atom.id }, headers: bearer_auth
         expect(response.status).to eq(200)
         expect(Atom.find_by(id: atom.id)).to be_blank
-        delete beach_api_core.v1_atoms_path, params: { name: other_atom.name }, headers: bearer_auth
+        delete beach_api_core.v1_atoms_path, params: { id: other_atom.name }, headers: bearer_auth
         expect(response.status).to eq(200)
         expect(Atom.find_by(id: other_atom.id)).to be_blank
       end

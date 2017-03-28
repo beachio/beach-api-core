@@ -19,8 +19,7 @@ module AtomsDoc
 
   api :PUT, '/atoms', 'Update an atom by id or name'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :id, Integer, desc: 'required if no name provided'
-  param :name, String, desc: 'required if no id provided'
+  param :id, String, desc: 'can be either atom id or name'
   param_group :atom
   example "\"atom\": #{apipie_atom_response} \nfail: 'Errors Description'"
   def update
@@ -40,8 +39,7 @@ module AtomsDoc
 
   api :DELETE, '/atoms', 'Remove an atom by id or name'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :id, Integer, desc: 'required if no name provided'
-  param :name, String, desc: 'required if no id provided'
+  param :id, String, desc: 'can be either atom id or name'
   example "success: 'Atom was successfully deleted' \nfail: 'Could not remove atom'"
   def destroy
   end
