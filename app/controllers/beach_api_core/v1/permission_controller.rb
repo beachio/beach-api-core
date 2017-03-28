@@ -15,7 +15,7 @@ module BeachApiCore
     private
 
     def find_atom
-      @atom = BeachApiCore::Atom.where.has{ |a| (a.id == params[:atom_id]) | (a.name == params[:atom_id]) }.first
+      @atom ||= BeachApiCore::Atom.lookup!(params[:atom_id])
     end
   end
 end

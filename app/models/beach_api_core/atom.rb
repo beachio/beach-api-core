@@ -10,6 +10,14 @@ module BeachApiCore
 
     validate :check_looped_tree
 
+    class << self
+      def lookup!(name_or_id)
+        atom = where.has{ |a| (a.id == name_or_id) | (a.name == name_or_id) }.first
+        raise ActiveRecord::RecordNotFound.new('Not Found') unless atom
+        atom
+      end
+    end
+
     private
 
     def check_looped_tree(parent = nil)
