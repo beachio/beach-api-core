@@ -1,6 +1,7 @@
 module BeachApiCore
   class OrganisationSerializer < ActiveModel::Serializer
     include BeachApiCore::Concerns::DocIdAbsSerializerConcern
+    acts_as_abs_doc_id
 
     attributes :id, :name, :logo_url, :logo_properties, :current_user_roles
 

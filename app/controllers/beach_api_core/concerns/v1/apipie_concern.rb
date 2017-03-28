@@ -7,7 +7,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
     def apipie_user
       return @_apipie_user if @_apipie_user
-      @_apipie_user = BeachApiCore::User.new(id: rand(1..100) * (-1), email: Faker::Internet.email)
+      @_apipie_user = BeachApiCore::User.new(id: fake_id, email: Faker::Internet.email)
       @_apipie_user.build_profile(first_name: Faker::Name.first_name,
                                   last_name: Faker::Name.last_name,
                                   sex: BeachApiCore::Profile.sexes.keys.sample,
@@ -22,11 +22,14 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
     def apipie_asset
       return @_apipie_asset if @_apipie_asset
-      @_apipie_asset = BeachApiCore::Asset.new(file: Refile::FileDouble.new('dummy', 'logo.png', content_type: 'image/png'))
+      @_apipie_asset = BeachApiCore::Asset.new(id: fake_id,
+                                               file: Refile::FileDouble.new('dummy', 'logo.png', content_type: 'image/png'))
     end
 
     def apipie_favourite
-      @_apipie_favourite ||= BeachApiCore::Favourite.new(user: apipie_user, favouritable: apipie_asset)
+      @_apipie_favourite ||= BeachApiCore::Favourite.new(id: fake_id,
+                                                         user: apipie_user,
+                                                         favouritable: apipie_asset)
     end
 
     def apipie_invitation
@@ -41,7 +44,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     end
 
     def apipie_organisation
-      @_apipie_organisation ||= BeachApiCore::Organisation.new(id: rand(1..100) * (-1),
+      @_apipie_organisation ||= BeachApiCore::Organisation.new(id: fake_id,
                                                                name: Faker::Company.name,
                                                                application: apipie_oauth_application,
                                                                logo_image: apipie_asset,
@@ -49,7 +52,8 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     end
 
     def apipie_oauth_application
-      @_oauth_application ||= Doorkeeper::Application.new(name: Faker::Company.name,
+      @_oauth_application ||= Doorkeeper::Application.new(id: fake_id,
+                                                          name: Faker::Company.name,
                                                           redirect_uri: Faker::Internet.redirect_uri,
                                                           owner: apipie_user)
     end
@@ -80,6 +84,12 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
     def pretty(serializer)
       JSON.pretty_generate serializer.as_json
+    end
+
+    private
+
+    def fake_id
+      rand(1..100) * (-1)
     end
   end
 end
