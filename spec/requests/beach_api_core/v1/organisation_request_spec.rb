@@ -35,10 +35,15 @@ module BeachApiCore
       let!(:logo_image) { fixture_file_upload('spec/uploads/test.png', 'image/png') }
 
       context 'when valid' do
-        before { post beach_api_core.v1_organisations_path,
-                      params: { organisation: { name: Faker::Name.title, logo_image_attributes: { file: logo_image },
-                                                logo_properties: { color: Faker::Lorem.word } } },
-                      headers: bearer_auth }
+        before do
+          post beach_api_core.v1_organisations_path,
+               params: {
+                 organisation: { name: Faker::Name.title,
+                                 logo_image_attributes: { file: logo_image },
+                                 logo_properties: { color: Faker::Lorem.word } }
+               },
+               headers: bearer_auth
+        end
         it { expect(response.status).to eq(201) }
         it_behaves_like 'valid organisation response' do
           it do
@@ -61,36 +66,50 @@ module BeachApiCore
     end
 
     describe 'when update' do
-      let(:owned_organisation) { (create :membership, member: oauth_user, owner: true,
-                                         group: (create :organisation)).group }
+      let(:owned_organisation) do
+        (create :membership, member: oauth_user, owner: true, group: (create :organisation)).group
+      end
       let(:organisation) { (create :membership, member: oauth_user, group: (create :organisation)).group }
       let(:new_name) { Faker::Name.title }
 
       context 'when valid' do
-        before { patch beach_api_core.v1_organisation_path(owned_organisation), params: { organisation: { name: new_name } },
-                       headers: bearer_auth }
+        before do
+          patch beach_api_core.v1_organisation_path(owned_organisation),
+                params: { organisation: { name: new_name } },
+                headers: bearer_auth
+        end
         it { expect(owned_organisation.reload.name).to eq new_name }
         it_behaves_like 'valid organisation response'
       end
 
       it_behaves_like 'an forbidden resource' do
-        before { patch beach_api_core.v1_organisation_path(organisation), params: { organisation: { name: new_name } },
-                                                                  headers: bearer_auth }
+        before do
+          patch beach_api_core.v1_organisation_path(organisation),
+                params: { organisation: { name: new_name } },
+                headers: bearer_auth
+        end
       end
 
       it_behaves_like 'an authenticated resource' do
-        before { patch beach_api_core.v1_organisation_path(owned_organisation), params: { organisation: { name: new_name } } }
+        before do
+          patch beach_api_core.v1_organisation_path(owned_organisation),
+                params: { organisation: { name: new_name } }
+        end
       end
 
       it_behaves_like 'an authenticated resource' do
-        before { patch beach_api_core.v1_organisation_path(owned_organisation), params: { organisation: { name: new_name } },
-                                                                   headers: invalid_bearer_auth }
+        before do
+          patch beach_api_core.v1_organisation_path(owned_organisation),
+                params: { organisation: { name: new_name } },
+                headers: invalid_bearer_auth
+        end
       end
     end
 
     describe 'when destroy' do
-      let(:owned_organisation) { (create :membership, member: oauth_user,
-                                                      group: (create :organisation), owner: true).group }
+      let(:owned_organisation) do
+        (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
+      end
       let(:organisation) { (create :membership, member: oauth_user, group: (create :organisation)).group }
 
       it 'should allow owner to delete the organisation' do
@@ -104,8 +123,9 @@ module BeachApiCore
     end
 
     describe 'when show' do
-      let(:owned_organisation) { (create :membership, member: oauth_user, owner: true,
-                                         group: (create :organisation)).group }
+      let(:owned_organisation) do
+        (create :membership, member: oauth_user, owner: true, group: (create :organisation)).group
+      end
       let(:organisation) { (create :membership, group: (create :organisation)).group }
 
       it_behaves_like 'an authenticated resource' do
@@ -126,38 +146,41 @@ module BeachApiCore
     end
 
     describe 'when users' do
-      let(:organisation) { (create :membership, member: oauth_user, group: (create :organisation)).group }
-
-      before do
-        2.times do |i|
-          user = create :user, email: "test#{i}@i.com"
-          create :membership, group: organisation, member: user
+      context 'when organisation member' do
+        let!(:organisation) do
+          (create :membership, member: oauth_user, group: (create :organisation)).group
         end
-        access_token.update(organisation: organisation)
+
+        before do
+          access_token.update(organisation: organisation)
+        end
+
+        it 'should should respond with forbidden status' do
+          get beach_api_core.users_v1_organisations_path, headers: bearer_auth
+          expect(response.status).to eq 403
+        end
       end
 
-      it 'should return all available inventors for organisation' do
-        get beach_api_core.users_v1_organisations_path, headers: bearer_auth
-        expect(response.status).to eq 200
-        expect(json_body[:users]).to be_present
-        expect(json_body[:users].size).to eq 3
-      end
-
-      it 'should autocomplete available inventors for organisation' do
-        request = -> (term) do
-          get beach_api_core.users_v1_organisations_path, params: { term: term }, headers: bearer_auth
+      context 'when organisation owner' do
+        let!(:owned_organisation) do
+          (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
         end
-        request.call('test')
-        expect(response.status).to eq 200
-        expect(json_body[:users]).to be_present
-        expect(json_body[:users].size).to eq 2
-        request.call('test1')
-        expect(response.status).to eq 200
-        expect(json_body[:users]).to be_present
-        expect(json_body[:users].size).to eq 1
-        request.call('fail')
-        expect(response.status).to eq 200
-        expect(json_body[:users].size).to eq 0
+
+        before do
+          access_token.update(organisation: owned_organisation)
+          2.times { create :membership, group: owned_organisation }
+        end
+
+        it_behaves_like 'an authenticated resource' do
+          before { get beach_api_core.users_v1_organisations_path }
+        end
+
+        it 'should return additional information for users' do
+          get beach_api_core.users_v1_organisations_path, headers: bearer_auth
+          expect(response.status).to eq 200
+          expect(json_body[:users]).to be_present
+          expect(json_body[:users].first).to include(:joined_at, :role, :profile)
+        end
       end
     end
 

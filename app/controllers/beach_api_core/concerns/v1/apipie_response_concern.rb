@@ -7,9 +7,15 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     private
 
     def apipie_user_response
-      pretty BeachApiCore::UserSerializer.new(apipie_user,
-                                              keepers: [BeachApiCore::Instance.current],
-                                              current_user: apipie_user).as_json
+      pretty BeachApiCore::UserSerializer.new(
+        apipie_user, keepers: [BeachApiCore::Instance.current], current_user: apipie_user
+      ).as_json
+    end
+
+    def apipie_organisation_user_response
+      pretty BeachApiCore::OrganisationUserSerializer.new(
+        apipie_user, current_organisation: apipie_organisation
+      ).as_json
     end
 
     def apipie_favourite_response
@@ -50,6 +56,10 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
              update:  [true, false].sample,
              delete:  [true, false].sample,
              execute: [true, false].sample)
+    end
+
+    def apipie_role_response
+      pretty BeachApiCore::RoleSerializer.new(apipie_role)
     end
   end
 end

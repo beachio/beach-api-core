@@ -3,5 +3,6 @@ FactoryGirl.define do
     user { build :user }
     email { Faker::Internet.email }
     group { build :team }
+    role
   end
 end
