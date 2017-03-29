@@ -12,7 +12,11 @@ module BeachApiCore
     end
 
     def index
-      render_json_success({ atoms: BeachApiCore::Atom.all }, :ok)
+      user = params[:user_id] ? BeachApiCore::User.find(params[:user_id]) : current_user
+      atoms = BeachApiCore::Atom.where(kind: params[:kind]).with_actions(params[:actions]).for_user(user)
+      render_json_success(atoms, :ok,
+                          current_user: user, current_organisation: current_organisation,
+                          root: :atoms)
     end
 
     def create
@@ -34,7 +38,8 @@ module BeachApiCore
     end
 
     def show
-      render_json_success(@atom, :ok, root: :atom)
+      render_json_success(@atom, :ok, root: :atom,
+                          current_user: current_user, current_organisation: current_organisation)
     end
 
     def destroy
