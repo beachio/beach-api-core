@@ -25,7 +25,6 @@ module BeachApiCore
       end
     end
 
-
     private
 
     def permission_params
