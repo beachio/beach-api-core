@@ -19,6 +19,5 @@ module BeachApiCore
       create :permission
       should validate_uniqueness_of(:atom).scoped_to(:keeper_id, :keeper_type)
     end
-
   end
 end

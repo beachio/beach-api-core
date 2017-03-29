@@ -12,10 +12,11 @@ module BeachApiCore
     end
 
     def index
-      atoms = BeachApiCore::Atom.where(kind: params[:kind]).only_with_actions(params[:actions])
       user = params[:user_id] ? BeachApiCore::User.find(params[:user_id]) : current_user
-      render_json_success({ atoms: atoms }, :ok, root: :atoms,
-                          current_user: user, current_organisation: current_organisation)
+      atoms = BeachApiCore::Atom.where(kind: params[:kind]).with_actions(params[:actions]).for_user(user)
+      render_json_success(atoms, :ok,
+                          current_user: user, current_organisation: current_organisation,
+                          root: :atoms)
     end
 
     def create

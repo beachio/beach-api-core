@@ -18,6 +18,5 @@ module BeachApiCore
     def organisation
       instance_options[:current_organisation]
     end
-
   end
 end

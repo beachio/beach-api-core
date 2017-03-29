@@ -10,12 +10,15 @@ module BeachApiCore
 
     validate :check_looped_tree
 
-    scope :only_with_actions, -> (actions) do
+    scope :with_actions, -> (actions) do
       joins(:permissions)
           .where(actions.map{ |action| "actions -> '#{action}' = 'true'" }.join(' AND '))
           .distinct
     end
 
+    scope :for_user, -> (user) do
+      joins(:permissions).where.has{ permissions.id.in BeachApiCore::Permission.for_user(user, user.roles).select(:id) }
+    end
 
     class << self
       def lookup!(name_or_id)

@@ -11,6 +11,10 @@ module BeachApiCore
     validates :atom, uniqueness: { scope: [:keeper_id, :keeper_type] }
     validates :keeper_type, inclusion: KEEPER_TYPES
 
+    scope :for_user, -> (user, roles) do
+      where(keeper: [user, user.organisations, user.teams, roles].compact.flatten)
+    end
+
     %w(create read update delete execute).each do |action|
       define_method action do
         actions[action]

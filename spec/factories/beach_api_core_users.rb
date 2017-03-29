@@ -6,6 +6,12 @@ FactoryGirl.define do
     after(:build) do |user|
       user.profile ||= build(:profile, user: user)
     end
+
+    trait :with_organisation do
+      after(:build) do |user|
+        user.organisation_memberships.build(group: (create :organisation))
+      end
+    end
   end
 
   factory :developer, parent: :user do

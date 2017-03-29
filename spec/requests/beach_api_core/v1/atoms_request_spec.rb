@@ -74,7 +74,7 @@ module BeachApiCore
         get beach_api_core.v1_atom_path(atom), headers: bearer_auth
         expect(response.status).to eq(200)
         expect(json_body[:atom]).to be_present
-        expect(json_body[:atom].keys).to include(:id, :title, :atom_parent_id, :kind)
+        expect(json_body[:atom].keys).to include(:id, :title, :atom_parent_id, :kind, :actions)
       end
     end
 
@@ -97,14 +97,19 @@ module BeachApiCore
     end
 
     describe 'when index' do
-      let(:user) { create :user }
-      let(:atoms) { create_list :atom, 2, kind: 'simple_item' }
+      let(:user) { create :user, :with_organisation }
+      let(:kind) { Faker::Lorem.word }
+
       before do
-        create :permission, atom: (create :atom), actions: { update: true }, keeper: user
-        create :permission, atom: (create :atom), actions: { update: true, execute: true }, keeper: (create :role)
-        create :permission, atom: (create :atom), actions: { create: true }, keeper: (create :user)
-        create :permission, atom: (create :atom, kind: 'simple_item'), actions: { create: true, update: true }, keeper: (create :user)
-        atoms.each { |a| create :permission, atom: a, actions: { create: true, update: true }, keeper: user }
+        create :assignment, user: user, keeper: BeachApiCore::Instance.current
+        create :permission, atom: (create :atom, kind: kind), actions: { update: true }, keeper: user
+        create :permission, atom: (create :atom, kind: kind), actions: { update: true, execute: true }, keeper: (create :role)
+        create :permission, atom: (create :atom, kind: kind), actions: { update: true, create: true }, keeper: user.roles.first
+        create :permission, atom: (create :atom, kind: kind), actions: { update: true, create: true }, keeper: oauth_user.roles.first
+        create :permission, atom: (create :atom, kind: kind), actions: { create: true }, keeper: (create :user)
+        create :permission, atom: (create :atom), actions: { create: true, update: true }, keeper: (create :user)
+        create :permission, atom: (create :atom, kind: kind), actions: { create: true, update: true }, keeper: user
+        create :permission, atom: (create :atom, kind: kind), actions: { create: true, update: true }, keeper: user.organisations.first
       end
 
       it_behaves_like 'an forbidden resource' do
@@ -113,13 +118,14 @@ module BeachApiCore
 
       it 'should return list of atoms' do
         get beach_api_core.v1_atoms_path,
-            params: { user_id: user.id, kind: 'simple_item', actions: %w(create update) }, headers: bearer_auth
+            params: { user_id: user.id, kind: kind, actions: %w(create update) }, headers: bearer_auth
         expect(response.status).to eq(200)
-        expect(json_body[:atoms].size).to eq 2
-        get beach_api_core.v1_atoms_path,
-            params: { kind: 'simple_item', actions: %w(create update) }, headers: bearer_auth
-        expect(response.status).to eq(200)
+        expect(json_body[:atoms].all? { |a| a[:actions].present? }).to be_truthy
         expect(json_body[:atoms].size).to eq 3
+        get beach_api_core.v1_atoms_path,
+            params: { kind: kind, actions: %w(create update) }, headers: bearer_auth
+        expect(response.status).to eq(200)
+        expect(json_body[:atoms].size).to eq 1
       end
     end
   end
