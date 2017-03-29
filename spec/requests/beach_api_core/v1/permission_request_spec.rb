@@ -28,7 +28,7 @@ module BeachApiCore
       end
 
       it 'should return services categories' do
-        get beach_api_core.v1_atom_permission_index_path(@atom), headers: bearer_auth
+        get beach_api_core.v1_atom_permission_path(@atom), headers: bearer_auth
         actions = { create: true, read: true, update: true, delete: true, execute: false }
         expect(response.status).to eq 200
         expect(json_body[:actions]).to be_present
@@ -36,8 +36,74 @@ module BeachApiCore
       end
 
       it_behaves_like 'an authenticated resource' do
-        before { get beach_api_core.v1_atom_permission_index_path(@atom) }
+        before { get beach_api_core.v1_atom_permission_path(@atom) }
       end
+    end
+
+    describe 'when set' do
+      before do
+        @atom = create :atom
+        create :assignment, role: (create :role, name: 'admin'),
+               user: oauth_user, keeper: BeachApiCore::Instance.current
+      end
+
+      context 'when create' do
+        it_behaves_like 'an authenticated resource' do
+          before { post beach_api_core.set_v1_atom_permission_path(@atom) }
+        end
+
+        it_behaves_like 'an forbidden resource' do
+          before { post beach_api_core.set_v1_atom_permission_path(@atom),
+                        params: { permission: { keeper_id: BeachApiCore::Role.admin.id,
+                                                keeper_type: 'Role',
+                                                actions: [],
+                                                actor: Faker::Lorem.word } },
+                        headers: developer_bearer_auth }
+        end
+
+        it 'should successfully create an atom' do
+          expect { post beach_api_core.set_v1_atom_permission_path(@atom),
+                        params: { permission: { keeper_id: BeachApiCore::Role.admin.id,
+                                                keeper_type: 'Role',
+                                                actions: [],
+                                                actor: Faker::Lorem.word } },
+                        headers: bearer_auth }
+              .to change(Permission, :count).by(1)
+          expect(response.status).to eq 200
+        end
+      end
+
+      context 'when update' do
+        before do
+          @permission = create :permission, atom: @atom, actions: {}
+        end
+        it_behaves_like 'an authenticated resource' do
+          before { post beach_api_core.set_v1_atom_permission_path(@atom) }
+        end
+
+        it_behaves_like 'an forbidden resource' do
+          before { post beach_api_core.set_v1_atom_permission_path(@atom),
+                        params: { permission: { keeper_id: @permission.keeper_id,
+                                                keeper_type: @permission.keeper_type,
+                                                actions: [:read],
+                                                actor: @permission.actor } },
+                        headers: developer_bearer_auth }
+        end
+
+        it 'should successfully update an atom' do
+          expect { post beach_api_core.set_v1_atom_permission_path(@atom),
+                        params: { permission: { keeper_id: @permission.keeper_id,
+                                                keeper_type: @permission.keeper_type,
+                                                actions: [:read],
+                                                actor: @permission.actor } },
+                        headers: bearer_auth }
+              .not_to change(Permission, :count)
+          expect(response.status).to eq 200
+          actions = { 'read' => 'true' }
+          expect(@permission.reload.actions).to eq actions
+        end
+      end
+
     end
 
   end

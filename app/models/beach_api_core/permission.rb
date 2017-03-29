@@ -6,9 +6,9 @@ module BeachApiCore
     belongs_to :atom, class_name: 'BeachApiCore::Atom', inverse_of: :permissions
     belongs_to :keeper, polymorphic: true
 
-    validates :atom, :keeper, presence: true
+    validates :atom, :keeper, :actor, presence: true
     validates :actions, presence: true, allow_blank: true
-    validates :atom, uniqueness: { scope: [:keeper_id, :keeper_type] }
+    validates :atom, uniqueness: { scope: [:actor, :keeper_id, :keeper_type] }
     validates :keeper_type, inclusion: KEEPER_TYPES
 
     scope :for_user, -> (user, roles) do
