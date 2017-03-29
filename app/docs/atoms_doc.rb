@@ -25,9 +25,8 @@ module AtomsDoc
   def update
   end
 
-  api :GET, '/atoms', 'Get an atom'
+  api :GET, '/atoms/:id', 'Get an atom'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :id, String, desc: 'can be either atom id or name', required: true
   example "\"atom\": #{apipie_atom_response} \nfail: 'Errors Description'"
   def show
   end
