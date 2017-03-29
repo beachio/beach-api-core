@@ -19,15 +19,16 @@ module AtomsDoc
 
   api :PUT, '/atoms', 'Update an atom by id or name'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :id, String, desc: 'can be either atom id or name'
+  param :id, String, desc: 'can be either atom id or name', required: true
   param_group :atom
   example "\"atom\": #{apipie_atom_response} \nfail: 'Errors Description'"
   def update
   end
 
-  api :DELETE, '/atoms/:id', 'Remove an atom'
+  api :GET, '/atoms', 'Get an atom'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "success: 'Atom was successfully deleted' \nfail: 'Could not remove atom'"
+  param :id, String, desc: 'can be either atom id or name', required: true
+  example "\"atom\": #{apipie_atom_response} \nfail: 'Errors Description'"
   def show
   end
 
