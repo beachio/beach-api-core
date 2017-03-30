@@ -57,7 +57,7 @@ module BeachApiCore
     end
 
     def atom_params
-      params.require(:atom).permit(:kind, :atom_parent_id, :title)
+      params.require(:atom).permit(:kind, :atom_parent_id, :title, :name)
     end
   end
 end

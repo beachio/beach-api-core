@@ -32,7 +32,7 @@ module BeachApiCore
     describe 'when update' do
       let!(:atom) { create :atom }
       let(:new_title) { Faker::Name.title }
-      let(:new_kind) { Faker::Lorem.word }
+      let(:new_name) { Faker::Lorem.word }
 
       it_behaves_like 'an authenticated resource' do
         before { put beach_api_core.v1_atoms_path, params: { id: atom.id } }
@@ -47,9 +47,9 @@ module BeachApiCore
         put beach_api_core.v1_atoms_path, params: { id: atom.id, atom: { title: new_title } }, headers: bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:atom][:title]).to eq new_title
-        put beach_api_core.v1_atoms_path, params: { id: atom.name, atom: { kind: new_kind } }, headers: bearer_auth
+        put beach_api_core.v1_atoms_path, params: { id: atom.name, atom: { name: new_name } }, headers: bearer_auth
         expect(response.status).to eq 200
-        expect(json_body[:atom][:kind]).to eq new_kind
+        expect(json_body[:atom][:name]).to eq new_name
       end
 
       it 'should return 404' do
