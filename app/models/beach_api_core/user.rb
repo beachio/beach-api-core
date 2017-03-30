@@ -32,7 +32,7 @@ module BeachApiCore
 
     accepts_nested_attributes_for :profile
     accepts_nested_attributes_for :organisation_memberships, allow_destroy: true, reject_if: proc { |attr| attr[:group_id].blank? }
-    accepts_nested_attributes_for :memberships, allow_destroy: true
+    accepts_nested_attributes_for :team_memberships, allow_destroy: true
     accepts_nested_attributes_for :assignments, allow_destroy: true
 
     after_initialize :generate_profile
