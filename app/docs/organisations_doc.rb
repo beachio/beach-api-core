@@ -1,6 +1,6 @@
 module OrganisationsDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   def_param_group :organisation do
     param :organisation, Hash, required: true do

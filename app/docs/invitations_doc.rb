@@ -1,6 +1,6 @@
 module InvitationsDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   api :GET, '/invitations', 'Get a list of pending invitations for group'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true

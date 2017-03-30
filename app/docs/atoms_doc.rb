@@ -1,6 +1,6 @@
 module AtomsDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   def_param_group :atom do
     param :atom, Hash, required: true do

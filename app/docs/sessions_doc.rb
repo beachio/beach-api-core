@@ -1,6 +1,6 @@
 module SessionsDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   api :POST, '/auth', 'Authorize user'
   param :session, Hash, required: true do
