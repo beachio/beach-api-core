@@ -1,6 +1,6 @@
 module TeamsDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   def_param_group :team do
     param :team, Hash, required: true do

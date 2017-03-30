@@ -1,6 +1,6 @@
 module CapabilitiesDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   api :POST, '/services/:service_id/capabilities', 'Create capability'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true

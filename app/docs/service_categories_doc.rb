@@ -1,6 +1,6 @@
 module ServiceCategoriesDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
   def_param_group :service_category do
     param :service_category, Hash, required: true do
       param :name, String, required: true

@@ -1,6 +1,6 @@
 module UsersDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   api :POST, '/users', 'Create user'
   param :user, Hash, required: true do

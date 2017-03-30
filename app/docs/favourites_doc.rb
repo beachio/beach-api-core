@@ -1,6 +1,6 @@
 module FavouritesDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   api :GET, '/favourites', 'List of user favourites items'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true

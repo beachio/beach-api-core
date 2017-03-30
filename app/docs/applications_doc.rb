@@ -1,6 +1,6 @@
 module ApplicationsDoc
   extend Apipie::DSL::Concern
-  include BeachApiCore::Concerns::V1::ApipieResponseConcern
+  extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   api :GET, '/applications', 'Get list of applications'
   example "\"applications\": [#{apipie_application_response}, ...]"
