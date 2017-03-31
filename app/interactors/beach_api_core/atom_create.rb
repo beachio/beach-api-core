@@ -3,7 +3,6 @@ class BeachApiCore::AtomCreate
 
   def call
     context.atom = BeachApiCore::Atom.new context.params
-
     if context.atom.save
       context.status = :created
     else

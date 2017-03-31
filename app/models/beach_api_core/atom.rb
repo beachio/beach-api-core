@@ -22,10 +22,17 @@ module BeachApiCore
 
     class << self
       def lookup!(name_or_id)
+        puts name_or_id
+        puts where.has{ |a| (a.id == name_or_id) | (a.name == name_or_id) }.first
         atom = where.has{ |a| (a.id == name_or_id) | (a.name == name_or_id) }.first
         raise ActiveRecord::RecordNotFound.new('Not Found') unless atom
         atom
       end
+    end
+
+    def atom_parent_id=(value)
+      atom_parent_id = BeachApiCore::Atom.lookup!(value).id
+      self.instance_variable_set(:@parent_atom_id, atom_parent_id)
     end
 
     private

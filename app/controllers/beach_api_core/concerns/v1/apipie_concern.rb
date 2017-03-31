@@ -73,10 +73,12 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   end
 
   def apipie_atom
+    return @_apipie_atom if @_apipie_atom
     @_apipie_atom ||= BeachApiCore::Atom.new(id: fake_id,
                                              title: Faker::Name.title,
-                                             kind: Faker::Lorem.word,
-                                             atom_parent_id: fake_id)
+                                             kind: Faker::Lorem.word)
+    @_apipie_atom.attributes = { atom_parent_id: fake_id }
+    @_apipie_atom
   end
 
   def apipie_role
@@ -93,5 +95,4 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   def fake_id
     rand(1..100) * (-1)
   end
-
 end
