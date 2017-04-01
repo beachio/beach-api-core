@@ -34,14 +34,12 @@ module BeachApiCore
 
         it 'should set an atom parent' do
           [@atom_parent.id, @atom_parent.name].each do |value|
-            puts @atom_parent.inspect
             expect { post beach_api_core.v1_atoms_path, params: { atom: { title: Faker::Name.title, kind: 'item',
                                                                           atom_parent_id: value } },
                           headers: bearer_auth }
               .to change(Atom, :count).by(1)
             expect(response.status).to eq 201
             expect(json_body[:atom]).to be_present
-            puts json_body[:atom].inspect
             expect(json_body[:atom][:atom_parent_id]).to be_present
           end
         end
