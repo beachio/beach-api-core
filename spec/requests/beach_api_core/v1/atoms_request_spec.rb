@@ -11,6 +11,7 @@ module BeachApiCore
     end
 
     describe 'when create' do
+
       it_behaves_like 'an authenticated resource' do
         before { post beach_api_core.v1_atoms_path }
       end
@@ -26,6 +27,22 @@ module BeachApiCore
             .to change(Atom, :count).by(1)
         expect(response.status).to eq 201
         expect(json_body[:atom]).to be_present
+      end
+
+      context 'atom parent' do
+        before { @atom_parent = create :atom  }
+
+        it 'should set an atom parent' do
+          [@atom_parent.id, @atom_parent.name].each do |value|
+            expect { post beach_api_core.v1_atoms_path, params: { atom: { title: Faker::Name.title, kind: 'item',
+                                                                          atom_parent_id: value } },
+                          headers: bearer_auth }
+              .to change(Atom, :count).by(1)
+            expect(response.status).to eq 201
+            expect(json_body[:atom]).to be_present
+            expect(json_body[:atom][:atom_parent_id]).to be_present
+          end
+        end
       end
     end
 

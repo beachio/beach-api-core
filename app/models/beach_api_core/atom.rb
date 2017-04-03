@@ -28,6 +28,11 @@ module BeachApiCore
       end
     end
 
+    def atom_parent_id=(value)
+      atom_parent_id = BeachApiCore::Atom.lookup!(value).id
+      instance_variable_get(:@attributes)['atom_parent_id'].instance_variable_set(:@value, atom_parent_id)
+    end
+
     private
 
     def check_looped_tree(parent = nil)
