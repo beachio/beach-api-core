@@ -41,6 +41,7 @@ module BeachApiCore
             expect(response.status).to eq 201
             expect(json_body[:atom]).to be_present
             expect(json_body[:atom][:atom_parent_id]).to be_present
+            expect(Atom.last.atom_parent).to be_present
           end
         end
       end

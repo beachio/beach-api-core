@@ -29,8 +29,9 @@ module BeachApiCore
     end
 
     def atom_parent_id=(value)
-      atom_parent_id = BeachApiCore::Atom.lookup!(value).id
-      instance_variable_get(:@attributes)['atom_parent_id'].instance_variable_set(:@value, atom_parent_id)
+      return unless value.present?
+      self.atom_parent = BeachApiCore::Atom.lookup!(value)
+      instance_variable_get(:@attributes)['atom_parent_id'].instance_variable_set(:@value, atom_parent.id)
     end
 
     private
