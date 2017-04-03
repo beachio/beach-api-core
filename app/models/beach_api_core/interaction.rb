@@ -12,5 +12,14 @@ module BeachApiCore
     accepts_nested_attributes_for :assets, allow_destroy: true, reject_if: :file_blank?
 
     validates :user, :interaction_keepers, :kind, presence: true
+    validate :check_uniqueness_of_attributes_keys, on: [:create, :update]
+
+    private
+
+    def check_uniqueness_of_attributes_keys
+      errors.add(:interaction_attributes,
+                 'can not have duplicate keys') if interaction_attributes
+                                                       .map(&:key).uniq.size != interaction_attributes.size
+    end
   end
 end

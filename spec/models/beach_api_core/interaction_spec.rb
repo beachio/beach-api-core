@@ -25,9 +25,26 @@ module BeachApiCore
 
     it 'should remove interaction attributes' do
       interaction = create :interaction
-      create_list :interaction_attribute, 2, interaction: interaction
+      interaction.interaction_attributes = create_list(:interaction_attribute, 2, interaction: interaction)
       expect { interaction.destroy }.to change(BeachApiCore::Interaction, :count)
                                             .and change(BeachApiCore::InteractionAttribute, :count)
     end
+
+    it 'should not create interation with duplicated attributes keys' do
+      interaction = build :interaction
+      key = Faker::Lorem.word
+      interaction.update(interaction_attributes_attributes: [{ key: key, values: { name: Faker::Lorem.word } },
+                                                             { key: key, values: { name: Faker::Lorem.word } }])
+      expect(interaction).to be_invalid
+    end
+
+    it 'should not update interation with duplicated attributes keys' do
+      interaction = create :interaction
+      key = Faker::Lorem.word
+      interaction.update(interaction_attributes_attributes: [{ key: key, values: { name: Faker::Lorem.word } },
+                                                             { key: key, values: { name: Faker::Lorem.word } }])
+      expect(interaction).to be_invalid
+    end
+
   end
 end
