@@ -5,6 +5,6 @@ module BeachApiCore
 
     attributes :id, :email, :username
     has_one :profile, serializer: BeachApiCore::ProfileSerializer
-    has_one :organisations
+    has_many :organisations
   end
 end
