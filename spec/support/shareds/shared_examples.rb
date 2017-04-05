@@ -12,8 +12,10 @@ end
 
 shared_examples 'valid user response' do
   it do
+    # puts json_body[:user].inspect
     expect(json_body[:user]).to be_present
-    expect(json_body[:user].keys).to contain_exactly(:id, :email, :username, :profile, :organisations)
+    expect(json_body[:user].keys).to contain_exactly(:id, :email, :username, :profile,
+                                                     :organisations, :user_preferences)
     expect(json_body[:user][:profile].keys).to include(:id, :first_name, :last_name,
                                                        :birth_date, :sex, :time_zone,
                                                        :avatar_url)

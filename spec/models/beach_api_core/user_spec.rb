@@ -14,6 +14,7 @@ module BeachApiCore
       should have_many(:roles)
       should have_many(:applications)
       should have_many(:favourites).dependent(:destroy)
+      should have_many(:user_preferences).dependent(:destroy)
       should have_many :organisations
       should have_many :teams
       should respond_to(:first_name)
@@ -103,7 +104,6 @@ module BeachApiCore
         actions = { create: true, read: false, update: true, delete: true, execute: true }
         expect(@user.permissions_for(@atom)).to eq actions
       end
-
     end
   end
 end
