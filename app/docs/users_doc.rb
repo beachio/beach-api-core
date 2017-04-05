@@ -35,6 +35,10 @@ module UsersDoc
         param :base64, String, desc: 'Encoded Base64 string'
       end
     end
+    param :user_preferences_attributes, Array do
+      param :id, Integer, required: true
+      param :preferences, Hash, required: true
+    end
   end
   example "\"user\": #{apipie_user_response} \nfail: 'Errors Description'"
   def update

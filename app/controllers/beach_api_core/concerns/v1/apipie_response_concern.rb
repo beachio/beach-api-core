@@ -58,5 +58,4 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
   def apipie_role_response
     pretty BeachApiCore::RoleSerializer.new(apipie_role)
   end
-
 end

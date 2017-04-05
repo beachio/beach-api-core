@@ -95,6 +95,17 @@ module BeachApiCore
           expect(json_body[:user][:organisations].first[:current_user_roles]).to eq([assignment.role.name])
         end
       end
+
+      context 'when with preferences' do
+        let!(:current_preference) { create :user_preference, user: oauth_user, application: oauth_application }
+        let!(:other_preference) { create :user_preference, user: oauth_user }
+
+        it 'should return preferences for current application' do
+          get beach_api_core.v1_user_path, headers: bearer_auth
+          expect(json_body[:user][:user_preferences].size).to eq 1
+          expect(json_body[:user][:user_preferences].first[:id]).to eq current_preference.id
+        end
+      end
     end
 
     describe 'when update' do
