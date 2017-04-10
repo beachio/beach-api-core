@@ -6,5 +6,6 @@ module BeachApiCore
     attributes :id, :kind, :created_at
     belongs_to :user
     has_many :interaction_keepers
+    has_many :interaction_attributes
   end
 end
