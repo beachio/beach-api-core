@@ -11,6 +11,10 @@ module BeachApiCore::Concerns::V1::BaseControllerConcern
 
     private
 
+    def require_organisation!
+      raise BeachApiCore::Exception::NotAcceptable unless current_organisation
+    end
+
     def current_keepers
       [current_application, current_organisation, BeachApiCore::Instance.current].compact
     end
