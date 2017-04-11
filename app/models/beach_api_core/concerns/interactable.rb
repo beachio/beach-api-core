@@ -15,7 +15,9 @@ module BeachApiCore::Concerns::Interactable
         kind = "#{attr}_changed"
         interactions.create(kind: kind, user: current_user,
                             interaction_attributes_attributes: [{ key: 'new_value',
-                                                                  values: { value: send(attr) } }])
+                                                                  values: { value: send(attr) } },
+                                                                { key: 'old_value',
+                                                                  values: { value: send(:"#{attr}_was") } } ])
       end
     end
 

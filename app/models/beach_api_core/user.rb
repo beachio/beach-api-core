@@ -26,6 +26,7 @@ module BeachApiCore
     has_many :team_memberships, -> { where(group_type: 'BeachApiCore::Team') },
              as: :member, inverse_of: :member, class_name: 'BeachApiCore::Membership'
     has_many :teams, through: :team_memberships, source: :group, source_type: 'BeachApiCore::Team'
+    has_many :user_preferences, dependent: :destroy
 
     has_secure_password
     acts_as_downcasable_on [:email, :username]
@@ -34,6 +35,7 @@ module BeachApiCore
     accepts_nested_attributes_for :organisation_memberships, allow_destroy: true, reject_if: proc { |attr| attr[:group_id].blank? }
     accepts_nested_attributes_for :team_memberships, allow_destroy: true
     accepts_nested_attributes_for :assignments, allow_destroy: true
+    accepts_nested_attributes_for :user_preferences, allow_destroy: true
 
     after_initialize :generate_profile
     before_validation :generate_username

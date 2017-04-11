@@ -95,6 +95,17 @@ module BeachApiCore
           expect(json_body[:user][:organisations].first[:current_user_roles]).to eq([assignment.role.name])
         end
       end
+
+      context 'when with preferences' do
+        let!(:current_preference) { create :user_preference, user: oauth_user, application: oauth_application }
+        let!(:other_preference) { create :user_preference, user: oauth_user }
+
+        it 'should return preferences for current application' do
+          get beach_api_core.v1_user_path, headers: bearer_auth
+          expect(json_body[:user][:user_preferences].size).to eq 1
+          expect(json_body[:user][:user_preferences].first[:id]).to eq current_preference.id
+        end
+      end
     end
 
     describe 'when update' do
@@ -111,18 +122,27 @@ module BeachApiCore
 
       context 'when valid' do
         context 'when success' do
+          let(:new_email) { Faker::Internet.email }
+
           before do
-            patch beach_api_core.v1_user_path, params: { user: { email: Faker::Internet.email,
-                                                  username: Faker::Internet.user_name,
-                                                  profile_attributes: { id: oauth_user.profile.id,
-                                                                        first_name: Faker::Name.first_name,
-                                                                        last_name: Faker::Name.last_name,
-                                                                        sex: [:male, :female].sample
-                                                  } } },
+            patch beach_api_core.v1_user_path,
+                  params: { user: { email: new_email,
+                                    username: Faker::Internet.user_name,
+                                    profile_attributes: { id: oauth_user.profile.id,
+                                                          first_name: Faker::Name.first_name,
+                                                          last_name: Faker::Name.last_name,
+                                                          sex: [:male, :female].sample },
+                                    user_preferences_attributes: [ { preferences: { text: Faker::Lorem.word } } ]
+                  } },
                   headers: bearer_auth
           end
-          it { expect(response.status).to eq(200) }
-          it_behaves_like 'valid user response'
+          it_behaves_like 'valid user response' do
+            it do
+              expect(response.status).to eq(200)
+              expect(oauth_user.reload.email).to eq(new_email)
+              expect(oauth_user.user_preferences).to be_present
+            end
+          end
         end
 
         context 'when success with custom fields' do
