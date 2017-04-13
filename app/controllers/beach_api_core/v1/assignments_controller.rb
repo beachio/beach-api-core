@@ -2,7 +2,7 @@ module BeachApiCore
   class V1::AssignmentsController < BeachApiCore::V1::BaseController
     include BeachApiCore::Concerns::V1::ResourceConcern
     include AssignmentsDoc
-    before_action :doorkeeper_authorize!, :check_user_membership
+    before_action :doorkeeper_authorize!, :check_user_membership!
 
     resource_description do
       error code: 403, desc: 'Forbidden request'
@@ -26,7 +26,7 @@ module BeachApiCore
       params.require(:assignment).permit(:user_id, :role_id)
     end
 
-    def check_user_membership
+    def check_user_membership!
       unless current_organisation.users.pluck(:id).include?(params[:assignment][:user_id].to_i)
         raise ActiveRecord::RecordNotFound.new('Not Found')
       end
