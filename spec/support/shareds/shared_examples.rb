@@ -10,6 +10,12 @@ shared_examples 'an forbidden resource' do
   end
 end
 
+shared_examples 'resource not found' do
+  it 'has status 404' do
+    expect(response.status).to eq(404)
+  end
+end
+
 shared_examples 'valid user response' do
   it do
     expect(json_body[:user]).to be_present

@@ -88,6 +88,11 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                              name: Faker::Lorem.word)
   end
 
+  def apipie_assignment
+    @_apipie_assignment ||= BeachApiCore::Assignment.new(id: fake_id, user: apipie_user,
+                                                         role: apipie_role, keeper: apipie_organisation)
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end
