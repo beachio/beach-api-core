@@ -16,7 +16,7 @@ BeachApiCore::Engine.routes.draw do
       get :users, on: :collection
       put :current, on: :member
     end
-    resources :assignments, only: [:create]
+    resources :assignments, only: [:create, :destroy]
     resources :memberships, only: [:create, :destroy]
     resources :invitations, only: [:index, :create, :destroy]
     resources :atoms, only: [:create, :index, :show] do

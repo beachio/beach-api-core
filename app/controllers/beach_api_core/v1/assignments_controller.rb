@@ -1,8 +1,8 @@
 module BeachApiCore
   class V1::AssignmentsController < BeachApiCore::V1::BaseController
-    include BeachApiCore::Concerns::V1::ResourceConcern
     include AssignmentsDoc
-    before_action :doorkeeper_authorize!, :check_user_membership!
+    before_action :doorkeeper_authorize!
+    before_action :check_user_membership!, only: :create
 
     resource_description do
       error code: 403, desc: 'Forbidden request'
@@ -17,6 +17,16 @@ module BeachApiCore
         render_json_success(result.assignment, result.status, root: :assignment)
       else
         render_json_error({ message: result.message }, result.status)
+      end
+    end
+
+    def destroy
+      authorize current_organisation, :update?
+      @assignment = current_organisation.assignments.find(params[:id])
+      if @assignment.destroy
+        render_json_success({ message: 'Role has been removed' }, :ok)
+      else
+        render_json_error({ message: 'Could not remove role' }, :bad_request)
       end
     end
 
