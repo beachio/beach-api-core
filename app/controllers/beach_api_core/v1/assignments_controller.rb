@@ -37,8 +37,7 @@ module BeachApiCore
     end
 
     def check_user_membership!
-      user = User.find(params[:assignment][:user_id].to_i)
-      raise ActiveRecord::RecordNotFound.new('Not Found') unless current_organisation.users.include?(user)
+      raise ActiveRecord::RecordNotFound.new('Not Found') unless current_organisation.users.exists?(assignment_params[:user_id])
     end
   end
 end
