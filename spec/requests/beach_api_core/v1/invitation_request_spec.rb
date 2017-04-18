@@ -66,7 +66,11 @@ module BeachApiCore
       let!(:organisation) do
         (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
       end
-      before { @invitation = create :invitation, group: organisation, user: oauth_user }
+      before do
+        @invitation = create :invitation, group: organisation, user: oauth_user
+        @other_invitation = create :invitation, group: organisation, user: oauth_user
+        create :invitation, invitee: @invitation.invitee, email: @invitation.invitee.email
+      end
 
       it_behaves_like 'an authenticated resource' do
         before { delete beach_api_core.v1_invitation_path(@invitation) }
@@ -75,15 +79,15 @@ module BeachApiCore
       it 'should destroy an invitation and invitee' do
         expect do
           delete beach_api_core.v1_invitation_path(@invitation), headers: bearer_auth
-        end.to change(Invitation, :count).by(-1).and change(User, :count).by(-1)
+        end.to change(Invitation, :count).by(-2).and change(User, :count).by(-1)
         expect(response.status).to eq 200
         expect(json_body[:message]).to be_present
       end
 
       it 'should not destroy an active user' do
-        @invitation.invitee.active!
+        @other_invitation.invitee.active!
         expect do
-          delete beach_api_core.v1_invitation_path(@invitation), headers: bearer_auth
+          delete beach_api_core.v1_invitation_path(@other_invitation), headers: bearer_auth
         end.to change(Invitation, :count).by(-1).and change(User, :count).by(0)
       end
     end
