@@ -15,6 +15,8 @@ module BeachApiCore
       should have_many(:applications)
       should have_many(:favourites).dependent(:destroy)
       should have_many(:user_preferences).dependent(:destroy)
+      should have_many(:received_invitations).dependent(:destroy)
+      should have_many(:invitations).dependent(:destroy)
       should have_many :organisations
       should have_many :teams
       should respond_to(:first_name)

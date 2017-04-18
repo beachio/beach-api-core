@@ -15,7 +15,8 @@ module BeachApiCore
     validates :username, presence: true, uniqueness: true
     validates :profile, :status, presence: true
 
-    has_many :invitations
+    has_many :received_invitations, dependent: :destroy, foreign_key: :invitee_id, class_name: 'BeachApiCore::Invitation'
+    has_many :invitations, dependent: :destroy
 
     has_many :memberships, as: :member, inverse_of: :member, dependent: :destroy
 
