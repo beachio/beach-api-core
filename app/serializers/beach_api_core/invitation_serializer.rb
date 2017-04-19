@@ -5,7 +5,7 @@ module BeachApiCore
 
     attributes :id, :email, :created_at
 
-    belongs_to :invitee
+    belongs_to :invitee, serializer: ProfileSimpleSerializer
     belongs_to :group
     belongs_to :role
   end

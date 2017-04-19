@@ -30,9 +30,11 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   def apipie_invitation
     @_apipie_invitation ||= BeachApiCore::Invitation.new(id: fake_id,
                                                          user: apipie_user,
+                                                         invitee: apipie_user,
                                                          email: Faker::Internet.email,
                                                          group: apipie_team,
-                                                         created_at: Time.now)
+                                                         created_at: Time.now,
+                                                         role: apipie_role)
   end
 
   def apipie_team
