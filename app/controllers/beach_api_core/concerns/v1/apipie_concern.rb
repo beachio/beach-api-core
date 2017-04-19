@@ -93,6 +93,11 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                          role: apipie_role, keeper: apipie_organisation)
   end
 
+  def apipie_setting
+    @_apipie_setting ||= BeachApiCore::Setting.new(id: fake_id, keeper: apipie_organisation,
+                                                   name: Faker::Name.title, value: Faker::Lorem.word)
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end
