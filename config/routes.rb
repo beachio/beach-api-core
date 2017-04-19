@@ -29,5 +29,6 @@ BeachApiCore::Engine.routes.draw do
       end
     end
     resources :roles, only: [:index]
+    resources :settings, only: [:update]
   end
 end
