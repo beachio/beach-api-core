@@ -168,7 +168,10 @@ module BeachApiCore
 
         before do
           access_token.update(organisation: owned_organisation)
-          2.times { create :membership, group: owned_organisation }
+          2.times do
+            user = (create :membership, group: owned_organisation).member
+            create :assignment, user: user, keeper: owned_organisation
+          end
         end
 
         it_behaves_like 'an authenticated resource' do
@@ -179,7 +182,8 @@ module BeachApiCore
           get beach_api_core.users_v1_organisations_path, headers: bearer_auth
           expect(response.status).to eq 200
           expect(json_body[:users]).to be_present
-          expect(json_body[:users].first).to include(:joined_at, :roles, :profile)
+          expect(json_body[:users].first).to include(:joined_at, :assignments, :profile)
+          expect(json_body[:users].first[:assignments].first.keys).to include(:id, :role)
         end
       end
     end
