@@ -6,6 +6,7 @@ module BeachApiCore
     before_action :doorkeeper_authorize!, :authorize_instance_owner!
 
     resource_description do
+      name 'Atoms'
       error code: 403, desc: 'Forbidden request'
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'

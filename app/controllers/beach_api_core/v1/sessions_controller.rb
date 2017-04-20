@@ -1,6 +1,7 @@
 module BeachApiCore
   class V1::SessionsController < BeachApiCore::V1::BaseController
     include SessionsDoc
+
     resource_description do
       name 'Authorization'
     end

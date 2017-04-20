@@ -5,6 +5,7 @@ module BeachApiCore
     before_action :get_resource, only: [:show, :update, :destroy]
 
     resource_description do
+      name 'Applications'
       error code: 403, desc: 'Forbidden request'
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'

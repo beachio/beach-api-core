@@ -6,6 +6,7 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
 
     resource_description do
+      name 'Teams'
       error code: 403, desc: 'Forbidden request'
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'

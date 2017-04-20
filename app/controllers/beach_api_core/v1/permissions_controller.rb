@@ -5,6 +5,7 @@ module BeachApiCore
     before_action :authorize_instance_owner!, except: [:show]
 
     resource_description do
+      name 'Permissions'
       error code: 403, desc: 'Forbidden request'
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'

@@ -4,6 +4,7 @@ module BeachApiCore
     before_action :doorkeeper_authorize!, :find_service
 
     resource_description do
+      name 'Capabilities'
       error code: 403, desc: 'Forbidden request'
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'

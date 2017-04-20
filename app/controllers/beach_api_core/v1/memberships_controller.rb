@@ -6,6 +6,7 @@ module BeachApiCore
     before_action :find_group, only: [:create]
 
     resource_description do
+      name 'Memberships'
       error code: 403, desc: 'Forbidden request'
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'

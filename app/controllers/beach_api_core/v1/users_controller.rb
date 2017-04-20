@@ -3,6 +3,10 @@ module BeachApiCore
     include ::UsersDoc
     before_action :doorkeeper_authorize!, except: [:create]
 
+    resource_description do
+      name 'Users'
+    end
+
     def create
       result = BeachApiCore::SignUp.call(user_create_params.merge(headers: request.headers['HTTP_AUTHORIZATION']))
 

@@ -5,6 +5,7 @@ module BeachApiCore
     before_action :check_user_membership!, only: :create
 
     resource_description do
+      name 'Assignments'
       error code: 403, desc: 'Forbidden request'
       error code: 401, desc: 'Unauthorized'
       error code: 404, desc: "User doesn't belong to current organisation"

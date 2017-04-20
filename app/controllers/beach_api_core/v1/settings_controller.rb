@@ -5,6 +5,10 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
     before_action :find_group, only: [:update]
 
+    resource_description do
+      name 'Settings'
+    end
+
     def update
       authorize @group, :update?
       result = SettingUpdate.call(keeper: @group,

@@ -6,6 +6,7 @@ module BeachApiCore
     before_action :find_group, except: [:destroy]
 
     resource_description do
+      name 'Invitations'
       error code: 403, desc: 'Forbidden request'
       error code: 401, desc: 'Unauthorized'
       error code: 400, desc: 'Bad request'
