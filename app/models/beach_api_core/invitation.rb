@@ -12,7 +12,7 @@ module BeachApiCore
 
     before_validation :set_invitee, on: :create
     before_validation :set_token, on: :create, unless: 'token.present?'
-    after_destroy :destroy_invitee, if: 'invitee.invitee?'
+    after_destroy :destroy_invitee, if: 'invitee&.invitee?'
 
     private
 
