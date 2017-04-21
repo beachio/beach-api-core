@@ -4,7 +4,7 @@ module BeachApiCore
     belongs_to :keeper, polymorphic: true
 
     validates :name, presence: true, uniqueness: { scope: [:keeper_id, :keeper_type] }
-    validates :title, presence: true
+    validates :title, :keeper, presence: true
 
     enum status: [:enabled, :disabled]
 
