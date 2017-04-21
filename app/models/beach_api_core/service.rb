@@ -3,7 +3,7 @@ module BeachApiCore
     include Concerns::NameGenerator
     include BeachApiCore::Concerns::AssetConcern
 
-    validates :name, :title, presence: true
+    validates :name, :title, :service_category, presence: true
 
     belongs_to :service_category, class_name: 'BeachApiCore::ServiceCategory'
     has_one :icon, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy

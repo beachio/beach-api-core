@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :assignment, class: 'BeachApiCore::Assignment' do
-    keeper { build(:instance) }
+    keeper { BeachApiCore::Instance.current }
     role
     user
   end

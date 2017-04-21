@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404145233) do
+ActiveRecord::Schema.define(version: 20170421084203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
   create_table "beach_api_core_assets", force: :cascade do |t|
-    t.string   "file_id"
+    t.string   "file_id",           null: false
     t.string   "file_filename"
     t.integer  "file_size"
     t.string   "file_content_type"
-    t.string   "entity_type"
-    t.integer  "entity_id"
+    t.string   "entity_type",       null: false
+    t.integer  "entity_id",         null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "file_extension"
@@ -32,10 +32,10 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_assignments", force: :cascade do |t|
-    t.integer  "role_id"
-    t.integer  "user_id"
-    t.string   "keeper_type"
-    t.integer  "keeper_id"
+    t.integer  "role_id",     null: false
+    t.integer  "user_id",     null: false
+    t.string   "keeper_type", null: false
+    t.integer  "keeper_id",   null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_assignments_on_keeper_type_and_keeper_id", using: :btree
@@ -56,8 +56,8 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_capabilities", force: :cascade do |t|
-    t.integer  "service_id"
-    t.integer  "application_id"
+    t.integer  "service_id",     null: false
+    t.integer  "application_id", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["application_id"], name: "index_beach_api_core_capabilities_on_application_id", using: :btree
@@ -65,9 +65,9 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_favourites", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "favouritable_type"
-    t.integer  "favouritable_id"
+    t.integer  "user_id",           null: false
+    t.string   "favouritable_type", null: false
+    t.integer  "favouritable_id",   null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.index ["favouritable_type", "favouritable_id"], name: "indexfavourites_on_favouritable_type_and_favouritable_id", using: :btree
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_interaction_attributes", force: :cascade do |t|
-    t.integer  "interaction_id"
+    t.integer  "interaction_id",              null: false
     t.string   "key",                         null: false
     t.hstore   "values",         default: {}
     t.datetime "created_at",                  null: false
@@ -93,9 +93,9 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_interaction_keepers", force: :cascade do |t|
-    t.integer  "interaction_id"
-    t.string   "keeper_type"
-    t.integer  "keeper_id"
+    t.integer  "interaction_id", null: false
+    t.string   "keeper_type",    null: false
+    t.integer  "keeper_id",      null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["interaction_id"], name: "index_beach_api_core_interaction_keepers_on_interaction_id", using: :btree
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_interactions", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",    null: false
     t.string   "kind",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -112,13 +112,13 @@ ActiveRecord::Schema.define(version: 20170404145233) do
 
   create_table "beach_api_core_invitations", force: :cascade do |t|
     t.string   "email"
-    t.integer  "user_id"
-    t.string   "group_type"
-    t.integer  "group_id"
+    t.integer  "user_id",                 null: false
+    t.string   "group_type",              null: false
+    t.integer  "group_id",                null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "invitee_id"
-    t.integer  "role_id"
+    t.integer  "role_id",                 null: false
     t.string   "token",      default: "", null: false
     t.index ["group_type", "group_id"], name: "index_beach_api_core_invitations_on_group_type_and_group_id", using: :btree
     t.index ["invitee_id"], name: "index_beach_api_core_invitations_on_invitee_id", using: :btree
@@ -127,10 +127,10 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_memberships", force: :cascade do |t|
-    t.string   "member_type"
-    t.integer  "member_id"
-    t.string   "group_type"
-    t.integer  "group_id"
+    t.string   "member_type", null: false
+    t.integer  "member_id",   null: false
+    t.string   "group_type",  null: false
+    t.integer  "group_id",    null: false
     t.boolean  "owner"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20170404145233) do
 
   create_table "beach_api_core_organisations", force: :cascade do |t|
     t.string   "name"
-    t.integer  "application_id"
+    t.integer  "application_id",  null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.hstore   "logo_properties"
@@ -148,9 +148,9 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_permissions", force: :cascade do |t|
-    t.integer  "atom_id"
-    t.string   "keeper_type"
-    t.integer  "keeper_id"
+    t.integer  "atom_id",                  null: false
+    t.string   "keeper_type",              null: false
+    t.integer  "keeper_id",                null: false
     t.hstore   "actions",     default: {}
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
@@ -162,8 +162,8 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   end
 
   create_table "beach_api_core_profile_attributes", force: :cascade do |t|
-    t.integer  "profile_id"
-    t.integer  "profile_custom_field_id"
+    t.integer  "profile_id",              null: false
+    t.integer  "profile_custom_field_id", null: false
     t.string   "value"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -176,8 +176,8 @@ ActiveRecord::Schema.define(version: 20170404145233) do
     t.string   "name"
     t.string   "title"
     t.integer  "status"
-    t.string   "keeper_type"
-    t.integer  "keeper_id"
+    t.string   "keeper_type", null: false
+    t.integer  "keeper_id",   null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["keeper_type", "keeper_id"], name: "index_profile_custom_fields_on_keeper_type_and_keeper_id", using: :btree
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 20170404145233) do
     t.date     "birth_date"
     t.integer  "sex"
     t.string   "time_zone"
-    t.integer  "user_id"
+    t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_beach_api_core_profiles_on_user_id", using: :btree
@@ -212,7 +212,7 @@ ActiveRecord::Schema.define(version: 20170404145233) do
     t.string   "title"
     t.string   "name"
     t.text     "description"
-    t.integer  "service_category_id"
+    t.integer  "service_category_id", null: false
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.index ["service_category_id"], name: "index_beach_api_core_services_on_service_category_id", using: :btree
@@ -221,8 +221,8 @@ ActiveRecord::Schema.define(version: 20170404145233) do
   create_table "beach_api_core_settings", force: :cascade do |t|
     t.string   "name",        null: false
     t.string   "value"
-    t.string   "keeper_type"
-    t.integer  "keeper_id"
+    t.string   "keeper_type", null: false
+    t.integer  "keeper_id",   null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_settings_on_keeper_type_and_keeper_id", using: :btree
@@ -231,15 +231,15 @@ ActiveRecord::Schema.define(version: 20170404145233) do
 
   create_table "beach_api_core_teams", force: :cascade do |t|
     t.string   "name"
-    t.integer  "application_id"
+    t.integer  "application_id", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["application_id"], name: "index_beach_api_core_teams_on_application_id", using: :btree
   end
 
   create_table "beach_api_core_user_preferences", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "application_id"
+    t.integer "user_id",                     null: false
+    t.integer "application_id",              null: false
     t.hstore  "preferences",    default: {}
     t.index ["application_id"], name: "index_beach_api_core_user_preferences_on_application_id", using: :btree
     t.index ["user_id"], name: "index_beach_api_core_user_preferences_on_user_id", using: :btree

@@ -73,7 +73,7 @@ module BeachApiCore
 
       context 'when valid' do
         before do
-          create :profile_custom_field
+          create :profile_custom_field, keeper: create(:oauth_application)
           create :profile_custom_field, name: :custom_instance_field, keeper: Instance.current
           create :profile_custom_field, name: :custom_application_field, keeper: oauth_application
           get beach_api_core.v1_user_path, headers: bearer_auth
