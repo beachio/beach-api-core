@@ -7,11 +7,18 @@ Short description and motivation.
 How to use my plugin.
 
 ## Requirements
-If you want to use [elasticsearch](#elasticsearch) you need to start sidekiq in your main app with query `elsaticsearch`.
+If you want to use [elasticsearch](#elasticsearch) you need to start sidekiq in your main app for `elsaticsearch` query.
 For cloud66 you can add to your main project's Procfile:
 
 ```
 worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q elasticsearch
+```
+
+In order to send emails using Email API endpoints you need to start sidekiq queue in your main app for `email` query.
+For cloud66 you can add to your main project's Procfile:
+
+```
+worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q email
 ```
 
 ## Installation
