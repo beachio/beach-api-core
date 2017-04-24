@@ -20,7 +20,7 @@ module BeachApiCore::Concerns::V1::BaseControllerConcern
     end
 
     def current_user
-      @current_user ||= BeachApiCore::User.find_by(id: doorkeeper_token&.resource_owner_id)
+      @current_user ||= doorkeeper_token&.user
     end
 
     def current_application

@@ -3,5 +3,6 @@ module BeachApiCore::Concerns::AccessTokenExtension
 
   included do
     belongs_to :organisation, class_name: 'BeachApiCore::Organisation'
+    belongs_to :user, class_name: 'BeachApiCore::User', foreign_key: :resource_owner_id
   end
 end
