@@ -7,9 +7,17 @@ module BeachApiCore
     end
 
     def create
-      EmailCreate.call(params: email_params,
-                       scheduled_time: params[:email][:scheduled_time])
-      head :created
+      result = EmailInteractor::Send.call(
+        params: email_params,
+        scheduled_time: params[:email][:scheduled_time],
+        headers: request.headers['HTTP_AUTHORIZATION']
+      )
+      if result.success?
+        # @todo: more meaningful message?
+        render_json_success({ message: 'Email has been created' }, :created)
+      else
+        render_json_error({ message: result.message }, result.status)
+      end
     end
 
     private
@@ -19,8 +27,7 @@ module BeachApiCore
         to: recipients,
         cc: params[:email][:cc],
         subject: params[:email][:subject],
-        body: params[:email][:body],
-        layout: params[:email][:template] }
+        body: params[:email][:body] }
     end
 
     def recipients

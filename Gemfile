@@ -10,6 +10,7 @@ gemspec
 gem 'refile', require: 'refile/rails', git: 'https://github.com/manfe/refile.git'
 gem 'faker'
 
+gem 'sidekiq', '~> 4.2.9'
 gem 'elasticsearch-model', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
 

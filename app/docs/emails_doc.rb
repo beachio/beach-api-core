@@ -10,7 +10,6 @@ module EmailsDoc
     param :cc, String
     param :subject, String
     param :body, String
-    param :template, String
     param :scheduled_time, Integer
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
