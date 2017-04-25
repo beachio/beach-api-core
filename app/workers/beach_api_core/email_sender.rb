@@ -1,5 +1,5 @@
 module BeachApiCore
-  class ScheduledEmailSender
+  class EmailSender
     include ::Sidekiq::Worker
     sidekiq_options queue: 'email'
     sidekiq_options retry: 10

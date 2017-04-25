@@ -20,11 +20,12 @@ module BeachApiCore
         before { post beach_api_core.v1_emails_path, params: { email: @email_params } }
       end
 
-      it 'should send an email with given params' do
+      it 'should queue an email with given params' do
         post beach_api_core.v1_emails_path,
              params: { email: @email_params },
              headers: application_auth
-        # @todo: check for action mailer deliveries after sidekiq send out an email
+        expect(EmailSender.jobs.size).to eq 1
+        expect(EmailSender.jobs.first['args'].first.symbolize_keys).to eq @email_params
       end
     end
   end
