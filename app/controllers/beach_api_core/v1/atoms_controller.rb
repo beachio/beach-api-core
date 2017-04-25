@@ -3,7 +3,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     include AtomsDoc
 
-    before_action :doorkeeper_authorize!, :authorize_instance_owner!
+    before_action :doorkeeper_authorize!
 
     resource_description do
       name 'Atoms'

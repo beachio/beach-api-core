@@ -52,15 +52,6 @@ module BeachApiCore
           before { post beach_api_core.set_v1_atom_permission_path(@atom) }
         end
 
-        it_behaves_like 'an forbidden resource' do
-          before { post beach_api_core.set_v1_atom_permission_path(@atom),
-                        params: { permission: { keeper_id: BeachApiCore::Role.admin.id,
-                                                keeper_type: 'Role',
-                                                actions: [],
-                                                actor: Faker::Lorem.word } },
-                        headers: developer_bearer_auth }
-        end
-
         it 'should successfully create an atom' do
           expect { post beach_api_core.set_v1_atom_permission_path(@atom),
                         params: { permission: { keeper_id: BeachApiCore::Role.admin.id,
@@ -79,15 +70,6 @@ module BeachApiCore
         end
         it_behaves_like 'an authenticated resource' do
           before { post beach_api_core.set_v1_atom_permission_path(@atom) }
-        end
-
-        it_behaves_like 'an forbidden resource' do
-          before { post beach_api_core.set_v1_atom_permission_path(@atom),
-                        params: { permission: { keeper_id: @permission.keeper_id,
-                                                keeper_type: @permission.keeper_type,
-                                                actions: [:read],
-                                                actor: @permission.actor } },
-                        headers: developer_bearer_auth }
         end
 
         it 'should successfully update an atom' do

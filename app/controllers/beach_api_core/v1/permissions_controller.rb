@@ -2,7 +2,6 @@ module BeachApiCore
   class V1::PermissionsController < BeachApiCore::V1::BaseController
     include PermissionsDoc
     before_action :doorkeeper_authorize!, :find_atom
-    before_action :authorize_instance_owner!, except: [:show]
 
     resource_description do
       name 'Permissions'
