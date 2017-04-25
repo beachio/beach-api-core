@@ -21,10 +21,11 @@ module BeachApiCore
       end
 
       it 'should queue an email with given params' do
-        post beach_api_core.v1_emails_path,
-             params: { email: @email_params },
-             headers: application_auth
-        expect(EmailSender.jobs.size).to eq 1
+        expect do
+          post beach_api_core.v1_emails_path,
+               params: { email: @email_params },
+               headers: application_auth
+        end.to change(EmailSender.jobs, :size).by(1)
         expect(EmailSender.jobs.first['args'].first.symbolize_keys).to eq @email_params
       end
     end
