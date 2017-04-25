@@ -6,7 +6,7 @@ module BeachApiCore
 
     def perform(opts = {})
       normalize_opts!(opts)
-      ActionMailer::Base.mail(opts).deliver
+      puts ApiMailer.custom(opts).deliver
     end
 
     private
@@ -18,7 +18,7 @@ module BeachApiCore
 
     def defaults
       # @todo: default "From" email?
-      { body: '<body></body>', from: '' }
+      { from: 'noreply@example.com', body: '<body></body>' }
     end
   end
 end

@@ -4,12 +4,14 @@ module BeachApiCore
   describe EmailSender do
     describe 'should send an email' do
       before do
+        content = Faker::Lorem.sentence
         @email_params = {
           from: Faker::Internet.email,
           to: Faker::Internet.email,
           cc: Faker::Internet.email,
           subject: Faker::Lorem.sentence,
-          body: "<body>#{Faker::Lorem.sentence}</body>"
+          body: "<body>#{content}</body>",
+          plain: content
         }
       end
 

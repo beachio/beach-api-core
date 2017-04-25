@@ -27,7 +27,8 @@ module BeachApiCore
           to: recipients,
           cc: context.email[:cc],
           subject: context.email[:subject],
-          body: context.email[:body] }
+          body: context.email[:body],
+          plain: context.email[:plain] }
       end
 
       def recipients
