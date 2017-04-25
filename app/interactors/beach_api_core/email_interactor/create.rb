@@ -3,15 +3,6 @@ module BeachApiCore
     class Create
       include Interactor
 
-      before do
-        unless context.application
-          context.fail!(
-            message: ['Application ID and/or secret are not correct'],
-            status: :unauthorized
-          )
-        end
-      end
-
       def call
         BeachApiCore::EmailSender.perform_at(
           context.scheduled_time || DateTime.now, email_params
