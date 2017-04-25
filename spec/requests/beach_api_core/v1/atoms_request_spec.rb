@@ -16,11 +16,6 @@ module BeachApiCore
         before { post beach_api_core.v1_atoms_path }
       end
 
-      it_behaves_like 'an forbidden resource' do
-        before { post beach_api_core.v1_atoms_path, params: { atom: { title: Faker::Name.title, kind: 'item' } },
-                      headers: developer_bearer_auth }
-      end
-
       it 'should successfully create an atom' do
         expect { post beach_api_core.v1_atoms_path, params: { atom: { title: Faker::Name.title, kind: 'item' } },
                       headers: bearer_auth }
@@ -56,11 +51,6 @@ module BeachApiCore
         before { put beach_api_core.v1_atoms_path, params: { id: atom.id } }
       end
 
-      it_behaves_like 'an forbidden resource' do
-        before { put beach_api_core.v1_atoms_path, params: { id: atom.id, atom: { title: new_title } },
-                     headers: developer_bearer_auth }
-      end
-
       it 'should successfully update an atom' do
         put beach_api_core.v1_atoms_path, params: { id: atom.id, atom: { title: new_title } }, headers: bearer_auth
         expect(response.status).to eq 200
@@ -84,10 +74,6 @@ module BeachApiCore
         before { get beach_api_core.v1_atom_path(atom) }
       end
 
-      it_behaves_like 'an forbidden resource' do
-        before { get beach_api_core.v1_atom_path(atom), headers: developer_bearer_auth }
-      end
-
       it 'should return an atom' do
         get beach_api_core.v1_atom_path(atom), headers: bearer_auth
         expect(response.status).to eq(200)
@@ -108,10 +94,6 @@ module BeachApiCore
         expect(response.status).to eq(200)
         expect(Atom.find_by(id: other_atom.id)).to be_blank
       end
-
-      it_behaves_like 'an forbidden resource' do
-        before { delete beach_api_core.v1_atoms_path, params: { id: atom.id }, headers: developer_bearer_auth }
-      end
     end
 
     describe 'when index' do
@@ -128,10 +110,6 @@ module BeachApiCore
         create :permission, atom: (create :atom), actions: { create: true, update: true }, keeper: (create :user)
         create :permission, atom: (create :atom, kind: kind), actions: { create: true, update: true }, keeper: user
         create :permission, atom: (create :atom, kind: kind), actions: { create: true, update: true }, keeper: user.organisations.first
-      end
-
-      it_behaves_like 'an forbidden resource' do
-        before { get beach_api_core.v1_atoms_path, headers: developer_bearer_auth }
       end
 
       it 'should return list of atoms' do
