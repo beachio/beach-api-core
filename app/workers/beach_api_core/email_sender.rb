@@ -6,7 +6,7 @@ module BeachApiCore
 
     def perform(opts = {})
       normalize_opts!(opts)
-      puts ApiMailer.custom(opts).deliver
+      ApiMailer.custom(opts).deliver
     end
 
     private
