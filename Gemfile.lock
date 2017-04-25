@@ -308,6 +308,7 @@ DEPENDENCIES
   refile!
   rspec-rails
   shoulda-matchers!
+  sidekiq (~> 4.2.9)
   webmock
 
 RUBY VERSION
