@@ -13,12 +13,11 @@ module BeachApiCore
 
     def normalize_opts!(opts)
       opts.symbolize_keys!
-      opts.merge!(defaults) { |key, v1, v2| v1 }
+      opts.merge!(defaults) { |key, v1, v2| v1 || v2 }
     end
 
     def defaults
-      # @todo: default "From" email?
-      { from: 'noreply@example.com', body: '<body></body>' }
+      { from: ENV['EMAIL_FROM'], body: '<body></body>' }
     end
   end
 end
