@@ -12,7 +12,7 @@ module BeachApiCore
       )
       if result.success?
         # @todo: more meaningful message?
-        render_json_success({ message: 'Email has been created' }, :created)
+        render_json_success({ message: 'Email has been created' }, result.status)
       else
         render_json_error({ message: result.message }, result.status)
       end

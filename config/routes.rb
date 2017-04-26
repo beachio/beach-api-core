@@ -31,6 +31,6 @@ BeachApiCore::Engine.routes.draw do
     resources :roles, only: [:index]
     resources :settings, only: [:update]
     resources :emails, only: [:create]
-    resources :jobs, only: [:create, :delete]
+    resources :jobs, only: [:create, :destroy]
   end
 end

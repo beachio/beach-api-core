@@ -30,7 +30,24 @@ module BeachApiCore
                headers: application_auth
         end.to change(JobRunner.jobs, :size).by(1)
                  .and change(Job, :count).by(1)
-        expect(JobRunner.jobs.first['args'].first).to eq Job.last.id
+        expect(JobRunner.jobs.last['args'].first).to eq Job.last.id
+      end
+    end
+
+    describe 'when destroy' do
+      before do
+        @job = create :job
+      end
+
+      it_behaves_like 'an authenticated resource' do
+        before { delete beach_api_core.v1_job_path(@job) }
+      end
+
+      it 'shoyld destroy a job' do
+        expect do
+          delete beach_api_core.v1_job_path(@job),
+                 headers: application_auth
+        end.to change(Job, :count).by(-1)
       end
     end
   end
