@@ -8,7 +8,8 @@ module BeachApiCore
       return unless (job = Job.find_by_id(id))
       client = RestClient::Resource.new job.params[:uri],
                                         headers: headers(job.params[:bearer])
-      call_method(client, job.params[:method], job.params[:input])
+      result = call_method(client, job.params[:method], job.params[:input])
+      # @todo: Save job result
     end
 
     private
