@@ -55,6 +55,10 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     pretty BeachApiCore::SettingSerializer.new(apipie_setting)
   end
 
+  def apipie_job_response
+    pretty BeachApiCore::JobSerializer.new(apipie_job)
+  end
+
   def apipie_actions_response
     pretty(create:  [true, false].sample,
            read:    [true, false].sample,

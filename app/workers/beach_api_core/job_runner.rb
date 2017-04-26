@@ -5,11 +5,12 @@ module BeachApiCore
     sidekiq_options retry: 10
 
     def perform(id)
-      return unless (job = Job.find_by_id(id))
+      return unless (job = Job.find_by_id(id)) && !job.done?
       client = RestClient::Resource.new job.params[:uri],
                                         headers: headers(job.params[:bearer])
       result = call_method(client, job.params[:method], job.params[:input])
-      # @todo: Save job result
+      # @todo: Parse job result before saving?
+      job.update(done: true, result: result)
     end
 
     private

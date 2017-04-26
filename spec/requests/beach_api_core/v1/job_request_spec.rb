@@ -34,16 +34,30 @@ module BeachApiCore
       end
     end
 
-    describe 'when destroy' do
-      before do
-        @job = create :job
+    describe 'when show' do
+      before { @job = create :job }
+
+      # it_behaves_like 'an authenticated resource' do
+      #   before { delete beach_api_core.v1_job_path(@job) }
+      # end
+
+      it 'should show a job' do
+        get beach_api_core.v1_job_path(@job),
+            headers: application_auth
+        expect(json_body[:job]).to be_present
+        expect(json_body[:job].keys).to contain_exactly(:id, :done, :result)
+        expect(json_body[:job][:id]).to eq @job.id
       end
+    end
+
+    describe 'when destroy' do
+      before { @job = create :job }
 
       it_behaves_like 'an authenticated resource' do
         before { delete beach_api_core.v1_job_path(@job) }
       end
 
-      it 'shoyld destroy a job' do
+      it 'should destroy a job' do
         expect do
           delete beach_api_core.v1_job_path(@job),
                  headers: application_auth

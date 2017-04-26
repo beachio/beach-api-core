@@ -8,11 +8,19 @@ module JobsDoc
     param :start_at, DateTime, required: true
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
+  example "\"job\": #{apipie_job_response}"
   def create
+  end
+
+  api :GET, '/job/:id', 'Show an existing job'
+  header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
+  example "\"job\": #{apipie_job_response}"
+  def show
   end
 
   api :DELETE, '/jobs/:job_id', 'Destroy an existing job'
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
+  example "\"job\": #{apipie_job_response}"
   def destroy
   end
 end

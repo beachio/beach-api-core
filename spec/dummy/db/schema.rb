@@ -130,8 +130,9 @@ ActiveRecord::Schema.define(version: 20170425114305) do
     t.datetime "start_at"
     t.hstore   "params",     default: {}
     t.hstore   "result",     default: {}
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.boolean  "done",       default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "beach_api_core_memberships", force: :cascade do |t|

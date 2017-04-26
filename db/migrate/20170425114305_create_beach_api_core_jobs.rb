@@ -4,6 +4,7 @@ class CreateBeachApiCoreJobs < ActiveRecord::Migration[5.0]
       t.datetime :start_at
       t.hstore :params, default: {}
       t.hstore :result, default: {}
+      t.boolean :done, default: false
 
       t.timestamps
     end
