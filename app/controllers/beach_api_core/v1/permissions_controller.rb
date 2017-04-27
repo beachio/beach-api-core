@@ -1,7 +1,7 @@
 module BeachApiCore
   class V1::PermissionsController < BeachApiCore::V1::BaseController
     include PermissionsDoc
-    before_action :doorkeeper_authorize!, :find_atom
+    before_action :application_authorize!, :find_atom
 
     resource_description do
       name 'Permissions'
