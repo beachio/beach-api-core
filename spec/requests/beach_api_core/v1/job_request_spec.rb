@@ -14,7 +14,6 @@ module BeachApiCore
             bearer: access_token.token,
             method: 'GET',
             uri: beach_api_core.v1_user_path,
-            input: {}
           }
         }
       end
@@ -31,6 +30,9 @@ module BeachApiCore
         end.to change(JobRunner.jobs, :size).by(1)
                  .and change(Job, :count).by(1)
         expect(JobRunner.jobs.last['args'].first).to eq Job.last.id
+        %w(bearer method uri).each do |param|
+          expect(Job.last.params[param]).to eq @job_params[:params][param.to_sym]
+        end
       end
     end
 

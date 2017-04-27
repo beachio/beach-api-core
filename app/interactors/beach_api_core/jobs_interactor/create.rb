@@ -8,7 +8,7 @@ module BeachApiCore
         context.status = :created
       else
         context.status = :bad_request
-        context.fail! message: context.atom.errors.full_messages
+        context.fail! message: context.job.errors.full_messages
       end
     end
   end
