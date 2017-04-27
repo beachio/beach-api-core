@@ -19,8 +19,14 @@ module BeachApiCore
     end
 
     def show
-      # @todo: check application auth headers
-      render_json_success(@job, :ok, root: :job)
+      result = JobsInteractor::Show.call(
+        headers: request.headers['HTTP_AUTHORIZATION']
+      )
+      if result.success?
+        render_json_success(@job, :ok, root: :job)
+      else
+        render_json_error({ message: result.message }, result.status)
+      end
     end
 
     def destroy

@@ -40,9 +40,9 @@ module BeachApiCore
     describe 'when show' do
       before { @job = create :job }
 
-      # it_behaves_like 'an authenticated resource' do
-      #   before { delete beach_api_core.v1_job_path(@job) }
-      # end
+      it_behaves_like 'an authenticated resource' do
+        before { delete beach_api_core.v1_job_path(@job) }
+      end
 
       it 'should show a job' do
         get beach_api_core.v1_job_path(@job),
