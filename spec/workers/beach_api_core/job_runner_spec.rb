@@ -14,7 +14,7 @@ module BeachApiCore
                  bearer: access_token.token,
                  method: 'GET',
                  # @todo: do not hardcode url
-                 uri: '/v1/user'
+                 uri: 'http://www.example.com/v1/user'
                }
       end
 

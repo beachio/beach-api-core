@@ -9,7 +9,7 @@ module BeachApiCore
 
     def create
       result = JobsInteractor::Submit.call(
-        params: job_params, headers: request.headers['HTTP_AUTHORIZATION']
+        params: job_params, headers: request.headers['HTTP_AUTHORIZATION'], host: host
       )
       if result.success?
         render_json_success(result.job, result.status, root: :job)
@@ -38,6 +38,10 @@ module BeachApiCore
 
     def job_params
       params.require(:job).permit(:start_at, params: [:method, :uri, :bearer, :input])
+    end
+
+    def host
+      "#{request.protocol}#{request.host_with_port}"
     end
   end
 end

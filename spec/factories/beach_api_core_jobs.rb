@@ -4,7 +4,7 @@ FactoryGirl.define do
     params do
       { bearer: SecureRandom.hex,
         method: %w(GET POST PUT PATCH DELETE).sample,
-        uri: '/uri',
+        uri: 'http://www.example.com/uri',
         input: { "#{Faker::Lorem.word}": Faker::Lorem.word } }
     end
   end

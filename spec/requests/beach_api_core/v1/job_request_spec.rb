@@ -30,9 +30,10 @@ module BeachApiCore
         end.to change(JobRunner.jobs, :size).by(1)
                  .and change(Job, :count).by(1)
         expect(JobRunner.jobs.last['args'].first).to eq Job.last.id
-        [:bearer, :method, :uri].each do |param|
+        [:bearer, :method].each do |param|
           expect(Job.last.params[param]).to eq @job_params[:params][param]
         end
+        expect(Job.last.params[:uri]).to include(@job_params[:params][:uri])
       end
     end
 

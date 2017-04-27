@@ -6,10 +6,7 @@ module BeachApiCore
 
     def perform(id)
       return unless (job = Job.find_by_id(id)) && !job.done?
-      # @todo: some better way to get root url?
-      url = URI.join(Rails.application.routes.url_helpers.beach_api_core_url,
-                     job.params[:uri])
-      client = RestClient::Resource.new url.to_s,
+      client = RestClient::Resource.new job.params[:uri],
                                         headers: headers(job.params[:bearer])
       result = call_method(client, job.params[:method], job.params[:input])
       job.update(done: true,
