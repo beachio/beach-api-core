@@ -35,8 +35,17 @@ module BeachApiCore
         expect(json_body[:actions]).to eq actions
       end
 
+      it 'should return services categories with application' do
+        get beach_api_core.v1_atom_permission_path(@atom), headers: application_auth
+        expect(response.status).to eq 200
+      end
+
       it_behaves_like 'an authenticated resource' do
         before { get beach_api_core.v1_atom_permission_path(@atom) }
+      end
+
+      it_behaves_like 'an authenticated resource' do
+        before { get beach_api_core.v1_atom_permission_path(@atom), headers: invalid_app_auth }
       end
     end
 
@@ -52,15 +61,21 @@ module BeachApiCore
           before { post beach_api_core.set_v1_atom_permission_path(@atom) }
         end
 
+        it_behaves_like 'an authenticated resource' do
+          before { post beach_api_core.set_v1_atom_permission_path(@atom), headers: invalid_app_auth }
+        end
+
         it 'should successfully create an atom' do
-          expect { post beach_api_core.set_v1_atom_permission_path(@atom),
-                        params: { permission: { keeper_id: BeachApiCore::Role.admin.id,
-                                                keeper_type: 'Role',
-                                                actions: [],
-                                                actor: Faker::Lorem.word } },
-                        headers: bearer_auth }
-              .to change(Permission, :count).by(1)
-          expect(response.status).to eq 200
+          [application_auth, bearer_auth].each do |auth|
+            expect { post beach_api_core.set_v1_atom_permission_path(@atom),
+                          params: { permission: { keeper_id: BeachApiCore::Role.admin.id,
+                                                  keeper_type: 'Role',
+                                                  actions: [],
+                                                  actor: Faker::Lorem.word } },
+                          headers: auth }
+                .to change(Permission, :count).by(1)
+            expect(response.status).to eq 200
+          end
         end
       end
 

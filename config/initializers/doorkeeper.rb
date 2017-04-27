@@ -118,5 +118,5 @@ ActiveSupport::Reloader.to_prepare do
   # Extend Doorkeeper models
   Doorkeeper::Application.send :include, BeachApiCore::Concerns::ApplicationExtension
   Doorkeeper::AccessToken.send :include, BeachApiCore::Concerns::AccessTokenExtension
-  # Doorkeeper.configuration.token_grant_types << 'password'
+  Doorkeeper.configuration.token_grant_types << 'password'
 end
