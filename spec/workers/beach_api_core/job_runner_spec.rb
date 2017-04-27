@@ -29,9 +29,8 @@ module BeachApiCore
 
       it do
         expect { subject.perform(job.id) }.to change { job.reload.done? }
-        expect(job.result['status'].to_i).to eq 200
-        body = JSON.parse(job.result['body'], symbolize_names: true)
-        expect(body[:user][:email]).to eq(oauth_user.email)
+        expect(job.result[:status].to_i).to eq 200
+        expect(job.result[:body][:user][:email]).to eq(oauth_user.email)
       end
     end
   end
