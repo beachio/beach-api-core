@@ -38,7 +38,10 @@ module BeachApiCore
     end
 
     describe 'when show' do
-      before { @job = create :job }
+      before do
+        @job_result = { "#{Faker::Lorem.word}": "#{Faker::Lorem.word}" }
+        @job = create :job, done: true, result: @job_result
+      end
 
       it_behaves_like 'an authenticated resource' do
         before { delete beach_api_core.v1_job_path(@job) }
@@ -50,6 +53,7 @@ module BeachApiCore
         expect(json_body[:job]).to be_present
         expect(json_body[:job].keys).to contain_exactly(:id, :done, :result)
         expect(json_body[:job][:id]).to eq @job.id
+        expect(json_body[:job][:result]).to eq @job_result
       end
     end
 
