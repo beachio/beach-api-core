@@ -13,7 +13,17 @@ module BeachApiCore
     describe 'when create' do
 
       it_behaves_like 'an authenticated resource' do
+        before { post beach_api_core.v1_atoms_path, headers: invalid_app_auth }
+      end
+
+      it_behaves_like 'an authenticated resource' do
         before { post beach_api_core.v1_atoms_path }
+      end
+
+      it 'should successfully create an atom with application auth' do
+        post beach_api_core.v1_atoms_path, params: { atom: { title: Faker::Name.title, kind: 'item' } },
+             headers: application_auth
+        expect(json_body[:atom]).to be_present
       end
 
       it 'should successfully create an atom' do
