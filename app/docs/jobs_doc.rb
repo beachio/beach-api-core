@@ -4,7 +4,12 @@ module JobsDoc
 
   api :POST, '/jobs', 'Create a new job'
   param :job, Hash, required: true do
-    param :input, Hash, required: true, desc: 'An array of user ids to send email instead of `to` param'
+    param :params, Hash, required: true do
+      param :bearer, String, required: true, desc: "User's access token"
+      param :method, %w(GET POST PUT PATCH DELETE), required: true
+      param :url, String, required: true, desc: 'Relative request path'
+      param :input, Hash, desc: 'POST, PUT, PATCH request params'
+    end
     param :start_at, DateTime, required: true
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
