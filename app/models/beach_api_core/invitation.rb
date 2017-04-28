@@ -6,7 +6,7 @@ module BeachApiCore
     belongs_to :user, class_name: 'BeachApiCore::User'
     belongs_to :invitee, class_name: 'BeachApiCore::User', autosave: true
     belongs_to :group, polymorphic: true
-    has_many :invitation_roles
+    has_many :invitation_roles, dependent: :destroy
     has_many :roles, through: :invitation_roles, class_name: 'BeachApiCore::Role'
 
     attr_accessor :first_name, :last_name
