@@ -39,7 +39,7 @@ module BeachApiCore
           stub_request(:get, 'http://www.example.com/v1/user')
             .with(headers: { 'Authorization' => "Bearer #{access_token.token}" })
             .to_return(
-              body: { message: 'You are not authorized' }.to_json,
+              body: { message: 'You need to authorize first' }.to_json,
               status: 401
             )
         end
