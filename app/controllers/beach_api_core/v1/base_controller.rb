@@ -26,6 +26,7 @@ module BeachApiCore
 
     def application_authorized?
       application_id, application_secret = request.headers['HTTP_AUTHORIZATION'].split(',')
+      return false unless application_id.present? && application_secret.present?
       application_id.gsub!('application_id', '').to_s.strip!
       application_secret.gsub!('client_secret', '').to_s.strip!
       @doorkeeper_application = Doorkeeper::Application.find_by(uid: application_id)
