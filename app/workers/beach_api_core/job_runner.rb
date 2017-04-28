@@ -6,15 +6,21 @@ module BeachApiCore
 
     def perform(id)
       return unless (job = Job.find_by_id(id)) && !job.done?
-      client = RestClient::Resource.new job.params[:uri],
-                                        headers: headers(job.params[:bearer])
-      result = call_method(client, job.params[:method], job.params[:input])
+      result = run_job(job)
       job.update(done: true,
                  result: { status: result.code,
                            body: JSON.parse(result.body, symbolize_names: true) })
     end
 
     private
+
+    def run_job(job)
+      client = RestClient::Resource.new job.params[:uri],
+                                        headers: headers(job.params[:bearer])
+      call_method(client, job.params[:method], job.params[:input])
+    rescue RestClient::Exception => e
+      e.response
+    end
 
     def call_method(client, method, params = {})
       case method.downcase
