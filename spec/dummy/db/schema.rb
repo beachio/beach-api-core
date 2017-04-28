@@ -110,8 +110,8 @@ ActiveRecord::Schema.define(version: 20170428073943) do
   end
 
   create_table "beach_api_core_invitation_roles", force: :cascade do |t|
-    t.integer  "role_id"
-    t.integer  "invitation_id"
+    t.integer  "role_id",       null: false
+    t.integer  "invitation_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["invitation_id"], name: "index_beach_api_core_invitation_roles_on_invitation_id", using: :btree
