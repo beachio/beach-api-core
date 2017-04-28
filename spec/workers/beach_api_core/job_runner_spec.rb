@@ -13,14 +13,13 @@ module BeachApiCore
                params: {
                  bearer: access_token.token,
                  method: 'GET',
-                 # @todo: do not hardcode url
                  uri: 'http://www.example.com/v1/user'
                }
       end
 
       before do
         stub_request(:get, 'http://www.example.com/v1/user')
-          .with(headers: bearer_auth)
+          .with(headers: { 'Authorization' => "Bearer #{access_token.token}" })
           .to_return(
             body: { user: UserSerializer.new(oauth_user) }.to_json,
             status: 200
