@@ -100,6 +100,16 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                    name: Faker::Name.title, value: Faker::Lorem.word)
   end
 
+  def apipie_job
+    @_apipie_job ||= BeachApiCore::Job.new(id: fake_id,
+                                           start_at: 2.days.since,
+                                           params: { bearer: SecureRandom.hex,
+                                                     method: %w(GET POST PUT PATCH DELETE).sample,
+                                                     uri: '/uri',
+                                                     input: { "#{Faker::Lorem.word}": Faker::Lorem.word } },
+                                           result: { "#{Faker::Lorem.word}": Faker::Lorem.word })
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end

@@ -28,7 +28,7 @@ module BeachApiCore
                params: { email: @email_params },
                headers: application_auth
         end.to change(EmailSender.jobs, :size).by(1)
-        expect(EmailSender.jobs.first['args'].first.symbolize_keys).to eq @email_params
+        expect(EmailSender.jobs.last['args'].first.symbolize_keys).to eq @email_params
       end
     end
   end
