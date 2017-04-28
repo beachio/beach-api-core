@@ -4,5 +4,6 @@ module BeachApiCore
     belongs_to :invitation
 
     validates :role, :invitation, presence: true
+    validates :role, uniqueness: { scope: :invitation }
   end
 end
