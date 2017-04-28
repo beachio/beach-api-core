@@ -34,7 +34,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                          email: Faker::Internet.email,
                                                          group: apipie_team,
                                                          created_at: Time.now,
-                                                         role: apipie_role)
+                                                         roles: [apipie_role])
   end
 
   def apipie_team

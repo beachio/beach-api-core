@@ -7,6 +7,6 @@ module BeachApiCore
 
     belongs_to :invitee, serializer: ProfileSimpleSerializer
     belongs_to :group
-    belongs_to :role
+    has_many :roles
   end
 end

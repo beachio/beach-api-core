@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421084203) do
+ActiveRecord::Schema.define(version: 20170428073943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20170421084203) do
     t.integer  "atom_parent_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.index ["atom_parent_id"], name: "index_beach_api_core_atoms_on_atom_parent_id", using: :btree
     t.index ["name"], name: "index_beach_api_core_atoms_on_name", unique: true, using: :btree
   end
 
@@ -110,6 +109,15 @@ ActiveRecord::Schema.define(version: 20170421084203) do
     t.index ["user_id"], name: "index_beach_api_core_interactions_on_user_id", using: :btree
   end
 
+  create_table "beach_api_core_invitation_roles", force: :cascade do |t|
+    t.integer  "role_id"
+    t.integer  "invitation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["invitation_id"], name: "index_beach_api_core_invitation_roles_on_invitation_id", using: :btree
+    t.index ["role_id"], name: "index_beach_api_core_invitation_roles_on_role_id", using: :btree
+  end
+
   create_table "beach_api_core_invitations", force: :cascade do |t|
     t.string   "email"
     t.integer  "user_id",                 null: false
@@ -118,11 +126,9 @@ ActiveRecord::Schema.define(version: 20170421084203) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "invitee_id"
-    t.integer  "role_id",                 null: false
     t.string   "token",      default: "", null: false
     t.index ["group_type", "group_id"], name: "index_beach_api_core_invitations_on_group_type_and_group_id", using: :btree
     t.index ["invitee_id"], name: "index_beach_api_core_invitations_on_invitee_id", using: :btree
-    t.index ["role_id"], name: "index_beach_api_core_invitations_on_role_id", using: :btree
     t.index ["user_id"], name: "index_beach_api_core_invitations_on_user_id", using: :btree
   end
 
@@ -299,12 +305,10 @@ ActiveRecord::Schema.define(version: 20170421084203) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
-  add_foreign_key "beach_api_core_atoms", "beach_api_core_atoms", column: "atom_parent_id"
   add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interaction_keepers", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
-  add_foreign_key "beach_api_core_invitations", "beach_api_core_roles", column: "role_id"
   add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
