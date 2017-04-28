@@ -1,10 +1,10 @@
 module BeachApiCore
-  class JobsInteractor::Create
+  class JobCreate
     include Interactor
 
     before do
       if context.params[:params] && context.params[:params][:uri]
-        url = URI.join(context.host, context.params[:params][:uri])
+        url = URI.join(context.request.base_url, context.params[:params][:uri])
         context.params[:params][:uri] = url.to_s
       end
     end

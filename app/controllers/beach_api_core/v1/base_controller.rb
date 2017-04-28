@@ -8,19 +8,28 @@ module BeachApiCore
 
     private
 
+    def explicit_application_authorize!
+      if !doorkeeper_token && request.headers['HTTP_AUTHORIZATION'].present? && application_authorized?
+        return @current_user = @doorkeeper_application.owner
+      end
+      render_json_error({ message: 'Unauthorized' }, :unauthorized)
+    end
+
     def application_authorize!
-      if !doorkeeper_token && request.headers["HTTP_AUTHORIZATION"].present?
-        application_id, application_secret = request.headers["HTTP_AUTHORIZATION"].split(',')
-        application_id.gsub!('application_id', '').to_s.strip!
-        application_secret.gsub!('client_secret', '').to_s.strip!
-        application = Doorkeeper::Application.find_by(uid: application_id)
-        if application.blank? || application.secret != application_secret
-          return render_json_error({ message: 'Unauthorized' }, :unauthorized)
-        end
-        @current_user = application.owner
+      if !doorkeeper_token && request.headers['HTTP_AUTHORIZATION'].present?
+        return render_json_error({ message: 'Unauthorized' }, :unauthorized) unless application_authorized?
+        @current_user = @doorkeeper_application.owner
       else
         doorkeeper_authorize!
       end
+    end
+
+    def application_authorized?
+      application_id, application_secret = request.headers['HTTP_AUTHORIZATION'].split(',')
+      application_id.gsub!('application_id', '').to_s.strip!
+      application_secret.gsub!('client_secret', '').to_s.strip!
+      @doorkeeper_application = Doorkeeper::Application.find_by(uid: application_id)
+      @doorkeeper_application.present? && @doorkeeper_application.secret == application_secret
     end
 
     def authorize_instance_owner!
