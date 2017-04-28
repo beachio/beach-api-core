@@ -41,7 +41,7 @@ module BeachApiCore
     private
 
     def invitation_params
-      params.require(:invitation).permit(:email, :first_name, :last_name, :role_id)
+      params.require(:invitation).permit(:email, :first_name, :last_name, role_ids: [])
     end
   end
 end

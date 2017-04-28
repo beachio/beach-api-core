@@ -3,7 +3,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     include AtomsDoc
 
-    before_action :doorkeeper_authorize!
+    before_action :application_authorize!
 
     resource_description do
       name 'Atoms'
@@ -18,6 +18,11 @@ module BeachApiCore
       render_json_success(atoms, :ok,
                           current_user: user, current_organisation: current_organisation,
                           root: :atoms)
+    end
+
+    def show
+      render_json_success(@atom, :ok, root: :atom,
+                          current_user: current_user, current_organisation: current_organisation)
     end
 
     def create
@@ -36,11 +41,6 @@ module BeachApiCore
       else
         render_json_error({ message: result.message }, result.status)
       end
-    end
-
-    def show
-      render_json_success(@atom, :ok, root: :atom,
-                          current_user: current_user, current_organisation: current_organisation)
     end
 
     def destroy
