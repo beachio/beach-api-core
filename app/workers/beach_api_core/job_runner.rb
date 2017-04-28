@@ -9,7 +9,7 @@ module BeachApiCore
       result = run_job(job)
       job.update(done: true,
                  result: { status: result.code,
-                           body: JSON.parse(result.body, symbolize_names: true) })
+                           body: parse(result.body) })
     end
 
     private
@@ -35,6 +35,12 @@ module BeachApiCore
 
     def normalize_opts!(opts)
       opts.symbolize_keys!
+    end
+
+    def parse(body)
+      JSON.parse(body, symbolize_names: true)
+    rescue JSON::ParserError
+      body
     end
 
     def headers(bearer)

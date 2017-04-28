@@ -50,6 +50,22 @@ module BeachApiCore
           expect(@job.result[:body].keys).to contain_exactly(:message)
         end
       end
+
+      context 'when request result has an empty body' do
+        before do
+          stub_request(:get, 'http://www.example.com/v1/user')
+            .with(headers: { 'Authorization' => "Bearer #{access_token.token}" })
+            .to_return(
+              status: 401
+            )
+        end
+
+        it do
+          expect { subject.perform(@job.id) }.to change { @job.reload.done? }
+          expect(@job.result[:status].to_i).to eq 401
+          expect(@job.result[:body]).to be_empty
+        end
+      end
     end
   end
 end
