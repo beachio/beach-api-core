@@ -18,7 +18,7 @@ module JobsDoc
   def show
   end
 
-  api :DELETE, '/jobs/:job_id', 'Destroy an existing job'
+  api :DELETE, '/jobs/:id', 'Destroy an existing job'
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   example "\"job\": #{apipie_job_response}"
   def destroy
