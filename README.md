@@ -21,6 +21,12 @@ For cloud66 you can add to your main project's Procfile:
 worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q email
 ```
 
+Jobs API require launched sidekiq `job` query:
+
+```
+worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q job
+```
+
 ## Installation
 Add this line to your application's Gemfile:
 
