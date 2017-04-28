@@ -1,12 +1,13 @@
 module BeachApiCore
   class Invitation < ApplicationRecord
-    validates :email, :group, :user, :role, presence: true
+    validates :email, :group, :user, :roles, presence: true
     validates :token, uniqueness: true
 
     belongs_to :user, class_name: 'BeachApiCore::User'
     belongs_to :invitee, class_name: 'BeachApiCore::User', autosave: true
-    belongs_to :role, class_name: 'BeachApiCore::Role'
     belongs_to :group, polymorphic: true
+    has_many :invitation_roles, dependent: :destroy
+    has_many :roles, through: :invitation_roles, class_name: 'BeachApiCore::Role'
 
     attr_accessor :first_name, :last_name
 

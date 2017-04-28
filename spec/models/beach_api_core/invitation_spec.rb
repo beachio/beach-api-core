@@ -12,14 +12,14 @@ module BeachApiCore
       should belong_to :user
       should belong_to :invitee
       should belong_to :group
-      should belong_to :role
+      should have_many :roles
     end
 
     it 'should have basic validations' do
       should validate_presence_of :email
       should validate_presence_of :user
       should validate_presence_of :group
-      should validate_presence_of :role
+      should validate_presence_of :roles
       should validate_uniqueness_of :token
     end
 

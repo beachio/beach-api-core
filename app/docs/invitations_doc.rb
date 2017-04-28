@@ -14,7 +14,7 @@ module InvitationsDoc
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :invitation, Hash, required: true do
     param :email, String, required: true
-    param :role_id, Integer, required: true
+    param :role_ids, Array, required: true
     param :first_name, String
     param :last_name, String
   end

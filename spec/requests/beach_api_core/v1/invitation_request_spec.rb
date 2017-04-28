@@ -52,7 +52,7 @@ module BeachApiCore
                  invitation: { email: Faker::Internet.email,
                                first_name: Faker::Name.first_name,
                                last_name: Faker::Name.last_name,
-                               role_id: (create :role).id },
+                               role_ids: [(create :role).id] },
                  group_id: team.id,
                  group_type: 'Team' },
                headers: bearer_auth
