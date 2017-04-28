@@ -32,7 +32,7 @@ module BeachApiCore
     end
 
     def headers(bearer)
-      { 'HTTP-AUTHORIZATION' => "Bearer #{bearer}" }
+      { 'Authorization' => "Bearer #{bearer}" }
     end
   end
 end
