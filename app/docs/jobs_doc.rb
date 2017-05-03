@@ -10,7 +10,8 @@ module JobsDoc
       param :url, String, required: true, desc: 'Relative request path'
       param :input, Hash, desc: 'POST, PUT, PATCH request params'
     end
-    param :start_at, DateTime, required: true
+    param :start_at, DateTime
+    param :every, String, desc: 'Cron schedule for a job in format "30.minutes", "1.hour", "2.days", etc. Min period is 30 minutes.'
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   example "\"job\": #{apipie_job_response}"

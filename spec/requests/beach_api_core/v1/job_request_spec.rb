@@ -9,7 +9,6 @@ module BeachApiCore
     describe 'when create' do
       before do
         @job_params = {
-          start_at: 2.days.since,
           params: {
             bearer: access_token.token,
             method: 'GET',
@@ -22,18 +21,32 @@ module BeachApiCore
         before { post beach_api_core.v1_jobs_path, params: { job: @job_params } }
       end
 
-      it 'should create a job with given params' do
-        expect do
-          post beach_api_core.v1_jobs_path,
-               params: { job: @job_params },
-               headers: application_auth
-        end.to change(JobRunner.jobs, :size).by(1)
-                 .and change(Job, :count).by(1)
-        expect(JobRunner.jobs.last['args'].first).to eq Job.last.id
-        [:bearer, :method].each do |param|
-          expect(Job.last.params[param]).to eq @job_params[:params][param]
+      context 'when scheduled job' do
+        it 'should create a job with given params' do
+          expect do
+            post beach_api_core.v1_jobs_path,
+                 params: { job: @job_params.merge(start_at: 2.days.since) },
+                 headers: application_auth
+          end.to change(JobRunner.jobs, :size).by(1)
+                   .and change(Job, :count).by(1)
+          expect(JobRunner.jobs.last['args'].first).to eq Job.last.id
+          [:bearer, :method].each do |param|
+            expect(Job.last.params[param]).to eq @job_params[:params][param]
+          end
+          expect(Job.last.params[:uri]).to include(@job_params[:params][:uri])
         end
-        expect(Job.last.params[:uri]).to include(@job_params[:params][:uri])
+      end
+
+      context 'when cron job' do
+        it 'should not create a sidekiq job' do
+          expect do
+            post beach_api_core.v1_jobs_path,
+                 params: { job: @job_params.merge(every: '1.hour') },
+                 headers: application_auth
+          end.to change(JobRunner.jobs, :size).by(0)
+                   .and change(Job, :count).by(1)
+          expect(Job.last.every).to eq '1.hour'
+        end
       end
     end
 
@@ -51,7 +64,7 @@ module BeachApiCore
         get beach_api_core.v1_job_path(@job),
             headers: application_auth
         expect(json_body[:job]).to be_present
-        expect(json_body[:job].keys).to contain_exactly(:id, :done, :result)
+        expect(json_body[:job].keys).to contain_exactly(:id, :done, :last_run, :result)
         expect(json_body[:job][:id]).to eq @job.id
         expect(json_body[:job][:result]).to eq @job_result
       end

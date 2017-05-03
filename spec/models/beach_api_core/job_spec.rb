@@ -9,7 +9,38 @@ module BeachApiCore
     end
 
     it 'should have basic validations' do
-      should validate_presence_of :start_at
+      job = build :job, start_at: nil, every: nil
+      expect(job).to be_invalid
+      expect(job.errors.messages.keys).to include(:start_at)
+      expect(build(:job, start_at: 2.hours.since, every: nil)).to be_valid
+      expect(build(:job, start_at: nil, every: '1.hour')).to be_valid
+    end
+
+    it 'should validate that bearer, method and uri are present in params hash' do
+      job = build :job, params: { "#{Faker::Lorem.word}": Faker::Lorem.word }
+      expect(job).to be_invalid
+      expect(job.errors.messages.keys).to include(:params)
+    end
+
+    it 'should validate format of `every`' do
+      expect(build(:job, every: '1.hour')).to be_valid
+      expect(build(:job, every: '2.days')).to be_valid
+      expect(build(:job, every: '1 hour')).to be_invalid
+    end
+
+    describe 'should perform cron jobs' do
+      subject { Job }
+
+      before do
+        create :job, last_run: nil, every: '1.hour'
+        create :job, last_run: 1.hour.ago, every: '1.hour'
+        create :job, last_run: Time.now, every: '1.hour'
+        create :job, last_run: 1.hour.ago, every: '2.hours'
+      end
+
+      it do
+        expect { subject.perform_cron }.to change(JobRunner.jobs, :size).by(2)
+      end
     end
   end
 end
