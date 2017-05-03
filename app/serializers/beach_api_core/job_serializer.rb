@@ -3,6 +3,6 @@ module BeachApiCore
     include BeachApiCore::Concerns::DocIdAbsSerializerConcern
     acts_as_abs_doc_id
 
-    attributes :id, :done, :result
+    attributes :id, :done, :last_run, :result
   end
 end

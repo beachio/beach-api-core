@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'elasticsearch-rails'
   s.add_dependency 'elasticsearch-model'
   s.add_dependency 'sidekiq', '~> 4.2.9'
+  s.add_dependency 'whenever', '~> 0.9.7'
 
   s.add_dependency "interactor", "~> 3.1.0"
   s.add_dependency "interactor-rails", "~> 2.0.2"

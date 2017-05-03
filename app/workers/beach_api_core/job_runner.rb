@@ -8,6 +8,7 @@ module BeachApiCore
       return unless (job = Job.find_by_id(id)) && !job.done?
       result = run_job(job)
       job.update(done: true,
+                 last_run: Time.now,
                  result: { status: result.code,
                            body: parse(result.body) })
     end

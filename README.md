@@ -14,14 +14,18 @@ For cloud66 you can add to your main project's Procfile:
 worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q elasticsearch
 ```
 
-In order to send emails using Email API endpoints you need to start sidekiq queue in your main app for `email` query.
+In order to send emails using **Emails API** endpoints you need to start sidekiq queue in your main app for `email` query.
 For cloud66 you can add to your main project's Procfile:
 
 ```
 worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q email
 ```
 
-Jobs API require launched sidekiq `job` query:
+To use **Jobs API** you need to run rake task from your main app:
+```bash
+$ rake beach_api_core:jobs:cron_init
+```
+And launch sidekiq `job` query:
 
 ```
 worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q job

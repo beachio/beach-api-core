@@ -34,7 +34,7 @@ module BeachApiCore
     private
 
     def job_params
-      params.require(:job).permit(:start_at, params: [:method, :uri, :bearer, :input])
+      params.require(:job).permit(:start_at, :every, params: [:method, :uri, :bearer, :input])
     end
   end
 end

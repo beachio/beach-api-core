@@ -182,8 +182,8 @@ module BeachApiCore
           get beach_api_core.users_v1_organisations_path, headers: bearer_auth
           expect(response.status).to eq 200
           expect(json_body[:users]).to be_present
-          expect(json_body[:users].first).to include(:joined_at, :assignments, :profile)
-          expect(json_body[:users].first[:assignments].first.keys).to include(:id, :role)
+          expect(json_body[:users].last).to include(:joined_at, :assignments, :profile)
+          expect(json_body[:users].last[:assignments].first.keys).to include(:id, :role)
         end
       end
     end

@@ -52,7 +52,7 @@ module BeachApiCore
     def users
       authorize current_organisation, :update?
       # @todo: exclude current user from response?
-      users = current_organisation.users
+      users = current_organisation.users.order(:id)
       render_json_success(users, :ok,
                           each_serializer: BeachApiCore::OrganisationUserSerializer,
                           current_organisation: current_organisation,
