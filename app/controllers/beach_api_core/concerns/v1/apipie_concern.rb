@@ -110,6 +110,11 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                            result: { "#{Faker::Lorem.word}": Faker::Lorem.word })
   end
 
+  def apipie_project
+    @_apipie_project ||= BeachApiCore::Project.new(id: fake_id,
+                                                   name: Faker::Name.title)
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end

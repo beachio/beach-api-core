@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503074917) do
+ActiveRecord::Schema.define(version: 20170504073858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,6 +213,24 @@ ActiveRecord::Schema.define(version: 20170503074917) do
     t.index ["user_id"], name: "index_beach_api_core_profiles_on_user_id", using: :btree
   end
 
+  create_table "beach_api_core_project_keepers", force: :cascade do |t|
+    t.integer  "project_id",  null: false
+    t.string   "keeper_type", null: false
+    t.integer  "keeper_id",   null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_project_keepers_on_k_type_and_k_id", using: :btree
+    t.index ["project_id"], name: "index_beach_api_core_project_keepers_on_project_id", using: :btree
+  end
+
+  create_table "beach_api_core_projects", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_beach_api_core_projects_on_user_id", using: :btree
+  end
+
   create_table "beach_api_core_roles", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
@@ -323,6 +341,8 @@ ActiveRecord::Schema.define(version: 20170503074917) do
   add_foreign_key "beach_api_core_interaction_keepers", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
+  add_foreign_key "beach_api_core_project_keepers", "beach_api_core_projects", column: "project_id"
+  add_foreign_key "beach_api_core_projects", "beach_api_core_users", column: "user_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
 end
