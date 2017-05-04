@@ -112,7 +112,13 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
   def apipie_project
     @_apipie_project ||= BeachApiCore::Project.new(id: fake_id,
-                                                   name: Faker::Name.title)
+                                                   name: Faker::Name.title,
+                                                   project_keepers: [apipie_project_keeper])
+  end
+
+  def apipie_project_keeper
+    @_apipie_project_keeper ||= BeachApiCore::ProjectKeeper.new(id: fake_id,
+                                                                keeper: apipie_instance)
   end
 
   def pretty(serializer)
