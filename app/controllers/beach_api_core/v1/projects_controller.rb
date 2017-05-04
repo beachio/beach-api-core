@@ -22,6 +22,15 @@ module BeachApiCore
       render_json_success(@project, :ok, root: :project)
     end
 
+    def update
+      result = ProjectUpdate.call(project: @project, params: project_params)
+      if result.success?
+        render_json_success(result.project, result.status, root: :project)
+      else
+        render_json_error({ message: result.message }, result.status)
+      end
+    end
+
     def destroy
       if @project.destroy
         render_json_success(@project, :ok, root: :project)
@@ -37,7 +46,7 @@ module BeachApiCore
     end
 
     def project_params
-      params.require(:project).permit(:name)
+      params.require(:project).permit(:name, project_keepers_attributes: [:keeper_id, :keeper_type])
     end
   end
 end

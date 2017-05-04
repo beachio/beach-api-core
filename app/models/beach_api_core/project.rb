@@ -5,5 +5,7 @@ module BeachApiCore
 
     validates :name, :user, presence: true
     validates :name, uniqueness: true
+
+    accepts_nested_attributes_for :project_keepers, allow_destroy: true
   end
 end

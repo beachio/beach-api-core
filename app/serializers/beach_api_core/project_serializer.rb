@@ -4,5 +4,7 @@ module BeachApiCore
     acts_as_abs_doc_id
 
     attributes :id, :name
+
+    has_many :project_keepers
   end
 end
