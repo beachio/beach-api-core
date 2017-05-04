@@ -23,5 +23,62 @@ module BeachApiCore
         expect(json_body[:project][:name]).to eq(@project_params[:name])
       end
     end
+
+    describe 'when show' do
+      context 'when owned project' do
+        before { @project = create :project, user: oauth_user }
+
+        it 'should return an existing project' do
+          get beach_api_core.v1_project_path(@project),
+              headers: bearer_auth
+          expect(response).to have_http_status :ok
+          expect(json_body[:project]).to be_present
+          expect(json_body[:project][:name]).to eq @project.name
+        end
+      end
+
+      context 'when not owned project' do
+        before { @project = create :project }
+
+        it_behaves_like 'an authenticated resource' do
+          before { get beach_api_core.v1_project_path(@project) }
+        end
+
+        it 'should not return project info' do
+          get beach_api_core.v1_project_path(@project),
+              headers: bearer_auth
+          expect(response).to have_http_status :not_found
+        end
+      end
+    end
+
+    describe 'when destroy' do
+      context 'when owned project' do
+        before { @project = create :project, user: oauth_user }
+
+        it 'should destroy a job' do
+          delete beach_api_core.v1_project_path(@project),
+                 headers: bearer_auth
+          expect(response).to have_http_status :ok
+          expect(json_body[:project]).to be_present
+          expect(json_body[:project][:name]).to eq @project.name
+          expect(Project.count).to eq 0
+        end
+      end
+
+      context 'when not owned project' do
+        before { @project = create :project }
+
+        it_behaves_like 'an authenticated resource' do
+          before { delete beach_api_core.v1_project_path(@project) }
+        end
+
+        it 'should not allow to destory a job' do
+          delete beach_api_core.v1_project_path(@project),
+                 headers: bearer_auth
+          expect(response).to have_http_status :not_found
+        end
+      end
+    end
   end
 end

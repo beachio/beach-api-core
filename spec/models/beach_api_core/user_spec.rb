@@ -19,8 +19,9 @@ module BeachApiCore
       should have_many(:invitations).dependent(:destroy)
       should have_many :organisations
       should have_many :teams
-      should respond_to(:first_name)
-      should respond_to(:last_name)
+      should have_many :projects
+      should respond_to :first_name
+      should respond_to :last_name
     end
 
     it 'should have basic validations' do
@@ -29,6 +30,7 @@ module BeachApiCore
       should validate_presence_of :status
       should define_enum_for(:status).with(active: 0, invitee: 1)
     end
+
     it 'should have uniqueness case insensitive' do
       create :user
       should validate_uniqueness_of(:email).case_insensitive

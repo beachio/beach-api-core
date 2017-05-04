@@ -3,7 +3,7 @@ module BeachApiCore
     include ProjectsDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
 
-    before_action :doorkeeper_authorize!
+    prepend_before_action :doorkeeper_authorize!
 
     resource_description do
       name 'Projects'
@@ -18,7 +18,23 @@ module BeachApiCore
       end
     end
 
+    def show
+      render_json_success(@project, :ok, root: :project)
+    end
+
+    def destroy
+      if @project.destroy
+        render_json_success(@project, :ok, root: :project)
+      else
+        render_json_error({ message: @project.errors.full_messages }, :bad_request)
+      end
+    end
+
     private
+
+    def resource_scope
+      current_user.projects
+    end
 
     def project_params
       params.require(:project).permit(:name)
