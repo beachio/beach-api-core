@@ -71,7 +71,7 @@ module BeachApiCore
                           params: { permission: { keeper_id: BeachApiCore::Role.admin.id,
                                                   keeper_type: 'Role',
                                                   actions: [],
-                                                  actor: Faker::Lorem.word } },
+                                                  actor: "#{Faker::Lorem.word}-#{rand(1000)}" } },
                           headers: auth }
                 .to change(Permission, :count).by(1)
             expect(response.status).to eq 200
