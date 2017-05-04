@@ -10,7 +10,9 @@ module BeachApiCore
     end
 
     def create
-      result = ProjectCreate.call(params: project_params, user: current_user)
+      result = ProjectCreate.call(params: project_params,
+                                  user: current_user,
+                                  organisation: current_organisation)
       if result.success?
         render_json_success(result.project, result.status, root: :project)
       else
@@ -23,6 +25,7 @@ module BeachApiCore
     end
 
     def update
+      authorize @project
       result = ProjectUpdate.call(project: @project, params: project_params)
       if result.success?
         render_json_success(result.project, result.status, root: :project)
@@ -32,6 +35,7 @@ module BeachApiCore
     end
 
     def destroy
+      authorize @project
       if @project.destroy
         render_json_success(@project, :ok, root: :project)
       else
@@ -42,7 +46,7 @@ module BeachApiCore
     private
 
     def resource_scope
-      current_user.projects
+      current_organisation.projects
     end
 
     def project_params

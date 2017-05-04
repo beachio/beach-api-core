@@ -15,6 +15,7 @@ module BeachApiCore
 
     it 'should have relations' do
       should belong_to :user
+      should belong_to :organisation
       should have_many :project_keepers
     end
   end

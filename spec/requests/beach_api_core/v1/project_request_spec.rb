@@ -6,6 +6,12 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
+    let!(:organisation) do
+      (create :membership, member: oauth_user, group: (create :organisation)).group
+    end
+
+    before { access_token.update(organisation: organisation) }
+
     describe 'when create' do
       before do
         BeachApiCore::Instance.instance_variable_set('@_current', nil)
@@ -33,12 +39,25 @@ module BeachApiCore
         expect(json_body[:project][:name]).to eq(@project_params[:project][:name])
         expect(json_body[:project][:project_keepers].size).to eq 1
         expect(json_body[:project][:project_keepers].first[:keeper_id]).to eq @keeper.id
+        expect(Project.last.organisation_id).to eq organisation.id
       end
     end
 
     describe 'when show' do
       context 'when owned project' do
-        before { @project = create :project, user: oauth_user }
+        before { @project = create :project, user: oauth_user, organisation: organisation }
+
+        it 'should return an existing project' do
+          get beach_api_core.v1_project_path(@project),
+              headers: bearer_auth
+          expect(response).to have_http_status :ok
+          expect(json_body[:project]).to be_present
+          expect(json_body[:project][:name]).to eq @project.name
+        end
+      end
+
+      context 'when project from current organisation' do
+        before { @project = create :project, user: create(:user), organisation: organisation }
 
         it 'should return an existing project' do
           get beach_api_core.v1_project_path(@project),
@@ -70,7 +89,7 @@ module BeachApiCore
       end
 
       context 'when owned project' do
-        before { @project = create :project, user: oauth_user }
+        before { @project = create :project, user: oauth_user, organisation: organisation }
 
         it 'should destroy a job' do
           put beach_api_core.v1_project_path(@project),
@@ -100,7 +119,7 @@ module BeachApiCore
 
     describe 'when destroy' do
       context 'when owned project' do
-        before { @project = create :project, user: oauth_user }
+        before { @project = create :project, user: oauth_user, organisation: organisation }
 
         it 'should destroy a job' do
           delete beach_api_core.v1_project_path(@project),

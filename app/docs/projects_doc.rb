@@ -15,7 +15,7 @@ module ProjectsDoc
   def create
   end
 
-  api :GET, '/projects/:id', 'Get owned project info'
+  api :GET, '/projects/:id', 'Get project info (scoped by organisation)'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
   def show

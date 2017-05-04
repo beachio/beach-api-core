@@ -225,9 +225,11 @@ ActiveRecord::Schema.define(version: 20170504073858) do
 
   create_table "beach_api_core_projects", force: :cascade do |t|
     t.string   "name"
-    t.integer  "user_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",         null: false
+    t.integer  "organisation_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["organisation_id"], name: "index_beach_api_core_projects_on_organisation_id", using: :btree
     t.index ["user_id"], name: "index_beach_api_core_projects_on_user_id", using: :btree
   end
 
@@ -342,6 +344,7 @@ ActiveRecord::Schema.define(version: 20170504073858) do
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
   add_foreign_key "beach_api_core_project_keepers", "beach_api_core_projects", column: "project_id"
+  add_foreign_key "beach_api_core_projects", "beach_api_core_organisations", column: "organisation_id"
   add_foreign_key "beach_api_core_projects", "beach_api_core_users", column: "user_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"

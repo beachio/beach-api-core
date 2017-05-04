@@ -4,7 +4,8 @@ module BeachApiCore
 
     def call
       context.project = Project.new(context.params)
-      context.project.assign_attributes(user: context.user)
+      context.project.assign_attributes(user: context.user,
+                                        organisation: context.organisation)
 
       if context.project.save
         context.status = :created
