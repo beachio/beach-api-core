@@ -3,9 +3,8 @@ module BeachApiCore
     include Interactor
 
     def call
-      context.project = Project.new(context.params)
-      context.project.assign_attributes(user: context.user,
-                                        organisation: context.organisation)
+      context.project = context.organisation.projects.build(context.params)
+      context.project.assign_attributes(user: context.user)
 
       if context.project.save
         context.status = :created
