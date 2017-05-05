@@ -29,6 +29,8 @@ module BeachApiCore
     has_many :teams, through: :team_memberships, source: :group, source_type: 'BeachApiCore::Team'
     has_many :user_preferences, dependent: :destroy
 
+    has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :user, dependent: :destroy
+
     has_secure_password
     acts_as_downcasable_on [:email, :username]
 

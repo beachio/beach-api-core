@@ -63,6 +63,7 @@ module BeachApiCore
       it 'should show a job' do
         get beach_api_core.v1_job_path(@job),
             headers: application_auth
+        expect(response).to have_http_status :ok
         expect(json_body[:job]).to be_present
         expect(json_body[:job].keys).to contain_exactly(:id, :done, :last_run, :result)
         expect(json_body[:job][:id]).to eq @job.id

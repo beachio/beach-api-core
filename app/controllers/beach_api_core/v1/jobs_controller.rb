@@ -2,6 +2,7 @@ module BeachApiCore
   class V1::JobsController < BeachApiCore::V1::BaseController
     include JobsDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
+
     before_action :explicit_application_authorize!
 
     resource_description do
