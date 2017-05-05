@@ -89,7 +89,7 @@ module BeachApiCore
           delete beach_api_core.v1_assignment_path(assignment), headers: bearer_auth
         end
         it do
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 204
           expect(Assignment.find_by(id: assignment.id)).to be_blank
         end
       end

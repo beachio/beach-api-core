@@ -110,10 +110,10 @@ module BeachApiCore
           atom = create(:atom)
           other_atom = create(:atom)
           delete beach_api_core.v1_atoms_path, params: { id: atom.id }, headers: auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 204
           expect(Atom.find_by(id: atom.id)).to be_blank
           delete beach_api_core.v1_atoms_path, params: { id: other_atom.name }, headers: auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 204
           expect(Atom.find_by(id: other_atom.id)).to be_blank
         end
       end

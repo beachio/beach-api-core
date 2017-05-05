@@ -39,7 +39,7 @@ module BeachApiCore
       it 'should allow group owner to destroy membership' do
         membership = create :membership, member: oauth_user, owner: true
         delete beach_api_core.v1_membership_path(membership), headers: bearer_auth
-        expect(response.status).to eq 200
+        expect(response.status).to eq 204
         expect(Membership.find_by(id: membership.id)).to be_blank
       end
     end

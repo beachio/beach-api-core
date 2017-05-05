@@ -28,7 +28,7 @@ module BeachApiCore
     def destroy
       authorize @favourite
       if @favourite.destroy
-        render_json_success({ message: 'Favourite item was successfully deleted' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'This favourite item could not be deleted' }, :bad_request)
       end

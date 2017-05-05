@@ -14,7 +14,7 @@ module AssignmentsDoc
 
   api :DELETE, '/assignments/:id', "Remove user's role"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "success: 'Role has been removed' \nfail: 'Could not remove role'"
+  example "fail: 'Could not remove role'"
   def destroy
   end
 end

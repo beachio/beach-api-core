@@ -26,7 +26,7 @@ module BeachApiCore
       @membership = Membership.find(params[:id])
       authorize @membership
       if @membership.destroy
-        render_json_success({ message: 'Membership was successfully deleted' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'Could not remove membership' }, :bad_request)
       end

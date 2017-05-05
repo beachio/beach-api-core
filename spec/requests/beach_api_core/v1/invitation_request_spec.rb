@@ -80,8 +80,7 @@ module BeachApiCore
         expect do
           delete beach_api_core.v1_invitation_path(@invitation), headers: bearer_auth
         end.to change(Invitation, :count).by(-2).and change(User, :count).by(-1)
-        expect(response.status).to eq 200
-        expect(json_body[:message]).to be_present
+        expect(response.status).to eq 204
       end
 
       it 'should not destroy an active user' do

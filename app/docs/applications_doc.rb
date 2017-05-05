@@ -30,7 +30,7 @@ module ApplicationsDoc
   end
 
   api :DELETE, '/applications/:id', 'Delete an application'
-  example "success: 'Application has been destroyed' \nfail: 'Could not remove application'"
+  example "fail: 'Could not remove application'"
   def destroy
   end
 end

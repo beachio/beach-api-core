@@ -20,7 +20,9 @@ module BeachApiCore
     end
 
     def create
-      result = BeachApiCore::InvitationCreate.call(params: invitation_params, group: @group, user: current_user)
+      result = BeachApiCore::InvitationCreate.call(params: invitation_params,
+                                                   group: @group,
+                                                   user: current_user)
       if result.success?
         render_json_success(result.invitation, result.status, root: :invitation)
       else
@@ -32,7 +34,7 @@ module BeachApiCore
       invitation = Invitation.find(params[:id])
       authorize invitation
       if invitation.destroy
-        render_json_success({ message: 'Invitation was revoked successfully' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'Could not revoke an invitation' }, :bad_request)
       end

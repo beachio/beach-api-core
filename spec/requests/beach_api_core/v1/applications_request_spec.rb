@@ -155,7 +155,7 @@ module BeachApiCore
       context 'when valid' do
         it do
           delete beach_api_core.v1_application_path(oauth_application), headers: developer_bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 204
           expect(Doorkeeper::Application.find_by(id: oauth_application.id)).to be_blank
         end
       end

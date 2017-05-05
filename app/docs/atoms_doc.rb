@@ -43,7 +43,7 @@ module AtomsDoc
   api :DELETE, '/atoms', 'Remove an atom by id or name'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :id, String, desc: 'can be either atom id or name'
-  example "success: 'Atom was successfully deleted' \nfail: 'Could not remove atom'"
+  example "fail: 'Could not remove atom'"
   def destroy
   end
 end

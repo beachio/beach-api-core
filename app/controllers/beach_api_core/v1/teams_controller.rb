@@ -40,7 +40,7 @@ module BeachApiCore
     def destroy
       authorize @team
       if @team.destroy
-        render_json_success({ message: 'Team was successfully deleted' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'Could not remove team' }, :bad_request)
       end

@@ -30,7 +30,7 @@ module BeachApiCore
 
       it 'should successfully destroy capability' do
         delete beach_api_core.v1_service_capabilities_path(capability.service), headers: developer_bearer_auth
-        expect(response.status).to eq(200)
+        expect(response.status).to eq 204
         expect(Capability.find_by(id: capability.id)).to be_blank
       end
 

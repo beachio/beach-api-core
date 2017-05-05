@@ -45,7 +45,7 @@ module BeachApiCore
 
     def destroy
       if @atom.destroy
-        render_json_success({ message: 'Atom was successfully deleted' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'Could not remove atom' }, :bad_request)
       end

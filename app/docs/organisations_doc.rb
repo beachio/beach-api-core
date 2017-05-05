@@ -41,7 +41,7 @@ module OrganisationsDoc
 
   api :DELETE, '/organisations/:id', 'Remove organisation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "success: 'Organisation was successfully deleted' \nfail: 'Could not remove organisation'"
+  example "fail: 'Could not remove organisation'"
   def destroy
   end
 

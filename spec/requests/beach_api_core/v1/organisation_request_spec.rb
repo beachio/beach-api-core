@@ -114,7 +114,7 @@ module BeachApiCore
 
       it 'should allow owner to delete the organisation' do
         delete beach_api_core.v1_organisation_path(owned_organisation), headers: bearer_auth
-        expect(response.status).to eq(200)
+        expect(response.status).to eq 204
       end
 
       it_behaves_like 'an forbidden resource' do

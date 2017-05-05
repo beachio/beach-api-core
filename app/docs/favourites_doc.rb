@@ -20,7 +20,7 @@ module FavouritesDoc
 
   api :DELETE, '/favourites/:id', 'Remove favourite item'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "success: 'Favourite item was successfully deleted' \nfail: 'This favourite item could not be deleted'"
+  example "fail: 'This favourite item could not be deleted'"
   def destroy
   end
 end
