@@ -9,7 +9,7 @@ module BeachApiCore
     has_many :teams, through: :memberships, source: :member, source_type: 'BeachApiCore::Team'
     has_many :invitations, as: :group, inverse_of: :group
     has_many :assignments, as: :keeper, inverse_of: :keeper
-    has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :organisation
+    has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :organisation, dependent: :destroy
 
     has_one :logo_image, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
     accepts_nested_attributes_for :logo_image, allow_destroy: true, reject_if: :file_blank?
