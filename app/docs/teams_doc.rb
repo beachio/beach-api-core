@@ -29,7 +29,7 @@ module TeamsDoc
 
   api :DELETE, '/teams/:id', 'Remove team'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "success: 'Team was successfully deleted' \nfail: 'Could not remove team'"
+  example "fail: 'Could not remove team'"
   def destroy
   end
 end

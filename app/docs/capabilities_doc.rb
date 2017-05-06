@@ -10,7 +10,7 @@ module CapabilitiesDoc
 
   api :DELETE, '/services/:service_id/capabilities', 'Remove capability'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "success: 'Capability was successfully deleted' \nfail: 'Errors Description'"
+  example "fail: 'Errors Description'"
   def destroy
   end
 end

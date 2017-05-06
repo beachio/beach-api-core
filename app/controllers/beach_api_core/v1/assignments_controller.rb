@@ -25,7 +25,7 @@ module BeachApiCore
       authorize current_organisation, :update?
       @assignment = current_organisation.assignments.find(params[:id])
       if @assignment.destroy
-        render_json_success({ message: 'Role has been removed' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'Could not remove role' }, :bad_request)
       end

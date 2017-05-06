@@ -43,7 +43,7 @@ module BeachApiCore
     def destroy
       authorize @organisation
       if @organisation.destroy
-        render_json_success({ message: 'Organisation was successfully deleted' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'Could not remove organisation' }, :bad_request)
       end

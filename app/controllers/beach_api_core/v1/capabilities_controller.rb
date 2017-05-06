@@ -25,7 +25,7 @@ module BeachApiCore
       authorize current_application, :manage?
       @capability = @service.capabilities.find_by(application: current_application)
       if @capability.destroy
-        render_json_success({ message: 'Capability was successfully deleted' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'Could not remove capability' }, :bad_request)
       end

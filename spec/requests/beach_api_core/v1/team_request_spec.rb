@@ -56,7 +56,7 @@ module BeachApiCore
 
       it 'should allow to delete the team' do
         delete beach_api_core.v1_team_path(owned_team), headers: bearer_auth
-        expect(response.status).to eq(200)
+        expect(response.status).to eq 204
       end
 
       it_behaves_like 'an forbidden resource' do

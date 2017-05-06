@@ -39,8 +39,9 @@ module BeachApiCore
       authorize Instance.current, :developer?
       authorize @application
 
-      result = BeachApiCore::DoorkeeperInteractor::ApplicationUpdate.call(application: @application,
-                                                                          params: application_update_params)
+      result = BeachApiCore::DoorkeeperInteractor::ApplicationUpdate.call(
+        application: @application, params: application_update_params
+      )
 
       if result.success?
         render_json_success(result.application, result.status, serializer: AppSerializer, root: :application)
@@ -54,7 +55,7 @@ module BeachApiCore
       authorize @application
 
       if @application.destroy
-        render_json_success({ message: 'Application has been destroyed' }, :ok)
+        head :no_content
       else
         render_json_error({ message: 'Could not remove application' }, :bad_request)
       end

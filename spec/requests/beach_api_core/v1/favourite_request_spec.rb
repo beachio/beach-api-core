@@ -80,7 +80,7 @@ module BeachApiCore
         it do
           favourite = create(:favourite, user: oauth_user)
           delete beach_api_core.v1_favourite_path(favourite), headers: bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 204
           expect(Favourite.find_by(id: favourite.id)).to be_blank
         end
       end

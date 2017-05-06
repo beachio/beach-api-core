@@ -17,7 +17,7 @@ module MembershipsDoc
 
   api :DELETE, '/memberships/:id', 'Destroy membership'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "success: 'Membership was successfully deleted' \nfail: 'Could not remove membership'"
+  example "fail: 'Could not remove membership'"
   def destroy
   end
 end
