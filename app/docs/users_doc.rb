@@ -43,4 +43,10 @@ module UsersDoc
   example "\"user\": #{apipie_user_response} \nfail: 'Errors Description'"
   def update
   end
+
+  api :POST, '/users/:id/confirm'
+  param :confirmation_token, required: true
+  example "\"user\": #{apipie_user_response}"
+  def confirm
+  end
 end

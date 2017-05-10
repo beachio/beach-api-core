@@ -5,7 +5,9 @@ BeachApiCore::Engine.routes.draw do
     resources :applications, except: [:new, :edit]
     resources :sessions, only: :create, path: :auth
     resources :favourites, only: [:index, :create, :destroy]
-    resources :users, only: [:create]
+    resources :users, only: [:create] do
+      post :confirm, on: :member
+    end
     resource :user, only: [:show, :update]
     resources :services, only: [:index, :update] do
       resource :capabilities, only: [:create, :destroy]

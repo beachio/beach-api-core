@@ -13,5 +13,9 @@ module BeachApiCore::Concerns::V1::RescueFromConcern
     rescue_from BeachApiCore::Exception::NotAcceptable do |exception|
       render_json_error({ message: 'Not acceptable' }, :not_acceptable)
     end
+
+    rescue_from ActiveSupport::MessageVerifier::InvalidSignature do |exception|
+      render_json_error({ message: 'Invalid token' }, :bad_request)
+    end
   end
 end

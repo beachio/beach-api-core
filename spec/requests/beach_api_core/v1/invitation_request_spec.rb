@@ -113,6 +113,11 @@ module BeachApiCore
         expect(response.status).to eq 200
         expect(invitation.group.users).to include(user)
       end
+
+      it 'should return an error' do
+        post beach_api_core.accept_v1_invitation_path(invitation, token: 'invalid_token')
+        expect(response.status).to eq 400
+      end
     end
   end
 end

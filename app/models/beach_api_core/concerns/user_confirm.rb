@@ -20,5 +20,4 @@ module BeachApiCore::Concerns::UserConfirm
       @verifiers.fetch(purpose) { |p| @verifiers[p] = Rails.application.message_verifier("#{name}-#{p}") }
     end
   end
-
 end

@@ -57,6 +57,10 @@ module BeachApiCore
       end
     end
 
+    def confirmed?
+      confirmed_at.present?
+    end
+
     private
 
     def set_defaults
