@@ -45,7 +45,7 @@ module UsersDoc
   end
 
   api :POST, '/users/:id/confirm'
-  param :confirmation_token, required: true
+  param :confirmation_token, String, required: true
   example "\"user\": #{apipie_user_response}"
   def confirm
   end
