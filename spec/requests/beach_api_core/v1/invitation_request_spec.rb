@@ -90,5 +90,29 @@ module BeachApiCore
         end.to change(Invitation, :count).by(-1).and change(User, :count).by(0)
       end
     end
+
+    describe 'when accept' do
+      let(:invitee) { create :user, status: :invitee }
+      let(:user) { create :user }
+      let!(:invitation) { create :invitation, email: user.email, group: (create :organisation) }
+      let!(:other_invitation) { create :invitation, email: invitee.email }
+
+      it 'should join user to the group' do
+        expect do
+          post beach_api_core.accept_v1_invitation_path(other_invitation, token: other_invitation.token)
+          invitee.reload
+        end.to change(Invitation, :count).by(-1)
+           .and change(BeachApiCore::Membership, :count).by(1)
+           .and change(BeachApiCore::Assignment, :count).by(1)
+           .and change(invitee, :status).to 'active'
+        expect(response.status).to eq 200
+        expect(other_invitation.group.members).to include(invitee)
+        expect do
+          post beach_api_core.accept_v1_invitation_path(invitation, token: invitation.token)
+        end.to change(Invitation, :count).by(-1)
+        expect(response.status).to eq 200
+        expect(invitation.group.users).to include(user)
+      end
+    end
   end
 end

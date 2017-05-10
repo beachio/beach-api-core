@@ -29,4 +29,9 @@ module InvitationsDoc
   example "\"invitation\": #{apipie_invitation_response}"
   def destroy
   end
+
+  api :POST, '/invitations/:id/accept', 'Accept an invitation'
+  example "\"access_token\": \"#{SecureRandom.hex(16)}\"\nfail: 'Errors Description'"
+  def accept
+  end
 end
