@@ -4,7 +4,7 @@ module BeachApiCore::InvitationInteractor
 
     def call
       if context.invitation.group.is_a?(BeachApiCore::Team) || context.invitation.group.is_a?(BeachApiCore::Organisation)
-        BeachApiCore::InvitationMailer.group_invite(context.invitation).deliver_now
+        BeachApiCore::InvitationMailer.group_invite(context.invitation).deliver_later
       end
     end
   end

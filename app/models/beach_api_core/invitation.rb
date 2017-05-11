@@ -16,13 +16,12 @@ module BeachApiCore
     after_destroy :destroy_invitee, if: 'invitee&.invitee?'
 
     def accept!
-      if group.is_a?(BeachApiCore::Team) || group.is_a?(BeachApiCore::Organisation)
-        transaction do
-          group.memberships.create(member: invitee)
-          role_ids.each { |role_id| invitee.assignments.create(role_id: role_id, keeper: group) }
-          invitee.active!
-          destroy!
-        end
+      return unless group.is_a?(BeachApiCore::Team) || group.is_a?(BeachApiCore::Organisation)
+      transaction do
+        group.memberships.create(member: invitee)
+        role_ids.each { |role_id| invitee.assignments.create(role_id: role_id, keeper: group) }
+        invitee.active!
+        destroy!
       end
     end
 
