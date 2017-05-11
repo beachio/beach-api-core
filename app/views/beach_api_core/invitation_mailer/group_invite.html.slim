@@ -3,10 +3,7 @@ tr
     table(border="0" cellspacing="0" cellpadding="0" width="600" style="width: 600px; padding: 0; margin: 0;")
       tr
         td
-          - if @invitation.group.is_a?(BeachApiCore::Team)
-            img(src=image_url('beach_api_core/mailer/team-background.jpg') style="display: block; width: 600px")
-          - else
-            img(src=image_url('beach_api_core/mailer/organization-background.jpg') style="display: block; width: 600px")
+          img(src=image_url("beach_api_core/mailer/#{@invitation.group.class.name.demodulize.underscore}-background.jpg") style="display: block; width: 600px")
 tr
   td
     table(width="600px" border="0" cellspacing="0" cellpadding="0" style="padding: 15px 20px; background: #fff; border: 1px solid rgba(0,0,0,0.1); border-bottom: none")

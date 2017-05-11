@@ -105,6 +105,7 @@ module BeachApiCore
            .and change(BeachApiCore::Membership, :count).by(1)
            .and change(BeachApiCore::Assignment, :count).by(1)
            .and change(invitee, :status).to 'active'
+        expect(json_body[:access_token]).to be_present
         expect(response.status).to eq 200
         expect(other_invitation.group.members).to include(invitee)
         expect do

@@ -41,7 +41,7 @@ module BeachApiCore
       user = BeachApiCore::User.find(params[:id])
       result = BeachApiCore::UserInteractor::Confirm.call(user: user, token: params[:confirmation_token])
       if result.success?
-        render_json_success(result.user, result.status)
+        render_json_success(result.user, result.status, root: :user)
       else
         render_json_error({ message: result.message }, result.status)
       end

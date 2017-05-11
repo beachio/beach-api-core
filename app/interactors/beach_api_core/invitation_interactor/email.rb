@@ -3,9 +3,8 @@ module BeachApiCore::InvitationInteractor
     include Interactor
 
     def call
-      if context.invitation.group.is_a?(BeachApiCore::Team) || context.invitation.group.is_a?(BeachApiCore::Organisation)
-        BeachApiCore::InvitationMailer.group_invite(context.invitation).deliver_later
-      end
+      return unless [BeachApiCore::Team, BeachApiCore::Organisation].include?(context.invitation.group.class)
+      BeachApiCore::InvitationMailer.group_invite(context.invitation).deliver_later
     end
   end
 end

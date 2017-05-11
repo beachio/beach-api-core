@@ -47,7 +47,7 @@ module BeachApiCore
                                                    application: @invitation.group.application,
                                                    user: @invitation.invitee)
       if result.success?
-        render_json_success(result.access_token&.token, result.status)
+        render_json_success({ access_token: result.access_token&.token }, result.status)
       else
         render_json_error({ message: result.message }, result.status)
       end

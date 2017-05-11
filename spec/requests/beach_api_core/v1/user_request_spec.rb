@@ -226,6 +226,7 @@ module BeachApiCore
 
       it 'should confirm a user' do
         post beach_api_core.confirm_v1_user_path(user, confirmation_token: user.confirm_email_token)
+        expect(json_body[:user]).to be_present
         expect(user.reload.confirmed?).to be_truthy
       end
     end
