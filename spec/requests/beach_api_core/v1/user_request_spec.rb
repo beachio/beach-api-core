@@ -10,8 +10,8 @@ module BeachApiCore
 
       context 'when valid request' do
         it "has status 'created'" do
-          create_user_request
-          expect(response.status).to eq(201)
+          expect{ create_user_request }.to change(User, :count).by(1)
+          expect(response.status).to eq(200)
         end
 
         it 'creates users' do
