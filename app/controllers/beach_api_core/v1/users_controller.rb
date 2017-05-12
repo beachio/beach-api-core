@@ -1,7 +1,7 @@
 module BeachApiCore
   class V1::UsersController < BeachApiCore::V1::BaseController
     include ::UsersDoc
-    before_action :doorkeeper_authorize!, except: [:create]
+    before_action :doorkeeper_authorize!, except: [:create, :confirm]
 
     resource_description do
       name 'Users'
@@ -32,6 +32,17 @@ module BeachApiCore
         render_json_success(current_user, result.status, keepers: current_keepers,
                             current_user: current_user, current_application: current_application,
                             root: :user)
+      else
+        render_json_error({ message: result.message }, result.status)
+      end
+    end
+
+    def confirm
+      user = BeachApiCore::User.find(params[:id])
+      result = BeachApiCore::UserInteractor::Confirm.call(user: user, token: params[:confirmation_token])
+      if result.success?
+        render_json_success(result.user, result.status, keepers: [Instance.current],
+                            current_user: result.user, root: :user)
       else
         render_json_error({ message: result.message }, result.status)
       end

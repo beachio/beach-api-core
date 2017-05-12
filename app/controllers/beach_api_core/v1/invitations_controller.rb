@@ -1,9 +1,11 @@
 module BeachApiCore
   class V1::InvitationsController < BeachApiCore::V1::BaseController
     include BeachApiCore::Concerns::V1::GroupResourceConcern
+    include BeachApiCore::Concerns::V1::ResourceConcern
     include InvitationsDoc
-    before_action :doorkeeper_authorize!
+    before_action :doorkeeper_authorize!, except: [:accept]
     before_action :find_group, except: [:destroy]
+    skip_before_action :find_group, only: :accept
 
     resource_description do
       name 'Invitations'
@@ -31,12 +33,23 @@ module BeachApiCore
     end
 
     def destroy
-      invitation = Invitation.find(params[:id])
-      authorize invitation
-      if invitation.destroy
+      authorize @invitation
+      if @invitation.destroy
         head :no_content
       else
         render_json_error({ message: 'Could not revoke an invitation' }, :bad_request)
+      end
+    end
+
+    def accept
+      get_resource
+      result = BeachApiCore::InvitationAccept.call(invitation: @invitation, token: params[:token],
+                                                   application: @invitation.group.application,
+                                                   user: @invitation.invitee)
+      if result.success?
+        render_json_success({ access_token: result.access_token&.token }, result.status)
+      else
+        render_json_error({ message: result.message }, result.status)
       end
     end
 

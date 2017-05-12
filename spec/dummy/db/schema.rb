@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504073858) do
+ActiveRecord::Schema.define(version: 20170510115810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20170504073858) do
     t.integer  "atom_parent_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.index ["atom_parent_id"], name: "index_beach_api_core_atoms_on_atom_parent_id", using: :btree
     t.index ["name"], name: "index_beach_api_core_atoms_on_name", unique: true, using: :btree
   end
 
@@ -284,13 +283,14 @@ ActiveRecord::Schema.define(version: 20170504073858) do
   end
 
   create_table "beach_api_core_users", force: :cascade do |t|
-    t.string   "email",           null: false
-    t.string   "username",        null: false
+    t.string   "email",                null: false
+    t.string   "username",             null: false
     t.string   "password_digest"
     t.datetime "confirmed_at"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "status"
+    t.string   "reset_password_token"
     t.index ["email"], name: "index_beach_api_core_users_on_email", using: :btree
     t.index ["username"], name: "index_beach_api_core_users_on_username", using: :btree
   end
@@ -337,7 +337,6 @@ ActiveRecord::Schema.define(version: 20170504073858) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
-  add_foreign_key "beach_api_core_atoms", "beach_api_core_atoms", column: "atom_parent_id"
   add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interaction_keepers", "beach_api_core_interactions", column: "interaction_id"

@@ -15,6 +15,16 @@ module BeachApiCore
     before_validation :set_token, on: :create, unless: 'token.present?'
     after_destroy :destroy_invitee, if: 'invitee&.invitee?'
 
+    def accept!
+      return unless [BeachApiCore::Team, BeachApiCore::Organisation].include?(group.class)
+      transaction do
+        group.memberships.create(member: invitee)
+        role_ids.each { |role_id| invitee.assignments.create(role_id: role_id, keeper: group) }
+        invitee.active!
+        destroy!
+      end
+    end
+
     private
 
     def set_invitee

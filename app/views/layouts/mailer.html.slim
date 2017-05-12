@@ -4,7 +4,18 @@ css:
   p { margin-top: .5em; }
   h1, a { color: #80b1d1; }
   .margin { margin: 2em 0 2em 0; }
-  .button { color: white; background-color: #00a6d8; border-radius: 6px; padding: 12px; text-decoration: none; font-weight: 80%; }
+  .button { color: white; background-color: #00a6d8; border-radius: 6px; padding: 12px; text-decoration: none; }
 
 .email
-  = yield
+  doctype html
+  html
+    head
+      meta(http-equiv='Content-type', content='text/html; charset=UTF-8')
+      title Email
+    body(style="margin: 0; padding: 0; background: #FBFBFF;")
+      table(width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family: sans-serif; padding-bottom: 40px;")
+        tr
+          td(align="center")
+            table(border="0" cellspacing="0" cellpadding="0" width="600" style="width: 600px; padding: 0; margin: 0;")
+              = yield
+              = render 'layouts/mailer/footer'
