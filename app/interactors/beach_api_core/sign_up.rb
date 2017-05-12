@@ -7,5 +7,4 @@ class BeachApiCore::SignUp
                BeachApiCore::UserInteractor::Email,
                BeachApiCore::Authorization::CreateAccessToken
            ]
-
 end

@@ -3,6 +3,7 @@ class BeachApiCore::InvitationAccept
 
   organize [
              BeachApiCore::InvitationInteractor::Accept,
+             BeachApiCore::UserInteractor::Email,
              BeachApiCore::Authorization::CreateAccessToken
            ]
 end
