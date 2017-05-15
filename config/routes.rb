@@ -37,5 +37,7 @@ BeachApiCore::Engine.routes.draw do
     resources :emails, only: [:create]
     resources :jobs, only: [:create, :show, :destroy]
     resources :projects, only: [:create, :show, :update, :destroy]
+    resources :subscription_plans, only: [:index, :create]
+    resources :subscriptions, only: [:create]
   end
 end

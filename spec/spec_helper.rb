@@ -30,6 +30,12 @@ RSpec.configure do |config|
   end
 
   config.include FactoryGirl::Syntax::Methods
+
+  config.before(:each) do
+    # Stub all stripe requests
+    WebMock.stub_request(:any, %r{https://api\.stripe\.com/.+})
+      .to_return(status: 200, body: '{}', headers: {})
+  end
 end
 
 Shoulda::Matchers.configure do |config|

@@ -40,4 +40,7 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   routes.default_url_options = { host: 'www.example.com' }
+
+  ENV['STRIPE_SECRET_KEY'] = 'sk_test_vVgMECJPjoCesl3XyFB8jEya'
+  ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_C7oRRoiUbkWRo3m9URF7R0vg'
 end

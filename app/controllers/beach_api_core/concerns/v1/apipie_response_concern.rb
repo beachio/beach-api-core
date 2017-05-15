@@ -63,6 +63,10 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     pretty BeachApiCore::ProjectSerializer.new(apipie_project)
   end
 
+  def apipie_subscription_plan_response
+    pretty BeachApiCore::SubscriptionPlanSerializer.new(apipie_subscription_plan)
+  end
+
   def apipie_actions_response
     pretty(create:  [true, false].sample,
            read:    [true, false].sample,

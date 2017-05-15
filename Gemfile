@@ -13,6 +13,8 @@ gem 'faker'
 gem 'sidekiq', '~> 4.2.9'
 gem 'elasticsearch-model', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
+# @todo: remove "git" option for payola as soon as PR https://github.com/payolapayments/payola/pull/302 is merged
+gem 'payola-payments', git: 'https://github.com/alekseenko/payola'
 
 group :development, :test do
   gem 'rspec-rails'

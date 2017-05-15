@@ -116,6 +116,14 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                    project_keepers: [apipie_project_keeper])
   end
 
+  def apipie_subscription_plan
+    @_apipie_subscription_plan ||= BeachApiCore::SubscriptionPlan.new(id: fake_id,
+                                                                      name: Faker::Name.title,
+                                                                      stripe_id: Faker::Lorem.word,
+                                                                      amount: Faker::Number.between(1000, 10000),
+                                                                      interval: %w(day month year).sample)
+  end
+
   def apipie_project_keeper
     @_apipie_project_keeper ||= BeachApiCore::ProjectKeeper.new(id: fake_id,
                                                                 keeper: apipie_instance)
