@@ -61,6 +61,10 @@ module BeachApiCore
       confirmed_at.present?
     end
 
+    def display_name
+      first_name.present? ? first_name : username
+    end
+
     private
 
     def set_defaults
