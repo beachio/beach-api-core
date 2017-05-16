@@ -4,7 +4,7 @@ class BeachApiCore::DoorkeeperInteractor::ApplicationCreate
   def call
     context.application = context.user.applications.build(context.params)
     if context.application.save
-      context.status = :ok
+      context.status = :created
     else
       context.status = :bad_request
       context.fail! message: context.application.errors.full_messages

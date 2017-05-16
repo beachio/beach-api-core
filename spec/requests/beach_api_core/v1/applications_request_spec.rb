@@ -2,6 +2,7 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Application', type: :request do
+    APPLICATION_KEYS = [:id, :name].freeze
 
     describe 'when index' do
       include_context 'signed up developer'
@@ -23,9 +24,9 @@ module BeachApiCore
       context 'when valid' do
         it do
           get beach_api_core.v1_applications_path, headers: developer_bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 200
           expect(json_body[:applications]).to be_present
-          expect(json_body[:applications].first.keys).to contain_exactly(:id, :name)
+          expect(json_body[:applications].first.keys).to contain_exactly(*APPLICATION_KEYS)
         end
       end
     end
@@ -49,11 +50,15 @@ module BeachApiCore
 
       context 'when valid' do
         it do
-          post beach_api_core.v1_applications_path, params: { application: { name: Faker::App.name,
-                                                              redirect_uri: Faker::Internet.redirect_uri } },
+          post beach_api_core.v1_applications_path,
+               params: {
+                 application: { name: Faker::App.name,
+                                redirect_uri: Faker::Internet.redirect_uri }
+               },
                headers: developer_bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 201
           expect(json_body[:application]).to be_present
+          expect(json_body[:application].keys).to contain_exactly(*APPLICATION_KEYS)
         end
       end
     end
@@ -83,8 +88,9 @@ module BeachApiCore
       context 'when valid' do
         it do
           get beach_api_core.v1_application_path(oauth_application), headers: developer_bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 200
           expect(json_body[:application]).to be_present
+          expect(json_body[:application].keys).to contain_exactly(*APPLICATION_KEYS)
         end
       end
     end
@@ -98,23 +104,31 @@ module BeachApiCore
 
       context 'when invalid' do
         it_behaves_like 'an authenticated resource' do
-          before { patch beach_api_core.v1_application_path(oauth_application),
-                         params: { application: { name: Faker::App.name } } }
+          before do
+            patch beach_api_core.v1_application_path(oauth_application),
+                  params: { application: { name: Faker::App.name } }
+          end
         end
         it_behaves_like 'an authenticated resource' do
-          before { patch beach_api_core.v1_application_path(oauth_application),
-                         params: { application: { name: Faker::App.name } },
-                         headers: invalid_bearer_auth }
+          before do
+            patch beach_api_core.v1_application_path(oauth_application),
+                  params: { application: { name: Faker::App.name } },
+                  headers: invalid_bearer_auth
+          end
         end
         it_behaves_like 'an forbidden resource' do
-          before { patch beach_api_core.v1_application_path(oauth_application),
-                         params: { application: { name: Faker::App.name } },
-                         headers: bearer_auth }
+          before do
+            patch beach_api_core.v1_application_path(oauth_application),
+                  params: { application: { name: Faker::App.name } },
+                  headers: bearer_auth
+          end
         end
         it_behaves_like 'an forbidden resource' do
-          before { patch beach_api_core.v1_application_path(another_oauth_application),
-                         params: { application: { name: Faker::App.name } },
-                         headers: developer_bearer_auth }
+          before do
+            patch beach_api_core.v1_application_path(another_oauth_application),
+                  params: { application: { name: Faker::App.name } },
+                  headers: developer_bearer_auth
+          end
         end
       end
 
@@ -123,8 +137,9 @@ module BeachApiCore
           patch beach_api_core.v1_application_path(oauth_application),
                 params: { application: { name: Faker::App.name } },
                 headers: developer_bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 200
           expect(json_body[:application]).to be_present
+          expect(json_body[:application].keys).to contain_exactly(*APPLICATION_KEYS)
           expect(json_body[:application][:name]).not_to eq oauth_application.name
         end
       end
@@ -142,19 +157,29 @@ module BeachApiCore
           before { delete beach_api_core.v1_application_path(oauth_application) }
         end
         it_behaves_like 'an authenticated resource' do
-          before { delete beach_api_core.v1_application_path(oauth_application), headers: invalid_bearer_auth }
+          before do
+            delete beach_api_core.v1_application_path(oauth_application),
+                   headers: invalid_bearer_auth
+          end
         end
         it_behaves_like 'an forbidden resource' do
-          before { delete beach_api_core.v1_application_path(oauth_application), headers: bearer_auth }
+          before do
+            delete beach_api_core.v1_application_path(oauth_application),
+                   headers: bearer_auth
+          end
         end
         it_behaves_like 'an forbidden resource' do
-          before { delete beach_api_core.v1_application_path(another_oauth_application), headers: developer_bearer_auth }
+          before do
+            delete beach_api_core.v1_application_path(another_oauth_application),
+                   headers: developer_bearer_auth
+          end
         end
       end
 
       context 'when valid' do
         it do
-          delete beach_api_core.v1_application_path(oauth_application), headers: developer_bearer_auth
+          delete beach_api_core.v1_application_path(oauth_application),
+                 headers: developer_bearer_auth
           expect(response.status).to eq 204
           expect(Doorkeeper::Application.find_by(id: oauth_application.id)).to be_blank
         end

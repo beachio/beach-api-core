@@ -6,12 +6,15 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
+    ATOM_KEYS = [:id, :title, :name, :kind, :atom_parent_id, :actions].freeze
+
     before do
-      create :assignment, role: (create :role, name: 'admin'), user: oauth_user, keeper: BeachApiCore::Instance.current
+      create :assignment, role: (create :role, name: 'admin'),
+                          user: oauth_user,
+                          keeper: BeachApiCore::Instance.current
     end
 
     describe 'when create' do
-
       it_behaves_like 'an authenticated resource' do
         before { post beach_api_core.v1_atoms_path, headers: invalid_app_auth }
       end
@@ -22,9 +25,11 @@ module BeachApiCore
 
       it 'should successfully create an atom' do
         [application_auth, bearer_auth].each do |auth|
-          expect { post beach_api_core.v1_atoms_path, params: { atom: { title: Faker::Name.title, kind: 'item' } },
-                        headers: auth }
-              .to change(Atom, :count).by(1)
+          expect do
+            post beach_api_core.v1_atoms_path,
+                 params: { atom: { title: Faker::Name.title, kind: 'item' } },
+                 headers: auth
+          end.to change(Atom, :count).by(1)
           expect(response.status).to eq 201
           expect(json_body[:atom]).to be_present
         end
@@ -35,12 +40,18 @@ module BeachApiCore
 
         it 'should set an atom parent' do
           [@atom_parent.id, @atom_parent.name].each do |value|
-            expect { post beach_api_core.v1_atoms_path, params: { atom: { title: Faker::Name.title, kind: 'item',
-                                                                          atom_parent_id: value } },
-                          headers: bearer_auth }
-              .to change(Atom, :count).by(1)
+            expect do
+              post beach_api_core.v1_atoms_path,
+                   params: {
+                     atom: { title: Faker::Name.title,
+                             kind: 'item',
+                             atom_parent_id: value }
+                   },
+                   headers: bearer_auth
+            end.to change(Atom, :count).by(1)
             expect(response.status).to eq 201
             expect(json_body[:atom]).to be_present
+            expect(json_body[:atom].keys).to contain_exactly(*ATOM_KEYS)
             expect(json_body[:atom][:atom_parent_id]).to be_present
             expect(Atom.last.atom_parent).to be_present
           end
@@ -64,20 +75,30 @@ module BeachApiCore
         [application_auth, bearer_auth].each do |auth|
           atom = create(:atom)
           new_name = Faker::Lorem.word
-          put beach_api_core.v1_atoms_path, params: { id: atom.id, atom: { title: new_title } }, headers: auth
+          put beach_api_core.v1_atoms_path,
+              params: { id: atom.id, atom: { title: new_title } },
+              headers: auth
           expect(response.status).to eq 200
+          expect(json_body[:atom].keys).to contain_exactly(*ATOM_KEYS)
           expect(json_body[:atom][:title]).to eq new_title
-          put beach_api_core.v1_atoms_path, params: { id: atom.name, atom: { name: new_name } }, headers: auth
+          put beach_api_core.v1_atoms_path,
+              params: { id: atom.name, atom: { name: new_name } },
+              headers: auth
           expect(response.status).to eq 200
+          expect(json_body[:atom].keys).to contain_exactly(*ATOM_KEYS)
           expect(json_body[:atom][:name]).to eq new_name
         end
       end
 
       it 'should return 404' do
         [application_auth, bearer_auth].each do |auth|
-          put beach_api_core.v1_atoms_path, params: { id: 'some_name', atom: { title: new_title } }, headers: auth
+          put beach_api_core.v1_atoms_path,
+              params: { id: 'some_name', atom: { title: new_title } },
+              headers: auth
           expect(response.status).to eq 404
-          put beach_api_core.v1_atoms_path, params: { id: '', atom: { title: new_title } }, headers: auth
+          put beach_api_core.v1_atoms_path,
+              params: { id: '', atom: { title: new_title } },
+              headers: auth
           expect(response.status).to eq 404
         end
       end
@@ -97,9 +118,9 @@ module BeachApiCore
       it 'should return an atom' do
         [application_auth, bearer_auth].each do |auth|
           get beach_api_core.v1_atom_path(atom), headers: auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 200
           expect(json_body[:atom]).to be_present
-          expect(json_body[:atom].keys).to include(:id, :title, :atom_parent_id, :kind, :actions)
+          expect(json_body[:atom].keys).to contain_exactly(*ATOM_KEYS)
         end
       end
     end
@@ -137,18 +158,24 @@ module BeachApiCore
 
       it 'should return list of atoms' do
         get beach_api_core.v1_atoms_path,
-            params: { user_id: user.id, kind: kind, actions: %w(create update) }, headers: bearer_auth
-        expect(response.status).to eq(200)
+            params: { user_id: user.id, kind: kind, actions: %w(create update) },
+            headers: bearer_auth
+        expect(response.status).to eq 200
+        expect(json_body[:atoms].first.keys).to contain_exactly(*ATOM_KEYS)
         expect(json_body[:atoms].all? { |a| a[:actions].present? }).to be_truthy
         expect(json_body[:atoms].size).to eq 3
         get beach_api_core.v1_atoms_path,
-            params: { kind: kind, actions: %w(create update) }, headers: bearer_auth
-        expect(response.status).to eq(200)
+            params: { kind: kind, actions: %w(create update) },
+            headers: bearer_auth
+        expect(response.status).to eq 200
         expect(json_body[:atoms].size).to eq 1
+        expect(json_body[:atoms].first.keys).to contain_exactly(*ATOM_KEYS)
 
         get beach_api_core.v1_atoms_path,
-            params: { kind: kind, actions: %w(create update) }, headers: application_auth
-        expect(response.status).to eq(200)
+            params: { kind: kind, actions: %w(create update) },
+            headers: application_auth
+        expect(response.status).to eq 200
+        expect(json_body[:atoms].size).to eq 0
       end
     end
   end

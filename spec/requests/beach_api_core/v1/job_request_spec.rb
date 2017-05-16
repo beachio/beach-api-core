@@ -6,6 +6,8 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
+    JOB_KEYS = [:id, :done, :last_run, :result].freeze
+
     describe 'when create' do
       before do
         @job_params = {
@@ -29,6 +31,8 @@ module BeachApiCore
                  headers: application_auth
           end.to change(JobRunner.jobs, :size).by(1)
                    .and change(Job, :count).by(1)
+          expect(response.status).to eq 201
+          expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
           expect(JobRunner.jobs.last['args'].first).to eq Job.last.id
           [:bearer, :method].each do |param|
             expect(Job.last.params[param]).to eq @job_params[:params][param]
@@ -45,6 +49,8 @@ module BeachApiCore
                  headers: application_auth
           end.to change(JobRunner.jobs, :size).by(0)
                    .and change(Job, :count).by(1)
+          expect(response.status).to eq 201
+          expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
           expect(Job.last.every).to eq '1.hour'
         end
       end
@@ -63,9 +69,9 @@ module BeachApiCore
       it 'should show a job' do
         get beach_api_core.v1_job_path(@job),
             headers: application_auth
-        expect(response).to have_http_status :ok
+        expect(response.status).to eq 200
         expect(json_body[:job]).to be_present
-        expect(json_body[:job].keys).to contain_exactly(:id, :done, :last_run, :result)
+        expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
         expect(json_body[:job][:id]).to eq @job.id
         expect(json_body[:job][:result]).to eq @job_result
       end
@@ -83,6 +89,8 @@ module BeachApiCore
           delete beach_api_core.v1_job_path(@job),
                  headers: application_auth
         end.to change(Job, :count).by(-1)
+        expect(response.status).to eq 200
+        expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
       end
     end
   end
