@@ -13,7 +13,9 @@ module BeachApiCore
 
     def index
       authorize current_application, :manage?
-      render_json_success(ServiceCategory.all, :ok, each_serializer: ServiceCategorySerializer, root: :service_categories)
+      render_json_success(ServiceCategory.all, :ok,
+                          each_serializer: ServiceCategorySerializer,
+                          root: :service_categories)
     end
 
     def create
@@ -29,7 +31,9 @@ module BeachApiCore
 
     def update
       authorize current_application, :manage?
-      result = BeachApiCore::ServiceCategoryUpdate.call(service_category: @service_category, params: service_category_params)
+      result = BeachApiCore::ServiceCategoryUpdate.call(
+        service_category: @service_category, params: service_category_params
+      )
 
       if result.success?
         render_json_success(@service_category, result.status, root: :service_category)

@@ -2,7 +2,6 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Organisation', type: :request do
-
     include_context 'signed up developer'
     include_context 'authenticated user'
     include_context 'bearer token authentication'
@@ -22,11 +21,10 @@ module BeachApiCore
           create :membership, member: oauth_user, group: create(:organisation)
           create :organisation
           get beach_api_core.v1_organisations_path, headers: bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 200
           expect(json_body[:organisations]).to be_present
           expect(json_body[:organisations].size).to eq 1
-          expect(json_body[:organisations].first.keys)
-              .to contain_exactly(:id, :name, :logo_url, :logo_properties, :current_user_roles)
+          expect(json_body[:organisations].first.keys).to contain_exactly(*ORGANISATION_KEYS)
         end
       end
     end
@@ -44,7 +42,7 @@ module BeachApiCore
                },
                headers: bearer_auth
         end
-        it { expect(response.status).to eq(201) }
+        it { expect(response.status).to eq 201 }
         it_behaves_like 'valid organisation response' do
           it do
             expect(json_body[:organisation][:logo_properties]).to be_present
@@ -54,13 +52,17 @@ module BeachApiCore
       end
 
       it_behaves_like 'an authenticated resource' do
-        before { post beach_api_core.v1_organisations_path, params: { organisation: { name: Faker::Name.title } } }
+        before do
+          post beach_api_core.v1_organisations_path,
+               params: { organisation: { name: Faker::Name.title } }
+        end
       end
 
       it 'should create an ownership record' do
-        post beach_api_core.v1_organisations_path, params: { organisation: { name: Faker::Name.title } },
+        post beach_api_core.v1_organisations_path,
+             params: { organisation: { name: Faker::Name.title } },
              headers: bearer_auth
-        expect(oauth_user.organisations.first).to eq(Organisation.last)
+        expect(oauth_user.organisations.first).to eq Organisation.last
         expect(Organisation.last.owners).to include(oauth_user)
       end
     end
@@ -69,7 +71,9 @@ module BeachApiCore
       let(:owned_organisation) do
         (create :membership, member: oauth_user, owner: true, group: (create :organisation)).group
       end
-      let(:organisation) { (create :membership, member: oauth_user, group: (create :organisation)).group }
+      let(:organisation) do
+        (create :membership, member: oauth_user, group: (create :organisation)).group
+      end
       let(:new_name) { Faker::Name.title }
 
       context 'when valid' do
@@ -110,15 +114,21 @@ module BeachApiCore
       let(:owned_organisation) do
         (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
       end
-      let(:organisation) { (create :membership, member: oauth_user, group: (create :organisation)).group }
+      let(:organisation) do
+        (create :membership, member: oauth_user, group: (create :organisation)).group
+      end
 
       it 'should allow owner to delete the organisation' do
-        delete beach_api_core.v1_organisation_path(owned_organisation), headers: bearer_auth
+        delete beach_api_core.v1_organisation_path(owned_organisation),
+               headers: bearer_auth
         expect(response.status).to eq 204
       end
 
       it_behaves_like 'an forbidden resource' do
-        before { delete beach_api_core.v1_organisation_path(organisation), headers: bearer_auth }
+        before do
+          delete beach_api_core.v1_organisation_path(organisation),
+                 headers: bearer_auth
+        end
       end
     end
 
@@ -132,15 +142,24 @@ module BeachApiCore
         before { get beach_api_core.v1_organisation_path(owned_organisation) }
       end
       it_behaves_like 'an authenticated resource' do
-        before { get beach_api_core.v1_organisation_path(owned_organisation), headers: invalid_bearer_auth }
+        before do
+          get beach_api_core.v1_organisation_path(owned_organisation),
+              headers: invalid_bearer_auth
+        end
       end
       it_behaves_like 'an forbidden resource' do
-        before { get beach_api_core.v1_organisation_path(organisation), headers: bearer_auth }
+        before do
+          get beach_api_core.v1_organisation_path(organisation),
+              headers: bearer_auth
+        end
       end
 
       context 'when valid' do
-        before { get beach_api_core.v1_organisation_path(owned_organisation), headers: bearer_auth }
-        it { expect(response.status).to eq(200) }
+        before do
+          get beach_api_core.v1_organisation_path(owned_organisation),
+              headers: bearer_auth
+        end
+        it { expect(response.status).to eq 200 }
         it_behaves_like 'valid organisation response'
       end
     end
@@ -199,7 +218,8 @@ module BeachApiCore
         it_behaves_like 'an forbidden resource' do
           before do
             organisation = create(:organisation)
-            put beach_api_core.current_v1_organisation_path(organisation), headers: bearer_auth
+            put beach_api_core.current_v1_organisation_path(organisation),
+                headers: bearer_auth
           end
         end
       end
@@ -207,8 +227,9 @@ module BeachApiCore
       it 'when valid' do
         organisation = create(:organisation)
         create :membership, member: oauth_user, group: organisation
-        put beach_api_core.current_v1_organisation_path(organisation), headers: bearer_auth
-        expect(response.status).to eq(200)
+        put beach_api_core.current_v1_organisation_path(organisation),
+            headers: bearer_auth
+        expect(response.status).to eq 200
         expect(access_token.reload.organisation).to eq organisation
       end
     end

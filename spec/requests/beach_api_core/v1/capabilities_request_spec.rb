@@ -14,13 +14,19 @@ module BeachApiCore
       end
 
       it_behaves_like 'an authenticated resource' do
-        before { post beach_api_core.v1_service_capabilities_path(service), headers: invalid_bearer_auth }
+        before do
+          post beach_api_core.v1_service_capabilities_path(service),
+               headers: invalid_bearer_auth
+        end
       end
 
       it 'should successfully create capability' do
-        expect { post beach_api_core.v1_service_capabilities_path(service), headers: developer_bearer_auth }
-          .to change(Capability, :count).by(1)
+        expect do
+          post beach_api_core.v1_service_capabilities_path(service),
+               headers: developer_bearer_auth
+        end.to change(Capability, :count).by(1)
         expect(response.status).to eq 201
+        expect(json_body[:service].keys).to contain_exactly(*SERVICE_KEYS)
         expect(json_body[:service]).to be_present
       end
     end
@@ -29,7 +35,8 @@ module BeachApiCore
       let!(:capability) { create :capability, application: oauth_application }
 
       it 'should successfully destroy capability' do
-        delete beach_api_core.v1_service_capabilities_path(capability.service), headers: developer_bearer_auth
+        delete beach_api_core.v1_service_capabilities_path(capability.service),
+               headers: developer_bearer_auth
         expect(response.status).to eq 204
         expect(Capability.find_by(id: capability.id)).to be_blank
       end

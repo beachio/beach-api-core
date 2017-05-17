@@ -6,6 +6,8 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
+    ASSIGNMENT_KEYS = [:id, :keeper_id, :keeper_type, :role_id, :user].freeze
+
     describe 'when create' do
       let(:organisation) { create :organisation }
       let(:other_organisation) { create :organisation }
@@ -29,7 +31,8 @@ module BeachApiCore
         before do
           access_token.update(organisation: other_organisation)
           post beach_api_core.v1_assignments_path,
-               params: { assignment: { role_id: role.id, user_id: other_user.id } }, headers: bearer_auth
+               params: { assignment: { role_id: role.id, user_id: other_user.id } },
+               headers: bearer_auth
         end
       end
 
@@ -37,7 +40,8 @@ module BeachApiCore
         before do
           access_token.update(organisation: organisation)
           post beach_api_core.v1_assignments_path,
-                      params: { assignment: { role_id: role.id, user_id: other_user.id } }, headers: bearer_auth
+               params: { assignment: { role_id: role.id, user_id: other_user.id } },
+               headers: bearer_auth
         end
       end
 
@@ -45,9 +49,13 @@ module BeachApiCore
         before do
           access_token.update(organisation: organisation)
           post beach_api_core.v1_assignments_path,
-               params: { assignment: { role_id: role.id, user_id: user.id } }, headers: bearer_auth
+               params: { assignment: { role_id: role.id, user_id: user.id } },
+               headers: bearer_auth
         end
-        it { expect(response.status).to eq(201) }
+        it do
+          expect(response.status).to eq 201
+          expect(json_body[:assignment].keys).to contain_exactly(*ASSIGNMENT_KEYS)
+        end
       end
     end
 

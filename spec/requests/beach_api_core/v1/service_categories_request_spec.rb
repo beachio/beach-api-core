@@ -6,6 +6,8 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
+    SERVICE_CATEGORY_KEYS = [:id, :name, :services].freeze
+
     describe 'when create' do
       it_behaves_like 'an forbidden resource' do
         before { post beach_api_core.v1_service_categories_path, headers: bearer_auth }
@@ -16,10 +18,14 @@ module BeachApiCore
       end
 
       it 'should successfully create service category' do
-        expect { post beach_api_core.v1_service_categories_path, params: { service_category: { name: Faker::Name.title } },
-                                                  headers: developer_bearer_auth }
-            .to change(ServiceCategory, :count).by(1)
+        expect do
+          post beach_api_core.v1_service_categories_path,
+               params: { service_category: { name: Faker::Name.title } },
+               headers: developer_bearer_auth
+        end.to change(ServiceCategory, :count).by(1)
+        expect(response.status).to eq 201
         expect(json_body[:service_category]).to be_present
+        expect(json_body[:service_category].keys).to contain_exactly(*SERVICE_CATEGORY_KEYS)
       end
     end
 
@@ -30,6 +36,7 @@ module BeachApiCore
         get beach_api_core.v1_service_categories_path, headers: developer_bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:service_categories]).to be_present
+        expect(json_body[:service_categories].first.keys).to contain_exactly(*SERVICE_CATEGORY_KEYS)
         expect(json_body[:service_categories].first[:services]).to be_present
       end
 
@@ -50,15 +57,20 @@ module BeachApiCore
       end
 
       it_behaves_like 'an authenticated resource' do
-        before { patch beach_api_core.v1_service_category_path(service_category), params: nil, headers: invalid_bearer_auth }
+        before do
+          patch beach_api_core.v1_service_category_path(service_category),
+                headers: invalid_bearer_auth
+        end
       end
 
       it 'should update service category' do
         new_name = Faker::Name.title
-        patch beach_api_core.v1_service_category_path(service_category), params: { service_category: { name: new_name } },
-                                                          headers: developer_bearer_auth
+        patch beach_api_core.v1_service_category_path(service_category),
+              params: { service_category: { name: new_name } },
+              headers: developer_bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:service_category]).to be_present
+        expect(json_body[:service_category].keys).to contain_exactly(*SERVICE_CATEGORY_KEYS)
         expect(service_category.reload.name).to eq new_name
       end
     end

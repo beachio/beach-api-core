@@ -6,6 +6,8 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
+    INVITATION_KEYS = [:id, :email, :created_at, :invitee, :group, :roles].freeze
+
     describe 'when index' do
       let!(:organisation) do
         (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
@@ -27,8 +29,10 @@ module BeachApiCore
                 group_id: organisation.id
               },
               headers: bearer_auth
+          expect(response.status).to eq 200
           expect(json_body[:invitations]).to be_present
           expect(json_body[:invitations].length).to eq 1
+          expect(json_body[:invitations].first.keys).to contain_exactly(*INVITATION_KEYS)
           expect(json_body[:invitations].first[:id]).to eq @invitation.id
         end
       end
@@ -58,6 +62,8 @@ module BeachApiCore
                headers: bearer_auth
         end.to change(Invitation, :count).by(1)
            .and change(ActionMailer::Base.deliveries, :count).by(1)
+        expect(response.status).to eq 201
+        expect(json_body[:invitation].keys).to contain_exactly(*INVITATION_KEYS)
         expect(Invitation.last.user).to eq(oauth_user)
       end
     end

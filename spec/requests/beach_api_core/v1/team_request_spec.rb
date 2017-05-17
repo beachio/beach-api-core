@@ -7,20 +7,29 @@ module BeachApiCore
     include_context 'bearer token authentication'
 
     describe 'when create' do
-
       it_behaves_like 'an authenticated resource' do
-        before { post beach_api_core.v1_teams_path, params: { team: { name: Faker::Name.title } } }
+        before do
+          post beach_api_core.v1_teams_path,
+               params: { team: { name: Faker::Name.title } }
+        end
       end
 
       context 'when valid' do
-        before { post beach_api_core.v1_teams_path, params: { team: { name: Faker::Name.title } }, headers: bearer_auth }
-        it { expect(response.status).to eq(201) }
+        before do
+          post beach_api_core.v1_teams_path,
+               params: { team: { name: Faker::Name.title } },
+               headers: bearer_auth
+        end
+        it { expect(response.status).to eq 201 }
         it_behaves_like 'valid team response'
       end
 
       it 'should create an ownership record' do
-        expect { post beach_api_core.v1_teams_path, params: { team: { name: Faker::Name.title } }, headers: bearer_auth }
-          .to change(oauth_user.memberships, :count).by(1)
+        expect do
+          post beach_api_core.v1_teams_path,
+               params: { team: { name: Faker::Name.title } },
+               headers: bearer_auth
+        end.to change(oauth_user.memberships, :count).by(1)
         expect(Team.last.owners).to include(oauth_user)
       end
     end
@@ -31,22 +40,37 @@ module BeachApiCore
       let(:new_name) { Faker::Name.title }
 
       context 'when valid' do
-        before { patch beach_api_core.v1_team_path(owned_team), params: { team: { name: new_name } }, headers: bearer_auth }
+        before do
+          patch beach_api_core.v1_team_path(owned_team),
+                params: { team: { name: new_name } },
+                headers: bearer_auth
+        end
 
         it { expect(owned_team.reload.name).to eq new_name }
         it_behaves_like 'valid team response'
       end
 
       it_behaves_like 'an forbidden resource' do
-        before { patch beach_api_core.v1_team_path(team), params: { team: { name: new_name } }, headers: bearer_auth }
+        before do
+          patch beach_api_core.v1_team_path(team),
+                params: { team: { name: new_name } },
+                headers: bearer_auth
+        end
       end
 
       it_behaves_like 'an authenticated resource' do
-        before { patch beach_api_core.v1_team_path(owned_team), params: { team: { name: new_name } } }
+        before do
+          patch beach_api_core.v1_team_path(owned_team),
+                params: { team: { name: new_name } }
+        end
       end
 
       it_behaves_like 'an authenticated resource' do
-        before { patch beach_api_core.v1_team_path(owned_team), params: { team: { name: new_name } }, headers: invalid_bearer_auth }
+        before do
+          patch beach_api_core.v1_team_path(owned_team),
+                params: { team: { name: new_name } },
+                headers: invalid_bearer_auth
+        end
       end
     end
 
@@ -66,10 +90,13 @@ module BeachApiCore
 
     describe 'when show' do
       let(:owned_team) { (create :membership, member: oauth_user, owner: true).group }
-      let(:owned_organisation) { (create :membership, member: oauth_user,
-                                         group: (create :organisation), owner: true).group }
+      let(:owned_organisation) do
+        (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
+      end
 
-      let(:organisation_team) { (create :membership, group: owned_organisation, member: create(:team)).member }
+      let(:organisation_team) do
+        (create :membership, group: owned_organisation, member: create(:team)).member
+      end
       let(:team) { create :team }
 
       it_behaves_like 'an authenticated resource' do
@@ -84,13 +111,13 @@ module BeachApiCore
 
       context 'when valid' do
         before { get beach_api_core.v1_team_path(owned_team), headers: bearer_auth }
-        it { expect(response.status).to eq(200) }
+        it { expect(response.status).to eq 200 }
         it_behaves_like 'valid team response'
       end
 
       context 'when valid for owner organization' do
         before { get beach_api_core.v1_team_path(organisation_team), headers: bearer_auth }
-        it { expect(response.status).to eq(200) }
+        it { expect(response.status).to eq 200 }
         it_behaves_like 'valid team response'
       end
 
