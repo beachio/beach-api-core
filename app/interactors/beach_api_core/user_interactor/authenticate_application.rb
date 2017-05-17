@@ -15,7 +15,7 @@ module BeachApiCore::UserInteractor
         end
         context.application = application
         context.application_id = application.id
-      else
+      elsif !context.skip_headers
         context.status = :unauthorized
         context.fail! message: ['Require Application ID and secret']
       end

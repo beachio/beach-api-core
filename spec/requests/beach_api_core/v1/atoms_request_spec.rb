@@ -32,6 +32,7 @@ module BeachApiCore
           end.to change(Atom, :count).by(1)
           expect(response.status).to eq 201
           expect(json_body[:atom]).to be_present
+          expect(json_body[:atom].keys).to contain_exactly(*ATOM_KEYS)
         end
       end
 
