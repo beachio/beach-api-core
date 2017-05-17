@@ -62,18 +62,24 @@ module BeachApiCore
         end
 
         it_behaves_like 'an authenticated resource' do
-          before { post beach_api_core.set_v1_atom_permission_path(@atom), headers: invalid_app_auth }
+          before do
+            post beach_api_core.set_v1_atom_permission_path(@atom),
+                 headers: invalid_app_auth
+          end
         end
 
         it 'should successfully create an atom' do
           [application_auth, bearer_auth].each do |auth|
-            expect { post beach_api_core.set_v1_atom_permission_path(@atom),
-                          params: { permission: { keeper_id: BeachApiCore::Role.admin.id,
-                                                  keeper_type: 'Role',
-                                                  actions: [],
-                                                  actor: "#{Faker::Lorem.word}-#{rand(1000)}" } },
-                          headers: auth }
-                .to change(Permission, :count).by(1)
+            expect do
+              post beach_api_core.set_v1_atom_permission_path(@atom),
+                   params: {
+                     permission: { keeper_id: BeachApiCore::Role.admin.id,
+                                   keeper_type: 'Role',
+                                   actions: [],
+                                   actor: "#{Faker::Lorem.word}-#{rand(1000)}" }
+                   },
+                   headers: auth
+            end.to change(Permission, :count).by(1)
             expect(response.status).to eq 200
           end
         end
@@ -88,13 +94,16 @@ module BeachApiCore
         end
 
         it 'should successfully update an atom' do
-          expect { post beach_api_core.set_v1_atom_permission_path(@atom),
-                        params: { permission: { keeper_id: @permission.keeper_id,
-                                                keeper_type: @permission.keeper_type,
-                                                actions: [:read],
-                                                actor: @permission.actor } },
-                        headers: bearer_auth }
-              .not_to change(Permission, :count)
+          expect do
+            post beach_api_core.set_v1_atom_permission_path(@atom),
+                 params: {
+                   permission: { keeper_id: @permission.keeper_id,
+                                 keeper_type: @permission.keeper_type,
+                                 actions: [:read],
+                                 actor: @permission.actor }
+                 },
+                 headers: bearer_auth
+          end.not_to change(Permission, :count)
           expect(response.status).to eq 200
           actions = { 'read' => 'true' }
           expect(@permission.reload.actions).to eq actions

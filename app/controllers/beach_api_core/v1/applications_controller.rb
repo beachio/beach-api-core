@@ -13,17 +13,20 @@ module BeachApiCore
 
     def index
       authorize Instance.current, :developer?
-      render_json_success(current_user.applications, :ok, each_serializer: AppSerializer, root: :applications)
+      render_json_success(current_user.applications, :ok,
+                          each_serializer: AppSerializer, root: :applications)
     end
 
     def create
       authorize Instance.current, :developer?
 
-      result = BeachApiCore::DoorkeeperInteractor::ApplicationCreate.call(user: current_user,
-                                                                          params: application_create_params)
+      result = BeachApiCore::DoorkeeperInteractor::ApplicationCreate.call(
+        user: current_user, params: application_create_params
+      )
 
       if result.success?
-        render_json_success(result.application, result.status, serializer: AppSerializer, root: :application)
+        render_json_success(result.application, result.status,
+                            serializer: AppSerializer, root: :application)
       else
         render_json_error({ message: result.message }, result.status)
       end
@@ -44,7 +47,8 @@ module BeachApiCore
       )
 
       if result.success?
-        render_json_success(result.application, result.status, serializer: AppSerializer, root: :application)
+        render_json_success(result.application, result.status,
+                            serializer: AppSerializer, root: :application)
       else
         render_json_error({ message: result.message }, result.status)
       end

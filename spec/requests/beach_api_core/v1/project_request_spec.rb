@@ -6,6 +6,8 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
+    PROJECT_KEYS = [:id, :name, :project_keepers].freeze
+
     let!(:organisation) do
       (create :membership, member: oauth_user, group: (create :organisation)).group
     end
@@ -33,9 +35,9 @@ module BeachApiCore
         post beach_api_core.v1_projects_path,
              params: @project_params,
              headers: bearer_auth
-        expect(response).to have_http_status :created
+        expect(response.status).to eq 201
         expect(json_body[:project]).to be_present
-        expect(json_body[:project].keys).to contain_exactly(:id, :name, :project_keepers)
+        expect(json_body[:project].keys).to contain_exactly(*PROJECT_KEYS)
         expect(json_body[:project][:name]).to eq(@project_params[:project][:name])
         expect(json_body[:project][:project_keepers].size).to eq 1
         expect(json_body[:project][:project_keepers].first[:keeper_id]).to eq @keeper.id
@@ -50,8 +52,9 @@ module BeachApiCore
         it 'should return an existing project' do
           get beach_api_core.v1_project_path(@project),
               headers: bearer_auth
-          expect(response).to have_http_status :ok
+          expect(response.status).to eq 200
           expect(json_body[:project]).to be_present
+          expect(json_body[:project].keys).to contain_exactly(*PROJECT_KEYS)
           expect(json_body[:project][:name]).to eq @project.name
         end
       end
@@ -62,8 +65,9 @@ module BeachApiCore
         it 'should return an existing project' do
           get beach_api_core.v1_project_path(@project),
               headers: bearer_auth
-          expect(response).to have_http_status :ok
+          expect(response.status).to eq 200
           expect(json_body[:project]).to be_present
+          expect(json_body[:project].keys).to contain_exactly(*PROJECT_KEYS)
           expect(json_body[:project][:name]).to eq @project.name
         end
       end
@@ -78,7 +82,7 @@ module BeachApiCore
         it 'should not return project info' do
           get beach_api_core.v1_project_path(@project),
               headers: bearer_auth
-          expect(response).to have_http_status :not_found
+          expect(response.status).to eq 404
         end
       end
     end
@@ -95,8 +99,9 @@ module BeachApiCore
           put beach_api_core.v1_project_path(@project),
               params: @project_params,
               headers: bearer_auth
-          expect(response).to have_http_status :ok
+          expect(response.status).to eq 200
           expect(json_body[:project]).to be_present
+          expect(json_body[:project].keys).to contain_exactly(*PROJECT_KEYS)
           expect(json_body[:project][:name]).to eq @project_params[:project][:name]
         end
       end
@@ -112,7 +117,7 @@ module BeachApiCore
           put beach_api_core.v1_project_path(@project),
               params: @project_params,
               headers: bearer_auth
-          expect(response).to have_http_status :not_found
+          expect(response.status).to eq 404
         end
       end
     end
@@ -124,8 +129,9 @@ module BeachApiCore
         it 'should destroy a job' do
           delete beach_api_core.v1_project_path(@project),
                  headers: bearer_auth
-          expect(response).to have_http_status :ok
+          expect(response.status).to eq 200
           expect(json_body[:project]).to be_present
+          expect(json_body[:project].keys).to contain_exactly(*PROJECT_KEYS)
           expect(json_body[:project][:name]).to eq @project.name
           expect(Project.count).to eq 0
         end
@@ -141,7 +147,7 @@ module BeachApiCore
         it 'should not allow to destory a job' do
           delete beach_api_core.v1_project_path(@project),
                  headers: bearer_auth
-          expect(response).to have_http_status :not_found
+          expect(response.status).to eq 404
         end
       end
     end
