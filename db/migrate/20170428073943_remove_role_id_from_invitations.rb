@@ -1,4 +1,4 @@
-class RemoveRoleIdFromInvitations < ActiveRecord::Migration[5.0]
+class RemoveRoleIdFromInvitations < ActiveRecord::Migration[5.1]
   def up
     create_table :beach_api_core_invitation_roles do |t|
       t.references :role, null: false

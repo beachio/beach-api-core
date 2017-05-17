@@ -1,4 +1,4 @@
-class AddUniqIndexToInteractionAttributes < ActiveRecord::Migration[5.0]
+class AddUniqIndexToInteractionAttributes < ActiveRecord::Migration[5.1]
   def change
     BeachApiCore::InteractionAttribute.select('interaction_id,key')
         .group('interaction_id,key').having('count(interaction_id) > 1').each do |interaction_attribute|

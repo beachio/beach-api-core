@@ -4,7 +4,7 @@ class Interaction_20170310213442 < ActiveRecord::Base
   belongs_to :keeper, polymorphic: true
 end
 
-class CreateBeachApiCoreInteractionKeepers < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreInteractionKeepers < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_interaction_keepers do |t|
       t.references :interaction, foreign_key: { to_table: :beach_api_core_interactions }

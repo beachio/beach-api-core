@@ -1,4 +1,4 @@
-class CreateBeachApiCoreFavourites < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreFavourites < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_favourites do |t|
       t.references :user, foreign_key: {to_table: :beach_api_core_users}

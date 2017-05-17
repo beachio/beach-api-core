@@ -3,7 +3,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
 
 Rails.backtrace_cleaner.remove_silencers!
-ActiveRecord::Migration.maintain_test_schema!
+ActiveRecord::Migration[5.1].maintain_test_schema!
 
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
