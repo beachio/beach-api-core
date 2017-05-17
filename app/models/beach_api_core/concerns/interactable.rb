@@ -4,7 +4,7 @@ module BeachApiCore::Concerns::Interactable
   included do
     attr_accessor :current_user
 
-    before_save :create_interaction, unless: 'new_record?'
+    before_save :create_interaction, unless: :new_record?
 
     private
 

@@ -7,7 +7,7 @@ module BeachApiCore
     validate :schedule_present
     validate :required_params_present
 
-    after_create :schedule_sidekiq_job, if: 'start_at.present? && every.blank?'
+    after_create :schedule_sidekiq_job, if: -> { start_at.present? && every.blank? }
 
     class << self
       def perform_cron
