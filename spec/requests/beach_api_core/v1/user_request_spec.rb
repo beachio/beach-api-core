@@ -10,8 +10,8 @@ module BeachApiCore
 
       context 'when valid request' do
         it "has status 'created'" do
-          expect{ create_user_request }.to change(User, :count).by(1)
-          expect(response.status).to eq(200)
+          expect { create_user_request }.to change(User, :count).by(1)
+          expect(response.status).to eq 201
         end
 
         it 'creates users' do
@@ -19,7 +19,7 @@ module BeachApiCore
             create_user_request
             create_user_request email: Faker::Internet.email
           end.to change(User, :count).by(2)
-                     .and change(ActionMailer::Base.deliveries, :count).by(2)
+             .and change(ActionMailer::Base.deliveries, :count).by(2)
         end
 
         it_behaves_like 'valid user response' do
@@ -33,13 +33,13 @@ module BeachApiCore
          { password: Faker::Internet.password }].each do |params|
           it do
             create_user_request(email: nil, password: nil, params: params)
-            expect(response.status).to eq(400)
+            expect(response.status).to eq 400
             expect(json_body[:error][:message]).to_not be_nil
           end
         end
         it 'with existed user email' do
           create_user_request(email: existed_user.email, password: Faker::Internet.password)
-          expect(response.status).to eq(400)
+          expect(response.status).to eq 400
           expect(json_body[:error][:message]).to_not be_nil
         end
       end
@@ -54,7 +54,7 @@ module BeachApiCore
 
         it 'does not create a user and return an error if incorrect application credentials' do
           expect { create_user_request(headers: invalid_app_auth) }.to change(User, :count).by(0)
-          expect(response.status).to eq(401)
+          expect(response.status).to eq 401
         end
       end
     end
@@ -78,12 +78,11 @@ module BeachApiCore
           create :profile_custom_field, name: :custom_application_field, keeper: oauth_application
           get beach_api_core.v1_user_path, headers: bearer_auth
         end
-        it { expect(response.status).to eq(200) }
+        it { expect(response.status).to eq 200 }
         it_behaves_like 'valid user response' do
           it do
-            expect(json_body[:user][:profile].keys).to contain_exactly(:id, :first_name, :last_name,
-                                                                       :birth_date, :sex, :time_zone, :avatar_url,
-                                                                       :custom_instance_field, :custom_application_field)
+            expect(json_body[:user][:profile].keys)
+              .to contain_exactly(*PROFILE_KEYS + [:custom_instance_field, :custom_application_field])
           end
         end
         it 'returns organisations with roles' do
@@ -92,12 +91,15 @@ module BeachApiCore
           assignment = create :assignment, keeper: organisation, user: oauth_user, role: (create :role)
           get beach_api_core.v1_user_path, headers: bearer_auth
           expect(json_body[:user][:organisations]).to be_present
+          expect(json_body[:user][:organisations].first.keys).to contain_exactly(*ORGANISATION_KEYS)
           expect(json_body[:user][:organisations].first[:current_user_roles]).to eq([assignment.role.name])
         end
       end
 
       context 'when with preferences' do
-        let!(:current_preference) { create :user_preference, user: oauth_user, application: oauth_application }
+        let!(:current_preference) do
+          create :user_preference, user: oauth_user, application: oauth_application
+        end
         let!(:other_preference) { create :user_preference, user: oauth_user }
 
         it 'should return preferences for current application' do
@@ -126,20 +128,23 @@ module BeachApiCore
 
           before do
             patch beach_api_core.v1_user_path,
-                  params: { user: { email: new_email,
-                                    username: Faker::Internet.user_name,
-                                    profile_attributes: { id: oauth_user.profile.id,
-                                                          first_name: Faker::Name.first_name,
-                                                          last_name: Faker::Name.last_name,
-                                                          sex: [:male, :female].sample },
-                                    user_preferences_attributes: [ { preferences: { text: Faker::Lorem.word } } ]
-                  } },
+                  params: {
+                    user: {
+                      email: new_email,
+                      username: Faker::Internet.user_name,
+                      profile_attributes: { id: oauth_user.profile.id,
+                                            first_name: Faker::Name.first_name,
+                                            last_name: Faker::Name.last_name,
+                                            sex: [:male, :female].sample },
+                      user_preferences_attributes: [{ preferences: { text: Faker::Lorem.word } }]
+                    }
+                  },
                   headers: bearer_auth
           end
           it_behaves_like 'valid user response' do
             it do
-              expect(response.status).to eq(200)
-              expect(oauth_user.reload.email).to eq(new_email)
+              expect(response.status).to eq 200
+              expect(oauth_user.reload.email).to eq new_email
               expect(oauth_user.user_preferences).to be_present
             end
           end
@@ -151,13 +156,15 @@ module BeachApiCore
           let(:new_value1) { Faker::Lorem.word }
           let(:new_value2) { Faker::Lorem.word }
           before do
-            patch beach_api_core.v1_user_path, params: { user: { profile_attributes: { id: oauth_user.profile.id,
-                                                                        profile_custom_field1.name => new_value1,
-                                                                        profile_custom_field2.name => new_value2
-            } } },
+            patch beach_api_core.v1_user_path,
+                  params: {
+                    user: { profile_attributes: { id: oauth_user.profile.id,
+                                                  profile_custom_field1.name => new_value1,
+                                                  profile_custom_field2.name => new_value2} }
+                  },
                   headers: bearer_auth
           end
-          it { expect(response.status).to eq(200) }
+          it { expect(response.status).to eq 200 }
           it_behaves_like 'valid user response' do
             it do
               expect(json_body[:user][:profile][profile_custom_field1.name.to_sym]).to eq new_value1
@@ -169,9 +176,11 @@ module BeachApiCore
         context 'should skip not related attribute to keepers ' do
           let(:profile_custom_field) { create :profile_custom_field, keeper: create(:oauth_application) }
           before do
-            patch beach_api_core.v1_user_path, params: { user: { profile_attributes: { id: oauth_user.profile.id,
-                                                                        profile_custom_field.name => Faker::Lorem.word
-            } } },
+            patch beach_api_core.v1_user_path,
+                  params: {
+                    user: { profile_attributes: { id: oauth_user.profile.id,
+                                                  profile_custom_field.name => Faker::Lorem.word } }
+                  },
                   headers: bearer_auth
           end
           it { expect(json_body[:user][:profile][profile_custom_field.name.to_sym]).to be_blank }
@@ -190,16 +199,26 @@ module BeachApiCore
           let(:base64_avatar) { "data:image/png;base64,#{Base64.encode64(File.read('spec/uploads/test.png'))}" }
 
           it 'should save the icon' do
-            expect { patch beach_api_core.v1_user_path(oauth_user), params: { user: { profile_attributes: { id: oauth_user.profile.id,
-                                                                                             avatar_attributes: { file: simple_avatar } } } },
-                           headers: bearer_auth }.to change(Asset, :count).by(1)
+            expect do
+              patch beach_api_core.v1_user_path(oauth_user),
+                    params: {
+                      user: { profile_attributes: { id: oauth_user.profile.id,
+                                                    avatar_attributes: { file: simple_avatar } } }
+                    },
+                    headers: bearer_auth
+            end.to change(Asset, :count).by(1)
             expect(oauth_user.profile.avatar).to be_present
           end
 
           it 'should save icon as base64' do
-            expect { patch beach_api_core.v1_user_path(oauth_user), params: { user: { profile_attributes: { id: oauth_user.profile.id,
-                                                                                             avatar_attributes: { base64: base64_avatar } } } },
-                           headers: bearer_auth }.to change(Asset, :count).by(1)
+            expect do
+              patch beach_api_core.v1_user_path(oauth_user),
+                    params: {
+                      user: { profile_attributes: { id: oauth_user.profile.id,
+                                                    avatar_attributes: { base64: base64_avatar } } }
+                    },
+                    headers: bearer_auth
+            end.to change(Asset, :count).by(1)
             expect(oauth_user.profile.avatar).to be_present
           end
 
@@ -207,8 +226,11 @@ module BeachApiCore
             let(:asset) { create(:asset) }
             before do
               oauth_user.profile.update_attributes(avatar: asset)
-              patch beach_api_core.v1_user_path(oauth_user), params: { user: { profile_attributes: { id: oauth_user.profile.id,
-                                                                                      avatar_attributes: { base64: base64_avatar } } } },
+              patch beach_api_core.v1_user_path(oauth_user),
+                    params: {
+                      user: { profile_attributes: { id: oauth_user.profile.id,
+                                                    avatar_attributes: { base64: base64_avatar } } }
+                    },
                     headers: bearer_auth
             end
             it { expect(Asset.find_by(id: asset.id)).to be_blank }
@@ -226,6 +248,7 @@ module BeachApiCore
 
       it 'should confirm a user' do
         post beach_api_core.confirm_v1_user_path(user, confirmation_token: user.confirm_email_token)
+        expect(response.status).to eq 200
         expect(json_body[:user]).to be_present
         expect(user.reload.confirmed?).to be_truthy
       end

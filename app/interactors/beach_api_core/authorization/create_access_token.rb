@@ -9,7 +9,7 @@ class BeachApiCore::Authorization::CreateAccessToken
                                                                         Doorkeeper.configuration.access_token_expires_in,
                                                                         Doorkeeper.configuration.refresh_token_enabled?)
       if context.access_token
-        context.status = :ok
+        context.status ||= :ok
       else
         context.status = :unauthorized
       end

@@ -18,6 +18,7 @@ module BeachApiCore
           expect(json_body[:roles]).to be_present
           # 2 new roles + developer role
           expect(json_body[:roles].size).to eq 3
+          expect(json_body[:roles].first.keys).to contain_exactly(:id, :name)
         end
       end
     end

@@ -6,6 +6,8 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
+    SETTING_KEYS = [:id, :name, :value, :keeper_type, :keeper_id].freeze
+
     describe 'when update' do
       let(:owned_organisation) do
         (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
@@ -27,8 +29,9 @@ module BeachApiCore
                       group_id: owned_organisation.id },
             headers: bearer_auth
 
+        expect(response.status).to eq 200
         expect(json_body[:setting]).to be_present
-        expect(json_body[:setting].keys).to contain_exactly(:id, :name, :value, :keeper_type, :keeper_id)
+        expect(json_body[:setting].keys).to contain_exactly(*SETTING_KEYS)
         setting = Setting.find_by(name: 'test_name')
         expect(setting).to be_present
         expect(setting.value).to eq('test_value')
@@ -44,8 +47,9 @@ module BeachApiCore
                       group_id: owned_organisation.id },
             headers: bearer_auth
 
+        expect(response.status).to eq 200
         expect(json_body[:setting]).to be_present
-        expect(json_body[:setting].keys).to contain_exactly(:id, :name, :value, :keeper_type, :keeper_id)
+        expect(json_body[:setting].keys).to contain_exactly(*SETTING_KEYS)
         expect(setting.reload.value).to eq(new_value)
       end
     end

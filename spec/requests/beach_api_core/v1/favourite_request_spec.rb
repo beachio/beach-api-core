@@ -2,6 +2,7 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Favourite', type: :request do
+    FAVOURITE_KEYS = [:id, :favouritable_id, :favouritable_type].freeze
 
     describe 'when index' do
       include_context 'signed up developer'
@@ -22,10 +23,10 @@ module BeachApiCore
           create :favourite, user: oauth_user
           create :favourite
           get beach_api_core.v1_favourites_path, headers: bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 200
           expect(json_body[:favourites]).to be_present
           expect(json_body[:favourites].size).to eq 1
-          expect(json_body[:favourites].first.keys).to contain_exactly(:id, :favouritable_id, :favouritable_type)
+          expect(json_body[:favourites].first.keys).to contain_exactly(*FAVOURITE_KEYS)
         end
       end
     end
@@ -46,10 +47,15 @@ module BeachApiCore
 
       context 'when valid' do
         it do
-          post beach_api_core.v1_favourites_path, params: { favourite: { favouritable_id: oauth_application.id,
-                                                          favouritable_type: oauth_application.class } },
+          post beach_api_core.v1_favourites_path,
+               params: {
+                 favourite: { favouritable_id: oauth_application.id,
+                              favouritable_type: oauth_application.class }
+               },
                headers: bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq 200
+          expect(json_body[:favourite]).to be_present
+          expect(json_body[:favourite].keys).to contain_exactly(*FAVOURITE_KEYS)
           expect(oauth_user.favourites.map(&:favouritable)).to contain_exactly(oauth_application)
         end
       end
@@ -77,7 +83,7 @@ module BeachApiCore
       end
 
       context 'when valid' do
-        it do
+        it 'should remove favourite' do
           favourite = create(:favourite, user: oauth_user)
           delete beach_api_core.v1_favourite_path(favourite), headers: bearer_auth
           expect(response.status).to eq 204
@@ -85,6 +91,5 @@ module BeachApiCore
         end
       end
     end
-
   end
 end
