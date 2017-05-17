@@ -52,7 +52,7 @@ module BeachApiCore
           post beach_api_core.v1_applications_path, params: { application: { name: Faker::App.name,
                                                               redirect_uri: Faker::Internet.redirect_uri } },
                headers: developer_bearer_auth
-          expect(response.status).to eq(200)
+          expect(response.status).to eq(201)
           expect(json_body[:application]).to be_present
         end
       end
