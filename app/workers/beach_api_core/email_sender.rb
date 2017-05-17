@@ -17,7 +17,8 @@ module BeachApiCore
     end
 
     def defaults
-      { from: ENV['EMAIL_FROM'], body: '<body></body>' }
+      { from: ENV['EMAIL_API_FROM'] || ENV['EMAIL_FROM'],
+        body: '<body></body>' }
     end
   end
 end
