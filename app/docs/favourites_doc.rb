@@ -4,6 +4,7 @@ module FavouritesDoc
 
   api :GET, '/favourites', 'List of user favourites items'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  param :favouritable_type, String
   example "\"favourites\": [#{apipie_favourite_response}, ...]"
   def index
   end

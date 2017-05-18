@@ -12,7 +12,9 @@ module BeachApiCore
     end
 
     def index
-      render_json_success(current_user.favourites, :ok, root: :favourites)
+      scope = current_user.favourites
+      scope = scope.with_favouritable_type(params[:favouritable_type]) if params[:favouritable_type].present?
+      render_json_success(scope, :ok, root: :favourites)
     end
 
     def create
