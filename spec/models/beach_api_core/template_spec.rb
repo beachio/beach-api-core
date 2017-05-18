@@ -6,7 +6,7 @@ module BeachApiCore
 
     it 'should be valid with basic factory attributes' do
       expect(subject).to be_valid
-      exepct(subject.email?).to be_truthy
+      expect(subject.email?).to be_truthy
     end
 
     it 'should have basic validations' do
