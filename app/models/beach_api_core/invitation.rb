@@ -12,8 +12,8 @@ module BeachApiCore
     attr_accessor :first_name, :last_name
 
     before_validation :set_invitee, on: :create
-    before_validation :set_token, on: :create, unless: 'token.present?'
-    after_destroy :destroy_invitee, if: 'invitee&.invitee?'
+    before_validation :set_token, on: :create, unless: -> { token.present? }
+    after_destroy :destroy_invitee, if: -> { invitee&.invitee? }
 
     def accept!
       return unless [BeachApiCore::Team, BeachApiCore::Organisation].include?(group.class)

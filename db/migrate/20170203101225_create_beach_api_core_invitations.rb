@@ -1,4 +1,4 @@
-class CreateBeachApiCoreInvitations < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreInvitations < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_invitations do |t|
       t.string :email

@@ -1,4 +1,4 @@
-class AddNullRestrictions < ActiveRecord::Migration[5.0]
+class AddNullRestrictions < ActiveRecord::Migration[5.1]
   def change
     {
       beach_api_core_assets: [:file_id, :entity_id, :entity_type],

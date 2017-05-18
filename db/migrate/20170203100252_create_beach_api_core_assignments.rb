@@ -1,4 +1,4 @@
-class CreateBeachApiCoreAssignments < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreAssignments < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_assignments do |t|
       t.references :role

@@ -1,4 +1,4 @@
-class CreateBeachApiCoreAtoms < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreAtoms < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_atoms do |t|
       t.string :name, index: { unique: true }

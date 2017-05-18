@@ -1,4 +1,4 @@
-class CreateBeachApiCoreMemberships < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreMemberships < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_memberships do |t|
       t.references :member, polymorphic: true

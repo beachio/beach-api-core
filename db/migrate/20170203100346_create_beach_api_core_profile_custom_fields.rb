@@ -1,4 +1,4 @@
-class CreateBeachApiCoreProfileCustomFields < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreProfileCustomFields < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_profile_custom_fields do |t|
       t.string :name

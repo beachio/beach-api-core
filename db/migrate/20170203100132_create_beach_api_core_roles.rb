@@ -1,4 +1,4 @@
-class CreateBeachApiCoreRoles < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreRoles < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_roles do |t|
       t.string :name, index: true, null: false

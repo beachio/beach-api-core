@@ -1,4 +1,4 @@
-class CreateBeachApiCoreUserPreferences < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreUserPreferences < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_user_preferences do |t|
       t.references :user

@@ -1,4 +1,4 @@
-class CreateBeachApiCoreProjects < ActiveRecord::Migration[5.0]
+class CreateBeachApiCoreProjects < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_projects do |t|
       t.string :name

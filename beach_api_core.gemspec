@@ -17,29 +17,29 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,db,lib}/**/*', "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 5.0.1"
+  s.add_dependency "rails"
 
-  s.add_dependency "omniauth", "~> 1.3.2"
-  s.add_dependency "doorkeeper", "~> 4.2.0"
+  s.add_dependency "omniauth"
+  s.add_dependency "doorkeeper"
 
   s.add_dependency "pg"
-  s.add_dependency "baby_squeel", "~> 1.0.1"
-  s.add_dependency "pundit", "~> 1.1.0"
-  s.add_dependency "active_model_serializers", "~> 0.10.4"
-  s.add_dependency "bcrypt", "~> 3.1.11"
-  s.add_dependency "versionist", "~> 1.5.0"
+  s.add_dependency "baby_squeel"
+  s.add_dependency "pundit"
+  s.add_dependency "active_model_serializers"
+  s.add_dependency "bcrypt"
+  s.add_dependency "versionist"
   s.add_dependency "refile"
   s.add_dependency 'activerecord_lookup_or_initialize'
 
   s.add_dependency 'elasticsearch-rails'
   s.add_dependency 'elasticsearch-model'
-  s.add_dependency 'sidekiq', '~> 4.2.9'
-  s.add_dependency 'whenever', '~> 0.9.7'
+  s.add_dependency 'sidekiq'
+  s.add_dependency 'whenever'
 
-  s.add_dependency "interactor", "~> 3.1.0"
-  s.add_dependency "interactor-rails", "~> 2.0.2"
+  s.add_dependency "interactor"
+  s.add_dependency "interactor-rails"
 
-  s.add_dependency "slim-rails", "~> 3.1.1"
+  s.add_dependency "slim-rails"
 
   s.add_dependency "apipie-rails"
 end
