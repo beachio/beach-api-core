@@ -278,5 +278,45 @@ module BeachApiCore
         expect(user.reload.confirmed?).to be_truthy
       end
     end
+
+    describe 'when forgot_password' do
+      let(:user) { create :user }
+
+      it 'should send reset password instructions' do
+        expect do
+          post beach_api_core.forgot_password_v1_users_path,
+               params: { email: user.email }
+        end.to change(ActionMailer::Base.deliveries, :size).by(1)
+        expect(user.reload.reset_password_token).to be_present
+      end
+    end
+
+    describe 'when reset password' do
+      let(:new_password) { Faker::Internet.password }
+      let(:token) { SecureRandom.urlsafe_base64 }
+      let(:user) { create :user, reset_password_token: token }
+
+      it "should reset user's password" do
+        expect do
+          post beach_api_core.reset_password_v1_users_path,
+               params: { user: {
+                 token: token,
+                 password: new_password,
+                 password_confirmation: new_password
+               } }
+        end.to change{ user.reload.password_digest }
+      end
+
+      it 'should should return error' do
+        post beach_api_core.reset_password_v1_users_path,
+             params: { user: {
+               token: 'invalid',
+               password: new_password,
+               password_confirmation: new_password
+             } }
+        expect(json_body[:error][:message]).to eq('Invalid token')
+      end
+    end
   end
 end
+

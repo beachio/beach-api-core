@@ -49,7 +49,7 @@ module BeachApiCore
 
     def forgot_password
       user = BeachApiCore::User.find_by(email: params[:email])
-      result = BeachApiCore::ResetPassword.call(user: user)
+      result = BeachApiCore::ForgotPassword.call(user: user)
       if result.success?
         render_json_success({ user: BeachApiCore::UserSimpleSerializer.new(result.user) })
       else
@@ -58,8 +58,7 @@ module BeachApiCore
     end
 
     def reset_password
-      user = BeachApiCore::User.find(params[:id])
-      result = BeachApiCore::UserInteractor::Confirm.call(user: user, token: params[:token])
+      result = BeachApiCore::ResetPassword.call(params: user_reset_password_params)
       if result.success?
         render_json_success({ user: BeachApiCore::UserSimpleSerializer.new(result.user) })
       else
@@ -79,6 +78,10 @@ module BeachApiCore
                                                                                      :last_name, :sex,
                                                                                      avatar_attributes: [:file, :base64]]),
                                    user_preferences_attributes: [:id, preferences: preferences_params])
+    end
+
+    def user_reset_password_params
+      params.require(:user).permit(:token, :password, :password_confirmation)
     end
 
     def preferences_params

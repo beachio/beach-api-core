@@ -28,6 +28,8 @@ module UsersDoc
       param :id, Integer, required: true
       param :first_name, String
       param :last_name, String
+      param :password, String
+      param :password_confirmation, String
       param :sex, %w(male female)
       param :'***', String, desc: 'Any custom field'
       param :avatar_attributes, Hash do
@@ -56,10 +58,12 @@ module UsersDoc
   def forgot_password
   end
 
-  api :POST, '/users/:id/reset_password', 'Confirm user'
-  param :token, String, required: true, desc: 'Reset password token'
-  param :password, String, required: true
-  param :password_confirmation, String, required: true
+  api :POST, '/users/reset_password', "'Reset user's password'"
+  param :user, Hash, required: true do
+    param :token, String, required: true, desc: 'Reset password token'
+    param :password, String, required: true
+    param :password_confirmation, String, required: true
+  end
   example "\"user\": #{apipie_user_response}"
   def reset_password
   end
