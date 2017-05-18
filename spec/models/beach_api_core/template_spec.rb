@@ -12,6 +12,7 @@ module BeachApiCore
     it 'should have basic validations' do
       should validate_presence_of :name
       should validate_presence_of :value
+      should define_enum_for(:kind).with([:email])
     end
 
     it 'should validate uniqueness of normalized name' do

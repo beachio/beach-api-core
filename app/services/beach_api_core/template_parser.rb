@@ -1,27 +1,21 @@
 module BeachApiCore
-  # BeachApiCore::TemplateParser.new(:example, user: user).call -> string
+  # BeachApiCore::TemplateParser.new(some_template, user: user).call -> string
   #
   # In order to parse `tokens` (eg {first_name}) add new private methods
+  # that should be called TemplateKind_TokenName (eg email_first_name for email template)
   # that use @opts hash and provide expected value. Example:
   #
-  # def first_name
-  #   @opts[:user].first_name
+  # def email_first_name
+  #   @opts[:user].first_name || 'there'
   # end
   class TemplateParser
-    def initialize(template_name, opts = {})
-      @template = Template.find_by!(name: template_name)
+    def initialize(template, opts = {})
+      @template = template
       @opts = opts
     end
 
     def call
-      @template.value.gsub(/{([\w_]+)}/) { |m| parse_token($1) }
-    end
-
-    private
-
-    def parse_token(token_name)
-      raise NoMethodError if %w(initialize call parse_token).include?(token_name)
-      send(token_name)
+      @template.value.gsub(/{([\w_]+)}/) { |m| send("#{@template.kind}_#{$1}") }
     end
   end
 end
