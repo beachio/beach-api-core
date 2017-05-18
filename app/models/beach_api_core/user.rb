@@ -14,6 +14,7 @@ module BeachApiCore
               if: proc { errors[:email].empty? }
     validates :username, presence: true, uniqueness: true
     validates :profile, :status, presence: true
+    validates :password_confirmation, presence: true, if: :require_confirmation
 
     has_many :received_invitations, dependent: :destroy, foreign_key: :invitee_id, class_name: 'BeachApiCore::Invitation'
     has_many :invitations, dependent: :destroy
@@ -45,6 +46,7 @@ module BeachApiCore
     after_initialize :set_defaults
 
     delegate :first_name, :last_name, to: :profile
+    attr_accessor :require_confirmation
 
     enum status: [:active, :invitee]
 

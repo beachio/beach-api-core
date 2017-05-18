@@ -44,9 +44,23 @@ module UsersDoc
   def update
   end
 
-  api :POST, '/users/:id/confirm'
+  api :POST, '/users/:id/confirm', 'Confirm user'
   param :confirmation_token, String, required: true
   example "\"user\": #{apipie_user_response}"
   def confirm
+  end
+
+  api :POST, '/users/forgot_password', 'Send forgot password email'
+  param :email, String, required: true
+  example "\"user\": #{apipie_user_response}"
+  def forgot_password
+  end
+
+  api :POST, '/users/:id/reset_password', 'Confirm user'
+  param :token, String, required: true, desc: 'Reset password token'
+  param :password, String, required: true
+  param :password_confirmation, String, required: true
+  example "\"user\": #{apipie_user_response}"
+  def reset_password
   end
 end

@@ -237,6 +237,31 @@ module BeachApiCore
           end
         end
       end
+
+      context 'password update' do
+        let(:new_password) { Faker::Internet.password }
+        it do
+          expect do
+            put beach_api_core.v1_user_path(oauth_user),
+                params: { user: { password: new_password } },
+                headers: bearer_auth
+          end.to_not change{ oauth_user.reload.password_digest }
+          expect do
+            put beach_api_core.v1_user_path(oauth_user),
+                  params: { user: {
+                    password: new_password,
+                    password_confirmation: 'nomatch' } },
+                  headers: bearer_auth
+          end.to_not change{ oauth_user.reload.password_digest }
+          expect do
+            put beach_api_core.v1_user_path(oauth_user),
+                params: { user: {
+                  password: new_password,
+                  password_confirmation: new_password } },
+                headers: bearer_auth
+          end.to change{ oauth_user.reload.password_digest }
+        end
+      end
     end
 
     describe 'when confirm' do

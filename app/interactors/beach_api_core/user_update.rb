@@ -3,6 +3,7 @@ class BeachApiCore::UserUpdate
 
   def call
     context.user.profile.keepers = context.keepers
+    context.user.require_confirmation = true if context.params.include?('password')
     current_application = context.keepers.detect{ |k| k.is_a?(Doorkeeper::Application) }
     context.params[:user_preferences_attributes].each do |attr|
       attr.merge!(application: current_application)
