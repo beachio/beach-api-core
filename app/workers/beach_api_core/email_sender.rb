@@ -6,6 +6,7 @@ module BeachApiCore
 
     def perform(opts = {})
       normalize_opts!(opts)
+      parse_body!(opts) if opts[:template]
       ApiMailer.custom(opts).deliver
     end
 
@@ -14,6 +15,12 @@ module BeachApiCore
     def normalize_opts!(opts)
       opts.symbolize_keys!
       opts.merge!(defaults) { |key, v1, v2| v1 || v2 }
+    end
+
+    def parse_body!(opts)
+      opts[:body] = TemplateParser.new(
+        opts.delete(:template), opts.delete(:template_params)
+      ).call
     end
 
     def defaults
