@@ -15,6 +15,8 @@ module BeachApiCore
     validates :username, presence: true, uniqueness: true
     validates :profile, :status, presence: true
     validates :password_confirmation, presence: true, if: :require_confirmation
+    validate :correct_current_password, if: :require_current_password
+    validates :current_password, presence: true, if: :require_current_password
 
     has_many :received_invitations, dependent: :destroy, foreign_key: :invitee_id, class_name: 'BeachApiCore::Invitation'
     has_many :invitations, dependent: :destroy
@@ -46,7 +48,7 @@ module BeachApiCore
     after_initialize :set_defaults
 
     delegate :first_name, :last_name, to: :profile
-    attr_accessor :require_confirmation
+    attr_accessor :require_confirmation, :require_current_password, :current_password
 
     enum status: [:active, :invitee]
 
@@ -68,6 +70,11 @@ module BeachApiCore
     end
 
     private
+
+    def correct_current_password
+      return unless current_password
+      errors.add(:current_password, 'Incorrect current password') unless User.find(id).authenticate(current_password)
+    end
 
     def set_defaults
       self.status ||= :active

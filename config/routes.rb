@@ -6,11 +6,13 @@ BeachApiCore::Engine.routes.draw do
     resources :sessions, only: :create, path: :auth
     resources :favourites, only: [:index, :create, :destroy]
     resources :users, only: [:create] do
-      collection do
-        post :reset_password
-        post :forgot_password
-      end
       post :confirm, on: :member
+    end
+    resources :passwords, only: [] do
+      collection do
+        post :create
+        put :update
+      end
     end
     resource :user, only: [:show, :update]
     resources :services, only: [:index, :update] do

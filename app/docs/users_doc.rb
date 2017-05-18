@@ -28,6 +28,7 @@ module UsersDoc
       param :id, Integer, required: true
       param :first_name, String
       param :last_name, String
+      param :current_password, String
       param :password, String
       param :password_confirmation, String
       param :sex, %w(male female)
@@ -50,21 +51,5 @@ module UsersDoc
   param :confirmation_token, String, required: true
   example "\"user\": #{apipie_user_response}"
   def confirm
-  end
-
-  api :POST, '/users/forgot_password', 'Send forgot password email'
-  param :email, String, required: true
-  example "\"user\": #{apipie_user_response}"
-  def forgot_password
-  end
-
-  api :POST, '/users/reset_password', "'Reset user's password'"
-  param :user, Hash, required: true do
-    param :token, String, required: true, desc: 'Reset password token'
-    param :password, String, required: true
-    param :password_confirmation, String, required: true
-  end
-  example "\"user\": #{apipie_user_response}"
-  def reset_password
   end
 end
