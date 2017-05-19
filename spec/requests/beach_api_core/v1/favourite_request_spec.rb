@@ -20,7 +20,7 @@ module BeachApiCore
 
       context 'when valid' do
         before do
-          create :favourite, user: oauth_user
+          create :favourite, user: oauth_user, favouritable: oauth_user
           create :favourite
         end
         it 'without filter' do
@@ -33,15 +33,17 @@ module BeachApiCore
 
         context 'when filter exists' do
           it do
-            get beach_api_core.v1_favourites_path(favouritable_type: BeachApiCore::Favourite.name),
-                headers: bearer_auth
+            get beach_api_core.v1_favourites_path(
+              favouritable_type: BeachApiCore::Favourite.name
+            ), headers: bearer_auth
             expect(response.status).to eq 200
             expect(json_body[:favourites]).to be_empty
           end
 
           it do
-            get beach_api_core.v1_favourites_path(favouritable_type: BeachApiCore::User.name),
-                headers: bearer_auth
+            get beach_api_core.v1_favourites_path(
+              favouritable_type: BeachApiCore::User.name
+            ), headers: bearer_auth
             expect(response.status).to eq 200
             expect(json_body[:favourites]).to be_present
           end
