@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.4.1'
 
 # Declare your gem's dependencies in beach_api_core.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
