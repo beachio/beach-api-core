@@ -247,6 +247,7 @@ module BeachApiCore
                 params: { user: { password: new_password } },
                 headers: bearer_auth
           end.to_not change{ oauth_user.reload.password_digest }
+          expect(response.status).to eq 400
           expect do
             put beach_api_core.v1_user_path(oauth_user),
                   params: { user: {
@@ -254,6 +255,7 @@ module BeachApiCore
                     password_confirmation: 'nomatch' } },
                   headers: bearer_auth
           end.to_not change{ oauth_user.reload.password_digest }
+          expect(response.status).to eq 400
           expect do
             put beach_api_core.v1_user_path(oauth_user),
                 params: { user: {
@@ -262,6 +264,7 @@ module BeachApiCore
                   password_confirmation: new_password } },
                 headers: bearer_auth
           end.to_not change{ oauth_user.reload.password_digest }
+          expect(response.status).to eq 400
           expect do
             put beach_api_core.v1_user_path(oauth_user),
                 params: { user: {
@@ -270,6 +273,7 @@ module BeachApiCore
                   password_confirmation: new_password } },
                 headers: bearer_auth
           end.to change{ oauth_user.reload.password_digest }
+          expect(response.status).to eq 200
         end
       end
     end

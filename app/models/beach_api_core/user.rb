@@ -5,18 +5,20 @@ module BeachApiCore
     include Concerns::UserRoles
     include Concerns::UserPermissions
 
-    has_one :profile, inverse_of: :user, dependent: :destroy, class_name: 'BeachApiCore::Profile'
-    has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'
-    has_many :favourites, inverse_of: :user, dependent: :destroy
-
     validates :email, presence: true, uniqueness: true, format: {
         with: /\A(|(([a-z0-9]+_+)|([a-z0-9]+\-+)|([a-z0-9]+\.+)|([a-z0-9]+\++))*[a-z0-9]+@(([a-z0-9]+\-+)|([a-z0-9]+\.))*[a-z0-9]{1,63}\.[a-z]{2,6})\z/i },
               if: proc { errors[:email].empty? }
     validates :username, presence: true, uniqueness: true
     validates :profile, :status, presence: true
     validates :password_confirmation, presence: true, if: :require_confirmation
-    validate :correct_current_password, if: :require_current_password
     validates :current_password, presence: true, if: :require_current_password
+    validate :correct_current_password, if: :require_current_password
+
+    attr_accessor :require_confirmation, :require_current_password, :current_password
+
+    has_one :profile, inverse_of: :user, dependent: :destroy, class_name: 'BeachApiCore::Profile'
+    has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'
+    has_many :favourites, inverse_of: :user, dependent: :destroy
 
     has_many :received_invitations, dependent: :destroy, foreign_key: :invitee_id, class_name: 'BeachApiCore::Invitation'
     has_many :invitations, dependent: :destroy
@@ -48,7 +50,6 @@ module BeachApiCore
     after_initialize :set_defaults
 
     delegate :first_name, :last_name, to: :profile
-    attr_accessor :require_confirmation, :require_current_password, :current_password
 
     enum status: [:active, :invitee]
 
@@ -72,8 +73,8 @@ module BeachApiCore
     private
 
     def correct_current_password
-      return unless current_password
-      errors.add(:current_password, 'Incorrect current password') unless User.find(id).authenticate(current_password)
+      return if User.find(id).authenticate(current_password)
+      errors.add(:current_password, 'Incorrect current password')
     end
 
     def set_defaults
