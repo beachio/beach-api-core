@@ -18,7 +18,7 @@ module BeachApiCore
             create_user_request
             create_user_request email: Faker::Internet.email
           end.to change(User, :count).by(2)
-             .and change(ActionMailer::Base.deliveries, :count).by(2)
+            .and change(ActionMailer::Base.deliveries, :count).by(2)
         end
 
         it_behaves_like 'valid user response' do
@@ -46,8 +46,8 @@ module BeachApiCore
       context 'with application credentials' do
         it 'creates a bearer token for authorized application' do
           expect { create_user_request(headers: application_auth) }
-              .to change(Doorkeeper::AccessToken, :count).by(1)
-              .and change(User, :count).by(1)
+            .to change(Doorkeeper::AccessToken, :count).by(1)
+            .and change(User, :count).by(1)
           expect(json_body[:access_token]).to be_present
         end
 
@@ -81,7 +81,7 @@ module BeachApiCore
         it_behaves_like 'valid user response' do
           it do
             expect(json_body[:user][:profile].keys)
-              .to contain_exactly(*PROFILE_KEYS + [:custom_instance_field, :custom_application_field])
+              .to contain_exactly(*PROFILE_KEYS + %i(custom_instance_field custom_application_field))
           end
         end
         it 'returns organisations with roles' do
@@ -134,7 +134,7 @@ module BeachApiCore
                       profile_attributes: { id: oauth_user.profile.id,
                                             first_name: Faker::Name.first_name,
                                             last_name: Faker::Name.last_name,
-                                            sex: [:male, :female].sample },
+                                            sex: %i(male female).sample },
                       user_preferences_attributes: [{ preferences: { text: Faker::Lorem.word } }]
                     }
                   },
@@ -159,7 +159,7 @@ module BeachApiCore
                   params: {
                     user: { profile_attributes: { id: oauth_user.profile.id,
                                                   profile_custom_field1.name => new_value1,
-                                                  profile_custom_field2.name => new_value2} }
+                                                  profile_custom_field2.name => new_value2 } }
                   },
                   headers: bearer_auth
           end
@@ -249,19 +249,19 @@ module BeachApiCore
           expect(response.status).to eq 400
           expect do
             put beach_api_core.v1_user_path(oauth_user),
-                  params: { user: {
-                    password: new_password,
-                    password_confirmation: 'nomatch' } },
-                  headers: bearer_auth
+              params: { user: {
+                password: new_password,
+                password_confirmation: 'nomatch' } },
+              headers: bearer_auth
           end.to_not change{ oauth_user.reload.password_digest }
           expect(response.status).to eq 400
           expect do
             put beach_api_core.v1_user_path(oauth_user),
-                params: { user: {
-                  current_password: 'invalid',
-                  password: new_password,
-                  password_confirmation: new_password } },
-                headers: bearer_auth
+              params: { user: {
+                current_password: 'invalid',
+                password: new_password,
+                password_confirmation: new_password } },
+              headers: bearer_auth
           end.to_not change{ oauth_user.reload.password_digest }
           expect(response.status).to eq 400
           expect do
@@ -273,6 +273,7 @@ module BeachApiCore
                 headers: bearer_auth
           end.to change{ oauth_user.reload.password_digest }
           expect(response.status).to eq 200
+          expect(json_body[:user].keys).to contain_exactly(*BeachApiCore::USER_KEYS)
         end
       end
     end
