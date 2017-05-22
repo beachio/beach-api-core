@@ -8,14 +8,14 @@ module BeachApiCore
 
     acts_as_downcasable_on [:name]
 
-    [:admin, :developer, :user].each do |basic_role|
+    %i(admin developer user).each do |basic_role|
       define_method "#{basic_role}?" do
         name == basic_role.to_s
       end
     end
 
     class << self
-      [:admin, :developer, :user].each do |basic_role|
+      %i(admin developer user).each do |basic_role|
         define_method basic_role do
           find_by(name: basic_role)
         end

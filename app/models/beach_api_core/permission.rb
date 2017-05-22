@@ -1,19 +1,16 @@
 module BeachApiCore
   class Permission < ApplicationRecord
-
-    KEEPER_TYPES = %w(BeachApiCore::Role BeachApiCore::Organisation BeachApiCore::Team BeachApiCore::User)
+    KEEPER_TYPES = %w(BeachApiCore::Role BeachApiCore::Organisation BeachApiCore::Team BeachApiCore::User).freeze
 
     belongs_to :atom, class_name: 'BeachApiCore::Atom', inverse_of: :permissions
     belongs_to :keeper, polymorphic: true
 
     validates :atom, :keeper, :actor, presence: true
     validates :actions, presence: true, allow_blank: true
-    validates :atom, uniqueness: { scope: [:actor, :keeper_id, :keeper_type] }
+    validates :atom, uniqueness: { scope: %i(actor keeper_id keeper_type) }
     validates :keeper_type, inclusion: KEEPER_TYPES
 
-    scope :for_user, -> (user, roles) do
-      where(keeper: [user, user.organisations, user.teams, roles].compact.flatten)
-    end
+    scope :for_user, ->(user, roles) { where(keeper: [user, user.organisations, user.teams, roles].compact.flatten) }
 
     %w(create read update delete execute).each do |action|
       define_method action do

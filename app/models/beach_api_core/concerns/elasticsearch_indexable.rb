@@ -4,11 +4,11 @@ module BeachApiCore::Concerns::ElasticsearchIndexable
   included do
     include ::Elasticsearch::Model
 
-    after_commit :update_index, on: [:create, :update], if: -> { ::BeachApiCore::Engine.elasticsearch_enabled }
+    after_commit :update_index, on: %i(create update), if: -> { ::BeachApiCore::Engine.elasticsearch_enabled }
     after_commit :destroy_index, on: :destroy, if: -> { ::BeachApiCore::Engine.elasticsearch_enabled }
 
     def as_indexed_json(options = {})
-      return self.as_json(options.merge root: false) unless self.class.elasticserach_serializer_value
+      return as_json(options.merge(root: false)) unless self.class.elasticserach_serializer_value
       self.class.elasticserach_serializer_value.new(self).as_json
     end
 

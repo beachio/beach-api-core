@@ -12,12 +12,10 @@ module MembershipsDoc
   param :group_id, String, required: true
   param :group_type, %w(Team Organisation), required: true
   example "\"team(or organisation)\": #{apipie_team_response} \nfail: 'Errors Description'"
-  def create
-  end
+  def create; end
 
   api :DELETE, '/memberships/:id', 'Destroy membership'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "fail: 'Could not remove membership'"
-  def destroy
-  end
+  def destroy; end
 end

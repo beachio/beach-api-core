@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 20170518082109) do
 
   create_table "beach_api_core_project_keepers", id: :serial, force: :cascade do |t|
     t.integer "project_id", null: false
-    t.string "keeper_type"
+    t.string "keeper_type", null: false
     t.integer "keeper_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 20170518082109) do
     t.index ["application_id"], name: "index_beach_api_core_teams_on_application_id"
   end
 
-  create_table "beach_api_core_templates", id: :serial, force: :cascade do |t|
+  create_table "beach_api_core_templates", force: :cascade do |t|
     t.string "name", null: false
     t.string "value"
     t.integer "kind", default: 0, null: false

@@ -71,12 +71,12 @@ module BeachApiCore
         @role = create(:assignment, user: @user, keeper: BeachApiCore::Instance.current).role
         @other_role = create(:assignment, user: @user, keeper: BeachApiCore::Instance.current).role
       end
-      it { expect(@user.has_role?(@role)).to be_truthy }
-      it { expect(@user.has_role?(create(:role))).to be_falsey }
+      it { expect(@user.role?(@role)).to be_truthy }
+      it { expect(@user.role?(create(:role))).to be_falsey }
 
       it 'should add role to user' do
         @user.add_role(@other_role)
-        expect(@user.has_role?(@other_role)).to be_truthy
+        expect(@user.role?(@other_role)).to be_truthy
       end
     end
 

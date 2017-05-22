@@ -18,6 +18,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'byebug', platform: :mri
   gem 'factory_girl_rails'
+  gem 'rubocop'
 end
 
 group :test do

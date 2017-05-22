@@ -1,6 +1,6 @@
 module BeachApiCore
   class ServiceCategory < ApplicationRecord
-    validates_presence_of :name
+    validates :name, presence: true
 
     has_many :services
   end

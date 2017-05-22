@@ -14,22 +14,19 @@ module AtomsDoc
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :atom
   example "\"atom\": #{apipie_atom_response} \nfail: 'Errors Description'"
-  def create
-  end
+  def create; end
 
   api :PUT, '/atoms', 'Update an atom by id or name'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :id, String, desc: 'can be either atom id or name', required: true
   param_group :atom
   example "\"atom\": #{apipie_atom_response} \nfail: 'Errors Description'"
-  def update
-  end
+  def update; end
 
   api :GET, '/atoms/:id', 'Get an atom'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"atom\": #{apipie_atom_response} \nfail: 'Errors Description'"
-  def show
-  end
+  def show; end
 
   api :GET, '/atoms', 'List of atoms'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -37,13 +34,11 @@ module AtomsDoc
   param :kind, String, required: true
   param :actions, Array, required: true
   example "\"atoms\": [#{apipie_atom_response}, ...]"
-  def index
-  end
+  def index; end
 
   api :DELETE, '/atoms', 'Remove an atom by id or name'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :id, String, desc: 'can be either atom id or name'
   example "fail: 'Could not remove atom'"
-  def destroy
-  end
+  def destroy; end
 end

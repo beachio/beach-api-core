@@ -8,7 +8,7 @@ module BeachApiCore
       show? || ::Pundit.policy(user, Instance.current).developer_or_admin?
     end
 
-    alias_method :update?, :show?
-    alias_method :destroy?, :show?
+    alias update? show?
+    alias destroy? show?
   end
 end
