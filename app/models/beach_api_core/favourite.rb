@@ -5,5 +5,7 @@ module BeachApiCore
 
     validates :user, :favouritable, presence: true
     validates :user, uniqueness: { scope: [:favouritable_id, :favouritable_type] }
+
+    scope :with_favouritable_type, ->(favouritable_type) { where(favouritable_type: favouritable_type) }
   end
 end

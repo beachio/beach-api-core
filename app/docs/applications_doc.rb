@@ -4,8 +4,7 @@ module ApplicationsDoc
 
   api :GET, '/applications', 'Get list of applications'
   example "\"applications\": [#{apipie_application_response}, ...]"
-  def index
-  end
+  def index; end
 
   api :POST, '/applications', 'Create an application'
   param :application, Hash, required: true do
@@ -13,24 +12,20 @@ module ApplicationsDoc
     param :redirect_uri, String, required: true
   end
   example "\"application\": #{apipie_application_response} \nfail: 'Errors Description'"
-  def create
-  end
+  def create; end
 
   api :GET, '/applications/:id', 'GET an application'
   example "\"application\": #{apipie_application_response}"
-  def show
-  end
+  def show; end
 
-  api :PUT,' /applications/:id', 'Update an application'
+  api :PUT, '/applications/:id', 'Update an application'
   param :application, Hash, required: true do
     param :name, String
   end
   example "\"application\": #{apipie_application_response} \nfail: 'Errors Description'"
-  def update
-  end
+  def update; end
 
   api :DELETE, '/applications/:id', 'Delete an application'
   example "fail: 'Could not remove application'"
-  def destroy
-  end
+  def destroy; end
 end

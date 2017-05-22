@@ -13,12 +13,19 @@ module BeachApiCore
     private
 
     def email_params
-      { from: context.email[:from],
+      params = {
+        from: context.email[:from],
         to: recipients,
         cc: context.email[:cc],
         subject: context.email[:subject],
         body: context.email[:body],
-        plain: context.email[:plain] }
+        plain: context.email[:plain]
+      }
+      if context.email[:template]
+        params[:template] = context.email[:template]
+        params[:template_name] = context.email[:template_params] || {}
+      end
+      params
     end
 
     def recipients

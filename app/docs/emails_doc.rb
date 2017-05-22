@@ -11,6 +11,8 @@ module EmailsDoc
     param :subject, String
     param :body, String, desc: 'Email html body'
     param :plain, String, desc: 'Email plain text body (If omitted stripped `body` will be used as plain body)'
+    param :template, String, desc: 'Template name to parse'
+    param :template_params, Hash, desc: 'Template params to use for parsing'
     param :scheduled_time, Integer, desc: 'Timestamp for sending out an email'
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true

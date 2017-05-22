@@ -3,7 +3,6 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::User', type: :request do
-
     describe 'when create' do
       include_context 'signed up developer'
       include_context 'bearer token authentication'
