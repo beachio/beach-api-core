@@ -5,8 +5,7 @@ module ServicesDoc
   api :GET, '/services', t('api.resource_description.descriptions.services.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"services\": [#{apipie_service_response},...]"
-  def index
-  end
+  def index; end
 
   api :PUT, '/services/:id', t('api.resource_description.descriptions.services.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -22,6 +21,5 @@ module ServicesDoc
   end
   example "\"service\": #{apipie_service_response} \n#{t('api.resource_description.fail',
                                                          description: t('api.resource_description.fails.errors_description'))}"
-  def update
-  end
+  def update; end
 end

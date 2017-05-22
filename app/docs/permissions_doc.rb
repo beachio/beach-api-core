@@ -5,8 +5,7 @@ module PermissionsDoc
   api :GET, '/atoms/:atom_id/permission', t('api.resource_description.descriptions.permissions.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"actions\": #{apipie_actions_response}"
-  def show
-  end
+  def show; end
 
   api :POST, '/v1/atoms/:atom_id/permission/set', t('api.resource_description.descriptions.permissions.create_update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -16,6 +15,5 @@ module PermissionsDoc
     param :actor, String, required: true
     param :actions, Array, required: true
   end
-  def set
-  end
+  def set; end
 end

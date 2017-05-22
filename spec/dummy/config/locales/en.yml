@@ -39,6 +39,8 @@ en:
           recipient_emails: "Recipient emails joined by comma"
           email_html_body: "Email html body"
           email_plain_text_body: "Email plain text body (If omitted stripped `body` will be used as plain body)"
+          template_name: "Template name to parse"
+          templete_params: "Template params to use for parsing"
           email_timestamp: "Timestamp for sending out an email"
         applications:
           list: "Get list of applications"
@@ -115,6 +117,7 @@ en:
           create: "Create user"
           get: "Get current user"
           update: "Update current user"
+          confirm: "Confirm user"
   interactors:
     errors:
       email_must_be_present: "Email must be present"

@@ -13,26 +13,22 @@ module TeamsDoc
   param_group :team
   example "\"team\": #{apipie_team_response} \n#{t('api.resource_description.fail',
                                                    description: t('api.resource_description.fails.errors_description'))}"
-  def create
-  end
+  def create; end
 
   api :GET, '/teams/:id', t('api.resource_description.descriptions.teams.get')
   example "\"team\": #{apipie_team_response}"
-  def show
-  end
+  def show; end
 
   api :PUT,  '/teams/:id', t('api.resource_description.descriptions.teams.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
   example "\"team\": #{apipie_team_response} \n#{t('api.resource_description.fail',
                                                    description: t('api.resource_description.fails.errors_description'))}"
-  def update
-  end
+  def update; end
 
   api :DELETE, '/teams/:id', t('api.resource_description.descriptions.teams.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example t('api.resource_description.fail', description: t('api.resource_description.could_not_remove',
                                                             model: t('activerecord.models.beach_api_core/team.downcase')))
-  def destroy
-  end
+  def destroy; end
 end

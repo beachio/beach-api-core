@@ -4,7 +4,9 @@ class CreateBeachApiCoreProfileCustomFields < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :title
       t.integer :status
-      t.references :keeper, polymorphic: true, index: { name: 'index_profile_custom_fields_on_keeper_type_and_keeper_id' }
+      t.references :keeper,
+                   polymorphic: true,
+                   index: { name: 'index_profile_custom_fields_on_keeper_type_and_keeper_id' }
       t.timestamps
     end
   end

@@ -9,13 +9,11 @@ module AssignmentsDoc
     param :user_id, Integer, required: true
   end
   example "\"assignment\": #{apipie_assignment_response}"
-  def create
-  end
+  def create; end
 
   api :DELETE, '/assignments/:id', t('api.resource_description.descriptions.assignments.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example t('api.resource_description.fail', description: t('api.resource_description.could_not_remove',
                                                             model: t('activerecord.models.beach_api_core/role.downcase')))
-  def destroy
-  end
+  def destroy; end
 end

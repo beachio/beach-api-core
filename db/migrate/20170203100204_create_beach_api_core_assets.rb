@@ -8,6 +8,6 @@ class CreateBeachApiCoreAssets < ActiveRecord::Migration[5.0]
       t.references :entity, polymorphic: true
       t.timestamps
     end
-    add_index :beach_api_core_assets, [:entity_id, :entity_type]
+    add_index :beach_api_core_assets, %i(entity_id entity_type)
   end
 end

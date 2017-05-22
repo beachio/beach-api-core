@@ -11,14 +11,12 @@ module UsersDoc
   example "\"user\": #{apipie_user_response}, \n\"access_token\": \"#{SecureRandom.hex(16)}\"\n#{t('api.resource_description.fail',
                                                                                                    description: t('api.resource_description.fails.errors_description'))}"
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
-  def create
-  end
+  def create; end
 
   api :GET, '/user', t('api.resource_description.descriptions.users.get')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"user\": #{apipie_user_response}"
-  def show
-  end
+  def show; end
 
   api :PUT, '/user', t('api.resource_description.descriptions.users.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -29,6 +27,9 @@ module UsersDoc
       param :id, Integer, required: true
       param :first_name, String
       param :last_name, String
+      param :current_password, String
+      param :password, String
+      param :password_confirmation, String
       param :sex, %w(male female)
       param :'***', String, desc: t('api.resource_description.descriptions.params.any_custom_field')
       param :avatar_attributes, Hash do
@@ -43,12 +44,10 @@ module UsersDoc
   end
   example "\"user\": #{apipie_user_response} \n#{t('api.resource_description.fail',
                                                    description: t('api.resource_description.fails.errors_description'))}"
-  def update
-  end
+  def update; end
 
-  api :POST, '/users/:id/confirm'
+  api :POST, '/users/:id/confirm', t('api.resource_description.descriptions.users.confirm')
   param :confirmation_token, String, required: true
   example "\"user\": #{apipie_user_response}"
-  def confirm
-  end
+  def confirm; end
 end

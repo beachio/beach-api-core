@@ -10,11 +10,11 @@ module BeachApiCore
     has_many :invitations, as: :group, inverse_of: :group
 
     def owners
-      User.where.has { |u|
+      User.where.has do |u|
         (u.id.in organisation&.owners&.select(:id)).or(
             u.id.in members.where(Membership.table_name => { owner: true }).select(:id)
         )
-      }.distinct
+      end.distinct
     end
   end
 end

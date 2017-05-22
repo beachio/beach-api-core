@@ -8,8 +8,9 @@ class BeachApiCore::PermissionSet
   end
 
   def call
-    context.permission = context.atom.permissions.find_or_initialize_by(keeper: context.keeper,
-                                                                actor: context.params[:actor])
+    context.permission = context.atom.permissions
+                             .find_or_initialize_by(keeper: context.keeper,
+                                                    actor: context.params[:actor])
     actions = context.params[:actions].blank? ? {} : Hash[*context.params[:actions].map{|action| [action, true]}.flatten]
     context.permission.assign_attributes(actions: actions)
     if context.permission.save

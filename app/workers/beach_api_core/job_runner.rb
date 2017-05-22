@@ -5,10 +5,10 @@ module BeachApiCore
     sidekiq_options retry: 10
 
     def perform(id)
-      return unless (job = Job.find_by_id(id)) && !job.done?
+      return unless (job = Job.find_by(id: id)) && !job.done?
       result = run_job(job)
       job.update(done: true,
-                 last_run: Time.now,
+                 last_run: Time.zone.now,
                  result: { status: result.code,
                            body: parse(result.body) })
     end

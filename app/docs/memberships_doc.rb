@@ -13,13 +13,11 @@ module MembershipsDoc
   param :group_type, %w(Team Organisation), required: true
   example "\"team(or organisation)\": #{apipie_team_response} \n#{t('api.resource_description.fail',
                                                                     description: t('api.resource_description.fails.errors_description'))}"
-  def create
-  end
+  def create; end
 
   api :DELETE, '/memberships/:id', t('api.resource_description.descriptions.memberships.destroy')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example t('api.resource_description.fail', description: t('api.resource_description.could_not_remove',
                                                             model: t('activerecord.models.beach_api_core/membership.downcase')))
-  def destroy
-  end
+  def destroy; end
 end

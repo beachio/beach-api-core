@@ -11,9 +11,10 @@ module EmailsDoc
     param :subject, String
     param :body, String, desc: t('api.resource_description.descriptions.params.email_html_body')
     param :plain, String, desc: t('api.resource_description.descriptions.params.email_plain_text_body')
+    param :template, String, desc: t('api.resource_description.descriptions.params.template_name')
+    param :template_params, Hash, desc: t('api.resource_description.descriptions.params.templete_params')
     param :scheduled_time, Integer, desc: t('api.resource_description.descriptions.params.email_timestamp')
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
-  def create
-  end
+  def create; end
 end

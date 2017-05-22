@@ -10,7 +10,7 @@ module BeachApiCore
     scope :images, -> { where(file_extension: IMAGE_EXTENSION) }
     scope :files, -> { where.not(file_extension: IMAGE_EXTENSION) }
 
-    IMAGE_EXTENSION = [:jpg, :jpeg, :bmp, :png, :gif].freeze
+    IMAGE_EXTENSION = %i(jpg jpeg bmp png gif).freeze
 
     def name=(value)
       self.file_filename = value
@@ -26,10 +26,9 @@ module BeachApiCore
         f.write(decoded_image)
         f.rewind
         assign_attributes(file: f,
-                          file_filename: self.file_filename || "asset.#{content_type.gsub(/image\//, '')}",
+                          file_filename: file_filename || "asset.#{content_type.gsub(%r{image/}, '')}",
                           file_size: decoded_image.size,
-                          file_content_type: content_type
-        )
+                          file_content_type: content_type)
       end
     end
 

@@ -7,7 +7,7 @@ module BeachApiCore::Concerns::DocIdAbsSerializerConcern
         args = [:id] if args.blank?
         args.each do |attr|
           define_method attr do
-            object.send(attr).abs if object.send(attr)
+            object.send(attr).abs if object.send(attr).present?
           end
         end
       end
