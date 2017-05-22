@@ -26,10 +26,10 @@ GIT
 
 GIT
   remote: https://github.com/vitalinfo/apipie-rails
-  revision: df2f29432400543597526572217ddc82257e09f8
+  revision: 98b24d93785064175bf68b4737f0573ffc91241a
   specs:
-    apipie-rails (0.3.7)
-      json
+    apipie-rails (0.5.1)
+      rails (>= 4.1)
 
 PATH
   remote: .
@@ -163,7 +163,6 @@ GEM
     interactor-rails (2.1.1)
       interactor (~> 3.0)
       rails (>= 4.2, < 5.2)
-    json (2.1.0)
     jsonapi-renderer (0.1.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
