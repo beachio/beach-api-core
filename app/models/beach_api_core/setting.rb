@@ -1,7 +1,7 @@
 module BeachApiCore
   class Setting < ApplicationRecord
     validates :name, :keeper, :value, presence: true
-    validates :name, uniqueness: { scope: [:keeper_id, :keeper_type] }
+    validates :name, uniqueness: { scope: %i(keeper_id keeper_type) }
     validate :allowed_name
     before_save :normalize_name
 

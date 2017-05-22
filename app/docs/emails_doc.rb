@@ -16,6 +16,5 @@ module EmailsDoc
     param :scheduled_time, Integer, desc: 'Timestamp for sending out an email'
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
-  def create
-  end
+  def create; end
 end

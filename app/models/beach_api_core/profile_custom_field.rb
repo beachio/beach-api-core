@@ -3,10 +3,10 @@ module BeachApiCore
     include Concerns::NameGenerator
     belongs_to :keeper, polymorphic: true
 
-    validates :name, presence: true, uniqueness: { scope: [:keeper_id, :keeper_type] }
+    validates :name, presence: true, uniqueness: { scope: %i(keeper_id keeper_type) }
     validates :title, :keeper, presence: true
 
-    enum status: [:enabled, :disabled]
+    enum status: %i(enabled disabled)
 
     after_initialize :set_defaults
 

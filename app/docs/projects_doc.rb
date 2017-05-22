@@ -12,14 +12,12 @@ module ProjectsDoc
   end
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
-  def create
-  end
+  def create; end
 
   api :GET, '/projects/:id', 'Get project info (scoped by organisation)'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
-  def show
-  end
+  def show; end
 
   api :PUT, '/projects/:id', 'Update an existing owned project'
   param :project, Hash, required: true do
@@ -31,12 +29,10 @@ module ProjectsDoc
   end
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
-  def update
-  end
+  def update; end
 
   api :DELETE, '/projects/:id', 'Destroy an existing owned project'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
-  def destroy
-  end
+  def destroy; end
 end

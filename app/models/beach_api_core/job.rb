@@ -12,7 +12,7 @@ module BeachApiCore
     class << self
       def perform_cron
         where.not(every: nil).find_each do |job|
-          next unless job.last_run.nil? || job.last_run + eval(job.every) <= Time.now
+          next unless job.last_run.nil? || job.last_run + eval(job.every) <= Time.zone.now
           BeachApiCore::JobRunner.perform_async(job.id)
         end
       end
@@ -26,7 +26,7 @@ module BeachApiCore
     end
 
     def required_params_present
-      return if ([:bearer, :method, :uri] - params.symbolize_keys.keys).empty?
+      return if (%i(bearer method uri) - params.symbolize_keys.keys).empty?
       errors.add(:params, 'must include bearer, method and uri')
     end
 

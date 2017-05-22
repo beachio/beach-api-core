@@ -10,6 +10,5 @@ module SettingsDoc
     param :value, String, required: true
   end
   example "\"setting\": #{apipie_setting_response}"
-  def update
-  end
+  def update; end
 end

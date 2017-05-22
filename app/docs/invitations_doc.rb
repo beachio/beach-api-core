@@ -7,8 +7,7 @@ module InvitationsDoc
   param :group_type, %w(Team Organisation), required: true
   param :group_id, String, required: true
   example "\"invitations\": [#{apipie_invitation_response}, ...]"
-  def index
-  end
+  def index; end
 
   api :POST, '/invitations', 'Create an invitation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -21,17 +20,14 @@ module InvitationsDoc
   param :group_type, %w(Team Organisation), required: true
   param :group_id, String, required: true
   example "\"invitation\": #{apipie_invitation_response} \nfail: 'Errors Description'"
-  def create
-  end
+  def create; end
 
   api :DELETE, '/invitations/:id', 'Revoke an invitation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"invitation\": #{apipie_invitation_response}"
-  def destroy
-  end
+  def destroy; end
 
   api :POST, '/invitations/:id/accept', 'Accept an invitation'
   example "\"access_token\": \"#{SecureRandom.hex(16)}\"\nfail: 'Errors Description'"
-  def accept
-  end
+  def accept; end
 end
