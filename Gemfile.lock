@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/Privy/shoulda-matchers
+  remote: https://github.com/Privy/shoulda-matchers.git
   revision: 134582be24cea45f2bc93fc312a12fc21ee07f35
   specs:
     shoulda-matchers (3.1.1)
@@ -25,7 +25,7 @@ GIT
       sinatra (~> 2.0.0.beta2)
 
 GIT
-  remote: https://github.com/vitalinfo/apipie-rails
+  remote: https://github.com/vitalinfo/apipie-rails.git
   revision: 98b24d93785064175bf68b4737f0573ffc91241a
   specs:
     apipie-rails (0.5.1)
