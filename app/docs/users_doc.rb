@@ -10,14 +10,12 @@ module UsersDoc
   end
   example "\"user\": #{apipie_user_response}, \n\"access_token\": \"#{SecureRandom.hex(16)}\"\nfail: 'Errors Description'"
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
-  def create
-  end
+  def create; end
 
   api :GET, '/user', 'Get current user'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"user\": #{apipie_user_response}"
-  def show
-  end
+  def show; end
 
   api :PUT, '/user', 'Update current user'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -41,12 +39,10 @@ module UsersDoc
     end
   end
   example "\"user\": #{apipie_user_response} \nfail: 'Errors Description'"
-  def update
-  end
+  def update; end
 
   api :POST, '/users/:id/confirm'
   param :confirmation_token, String, required: true
   example "\"user\": #{apipie_user_response}"
-  def confirm
-  end
+  def confirm; end
 end

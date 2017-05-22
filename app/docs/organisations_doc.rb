@@ -16,44 +16,37 @@ module OrganisationsDoc
   api :GET, '/organisations', 'List of user organisations'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"organisations\": [#{apipie_organisation_response}, ...]"
-  def index
-  end
+  def index; end
 
   api :POST, '/organisations', 'Create an organisation'
   param_group :organisation
   example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  def create
-  end
+  def create; end
 
   api :GET, '/organisations/:id', 'Get organisation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"organisation\": #{apipie_organisation_response}"
-  def show
-  end
+  def show; end
 
   api :PUT, '/organisations/:id', 'Update organisation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :organisation
   example "\"organisation\": #{apipie_organisation_response} \nfail: 'Errors Description'"
-  def update
-  end
+  def update; end
 
   api :DELETE, '/organisations/:id', 'Remove organisation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "fail: 'Could not remove organisation'"
-  def destroy
-  end
+  def destroy; end
 
   api :GET, '/organisations/users', 'Get organisation users for organisation owner'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :term, String, desc: 'Term for autocomplete'
   example "\"users\": [#{apipie_organisation_user_response}, ...]"
-  def users
-  end
+  def users; end
 
   api :PUT, '/organisations/:id/current', 'Set organisation context'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  def current
-  end
+  def current; end
 end

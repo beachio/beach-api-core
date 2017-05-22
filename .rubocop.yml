@@ -6,6 +6,17 @@ Metrics/LineLength:
   Max: 120
 Metrics/ClassLength:
   Max: 200
+Metrics/ModuleLength:
+  Exclude:
+    - '**/*_spec.rb'
+    - 'spec/factories/**/*'
+    - 'spec/dummy/db/migrate/*'
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - '**/*_spec.rb'
+    - 'spec/factories/**/*'
+    - 'spec/dummy/db/migrate/*'
 Documentation:
   Enabled: false
 Style/SignalException:
@@ -20,4 +31,4 @@ PercentLiteralDelimiters:
     '%w': ()
 AllCops:
   Exclude:
-    - spec/dummy/db/schema.rb
+    - 'spec/dummy/db/schema.rb'

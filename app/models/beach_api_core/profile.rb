@@ -11,20 +11,18 @@ module BeachApiCore
     attr_accessor :keepers
 
     validates :user, presence: true, uniqueness: true
-    enum sex: [:male, :female]
+    enum sex: %i(male female)
 
     def _assign_attribute(k, v)
       public_send("#{k}=", v)
-    rescue NoMethodError, NameError, ActiveModel::UnknownAttributeError
+    rescue NameError, NoMethodError, ActiveModel::UnknownAttributeError
       if (profile_custom_field = ProfileCustomField.find_by(keeper: keepers, name: k)).present?
         profile_attribute = profile_attributes.lookup_or_initialize_by(profile_custom_field: profile_custom_field)
         profile_attribute.assign_attributes(value: v)
+      elsif respond_to?("#{k}=")
+        raise
       else
-        if respond_to?("#{k}=")
-          raise
-        else
-          raise ActiveRecord::UnknownAttributeError.new(self, k)
-        end
+        raise ActiveRecord::UnknownAttributeError.new(self, k)
       end
     end
   end

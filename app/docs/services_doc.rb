@@ -5,8 +5,7 @@ module ServicesDoc
   api :GET, '/services', 'Get list of services'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"services\": [#{apipie_service_response},...]"
-  def index
-  end
+  def index; end
 
   api :PUT, '/services/:id', 'Update service'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -21,6 +20,5 @@ module ServicesDoc
     end
   end
   example "\"service\": #{apipie_service_response} \nfail: 'Errors Description'"
-  def update
-  end
+  def update; end
 end

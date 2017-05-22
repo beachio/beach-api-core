@@ -15,7 +15,7 @@ module BeachApiCore
     end
 
     def call
-      @template.value.gsub(/{([\w_]+)}/) { |m| send("#{@template.kind}_#{$1}") }
+      @template.value.gsub(/{([\w_]+)}/) { |_| send("#{@template.kind}_#{Regexp.last_match[1]}") }
     end
   end
 end

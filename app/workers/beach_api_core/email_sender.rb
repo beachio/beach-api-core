@@ -14,7 +14,7 @@ module BeachApiCore
 
     def normalize_opts!(opts)
       opts.symbolize_keys!
-      opts.merge!(defaults) { |key, v1, v2| v1 || v2 }
+      opts.merge!(defaults) { |_, v1, v2| v1 || v2 }
     end
 
     def parse_body!(opts)

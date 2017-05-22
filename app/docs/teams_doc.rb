@@ -12,24 +12,20 @@ module TeamsDoc
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
   example "\"team\": #{apipie_team_response} \nfail: 'Errors Description'"
-  def create
-  end
+  def create; end
 
   api :GET, '/teams/:id', 'Get team'
   example "\"team\": #{apipie_team_response}"
-  def show
-  end
+  def show; end
 
   api :PUT,  '/teams/:id', 'Update a team'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
   example "\"team\": #{apipie_team_response} \nfail: 'Errors Description'"
-  def update
-  end
+  def update; end
 
   api :DELETE, '/teams/:id', 'Remove team'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "fail: 'Could not remove team'"
-  def destroy
-  end
+  def destroy; end
 end
