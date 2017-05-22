@@ -5,16 +5,11 @@ module BeachApiCore
     include Concerns::UserRoles
     include Concerns::UserPermissions
 
+    attr_accessor :require_confirmation, :require_current_password, :current_password
+
     has_one :profile, inverse_of: :user, dependent: :destroy, class_name: 'BeachApiCore::Profile'
     has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'
     has_many :favourites, inverse_of: :user, dependent: :destroy
-
-    validates :email, presence: true, uniqueness: true, format: {
-      with: /\A(|(([a-z0-9]+_+)|([a-z0-9]+\-+)|([a-z0-9]+\.+)|([a-z0-9]+\++))*[a-z0-9]+@(([a-z0-9]+\-+)|([a-z0-9]+\.))*[a-z0-9]{1,63}\.[a-z]{2,6})\z/i },
-              if: proc { errors[:email].empty? }
-    validates :username, presence: true, uniqueness: true
-    validates :profile, :status, presence: true
-
     has_many :received_invitations,
              dependent: :destroy,
              foreign_key: :invitee_id,
@@ -36,6 +31,15 @@ module BeachApiCore
     has_many :user_preferences, dependent: :destroy
 
     has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :user, dependent: :destroy
+
+    validates :email, presence: true, uniqueness: true, format: {
+      with: /\A(|(([a-z0-9]+_+)|([a-z0-9]+\-+)|([a-z0-9]+\.+)|([a-z0-9]+\++))*[a-z0-9]+@(([a-z0-9]+\-+)|([a-z0-9]+\.))*[a-z0-9]{1,63}\.[a-z]{2,6})\z/i },
+              if: proc { errors[:email].empty? }
+    validates :username, presence: true, uniqueness: true
+    validates :profile, :status, presence: true
+    validates :password_confirmation, presence: true, if: :require_confirmation
+    validates :current_password, presence: true, if: :require_current_password
+    validate :correct_current_password, if: :require_current_password
 
     has_secure_password
     acts_as_downcasable_on %i(email username)
@@ -73,6 +77,11 @@ module BeachApiCore
     end
 
     private
+
+    def correct_current_password
+      return if User.find(id).authenticate(current_password)
+      errors.add(:current_password, 'Incorrect current password')
+    end
 
     def set_defaults
       self.status ||= :active

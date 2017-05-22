@@ -8,6 +8,7 @@ BeachApiCore::Engine.routes.draw do
     resources :users, only: %i(create) do
       post :confirm, on: :member
     end
+    resource :password, only: %i(create update)
     resource :user, only: %i(show update)
     resources :services, only: %i(index update) do
       resource :capabilities, only: %i(create destroy)

@@ -26,6 +26,9 @@ module UsersDoc
       param :id, Integer, required: true
       param :first_name, String
       param :last_name, String
+      param :current_password, String
+      param :password, String
+      param :password_confirmation, String
       param :sex, %w(male female)
       param :'***', String, desc: 'Any custom field'
       param :avatar_attributes, Hash do
@@ -41,7 +44,7 @@ module UsersDoc
   example "\"user\": #{apipie_user_response} \nfail: 'Errors Description'"
   def update; end
 
-  api :POST, '/users/:id/confirm'
+  api :POST, '/users/:id/confirm', 'Confirm user'
   param :confirmation_token, String, required: true
   example "\"user\": #{apipie_user_response}"
   def confirm; end
