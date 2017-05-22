@@ -25,7 +25,7 @@ group :test do
   gem 'database_cleaner'
   gem 'webmock'
   gem 'poltergeist'
-  gem 'shoulda-matchers', git: 'https://github.com/Privy/shoulda-matchers'
+  gem 'shoulda-matchers', git: 'https://github.com/Privy/shoulda-matchers.git'
 end
 
-gem 'apipie-rails', git: 'https://github.com/vitalinfo/apipie-rails'
+gem 'apipie-rails', git: 'https://github.com/vitalinfo/apipie-rails.git'
