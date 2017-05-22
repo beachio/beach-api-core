@@ -22,12 +22,12 @@ module BeachApiCore
 
     def schedule_present
       return if start_at.present? || every.present?
-      errors.add(:start_at, 'is required')
+      errors.add(:start_at, :is_required)
     end
 
     def required_params_present
       return if ([:bearer, :method, :uri] - params.symbolize_keys.keys).empty?
-      errors.add(:params, 'must include bearer, method and uri')
+      errors.add(:params, :must_include_required_params_preset)
     end
 
     def schedule_sidekiq_job

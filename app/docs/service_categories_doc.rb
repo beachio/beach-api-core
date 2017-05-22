@@ -7,23 +7,25 @@ module ServiceCategoriesDoc
     end
   end
 
-  api :GET, '/service_categories', 'Service categories list'
+  api :GET, '/service_categories', t('api.resource_description.descriptions.service_categories.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"service_categories\": [#{apipie_service_category_response}, ...]"
   def index
   end
 
-  api :POST, '/service_categories', 'Create service category'
+  api :POST, '/service_categories', t('api.resource_description.descriptions.service_categories.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :service_category
-  example "\"service_category\": #{apipie_service_category_response} \nfail: 'Errors Description'"
+  example "\"service_category\": #{apipie_service_category_response} \n#{t('api.resource_description.fail',
+                                                                           description: t('api.resource_description.fails.errors_description'))}"
   def create
   end
 
-  api :PUT, '/service_categories/:id', 'Update service category'
+  api :PUT, '/service_categories/:id', t('api.resource_description.descriptions.service_categories.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :service_category
-  example "\"service_category\": #{apipie_service_category_response} \nfail: 'Errors Description'"
+  example "\"service_category\": #{apipie_service_category_response} \n#{t('api.resource_description.fail',
+                                                                           description: t('api.resource_description.fails.errors_description'))}"
   def update
   end
 end

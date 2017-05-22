@@ -5,10 +5,10 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
 
     resource_description do
-      name 'Service categories'
-      error code: 403, desc: 'Forbidden request'
-      error code: 401, desc: 'Unauthorized'
-      error code: 400, desc: 'Bad request'
+      name t('activerecord.models.beach_api_core/service_category.other')
+      error code: 403, desc: t('api.resource_description.errors.forbidden_request')
+      error code: 401, desc: t('api.resource_description.errors.unauthorized')
+      error code: 400, desc: t('api.resource_description.errors.bad_request')
     end
 
     def index

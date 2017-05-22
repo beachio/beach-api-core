@@ -3,7 +3,7 @@ module BeachApiCore
     include SessionsDoc
 
     resource_description do
-      name 'Authorization'
+      name t('api.resource_description.resources.authorization')
     end
 
     def create

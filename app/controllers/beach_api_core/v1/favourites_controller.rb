@@ -5,10 +5,10 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
 
     resource_description do
-      name 'Favourites'
-      error code: 403, desc: 'Forbidden request'
-      error code: 401, desc: 'Unauthorized'
-      error code: 400, desc: 'Bad request'
+      name t('activerecord.models.beach_api_core/favourite.other')
+      error code: 403, desc: t('api.resource_description.errors.forbidden_request')
+      error code: 401, desc: t('api.resource_description.errors.unauthorized')
+      error code: 400, desc: t('api.resource_description.errors.bad_request')
     end
 
     def index
@@ -30,7 +30,7 @@ module BeachApiCore
       if @favourite.destroy
         head :no_content
       else
-        render_json_error({ message: 'This favourite item could not be deleted' }, :bad_request)
+        render_json_error({ message: t('api.errors.favourite_item_could_not_be_deleted') }, :bad_request)
       end
     end
 

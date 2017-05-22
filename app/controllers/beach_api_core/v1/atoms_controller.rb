@@ -6,10 +6,10 @@ module BeachApiCore
     before_action :application_authorize!
 
     resource_description do
-      name 'Atoms'
-      error code: 403, desc: 'Forbidden request'
-      error code: 401, desc: 'Unauthorized'
-      error code: 400, desc: 'Bad request'
+      name t('activerecord.models.beach_api_core/atom.other')
+      error code: 403, desc: t('api.resource_description.errors.forbidden_request')
+      error code: 401, desc: t('api.resource_description.errors.unauthorized')
+      error code: 400, desc: t('api.resource_description.errors.bad_request')
     end
 
     def index
@@ -47,7 +47,8 @@ module BeachApiCore
       if @atom.destroy
         head :no_content
       else
-        render_json_error({ message: 'Could not remove atom' }, :bad_request)
+        render_json_error({ message: t('api.errors.could_not_remove',
+                                       model: t('activerecord.models.beach_api_core/atom.downcase')) }, :bad_request)
       end
     end
 

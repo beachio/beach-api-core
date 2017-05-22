@@ -19,7 +19,7 @@ module BeachApiCore
     private
 
     def validate_single_record
-      errors.add(:base, "can't be created more than one record") if self.class.where.not(id: id).present?
+      errors.add(:base, :can_not_be_created_more_than_one) if self.class.where.not(id: id).present?
     end
   end
 end

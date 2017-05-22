@@ -8,28 +8,31 @@ module TeamsDoc
     end
   end
 
-  api :POST, '/teams', 'Create a team'
+  api :POST, '/teams', t('api.resource_description.descriptions.teams.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
-  example "\"team\": #{apipie_team_response} \nfail: 'Errors Description'"
+  example "\"team\": #{apipie_team_response} \n#{t('api.resource_description.fail',
+                                                   description: t('api.resource_description.fails.errors_description'))}"
   def create
   end
 
-  api :GET, '/teams/:id', 'Get team'
+  api :GET, '/teams/:id', t('api.resource_description.descriptions.teams.get')
   example "\"team\": #{apipie_team_response}"
   def show
   end
 
-  api :PUT,  '/teams/:id', 'Update a team'
+  api :PUT,  '/teams/:id', t('api.resource_description.descriptions.teams.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
-  example "\"team\": #{apipie_team_response} \nfail: 'Errors Description'"
+  example "\"team\": #{apipie_team_response} \n#{t('api.resource_description.fail',
+                                                   description: t('api.resource_description.fails.errors_description'))}"
   def update
   end
 
-  api :DELETE, '/teams/:id', 'Remove team'
+  api :DELETE, '/teams/:id', t('api.resource_description.descriptions.teams.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "fail: 'Could not remove team'"
+  example t('api.resource_description.fail', description: t('api.resource_description.could_not_remove',
+                                                            model: t('activerecord.models.beach_api_core/team.downcase')))
   def destroy
   end
 end

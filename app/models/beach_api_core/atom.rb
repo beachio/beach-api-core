@@ -23,7 +23,7 @@ module BeachApiCore
     class << self
       def lookup!(name_or_id)
         atom = where.has{ |a| (a.id == name_or_id) | (a.name == name_or_id) }.first
-        raise ActiveRecord::RecordNotFound.new('Not Found') unless atom
+        raise ActiveRecord::RecordNotFound.new(t('errors.not_found')) unless atom
         atom
       end
     end
@@ -38,7 +38,7 @@ module BeachApiCore
 
     def check_looped_tree(parent = nil)
       parent ||= atom_parent
-      errors.add(:atom_parent_id, 'can not be a parent') and return if parent == self
+      errors.add(:atom_parent_id, :can_not_be_a_parent) and return if parent == self
       check_looped_tree(parent.atom_parent) if parent&.atom_parent
     end
   end

@@ -18,7 +18,7 @@ module BeachApiCore
 
     def check_uniqueness_of_attributes_keys
       errors.add(:interaction_attributes,
-                 'can not have duplicate keys') if interaction_attributes
+                 :can_not_have_duplicate_keys) if interaction_attributes
                                                        .map(&:key).uniq.size != interaction_attributes.size
     end
   end

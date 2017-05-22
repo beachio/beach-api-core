@@ -4,7 +4,7 @@ module BeachApiCore
     before_action :doorkeeper_authorize!, except: [:create, :confirm]
 
     resource_description do
-      name 'Users'
+      name t('activerecord.models.beach_api_core/user.other')
     end
 
     def create

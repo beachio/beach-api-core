@@ -5,10 +5,10 @@ module BeachApiCore
     before_action :get_resource, only: [:show, :update, :destroy]
 
     resource_description do
-      name 'Applications'
-      error code: 403, desc: 'Forbidden request'
-      error code: 401, desc: 'Unauthorized'
-      error code: 400, desc: 'Bad request'
+      name t('activerecord.models.beach_api_core/application.other')
+      error code: 403, desc: t('api.resource_description.errors.forbidden_request')
+      error code: 401, desc: t('api.resource_description.errors.unauthorized')
+      error code: 400, desc: t('api.resource_description.errors.bad_request')
     end
 
     def index
@@ -61,7 +61,9 @@ module BeachApiCore
       if @application.destroy
         head :no_content
       else
-        render_json_error({ message: 'Could not remove application' }, :bad_request)
+        render_json_error({ message: t('api.errors.could_not_remove',
+                                       model: t('activerecord.models.beach_api_core/application.downcase')) },
+                          :bad_request)
       end
     end
 

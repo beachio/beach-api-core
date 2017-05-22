@@ -30,7 +30,7 @@ module BeachApiCore
       when 'get', 'delete'
         client.send(method.downcase.to_sym)
       else
-        raise 'Method not allowed'
+        raise t('errors.method_not_allowed')
       end
     end
 

@@ -2,7 +2,7 @@ module ProjectsDoc
   extend Apipie::DSL::Concern
   extend BeachApiCore::Concerns::V1::ApipieResponseConcern
 
-  api :POST, '/projects', 'Create a new project'
+  api :POST, '/projects', t('api.resource_description.descriptions.projects.create')
   param :project, Hash, required: true do
     param :name, String, required: true
     param :project_keepers_attributes, Array do
@@ -15,13 +15,13 @@ module ProjectsDoc
   def create
   end
 
-  api :GET, '/projects/:id', 'Get project info (scoped by organisation)'
+  api :GET, '/projects/:id', t('api.resource_description.descriptions.projects.get')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
   def show
   end
 
-  api :PUT, '/projects/:id', 'Update an existing owned project'
+  api :PUT, '/projects/:id', t('api.resource_description.descriptions.projects.update')
   param :project, Hash, required: true do
     param :name, String, required: true
     param :project_keepers_attributes, Array do
@@ -34,7 +34,7 @@ module ProjectsDoc
   def update
   end
 
-  api :DELETE, '/projects/:id', 'Destroy an existing owned project'
+  api :DELETE, '/projects/:id', t('api.resource_description.descriptions.projects.destroy')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
   def destroy
