@@ -1,7 +1,7 @@
 module BeachApiCore
   class V1::UsersController < BeachApiCore::V1::BaseController
     include ::UsersDoc
-    before_action :doorkeeper_authorize!, only: [:update, :show]
+    before_action :doorkeeper_authorize!, only: %i(update show)
 
     resource_description do
       name 'Users'

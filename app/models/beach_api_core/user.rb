@@ -37,11 +37,6 @@ module BeachApiCore
               if: proc { errors[:email].empty? }
     validates :username, presence: true, uniqueness: true
     validates :profile, :status, presence: true
-    validates :email, presence: true, uniqueness: true, format: {
-      with: /\A(|(([a-z0-9]+_+)|([a-z0-9]+\-+)|([a-z0-9]+\.+)|([a-z0-9]+\++))*[a-z0-9]+@(([a-z0-9]+\-+)|([a-z0-9]+\.))*[a-z0-9]{1,63}\.[a-z]{2,6})\z/i },
-              if: proc { errors[:email].empty? }
-    validates :username, presence: true, uniqueness: true
-    validates :profile, :status, presence: true
     validates :password_confirmation, presence: true, if: :require_confirmation
     validates :current_password, presence: true, if: :require_current_password
     validate :correct_current_password, if: :require_current_password

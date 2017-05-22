@@ -3,8 +3,7 @@ class BeachApiCore::UserUpdate
 
   before do
     if context.params.include?('password')
-      context.user.require_confirmation = true
-      context.user.require_current_password = true
+      context.user.assign_attributes(require_confirmation: true, require_current_password: true)
     end
     context.user.profile.keepers = context.keepers
   end
