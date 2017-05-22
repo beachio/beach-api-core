@@ -1,8 +1,11 @@
 class BeachApiCore::ResetPassword
   include Interactor
 
-  def call
+  before do
     context.user = BeachApiCore::User.find_by(reset_password_token: context.params[:token])
+  end
+  
+  def call
     unless context.user
       context.status = :bad_request
       context.fail! message: 'Invalid token'
