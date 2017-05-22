@@ -11,6 +11,7 @@ module BeachApiCore
                params: { email: user.email }
         end.to change(ActionMailer::Base.deliveries, :size).by(1)
         expect(response.status).to eq 200
+        expect(json_body[:user].keys).to contain_exactly(*BeachApiCore::USER_SIMPLE_KEYS)
         expect(user.reload.reset_password_token).to be_present
       end
     end
@@ -29,6 +30,7 @@ module BeachApiCore
                 password_confirmation: new_password }
         end.to change { user.reload.password_digest }
         expect(response.status).to eq 200
+        expect(json_body[:user].keys).to contain_exactly(*BeachApiCore::USER_SIMPLE_KEYS)
       end
 
       it 'should should return error' do
