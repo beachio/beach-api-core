@@ -12,6 +12,7 @@ module BeachApiCore
 
     def show
       actions = current_user.permissions_for(@atom, current_organisation)
+      Rails.logger.info "DEBUG: #{current_user.inspect} -- #{current_organisation.inspect} -- #{@atom.inspect} -- #{actions.inspect}"
       render_json_success({ actions: actions }, :ok)
     end
 
