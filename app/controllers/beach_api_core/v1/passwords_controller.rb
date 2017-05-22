@@ -1,6 +1,11 @@
 module BeachApiCore
   class V1::PasswordsController < BeachApiCore::V1::BaseController
     include PasswordsDoc
+
+    resource_description do
+      name 'Passwords'
+    end
+
     def create
       user = BeachApiCore::User.find_by(email: params[:email])
       result = BeachApiCore::ForgotPassword.call(user: user)
