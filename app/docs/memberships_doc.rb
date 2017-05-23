@@ -17,7 +17,7 @@ module MembershipsDoc
 
   api :DELETE, '/memberships/:id', I18n.t('api.resource_description.descriptions.memberships.destroy')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example I18n.t('api.resource_description.fail', description: I18n.t('api.resource_description.could_not_remove',
+  example I18n.t('api.resource_description.fail', description: I18n.t('api.errors.could_not_remove',
                                                                       model: I18n.t('activerecord.models.beach_api_core/membership.downcase')))
   def destroy; end
 end

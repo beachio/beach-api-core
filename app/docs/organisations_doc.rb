@@ -39,7 +39,7 @@ module OrganisationsDoc
 
   api :DELETE, '/organisations/:id', I18n.t('api.resource_description.descriptions.organisations.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example I18n.t('api.resource_description.fail', description: I18n.t('api.resource_description.could_not_remove',
+  example I18n.t('api.resource_description.fail', description: I18n.t('api.errors.could_not_remove',
                                                                       model: I18n.t('activerecord.models.beach_api_core/organisation.downcase')))
   def destroy; end
 

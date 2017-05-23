@@ -5,7 +5,6 @@ en:
     unknown_action: "Unknown action '%{action}'"
   api:
     errors:
-      could_not_remove_application: "Could not remove application"
       could_not_remove: "Could not remove %{model}"
       email_has_been_created: "Email has been created"
       favourite_item_could_not_be_deleted: "This favourite item could not be deleted"
@@ -20,7 +19,6 @@ en:
         bad_request: "Bad request"
         user_does_not_belong_to_organisation: "User doesn't belong to current organisation"
       fail: "fail: '%{description}'"
-      could_not_remove: "Could not remove %{model}"
       fails:
         errors_description: "Errors Description"
         error_description: "Error description"
@@ -233,6 +231,7 @@ en:
         one: "Service Category"
         other: "Service Categories"
         downcase: "service category"
+        capital_other: "Service categories"
       service_category:
         <<: *service_category
       beach_api_core/service: &service

@@ -42,7 +42,7 @@ module AtomsDoc
   api :DELETE, '/atoms', I18n.t('api.resource_description.descriptions.atoms.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :id, String, desc: I18n.t('api.resource_description.descriptions.atoms.can_be_atom_id_or_name')
-  example I18n.t('api.resource_description.fail', description: I18n.t('api.resource_description.could_not_remove',
+  example I18n.t('api.resource_description.fail', description: I18n.t('api.errors.could_not_remove',
                                                                       model: I18n.t('activerecord.models.beach_api_core/atom.downcase')))
   def destroy; end
 end

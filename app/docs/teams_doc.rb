@@ -28,7 +28,7 @@ module TeamsDoc
 
   api :DELETE, '/teams/:id', I18n.t('api.resource_description.descriptions.teams.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example I18n.t('api.resource_description.fail', description: I18n.t('api.resource_description.could_not_remove',
+  example I18n.t('api.resource_description.fail', description: I18n.t('api.errors.could_not_remove',
                                                                       model: I18n.t('activerecord.models.beach_api_core/team.downcase')))
   def destroy; end
 end
