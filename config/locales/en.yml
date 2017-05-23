@@ -141,83 +141,127 @@ en:
         is_required: "is required"
         must_include_required_params_preset: "must include bearer, method and uri"
     models:
-      doorkeeper/application:
+      doorkeeper/application: &application
         one: "Application"
         other: "Applications"
         downcase: "application"
-      beach_api_core/assignment:
+      application:
+        <<: *application
+      beach_api_core/assignment: &assignment
         one: "Assignment"
         other: "Assignments"
         downcase: "assignment"
-      beach_api_core/atom:
+      assignment:
+        <<: *assignment
+      beach_api_core/atom: &atom
         one: "Atom"
         other: "Atoms"
         downcase: "atom"
-      beach_api_core/capability:
+      atom:
+        <<: *atom
+      beach_api_core/capability: &capability
         one: "Capability"
         other: "Capabilities"
         downcase: "capability"
-      beach_api_core/email:
+      capability:
+        <<: *capability
+      beach_api_core/email: &email
         one: "Email"
         other: "Emails"
         downcase: "email"
-      beach_api_core/favourite:
+      email:
+        <<: *email
+      beach_api_core/favourite: &favourite
         one: "Favourite"
         other: "Favourites"
         downcase: "favourite"
-      beach_api_core/invitation:
+      favourite:
+        <<: *favourite
+      beach_api_core/invitation: &invitation
         one: "Invitation"
         other: "Invitations"
         downcase: "invitation"
-      beach_api_core/job:
+      invitation:
+        <<: *invitation
+      beach_api_core/job: &job
         one: "Job"
         other: "Jobs"
         downcase: "job"
-      beach_api_core/membership:
+      job:
+        <<: *job
+      beach_api_core/membership: &membership
         one: "Membership"
         other: "Memberships"
         downcase: "membership"
-      beach_api_core/organisation:
+      membership:
+        <<: *membership
+      beach_api_core/organisation: &organisation
         one: "Organisation"
         other: "Organisations"
         downcase: "organisation"
-      beach_api_core/permission:
+      organisation:
+        <<: *organisation
+      beach_api_core/permission: &permission
         one: "Permission"
         other: "Permissions"
         downcase: "permission"
-      beach_api_core/profile_custom_field:
+      permission:
+        <<: *permission
+      beach_api_core/profile_custom_field: &profile_custom_field
         one: "Profile Custom Field"
         other: "Profile Custom Fields"
         downcase: "profile custom field"
-      beach_api_core/project:
+      profile_custom_field:
+        <<: *profile_custom_field
+      user_profile_custom_field:
+        one: "User Profile Custom Field"
+        other: "User Profile Custom Fields"
+        downcase: "user profile custom field"
+      beach_api_core/project: &project
         one: "Project"
         other: "Projects"
         downcase: "project"
-      beach_api_core/role:
+      project:
+        <<: *project
+      beach_api_core/role: &role
         one: "Role"
         other: "Roles"
         downcase: "role"
-      beach_api_core/service_category:
+      role:
+        <<: *role
+      beach_api_core/service_category: &service_category
         one: "Service Category"
         other: "Service Categories"
         downcase: "service category"
-      beach_api_core/service:
+      service_category:
+        <<: *service_category
+      beach_api_core/service: &service
         one: "Service"
         other: "Services"
         downcase: "service"
-      beach_api_core/setting:
+      service:
+        <<: *service
+      beach_api_core/setting: &setting
         one: "Setting"
         other: "Settings"
         downcase: "setting"
-      beach_api_core/team:
+      setting:
+        <<: *setting
+      beach_api_core/team: &team
         one: "Team"
         other: "Teams"
         downcase: "team"
-      beach_api_core/user:
+      team:
+        <<: *team
+      beach_api_core/user: &user
         one: "User"
         other: "Users"
         downcase: "user"
-      beach_api_core/template:
+      user:
+        <<: *user
+      beach_api_core/template: &template
         one: "Template"
         other: "Templates"
         downcase: "template"
+      template:
+        <<: *template
