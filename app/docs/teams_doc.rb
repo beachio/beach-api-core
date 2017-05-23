@@ -8,27 +8,27 @@ module TeamsDoc
     end
   end
 
-  api :POST, '/teams', t('api.resource_description.descriptions.teams.create')
+  api :POST, '/teams', I18n.t('api.resource_description.descriptions.teams.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
-  example "\"team\": #{apipie_team_response} \n#{t('api.resource_description.fail',
-                                                   description: t('api.resource_description.fails.errors_description'))}"
+  example "\"team\": #{apipie_team_response} \n#{I18n.t('api.resource_description.fail',
+                                                        description: I18n.t('api.resource_description.fails.errors_description'))}"
   def create; end
 
-  api :GET, '/teams/:id', t('api.resource_description.descriptions.teams.get')
+  api :GET, '/teams/:id', I18n.t('api.resource_description.descriptions.teams.get')
   example "\"team\": #{apipie_team_response}"
   def show; end
 
-  api :PUT,  '/teams/:id', t('api.resource_description.descriptions.teams.update')
+  api :PUT,  '/teams/:id', I18n.t('api.resource_description.descriptions.teams.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
-  example "\"team\": #{apipie_team_response} \n#{t('api.resource_description.fail',
-                                                   description: t('api.resource_description.fails.errors_description'))}"
+  example "\"team\": #{apipie_team_response} \n#{I18n.t('api.resource_description.fail',
+                                                        description: I18n.t('api.resource_description.fails.errors_description'))}"
   def update; end
 
-  api :DELETE, '/teams/:id', t('api.resource_description.descriptions.teams.remove')
+  api :DELETE, '/teams/:id', I18n.t('api.resource_description.descriptions.teams.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example t('api.resource_description.fail', description: t('api.resource_description.could_not_remove',
-                                                            model: t('activerecord.models.beach_api_core/team.downcase')))
+  example I18n.t('api.resource_description.fail', description: I18n.t('api.resource_description.could_not_remove',
+                                                                      model: I18n.t('activerecord.models.beach_api_core/team.downcase')))
   def destroy; end
 end

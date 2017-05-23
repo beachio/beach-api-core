@@ -4,12 +4,12 @@ class BeachApiCore::Authorization::AuthorizeUser
   before do
     if context.email.blank?
       context.status = :bad_request
-      context.fail! message: [t('interactors.errors.email_must_be_present')]
+      context.fail! message: [I18n.t('interactors.errors.email_must_be_present')]
     end
 
     if context.password.blank?
       context.status = :bad_request
-      context.fail! message: [t('interactors.errors.password_must_be_present')]
+      context.fail! message: [I18n.t('interactors.errors.password_must_be_present')]
     end
   end
 
@@ -19,7 +19,7 @@ class BeachApiCore::Authorization::AuthorizeUser
       context.status = :ok
     else
       context.status = :unauthorized
-      context.fail! message: [t('interactors.errors.not_valid_email_or_password')]
+      context.fail! message: [I18n.t('interactors.errors.not_valid_email_or_password')]
     end
   end
 

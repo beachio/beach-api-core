@@ -22,7 +22,7 @@ module BeachApiCore
     class << self
       def lookup!(name_or_id)
         atom = where.has { |a| (a.id == name_or_id) | (a.name == name_or_id) }.first
-        raise ActiveRecord::RecordNotFound, t('errors.not_found') unless atom
+        raise ActiveRecord::RecordNotFound, I18n.t('errors.not_found') unless atom
         atom
       end
     end

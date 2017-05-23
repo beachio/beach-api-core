@@ -8,7 +8,7 @@ class BeachApiCore::ResetPassword
   def call
     unless context.user
       context.status = :bad_request
-      context.fail! message: 'Invalid token'
+      context.fail! message: I18n.t('interactors.errors.invalid_email')
     end
     context.user.require_confirmation = true
     if context.user.update context.params.slice(:password, :password_confirmation)

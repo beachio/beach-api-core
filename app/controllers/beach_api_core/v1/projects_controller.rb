@@ -6,7 +6,7 @@ module BeachApiCore
     prepend_before_action :doorkeeper_authorize!
 
     resource_description do
-      name t('activerecord.models.beach_api_core/project.other')
+      name I18n.t('activerecord.models.beach_api_core/project.other')
     end
 
     def create

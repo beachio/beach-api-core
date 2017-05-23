@@ -4,10 +4,10 @@ module BeachApiCore
     before_action :application_authorize!, :find_atom
 
     resource_description do
-      name t('activerecord.models.beach_api_core/permission.other')
-      error code: 403, desc: t('api.resource_description.errors.forbidden_request')
-      error code: 401, desc: t('api.resource_description.errors.unauthorized')
-      error code: 400, desc: t('api.resource_description.errors.bad_request')
+      name I18n.t('activerecord.models.beach_api_core/permission.other')
+      error code: 403, desc: I18n.t('api.resource_description.errors.forbidden_request')
+      error code: 401, desc: I18n.t('api.resource_description.errors.unauthorized')
+      error code: 400, desc: I18n.t('api.resource_description.errors.bad_request')
     end
 
     def show

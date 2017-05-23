@@ -13,6 +13,7 @@ en:
     resource_description:
       resources:
         authorization: "Authorization"
+        passwords: "Passwords"
       errors:
         forbidden_request: "Forbidden request"
         unauthorized: "Unauthorized"
@@ -42,6 +43,7 @@ en:
           template_name: "Template name to parse"
           templete_params: "Template params to use for parsing"
           email_timestamp: "Timestamp for sending out an email"
+          reset_password_token: "Reset password token"
         applications:
           list: "Get list of applications"
           create: "Create an application"
@@ -87,6 +89,9 @@ en:
           remove: "Remove organisation"
           get_users: "Get organisation users for organisation owner"
           set_context: "Set organisation context"
+        passwords:
+          send: "Send forgot password email"
+          reset: "Reset user's password"
         permissions:
           list: "List of rights for Atom"
           create_update: "Create/Update permission for Atom"
@@ -126,6 +131,7 @@ en:
       incorrect_token: "The token is incorrect"
       incorrect_application_id_or_secret: "Application ID and/or secret are not correct"
       require_application_id_and_secret: "Require Application ID and secret"
+      invalid_email: "Invalid email"
   activerecord:
     errors:
       messages:
@@ -207,3 +213,7 @@ en:
         one: "User"
         other: "Users"
         downcase: "user"
+      beach_api_core/template:
+        one: "Template"
+        other: "Templates"
+        downcase: "template"

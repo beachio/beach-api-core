@@ -4,7 +4,7 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
 
     resource_description do
-      name t('activerecord.models.beach_api_core/role.other')
+      name I18n.t('activerecord.models.beach_api_core/role.other')
     end
 
     def index

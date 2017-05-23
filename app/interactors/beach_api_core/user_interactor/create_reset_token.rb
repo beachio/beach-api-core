@@ -5,7 +5,7 @@ module BeachApiCore::UserInteractor
     def call
       if context.user.nil?
         context.status = :bad_request
-        context.fail! message: 'Invalid email'
+        context.fail! message: I18n.t('interactors.errors.invalid_email')
       elsif context.user.update(reset_password_token: SecureRandom.urlsafe_base64)
         context.status = :ok
       else

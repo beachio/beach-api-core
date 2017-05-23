@@ -6,7 +6,7 @@ module BeachApiCore
     before_action :find_group, only: [:update]
 
     resource_description do
-      name t('activerecord.models.beach_api_core/setting.other')
+      name I18n.t('activerecord.models.beach_api_core/setting.other')
     end
 
     def update

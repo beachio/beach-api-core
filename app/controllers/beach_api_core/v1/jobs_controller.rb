@@ -6,7 +6,7 @@ module BeachApiCore
     before_action :explicit_application_authorize!
 
     resource_description do
-      name t('activerecord.models.beach_api_core/job.other')
+      name I18n.t('activerecord.models.beach_api_core/job.other')
     end
 
     def create
