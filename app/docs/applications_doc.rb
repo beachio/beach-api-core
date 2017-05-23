@@ -29,6 +29,6 @@ module ApplicationsDoc
 
   api :DELETE, '/applications/:id', I18n.t('api.resource_description.descriptions.applications.delete')
   example I18n.t('api.resource_description.fail', description: I18n.t('api.resource_description.could_not_remove',
-                                                                      model: I18n.t('activerecord.models.beach_api_core/application.downcase')))
+                                                                      model: I18n.t('activerecord.models.doorkeeper/application.downcase')))
   def destroy; end
 end

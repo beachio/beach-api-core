@@ -141,7 +141,7 @@ en:
         is_required: "is required"
         must_include_required_params_preset: "must include bearer, method and uri"
     models:
-      beach_api_core/application:
+      doorkeeper/application:
         one: "Application"
         other: "Applications"
         downcase: "application"
@@ -185,6 +185,10 @@ en:
         one: "Permission"
         other: "Permissions"
         downcase: "permission"
+      beach_api_core/profile_custom_field:
+        one: "Profile Custom Field"
+        other: "Profile Custom Fields"
+        downcase: "profile custom field"
       beach_api_core/project:
         one: "Project"
         other: "Projects"
@@ -194,8 +198,8 @@ en:
         other: "Roles"
         downcase: "role"
       beach_api_core/service_category:
-        one: "Service category"
-        other: "Service categories"
+        one: "Service Category"
+        other: "Service Categories"
         downcase: "service category"
       beach_api_core/service:
         one: "Service"

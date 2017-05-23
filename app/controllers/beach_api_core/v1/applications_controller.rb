@@ -5,7 +5,7 @@ module BeachApiCore
     before_action :get_resource, only: [:show, :update, :destroy]
 
     resource_description do
-      name I18n.t('activerecord.models.beach_api_core/application.other')
+      name I18n.t('activerecord.models.doorkeeper/application.other')
       error code: 403, desc: I18n.t('api.resource_description.errors.forbidden_request')
       error code: 401, desc: I18n.t('api.resource_description.errors.unauthorized')
       error code: 400, desc: I18n.t('api.resource_description.errors.bad_request')
@@ -62,7 +62,7 @@ module BeachApiCore
         head :no_content
       else
         render_json_error({ message: I18n.t('api.errors.could_not_remove',
-                                            model: I18n.t('activerecord.models.beach_api_core/application.downcase')) },
+                                            model: I18n.t('activerecord.models.doorkeeper/application.downcase')) },
                           :bad_request)
       end
     end
