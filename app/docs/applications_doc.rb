@@ -19,7 +19,7 @@ module ApplicationsDoc
   example "\"application\": #{apipie_application_response}"
   def show; end
 
-  api :PUT,' /applications/:id', I18n.t('api.resource_description.descriptions.applications.update')
+  api :PUT, '/applications/:id', I18n.t('api.resource_description.descriptions.applications.update')
   param :application, Hash, required: true do
     param :name, String
   end

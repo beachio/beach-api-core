@@ -43,7 +43,8 @@ module BeachApiCore
         head :no_content
       else
         render_json_error({ message: I18n.t('api.errors.could_not_remove',
-                                            model: I18n.t('activerecord.models.beach_api_core/team.downcase')) }, :bad_request)
+                                            model: I18n.t('activerecord.models.beach_api_core/team.downcase')) },
+                          :bad_request)
       end
     end
 
