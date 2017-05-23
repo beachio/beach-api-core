@@ -130,6 +130,7 @@ en:
       incorrect_application_id_or_secret: "Application ID and/or secret are not correct"
       require_application_id_and_secret: "Require Application ID and secret"
       invalid_email: "Invalid email"
+      invalid_token: "Invalid token"
   activerecord:
     errors:
       messages:
