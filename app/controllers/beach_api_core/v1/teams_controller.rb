@@ -6,10 +6,10 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
 
     resource_description do
-      name 'Teams'
-      error code: 403, desc: 'Forbidden request'
-      error code: 401, desc: 'Unauthorized'
-      error code: 400, desc: 'Bad request'
+      name I18n.t('activerecord.models.beach_api_core/team.other')
+      error code: 403, desc: I18n.t('api.resource_description.errors.forbidden_request')
+      error code: 401, desc: I18n.t('api.resource_description.errors.unauthorized')
+      error code: 400, desc: I18n.t('api.resource_description.errors.bad_request')
     end
 
     def create
@@ -42,7 +42,9 @@ module BeachApiCore
       if @team.destroy
         head :no_content
       else
-        render_json_error({ message: 'Could not remove team' }, :bad_request)
+        render_json_error({ message: I18n.t('api.errors.could_not_remove',
+                                            model: I18n.t('activerecord.models.beach_api_core/team.downcase')) },
+                          :bad_request)
       end
     end
 

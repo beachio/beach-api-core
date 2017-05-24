@@ -19,7 +19,7 @@ class BeachApiCore::ElasticsearchIndexer
       client.index elastic_opts.merge(body: entity.as_indexed_json)
     when 'delete'
       client.delete elastic_opts
-    else raise ArgumentError, "Unknown action '#{opts[:action]}'"
+    else raise ArgumentError, I18n.t('errors.unknown_action', action: opts[:action])
     end
   end
 end

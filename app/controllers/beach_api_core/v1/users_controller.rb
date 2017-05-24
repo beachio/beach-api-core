@@ -4,7 +4,7 @@ module BeachApiCore
     before_action :doorkeeper_authorize!, only: %i(update show)
 
     resource_description do
-      name 'Users'
+      name I18n.t('activerecord.models.beach_api_core/user.other')
     end
 
     def create

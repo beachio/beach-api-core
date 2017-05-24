@@ -3,7 +3,7 @@ module BeachApiCore
     include PasswordsDoc
 
     resource_description do
-      name 'Passwords'
+      name I18n.t('api.resource_description.resources.passwords')
     end
 
     def create

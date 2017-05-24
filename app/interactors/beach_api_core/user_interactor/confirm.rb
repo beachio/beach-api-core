@@ -7,7 +7,7 @@ module BeachApiCore::UserInteractor
         context.status = :ok
       else
         context.status = :bad_request
-        context.fail! message: 'Invalid token'
+        context.fail! message: I18n.t('interactors.errors.incorrect_token')
       end
     end
   end
