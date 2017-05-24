@@ -6,7 +6,7 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    describe 'when index' do
+    describe 'when show' do
       before do
         @atom = create :atom
         @organisation = create :organisation

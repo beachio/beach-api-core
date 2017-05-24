@@ -1,10 +1,10 @@
 module BeachApiCore
   class V1::UsersController < BeachApiCore::V1::BaseController
     include ::UsersDoc
-    before_action :doorkeeper_authorize!, except: [:create, :confirm]
+    before_action :doorkeeper_authorize!, only: %i(update show)
 
     resource_description do
-      name 'Users'
+      name I18n.t('activerecord.models.beach_api_core/user.other')
     end
 
     def create
@@ -41,8 +41,9 @@ module BeachApiCore
       user = BeachApiCore::User.find(params[:id])
       result = BeachApiCore::UserInteractor::Confirm.call(user: user, token: params[:confirmation_token])
       if result.success?
-        render_json_success(result.user, result.status, keepers: [Instance.current],
-                            current_user: result.user, root: :user)
+        render_json_success(result.user, :ok,
+                            serializer: BeachApiCore::UserSimpleSerializer,
+                            root: :user)
       else
         render_json_error({ message: result.message }, result.status)
       end
@@ -55,7 +56,7 @@ module BeachApiCore
     end
 
     def user_update_params
-      params.require(:user).permit(:email, :username,
+      params.require(:user).permit(:email, :username, :current_password, :password, :password_confirmation,
                                    profile_attributes: custom_profile_fields.concat([:id, :first_name,
                                                                                      :last_name, :sex,
                                                                                      avatar_attributes: [:file, :base64]]),

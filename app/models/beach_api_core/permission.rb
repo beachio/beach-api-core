@@ -12,14 +12,16 @@ module BeachApiCore
 
     scope :for_user, ->(user, roles) { where(keeper: [user, user.organisations, user.teams, roles].compact.flatten) }
 
-    %w(create read update delete execute).each do |action|
-      define_method action do
-        actions[action]
-      end
+    def method_missing(name, *args, &block)
+      super
+    rescue NoMethodError
+      raise unless name =~ %r{action_(.+)}
+      return actions[Regexp.last_match[1]] unless Regexp.last_match[1].last == '='
+      actions[Regexp.last_match[1][0..-2]] = args.first
+    end
 
-      define_method "#{action}=" do |value|
-        actions[action] = value
-      end
+    def respond_to_missing?(method_name, include_private = false)
+      super || method_name.match(%r{action_(.+)})
     end
 
     def keeper_name

@@ -11,13 +11,13 @@ module BeachApiCore::UserInteractor
 
         if application.blank? || application.secret != application_secret
           context.status = :unauthorized
-          context.fail! message: ['Application ID and/or secret are not correct']
+          context.fail! message: [I18n.t('interactors.errors.incorrect_application_id_or_secret')]
         end
         context.application = application
         context.application_id = application.id
       elsif !context.skip_headers
         context.status = :unauthorized
-        context.fail! message: ['Require Application ID and secret']
+        context.fail! message: [I18n.t('interactors.errors.require_application_id_and_secret')]
       end
     end
   end
