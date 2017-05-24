@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.4.1'
 
 # Declare your gem's dependencies in beach_api_core.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -25,7 +25,7 @@ group :test do
   gem 'database_cleaner'
   gem 'webmock'
   gem 'poltergeist'
-  gem 'shoulda-matchers', git: 'https://github.com/Privy/shoulda-matchers'
+  gem 'shoulda-matchers', git: 'https://github.com/Privy/shoulda-matchers.git'
 end
 
-gem 'apipie-rails', git: 'https://github.com/vitalinfo/apipie-rails'
+gem 'apipie-rails', git: 'https://github.com/vitalinfo/apipie-rails.git'
