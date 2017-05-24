@@ -63,6 +63,10 @@ en:
           remove: "Remove capability"
         emails:
           send: "Send an email"
+        entities:
+          show: "Show an entity"
+          create: "Create an entity"
+          remove: "Remove an entity"
         favourites:
           create: "Create favourite item"
           list: "List of user favourites items"
@@ -265,3 +269,9 @@ en:
         downcase: "template"
       template:
         <<: *template
+      beach_api_core/entity: &entity
+        one: "Entity"
+        other: "Entities"
+        downcase: "entity"
+      entity:
+        <<: *entity
