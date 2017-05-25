@@ -12,6 +12,7 @@ module BeachApiCore
 
     def call
       context.job = Job.new(context.params)
+      context.job.assign_attributes(application: context.application)
       if context.job.save
         context.status = :created
       else
