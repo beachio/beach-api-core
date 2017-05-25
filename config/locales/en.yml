@@ -3,6 +3,7 @@ en:
     not_found: "Not Found"
     method_not_allowed: "Method not allowed"
     unknown_action: "Unknown action '%{action}'"
+    something_went_wrong: 'Something went wrong'
   api:
     errors:
       could_not_remove: "Could not remove %{model}"
@@ -13,6 +14,7 @@ en:
       resources:
         authorization: "Authorization"
         passwords: "Passwords"
+        broadcasts: 'Broadcasts'
       errors:
         forbidden_request: "Forbidden request"
         unauthorized: "Unauthorized"
@@ -125,6 +127,8 @@ en:
           get: "Get current user"
           update: "Update current user"
           confirm: "Confirm user"
+        broadcasts:
+          create: "Notify user"
   interactors:
     errors:
       email_must_be_present: "Email must be present"
