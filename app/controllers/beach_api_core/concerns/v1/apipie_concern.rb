@@ -21,6 +21,14 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                              file: Refile::FileDouble.new('dummy', 'logo.png', content_type: 'image/png'))
   end
 
+  def apipie_entity
+    @_apipie_entity ||= BeachApiCore::Entity.new(id: fake_id,
+                                                 user: apipie_user,
+                                                 uid: Faker::Crypto.md5,
+                                                 kind: Faker::Lorem.word,
+                                                 settings: { property: Faker::Lorem.word })
+  end
+
   def apipie_favourite
     @_apipie_favourite ||= BeachApiCore::Favourite.new(id: fake_id,
                                                        user: apipie_user,
