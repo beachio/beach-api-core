@@ -10,7 +10,7 @@ module BeachApiCore
     end
 
     def create
-      result = JobCreate.call(params: job_params, request: request)
+      result = JobCreate.call(params: job_params, request: request, application: current_application)
       if result.success?
         render_json_success(result.job, result.status, root: :job)
       else

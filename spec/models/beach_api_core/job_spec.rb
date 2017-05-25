@@ -9,6 +9,10 @@ module BeachApiCore
     end
 
     it 'should have basic validations' do
+      should validate_presence_of :application
+    end
+
+    it 'should have basic validations' do
       job = build :job, start_at: nil, every: nil
       expect(job).to be_invalid
       expect(job.errors.messages.keys).to include(:start_at)

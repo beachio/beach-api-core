@@ -1,9 +1,12 @@
 module BeachApiCore
   class Job < ApplicationRecord
+    belongs_to :application, class_name: 'Doorkeeper::Application'
+
     serialize :params, Hash
     serialize :result, Hash
 
     validates :every, format: { with: /\A\d+\.\w+\z/ }, allow_nil: true
+    validates :application, presence: true
     validate :schedule_present
     validate :required_params_present
 
