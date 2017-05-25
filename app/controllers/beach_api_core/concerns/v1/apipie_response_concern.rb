@@ -15,6 +15,10 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     ).as_json
   end
 
+  def apipie_entity_response
+    pretty BeachApiCore::EntitySerializer.new(apipie_entity)
+  end
+
   def apipie_favourite_response
     pretty BeachApiCore::FavouriteSerializer.new(apipie_favourite)
   end
