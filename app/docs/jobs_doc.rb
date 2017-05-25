@@ -7,7 +7,7 @@ module JobsDoc
     param :params, Hash, required: true do
       param :headers, Hash, required: true, desc: I18n.t('api.resource_description.descriptions.params.request_headers')
       param :method, %w(GET POST PUT PATCH DELETE), required: true
-      param :url, String, required: true, desc: I18n.t('api.resource_description.descriptions.params.relative_request_path')
+      param :uri, String, required: true, desc: I18n.t('api.resource_description.descriptions.params.relative_request_path')
       param :input, Hash, desc: I18n.t('api.resource_description.descriptions.params.post_put_patch_request_params')
     end
     param :start_at, DateTime

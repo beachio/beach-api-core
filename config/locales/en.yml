@@ -29,7 +29,7 @@ en:
           encoded_string: "Encoded Base64 string"
           any_custom_field: "Any custom field"
           term_for_autocomplete: "Term for autocomplete"
-          relative_request_path: "Relative request path"
+          relative_request_path: "Relative request path or full request url"
           post_put_patch_request_params: "POST, PUT, PATCH request params"
           cron_schedule: 'Cron schedule for a job in format "30.minutes", "1.hour", "2.days", etc. Min period is 30 minutes.'
           request_headers: "Request headers"
