@@ -4,8 +4,8 @@ module EntitiesDoc
 
   api :GET, '/entities/:id', I18n.t('api.resource_description.descriptions.entities.show')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "\"entities\": [#{apipie_entity_response}, ...]"
-  def index; end
+  example "\"entity\": #{apipie_entity_response}"
+  def show; end
 
   api :POST, '/entities', I18n.t('api.resource_description.descriptions.entities.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true

@@ -68,12 +68,10 @@ ActiveRecord::Schema.define(version: 20170523155133) do
     t.bigint "user_id", null: false
     t.string "uid", null: false
     t.string "kind", null: false
-    t.hstore "settings"
+    t.hstore "settings", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["kind"], name: "index_beach_api_core_entities_on_kind"
     t.index ["uid", "kind"], name: "index_entities_on_uid_and_kind", unique: true
-    t.index ["uid"], name: "index_beach_api_core_entities_on_uid"
     t.index ["user_id"], name: "index_beach_api_core_entities_on_user_id"
   end
 
