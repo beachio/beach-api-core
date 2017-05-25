@@ -42,7 +42,7 @@ module BeachApiCore
 
         it 'should create a job with correct url' do
           job_params = @job_params.deep_merge(start_at: 2.days.since,
-                                              params: { uri: beach_api_core.v1_user_url })
+                                              params: { uri: Faker::Internet.url })
           expect { post beach_api_core.v1_jobs_path, params: { job: job_params }, headers: application_auth }
               .to change(JobRunner.jobs, :size).by(1).and change(Job, :count).by(1)
           expect(response.status).to eq 201
