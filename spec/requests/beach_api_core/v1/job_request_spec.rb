@@ -12,7 +12,7 @@ module BeachApiCore
       before do
         @job_params = {
           params: {
-            bearer: access_token.token,
+            headers: { 'Authorization' => "Bearer #{access_token.token}" },
             method: 'GET',
             uri: beach_api_core.v1_user_path,
           }
@@ -34,10 +34,21 @@ module BeachApiCore
           expect(response.status).to eq 201
           expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
           expect(JobRunner.jobs.last['args'].first).to eq Job.last.id
-          [:bearer, :method].each do |param|
+          [:headers, :method].each do |param|
             expect(Job.last.params[param]).to eq @job_params[:params][param]
           end
           expect(Job.last.params[:uri]).to include(@job_params[:params][:uri])
+        end
+
+        it 'should create a job with correct url' do
+          job_params = @job_params.deep_merge(start_at: 2.days.since,
+                                              params: { uri: Faker::Internet.url })
+          expect { post beach_api_core.v1_jobs_path, params: { job: job_params }, headers: application_auth }
+              .to change(JobRunner.jobs, :size).by(1).and change(Job, :count).by(1)
+          expect(response.status).to eq 201
+          expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
+          expect(JobRunner.jobs.last['args'].first).to eq Job.last.id
+          job_params[:params].each { |param, value| expect(Job.last.params[param]).to eq value }
         end
       end
 

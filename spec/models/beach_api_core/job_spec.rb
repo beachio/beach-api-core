@@ -16,10 +16,13 @@ module BeachApiCore
       expect(build(:job, start_at: nil, every: '1.hour')).to be_valid
     end
 
-    it 'should validate that bearer, method and uri are present in params hash' do
-      job = build :job, params: { "#{Faker::Lorem.word}": Faker::Lorem.word }
-      expect(job).to be_invalid
-      expect(job.errors.messages.keys).to include(:params)
+    it 'should validate that headers, method and uri are present in params hash' do
+      %i(headers method uri).each do |param|
+        job = build :job
+        job.params.delete(param)
+        expect(job).to be_invalid
+        expect(job.errors.messages.keys).to include(:params)
+      end
     end
 
     it 'should validate format of `every`' do

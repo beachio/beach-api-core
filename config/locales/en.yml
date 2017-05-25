@@ -29,10 +29,10 @@ en:
           encoded_string: "Encoded Base64 string"
           any_custom_field: "Any custom field"
           term_for_autocomplete: "Term for autocomplete"
-          relative_request_path: "Relative request path"
+          relative_request_path: "Relative request path or full request url"
           post_put_patch_request_params: "POST, PUT, PATCH request params"
           cron_schedule: 'Cron schedule for a job in format "30.minutes", "1.hour", "2.days", etc. Min period is 30 minutes.'
-          users_access_token: "User's access token"
+          request_headers: "Request headers"
           array_of_user_ids: "An array of user ids to send email instead of `to` param"
           sender_mail: "Sender email"
           recipient_emails: "Recipient emails joined by comma"
