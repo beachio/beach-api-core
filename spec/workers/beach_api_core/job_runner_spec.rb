@@ -11,7 +11,7 @@ module BeachApiCore
         @job = create :job,
                       start_at: 2.days.since,
                       params: {
-                        bearer: access_token.token,
+                        headers: { 'Authorization' => "Bearer #{access_token.token}" },
                         method: 'GET',
                         uri: 'http://www.example.com/v1/user'
                       }

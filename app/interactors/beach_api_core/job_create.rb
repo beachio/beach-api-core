@@ -4,7 +4,8 @@ module BeachApiCore
 
     before do
       if context.params[:params] && context.params[:params][:uri]
-        url = URI.join(context.request.base_url, context.params[:params][:uri])
+        url = context.params[:params][:uri]
+        url = URI.join(context.request.base_url, context.params[:params][:uri]) unless url =~ %r{\Ahttps?://}
         context.params[:params][:uri] = url.to_s
       end
     end

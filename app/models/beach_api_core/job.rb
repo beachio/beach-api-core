@@ -26,7 +26,7 @@ module BeachApiCore
     end
 
     def required_params_present
-      return if (%i(bearer method uri) - params.symbolize_keys.keys).empty?
+      return if (%i(headers method uri) - params.symbolize_keys.keys).empty?
       errors.add(:params, :must_include_required_params_preset)
     end
 

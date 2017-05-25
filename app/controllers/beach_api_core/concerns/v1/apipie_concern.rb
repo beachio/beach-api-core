@@ -103,7 +103,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   def apipie_job
     @_apipie_job ||= BeachApiCore::Job.new(id: fake_id,
                                            start_at: 2.days.since,
-                                           params: { bearer: SecureRandom.hex,
+                                           params: { headers: { 'Authorization' => "Bearer #{SecureRandom.hex}" },
                                                      method: %w(GET POST PUT PATCH DELETE).sample,
                                                      uri: '/uri',
                                                      input: { "#{Faker::Lorem.word}": Faker::Lorem.word } },

@@ -17,7 +17,7 @@ module BeachApiCore
 
     def run_job(job)
       client = RestClient::Resource.new job.params[:uri],
-                                        headers: headers(job.params[:bearer])
+                                        headers: job.params[:headers]
       call_method(client, job.params[:method], job.params[:input])
     rescue RestClient::Exception => e
       e.response
@@ -42,10 +42,6 @@ module BeachApiCore
       JSON.parse(body, symbolize_names: true)
     rescue JSON::ParserError
       body
-    end
-
-    def headers(bearer)
-      { 'Authorization' => "Bearer #{bearer}" }
     end
   end
 end
