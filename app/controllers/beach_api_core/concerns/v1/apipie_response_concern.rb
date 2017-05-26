@@ -78,4 +78,8 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
   def apipie_role_response
     pretty BeachApiCore::RoleSerializer.new(apipie_role)
   end
+
+  def apipie_webhook_response
+    pretty BeachApiCore::WebhookSerializer.new(apipie_webhook)
+  end
 end

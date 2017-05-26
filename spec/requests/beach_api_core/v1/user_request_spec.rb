@@ -24,6 +24,10 @@ module BeachApiCore
         it_behaves_like 'valid user response' do
           before { create_user_request }
         end
+
+        it 'should create webhooks notifier job' do
+          expect { create_user_request }.to change(WebhooksNotifier.jobs, :count).by(1)
+        end
       end
 
       context 'when invalid request' do

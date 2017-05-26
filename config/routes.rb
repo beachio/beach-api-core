@@ -6,6 +6,7 @@ BeachApiCore::Engine.routes.draw do
     resources :sessions, only: :create, path: :auth
     resources :favourites, only: %i(index create destroy)
     resources :entities, only: %i(show create destroy)
+    resources :webhooks, only: %i(index create destroy)
     resources :users, only: %i(create) do
       post :confirm, on: :member
     end

@@ -34,20 +34,26 @@ module BeachApiCore
 
       context 'when valid' do
         before do
-          post beach_api_core.v1_organisations_path,
-               params: {
-                 organisation: { name: Faker::Name.title,
-                                 logo_image_attributes: { file: logo_image },
-                                 logo_properties: { color: Faker::Lorem.word } }
-               },
-               headers: bearer_auth
+          @organisation_params = {
+            organisation: { name: Faker::Name.title,
+                            logo_image_attributes: { file: logo_image },
+                            logo_properties: { color: Faker::Lorem.word } }
+          }
         end
-        it { expect(response.status).to eq 201 }
-        it_behaves_like 'valid organisation response' do
-          it do
-            expect(json_body[:organisation][:logo_properties]).to be_present
-            expect(json_body[:organisation][:logo_url]).to be_present
+        context 'with create request' do
+          before { post beach_api_core.v1_organisations_path, params: @organisation_params, headers: bearer_auth }
+          it { expect(response.status).to eq 201 }
+          it_behaves_like 'valid organisation response' do
+            it do
+              expect(json_body[:organisation][:logo_properties]).to be_present
+              expect(json_body[:organisation][:logo_url]).to be_present
+            end
           end
+        end
+        it 'should create webhooks notifier job' do
+          expect do
+            post beach_api_core.v1_organisations_path, params: @organisation_params, headers: bearer_auth
+          end.to change(WebhooksNotifier.jobs, :count).by(1)
         end
       end
 

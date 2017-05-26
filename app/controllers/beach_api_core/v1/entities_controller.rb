@@ -12,7 +12,8 @@ module BeachApiCore
     end
 
     def show
-      render_json_success(entity, :ok, root: :entity)
+      authorize @entity
+      render_json_success(@entity, :ok, root: :entity)
     end
 
     def create
@@ -39,10 +40,6 @@ module BeachApiCore
 
     def entity_params
       params.require(:entity).permit(:uid, :kind, settings: {})
-    end
-
-    def entity
-      @entity ||= current_user.entities.find(params[:id])
     end
   end
 end

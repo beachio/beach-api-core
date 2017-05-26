@@ -93,6 +93,9 @@ module BeachApiCore
         it_behaves_like 'an authenticated resource' do
           before { get beach_api_core.v1_entity_path(entity), headers: invalid_bearer_auth }
         end
+        it_behaves_like 'an forbidden resource' do
+          before { get beach_api_core.v1_entity_path(entity), headers: bearer_auth }
+        end
       end
 
       context 'when valid' do

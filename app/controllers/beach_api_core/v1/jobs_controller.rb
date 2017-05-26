@@ -19,10 +19,12 @@ module BeachApiCore
     end
 
     def show
+      authorize @job
       render_json_success(@job, :ok, root: :job)
     end
 
     def destroy
+      authorize @job
       if @job.destroy
         render_json_success(@job, :ok, root: :job)
       else

@@ -32,6 +32,14 @@ module BeachApiCore
         end.to change(oauth_user.memberships, :count).by(1)
         expect(Team.last.owners).to include(oauth_user)
       end
+
+      it 'should create webhooks notifier job' do
+        expect do
+          post beach_api_core.v1_teams_path,
+               params: { team: { name: Faker::Name.title } },
+               headers: bearer_auth
+        end.to change(WebhooksNotifier.jobs, :count).by(1)
+      end
     end
 
     describe 'when update' do
