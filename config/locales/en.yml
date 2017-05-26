@@ -146,7 +146,7 @@ en:
         can_not_be_created_more_than_one: "can't be created more than one record"
         can_not_have_duplicate_keys: "can not have duplicate keys"
         is_required: "is required"
-        must_include_required_params_preset: "must include bearer, method and uri"
+        must_include_required_params_preset: "must include headers, method and uri"
     models:
       doorkeeper/application: &application
         one: "Application"
