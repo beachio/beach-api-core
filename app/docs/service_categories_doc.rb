@@ -16,16 +16,18 @@ module ServiceCategoriesDoc
   api :POST, '/service_categories', I18n.t('api.resource_description.descriptions.service_categories.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :service_category
-  example "\"service_category\": #{apipie_service_category_response} \n#{I18n.t('api.resource_description.fail',
-                                                                                description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"service_category\": #{apipie_service_category_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def create
   end
 
   api :PUT, '/service_categories/:id', I18n.t('api.resource_description.descriptions.service_categories.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :service_category
-  example "\"service_category\": #{apipie_service_category_response} \n#{I18n.t('api.resource_description.fail',
-                                                                                description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"service_category\": #{apipie_service_category_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def update
   end
 end

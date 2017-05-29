@@ -19,7 +19,8 @@ module ServicesDoc
       param :base64, String, desc: I18n.t('api.resource_description.descriptions.params.encoded_string')
     end
   end
-  example "\"service\": #{apipie_service_response} \n#{I18n.t('api.resource_description.fail',
-                                                              description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"service\": #{apipie_service_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def update; end
 end

@@ -11,8 +11,9 @@ module WebhooksDoc
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   param :uri, String, required: true
   param :kind, String, required: true, desc: I18n.t('api.resource_description.descriptions.params.event_type')
-  example "\"webhook\": #{apipie_webhook_response} \n#{I18n.t('api.resource_description.fail',
-                                                            description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"webhook\": #{apipie_webhook_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def create; end
 
   api :DELETE, '/webhooks/:id', I18n.t('api.resource_description.descriptions.webhooks.remove')

@@ -7,7 +7,8 @@ module PermissionsDoc
   example "\"actions\": #{apipie_actions_response}"
   def show; end
 
-  api :POST, '/v1/atoms/:atom_id/permission/set', I18n.t('api.resource_description.descriptions.permissions.create_update')
+  api :POST, '/v1/atoms/:atom_id/permission/set',
+      I18n.t('api.resource_description.descriptions.permissions.create_update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :permission, Hash, required: true do
     param :keeper_id, String, required: true

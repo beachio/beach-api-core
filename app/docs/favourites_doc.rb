@@ -14,8 +14,9 @@ module FavouritesDoc
     param :favouritable_id, String, required: true
     param :favouritable_type, String, required: true
   end
-  example "\"favourite\": #{apipie_favourite_response} \n#{I18n.t('api.resource_description.fail',
-                                                                  description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"favourite\": #{apipie_favourite_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def create; end
 
   api :DELETE, '/favourites/:id', I18n.t('api.resource_description.descriptions.favourites.remove')

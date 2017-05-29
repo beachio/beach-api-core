@@ -4,14 +4,8 @@ module BeachApiCore::WebhookInteractor
 
     def call
       return unless context.success?
-      if context.team
-        kind = 'team_created'
-      elsif context.organisation
-        kind = 'organisation_created'
-      else
-        kind = 'user_created'
-      end
-      BeachApiCore::Webhook.notify(kind)
+      kind = BeachApiCore::Webhook.class_to_kind(context.model.class)
+      BeachApiCore::Webhook.notify(kind, context.model.class.name, context.model.id)
     end
   end
 end

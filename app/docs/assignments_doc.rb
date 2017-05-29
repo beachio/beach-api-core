@@ -13,7 +13,8 @@ module AssignmentsDoc
 
   api :DELETE, '/assignments/:id', I18n.t('api.resource_description.descriptions.assignments.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example I18n.t('api.resource_description.fail', description: I18n.t('api.errors.could_not_remove',
-                                                                      model: I18n.t('activerecord.models.beach_api_core/role.downcase')))
+  example I18n.t('api.resource_description.fail',
+                 description: I18n.t('api.errors.could_not_remove',
+                                     model: I18n.t('activerecord.models.beach_api_core/role.downcase')))
   def destroy; end
 end

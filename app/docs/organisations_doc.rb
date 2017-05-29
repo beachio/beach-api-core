@@ -20,8 +20,9 @@ module OrganisationsDoc
 
   api :POST, '/organisations', I18n.t('api.resource_description.descriptions.organisations.create')
   param_group :organisation
-  example "\"organisation\": #{apipie_organisation_response} \n#{I18n.t('api.resource_description.fail',
-                                                                        description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"organisation\": #{apipie_organisation_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   def create; end
 
@@ -33,14 +34,16 @@ module OrganisationsDoc
   api :PUT, '/organisations/:id', I18n.t('api.resource_description.descriptions.organisations.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :organisation
-  example "\"organisation\": #{apipie_organisation_response} \n#{I18n.t('api.resource_description.fail',
-                                                                        description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"organisation\": #{apipie_organisation_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def update; end
 
   api :DELETE, '/organisations/:id', I18n.t('api.resource_description.descriptions.organisations.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example I18n.t('api.resource_description.fail', description: I18n.t('api.errors.could_not_remove',
-                                                                      model: I18n.t('activerecord.models.beach_api_core/organisation.downcase')))
+  example I18n.t('api.resource_description.fail',
+                 description: I18n.t('api.errors.could_not_remove',
+                                     model: I18n.t('activerecord.models.beach_api_core/organisation.downcase')))
   def destroy; end
 
   api :GET, '/organisations/users', I18n.t('api.resource_description.descriptions.organisations.get_users')

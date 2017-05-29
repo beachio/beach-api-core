@@ -7,15 +7,48 @@ module BeachApiCore
         let!(:"#{webhook_kind}_webhook") { create(:webhook, kind: webhook_kind) }
       end
 
-      Webhook.kinds.keys.each do |webhook_kind|
+      context 'user_created' do
         before do
-          @webhook = send("#{webhook_kind}_webhook")
-          stub_request(:post, @webhook.uri).to_return(status: 200)
+          stub_request(:post, user_created_webhook.uri).to_return(status: 200)
+          @user = create(:user)
         end
 
-        it "should send #{webhook_kind} notification" do
-          subject.perform(webhook_kind)
-          expect(a_request(:post, @webhook.uri).with(body: { event: webhook_kind })).to have_been_made.once
+        it 'should send user_created notification' do
+          subject.perform('user_created', @user.class.name, @user.id)
+          serialized_user = UserSerializer.new(@user).to_json
+          expect(a_request(:post, user_created_webhook.uri)
+                     .with(body: { event: 'user_created', model: serialized_user }.to_json)).to have_been_made.once
+
+        end
+      end
+
+      context 'team_created' do
+        before do
+          stub_request(:post, team_created_webhook.uri).to_return(status: 200)
+          @team = create(:team)
+        end
+
+        it 'should send user_created notification' do
+          subject.perform('team_created', @team.class.name, @team.id)
+          serialized_team = TeamSerializer.new(@team).to_json
+          expect(a_request(:post, team_created_webhook.uri)
+                     .with(body: { event: 'team_created', model: serialized_team }.to_json)).to have_been_made.once
+
+        end
+      end
+
+      context 'organisation_created' do
+        before do
+          stub_request(:post, organisation_created_webhook.uri).to_return(status: 200)
+          @organisation = create(:organisation)
+        end
+
+        it 'should send user_created notification' do
+          subject.perform('organisation_created', @organisation.class.name, @organisation.id)
+          serialized_organisation = OrganisationSerializer.new(@organisation).to_json
+          expect(a_request(:post, organisation_created_webhook.uri)
+                   .with(body: { event: 'organisation_created', model: serialized_organisation }.to_json))
+            .to have_been_made.once
         end
       end
     end

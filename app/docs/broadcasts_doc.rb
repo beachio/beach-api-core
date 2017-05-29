@@ -7,7 +7,7 @@ module BroadcastsDoc
     param :user_id, Integer, required: true
     param :payload, Hash, required: true
   end
-  example "#{I18n.t('api.resource_description.fail',
-                    description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example I18n.t('api.resource_description.fail',
+                 description: I18n.t('api.resource_description.fails.errors_description'))
   def create; end
 end

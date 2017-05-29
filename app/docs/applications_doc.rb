@@ -11,8 +11,9 @@ module ApplicationsDoc
     param :name, String, required: true
     param :redirect_uri, String, required: true
   end
-  example "\"application\": #{apipie_application_response} \n#{I18n.t('api.resource_description.fail',
-                                                                      description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"application\": #{apipie_application_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def create; end
 
   api :GET, '/applications/:id', I18n.t('api.resource_description.descriptions.applications.get')
@@ -23,12 +24,14 @@ module ApplicationsDoc
   param :application, Hash, required: true do
     param :name, String
   end
-  example "\"application\": #{apipie_application_response} \n#{I18n.t('api.resource_description.fail',
-                                                                      description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"application\": #{apipie_application_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def update; end
 
   api :DELETE, '/applications/:id', I18n.t('api.resource_description.descriptions.applications.delete')
-  example I18n.t('api.resource_description.fail', description: I18n.t('api.errors.could_not_remove',
-                                                                      model: I18n.t('activerecord.models.doorkeeper/application.downcase')))
+  example I18n.t('api.resource_description.fail',
+                 description: I18n.t('api.errors.could_not_remove',
+                                     model: I18n.t('activerecord.models.doorkeeper/application.downcase')))
   def destroy; end
 end
