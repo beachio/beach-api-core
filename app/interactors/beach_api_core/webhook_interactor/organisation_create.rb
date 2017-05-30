@@ -3,10 +3,9 @@ module BeachApiCore::WebhookInteractor
     include Interactor
 
     def call
-      context.organisation = BeachApiCore::Organisation.new context.params
+      context.organisation = context.model = BeachApiCore::Organisation.new(context.params) # create with alias
       context.organisation.assign_attributes(application: context.application)
       context.organisation.memberships.build member: context.user, owner: true
-      context.model = context.organisation # create alias
 
       if context.organisation.save
         context.status = :created
