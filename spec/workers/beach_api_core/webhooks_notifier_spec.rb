@@ -15,7 +15,7 @@ module BeachApiCore
 
         it 'should send user_created notification' do
           subject.perform('user_created', @user.class.name, @user.id)
-          serialized_user = UserSerializer.new(@user).to_json
+          serialized_user = UserSerializer.new(@user)
           expect(a_request(:post, user_created_webhook.uri)
                      .with(body: { event: 'user_created', model: serialized_user }.to_json)).to have_been_made.once
 
@@ -30,7 +30,7 @@ module BeachApiCore
 
         it 'should send user_created notification' do
           subject.perform('team_created', @team.class.name, @team.id)
-          serialized_team = TeamSerializer.new(@team).to_json
+          serialized_team = TeamSerializer.new(@team)
           expect(a_request(:post, team_created_webhook.uri)
                      .with(body: { event: 'team_created', model: serialized_team }.to_json)).to have_been_made.once
 
@@ -45,7 +45,7 @@ module BeachApiCore
 
         it 'should send user_created notification' do
           subject.perform('organisation_created', @organisation.class.name, @organisation.id)
-          serialized_organisation = OrganisationSerializer.new(@organisation).to_json
+          serialized_organisation = OrganisationSerializer.new(@organisation)
           expect(a_request(:post, organisation_created_webhook.uri)
                    .with(body: { event: 'organisation_created', model: serialized_organisation }.to_json))
             .to have_been_made.once
