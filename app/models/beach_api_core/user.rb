@@ -33,8 +33,10 @@ module BeachApiCore
     has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :user, dependent: :destroy
     has_many :entities, inverse_of: :user, dependent: :destroy
 
-    validates :email, presence: true, uniqueness: true, format: {
-      with: /\A(|(([a-z0-9]+_+)|([a-z0-9]+\-+)|([a-z0-9]+\.+)|([a-z0-9]+\++))*[a-z0-9]+@(([a-z0-9]+\-+)|([a-z0-9]+\.))*[a-z0-9]{1,63}\.[a-z]{2,6})\z/i },
+    validates :email,
+              presence: true,
+              uniqueness: true,
+              format: { with: /\A(|(([a-z0-9]+_+)|([a-z0-9]+\-+)|([a-z0-9]+\.+)|([a-z0-9]+\++))*[a-z0-9]+@(([a-z0-9]+\-+)|([a-z0-9]+\.))*[a-z0-9]{1,63}\.[a-z]{2,6})\z/i },
               if: proc { errors[:email].empty? }
     validates :username, presence: true, uniqueness: true
     validates :profile, :status, presence: true
@@ -94,7 +96,7 @@ module BeachApiCore
 
     def generate_username
       return if email.blank? || username.present?
-      self.username = Regexp.last_match[1] if email =~ /\A(.*)@/
+      self.username = Regexp.last_match[1] if /\A(.*)@/.match?(email)
     end
   end
 end
