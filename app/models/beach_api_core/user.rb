@@ -96,7 +96,7 @@ module BeachApiCore
 
     def generate_username
       return if email.blank? || username.present?
-      self.username = Regexp.last_match[1] if /\A(.*)@/.match?(email)
+      self.username = Regexp.last_match[1] if email =~ /\A(.*)@/
     end
   end
 end
