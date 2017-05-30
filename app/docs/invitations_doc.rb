@@ -19,8 +19,9 @@ module InvitationsDoc
   end
   param :group_type, %w(Team Organisation), required: true
   param :group_id, String, required: true
-  example "\"invitation\": #{apipie_invitation_response} \n#{I18n.t('api.resource_description.fail',
-                                                                    description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"invitation\": #{apipie_invitation_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def create; end
 
   api :DELETE, '/invitations/:id', I18n.t('api.resource_description.descriptions.invitations.revoke')
@@ -29,7 +30,8 @@ module InvitationsDoc
   def destroy; end
 
   api :POST, '/invitations/:id/accept', I18n.t('api.resource_description.descriptions.invitations.accept')
-  example "\"access_token\": \"#{SecureRandom.hex(16)}\"\n#{I18n.t('api.resource_description.fail',
-                                                                   description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"access_token\": \"#{SecureRandom.hex(16)}\"
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def accept; end
 end

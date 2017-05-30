@@ -44,6 +44,7 @@ en:
           templete_params: "Template params to use for parsing"
           email_timestamp: "Timestamp for sending out an email"
           reset_password_token: "Reset password token"
+          event_type: 'Event type ("organisation_created", "team_created" or "user_created")'
         applications:
           list: "Get list of applications"
           create: "Create an application"
@@ -129,6 +130,10 @@ en:
           confirm: "Confirm user"
         broadcasts:
           create: "Notify user"
+        webhooks:
+          list: "List of webhooks"
+          create: "Create a webhook"
+          remove: "Remove a webhook"
   interactors:
     errors:
       email_must_be_present: "Email must be present"
@@ -279,3 +284,9 @@ en:
         downcase: "entity"
       entity:
         <<: *entity
+      beach_api_core/webhook: &webhook
+        one: "Webhook"
+        other: "Webhooks"
+        downcase: "webhook"
+      webhook:
+        <<: *webhook

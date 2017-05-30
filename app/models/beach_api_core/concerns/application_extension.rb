@@ -8,6 +8,7 @@ module BeachApiCore::Concerns::ApplicationExtension
     has_many :services, through: :capabilities, class_name: 'BeachApiCore::Service'
     has_many :organisations, class_name: 'BeachApiCore::Organisation', dependent: :destroy
     has_many :jobs, class_name: 'BeachApiCore::Job', dependent: :destroy
+    has_many :webhooks, class_name: 'BeachApiCore::Webhook', dependent: :destroy
 
     def policy_class
       BeachApiCore::OAuthApplicationPolicy

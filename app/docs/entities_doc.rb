@@ -12,8 +12,9 @@ module EntitiesDoc
   param :uid, String, required: true
   param :kind, String, required: true
   param :settings, Hash
-  example "\"entity\": #{apipie_entity_response} \n#{I18n.t('api.resource_description.fail',
-                                                            description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"entity\": #{apipie_entity_response}
+                  \n#{I18n.t('api.resource_description.fail',
+                             description: I18n.t('api.resource_description.fails.errors_description'))}"
   def create; end
 
   api :DELETE, '/entities/:id', I18n.t('api.resource_description.descriptions.entities.remove')

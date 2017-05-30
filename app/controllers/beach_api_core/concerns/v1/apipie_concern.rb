@@ -129,6 +129,13 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                                 keeper: apipie_instance)
   end
 
+  def apipie_webhook
+    @_apipie_webhook ||= BeachApiCore::Webhook.new(id: fake_id,
+                                                   application: apipie_oauth_application,
+                                                   uri: Faker::Internet.url,
+                                                   kind: BeachApiCore::Webhook.kinds.keys.first)
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end

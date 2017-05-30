@@ -68,40 +68,62 @@ module BeachApiCore
     end
 
     describe 'when show' do
-      before do
-        @job_result = { "#{Faker::Lorem.word}": "#{Faker::Lorem.word}" }
-        @job = create :job, done: true, result: @job_result
+      context 'when invalid' do
+        let(:job) { create :job }
+        it_behaves_like 'an authenticated resource' do
+          before { get beach_api_core.v1_job_path(job) }
+        end
+        it_behaves_like 'an authenticated resource' do
+          before { get beach_api_core.v1_job_path(job), headers: invalid_app_auth }
+        end
+        it_behaves_like 'an forbidden resource' do
+          before { get beach_api_core.v1_job_path(job), headers: application_auth }
+        end
       end
 
-      it_behaves_like 'an authenticated resource' do
-        before { delete beach_api_core.v1_job_path(@job) }
-      end
+      context 'when valid' do
+        before do
+          @job_result = { "#{Faker::Lorem.word}": "#{Faker::Lorem.word}" }
+          @job = create :job, application: oauth_application, done: true, result: @job_result
+        end
 
-      it 'should show a job' do
-        get beach_api_core.v1_job_path(@job),
-            headers: application_auth
-        expect(response.status).to eq 200
-        expect(json_body[:job]).to be_present
-        expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
-        expect(json_body[:job][:id]).to eq @job.id
-        expect(json_body[:job][:result]).to eq @job_result
+        it_behaves_like 'an authenticated resource' do
+          before { delete beach_api_core.v1_job_path(@job) }
+        end
+
+        it 'should show a job' do
+          get beach_api_core.v1_job_path(@job),
+              headers: application_auth
+          expect(response.status).to eq 200
+          expect(json_body[:job]).to be_present
+          expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
+          expect(json_body[:job][:id]).to eq @job.id
+          expect(json_body[:job][:result]).to eq @job_result
+        end
       end
     end
 
     describe 'when destroy' do
-      before { @job = create :job }
-
-      it_behaves_like 'an authenticated resource' do
-        before { delete beach_api_core.v1_job_path(@job) }
+      context 'when invalid' do
+        let(:job) { create :job }
+        it_behaves_like 'an authenticated resource' do
+          before { delete beach_api_core.v1_job_path(job) }
+        end
+        it_behaves_like 'an authenticated resource' do
+          before { delete beach_api_core.v1_job_path(job), headers: invalid_app_auth }
+        end
+        it_behaves_like 'an forbidden resource' do
+          before { delete beach_api_core.v1_job_path(job), headers: application_auth }
+        end
       end
 
-      it 'should destroy a job' do
-        expect do
-          delete beach_api_core.v1_job_path(@job),
-                 headers: application_auth
-        end.to change(Job, :count).by(-1)
-        expect(response.status).to eq 200
-        expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
+      context 'when valid' do
+        it 'should destroy a job' do
+          job = create(:job, application: oauth_application)
+          expect { delete beach_api_core.v1_job_path(job), headers: application_auth }.to change(Job, :count).by(-1)
+          expect(response.status).to eq 200
+          expect(json_body[:job].keys).to contain_exactly(*JOB_KEYS)
+        end
       end
     end
   end

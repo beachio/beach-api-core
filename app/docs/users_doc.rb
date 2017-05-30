@@ -8,8 +8,9 @@ module UsersDoc
     param :username, String
     param :password, String, required: true
   end
-  example "\"user\": #{apipie_user_response}, \n\"access_token\": \"#{SecureRandom.hex(16)}\"\n#{I18n.t('api.resource_description.fail',
-                                                                                                        description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"user\": #{apipie_user_response}, \n\"access_token\": \"#{SecureRandom.hex(16)}\"
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   def create; end
 
@@ -42,8 +43,9 @@ module UsersDoc
       param :preferences, Hash, required: true
     end
   end
-  example "\"user\": #{apipie_user_response} \n#{I18n.t('api.resource_description.fail',
-                                                        description: I18n.t('api.resource_description.fails.errors_description'))}"
+  example "\"user\": #{apipie_user_response}
+          \n#{I18n.t('api.resource_description.fail',
+                     description: I18n.t('api.resource_description.fails.errors_description'))}"
   def update; end
 
   api :POST, '/users/:id/confirm', I18n.t('api.resource_description.descriptions.users.confirm')

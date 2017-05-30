@@ -4,7 +4,7 @@ module BeachApiCore::UserInteractor
 
     def call
       if new_user.save
-        context.user = new_user
+        context.user = context.model = new_user # create with alias
         context.status = :created
       else
         context.status = :bad_request

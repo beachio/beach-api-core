@@ -1,8 +1,9 @@
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :user, :application, :record
 
-  def initialize(user, record)
-    @user = user
+  def initialize(user_context, record)
+    @user = user_context.is_a?(UserContext) ? user_context.user : user_context
+    @application = user_context.try(:application)
     @record = record
   end
 

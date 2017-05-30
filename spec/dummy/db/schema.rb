@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525121437) do
+ActiveRecord::Schema.define(version: 20170526084931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -318,6 +318,15 @@ ActiveRecord::Schema.define(version: 20170525121437) do
     t.index ["username"], name: "index_beach_api_core_users_on_username"
   end
 
+  create_table "beach_api_core_webhooks", force: :cascade do |t|
+    t.string "uri", null: false
+    t.integer "kind", null: false
+    t.bigint "application_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_beach_api_core_webhooks_on_application_id"
+  end
+
   create_table "oauth_access_grants", id: :serial, force: :cascade do |t|
     t.integer "resource_owner_id", null: false
     t.integer "application_id", null: false
@@ -371,6 +380,7 @@ ActiveRecord::Schema.define(version: 20170525121437) do
   add_foreign_key "beach_api_core_project_keepers", "beach_api_core_projects", column: "project_id"
   add_foreign_key "beach_api_core_projects", "beach_api_core_organisations", column: "organisation_id"
   add_foreign_key "beach_api_core_projects", "beach_api_core_users", column: "user_id"
+  add_foreign_key "beach_api_core_webhooks", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
 end
