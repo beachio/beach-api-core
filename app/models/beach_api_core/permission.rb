@@ -15,13 +15,13 @@ module BeachApiCore
     def method_missing(name, *args, &block)
       super
     rescue NoMethodError
-      raise unless name =~ %r{/action_(.+)/}
+      raise unless name =~ /^action_(.+)$/
       return actions[Regexp.last_match[1]] unless Regexp.last_match[1].last == '='
       actions[Regexp.last_match[1][0..-2]] = args.first
     end
 
     def respond_to_missing?(method_name, include_private = false)
-      super || method_name.match(%r{/action_(.+)/})
+      super || method_name.match?(/^action_(.+)$/)
     end
 
     def keeper_name
