@@ -18,7 +18,6 @@ module BeachApiCore
           serialized_user = UserSerializer.new(@user)
           expect(a_request(:post, user_created_webhook.uri)
                      .with(body: { event: 'user_created', model: serialized_user }.to_json)).to have_been_made.once
-
         end
       end
 
@@ -33,7 +32,6 @@ module BeachApiCore
           serialized_team = TeamSerializer.new(@team)
           expect(a_request(:post, team_created_webhook.uri)
                      .with(body: { event: 'team_created', model: serialized_team }.to_json)).to have_been_made.once
-
         end
       end
 
