@@ -11,6 +11,10 @@ module BeachApiCore::Concerns::V1::BaseControllerConcern
 
     private
 
+    def pundit_user
+      UserContext.new(current_user, current_application)
+    end
+
     def require_organisation!
       raise BeachApiCore::Exception::NotAcceptable unless current_organisation
     end

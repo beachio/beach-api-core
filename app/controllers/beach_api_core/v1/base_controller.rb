@@ -39,9 +39,5 @@ module BeachApiCore
     def authorize_instance_owner!
       authorize Instance.current, :admin?
     end
-
-    def pundit_user
-      UserContext.new(current_user, current_application)
-    end
   end
 end
