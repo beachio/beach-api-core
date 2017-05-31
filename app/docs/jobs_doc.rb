@@ -5,7 +5,15 @@ module JobsDoc
   api :POST, '/jobs', I18n.t('api.resource_description.descriptions.jobs.create')
   param :job, Hash, required: true do
     param :params, Hash, required: true do
-      param :headers, Hash, required: true, desc: I18n.t('api.resource_description.descriptions.params.request_headers')
+      param :headers, Hash,
+            required: true,
+            desc: I18n.t('api.resource_description.descriptions.params.request_headers') do
+        param :platform_user_id, Integer,
+              required: true,
+              desc: I18n.t('api.resource_description.descriptions.params.platform_params')
+        param :platform_organisation_id, Integer,
+              desc: I18n.t('api.resource_description.descriptions.params.platform_params')
+      end
       param :method, %w(GET POST PUT PATCH DELETE), required: true
       param :uri, String,
             required: true,
