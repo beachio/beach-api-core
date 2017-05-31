@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20170526084931) do
     t.integer "atom_parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["atom_parent_id"], name: "index_beach_api_core_atoms_on_atom_parent_id"
     t.index ["name"], name: "index_beach_api_core_atoms_on_name", unique: true
   end
 
@@ -122,8 +121,8 @@ ActiveRecord::Schema.define(version: 20170526084931) do
   end
 
   create_table "beach_api_core_invitation_roles", id: :serial, force: :cascade do |t|
-    t.integer "role_id", null: false
-    t.integer "invitation_id", null: false
+    t.integer "role_id"
+    t.integer "invitation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["invitation_id"], name: "index_beach_api_core_invitation_roles_on_invitation_id"
@@ -369,7 +368,6 @@ ActiveRecord::Schema.define(version: 20170526084931) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
-  add_foreign_key "beach_api_core_atoms", "beach_api_core_atoms", column: "atom_parent_id"
   add_foreign_key "beach_api_core_entities", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"

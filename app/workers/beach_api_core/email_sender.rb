@@ -20,6 +20,7 @@ module BeachApiCore
     def parse_body!(opts)
       template = Template.find_by!(name: opts.delete(:template), kind: :email)
       opts[:body] = TemplateParser.new(template, opts.delete(:template_params)).call
+      opts.delete(:plain) if opts[:body]
     end
 
     def defaults
