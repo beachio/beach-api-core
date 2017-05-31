@@ -8,10 +8,20 @@ shared_context 'authenticated user' do
 end
 
 shared_context 'bearer token authentication' do
-  let(:access_token) { Doorkeeper::AccessToken.create!(application: oauth_application,
-                                                       resource_owner_id: oauth_user.id) }
-  let(:developer_access_token) { Doorkeeper::AccessToken.create!(application: oauth_application,
-                                                                 resource_owner_id: developer.id) }
+  let(:access_token) do
+    Doorkeeper::AccessToken.find_or_create_for(oauth_application,
+                                               oauth_user.id,
+                                               Doorkeeper::OAuth::Scopes.from_string('password'),
+                                               Doorkeeper.configuration.access_token_expires_in,
+                                               Doorkeeper.configuration.refresh_token_enabled?)
+  end
+  let(:developer_access_token) do
+    Doorkeeper::AccessToken.find_or_create_for(oauth_application,
+                                               developer.id,
+                                               Doorkeeper::OAuth::Scopes.from_string('password'),
+                                               Doorkeeper.configuration.access_token_expires_in,
+                                               Doorkeeper.configuration.refresh_token_enabled?)
+  end
 
   def bearer_auth
     { 'HTTP_AUTHORIZATION' => "Bearer #{access_token.token}" }

@@ -5,7 +5,7 @@ class BeachApiCore::Authorization::CreateAccessToken
     if context.application
       context.access_token = Doorkeeper::AccessToken.find_or_create_for(context.application,
                                                                         context.user.id,
-                                                                        'password',
+                                                                        Doorkeeper::OAuth::Scopes.from_string('password'),
                                                                         Doorkeeper.configuration.access_token_expires_in,
                                                                         Doorkeeper.configuration.refresh_token_enabled?)
       if context.access_token

@@ -45,6 +45,7 @@ en:
           email_timestamp: "Timestamp for sending out an email"
           reset_password_token: "Reset password token"
           event_type: 'Event type ("organisation_created", "team_created" or "user_created")'
+          platform_params: 'Using as a part of authorization token in request headers instead of actual token'
         applications:
           list: "Get list of applications"
           create: "Create an application"
