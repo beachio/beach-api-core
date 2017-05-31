@@ -17,7 +17,8 @@ module BeachApiCore
 
     def run_job(job)
       client = RestClient::Resource.new job.params[:uri],
-                                        headers: job.params[:headers]
+                                        headers: headers_with_authentication(job.params[:headers],
+                                                                             job.application)
       call_method(client, job.params[:method], job.params[:input])
     rescue RestClient::Exception => e
       e.response
@@ -34,8 +35,16 @@ module BeachApiCore
       end
     end
 
-    def normalize_opts!(opts)
-      opts.symbolize_keys!
+    def headers_with_authentication(headers, application)
+      return headers unless headers[:platform_user_id]
+      access_token = Doorkeeper::AccessToken.find_or_create_for(application,
+                                                                headers[:platform_user_id],
+                                                                Doorkeeper::OAuth::Scopes.from_string('password'),
+                                                                Doorkeeper.configuration.access_token_expires_in,
+                                                                Doorkeeper.configuration.refresh_token_enabled?,
+                                                                headers[:platform_organisation_id])
+      headers.without(:platform_user_id, :platform_organisation_id)
+        .merge('Authorization': "Bearer #{access_token.token}")
     end
 
     def parse(body)
