@@ -29,4 +29,3 @@ class BeachApiCore::Authorization::AuthorizeUser
     @_user ||= BeachApiCore::User.find_by(email: context.email)
   end
 end
-

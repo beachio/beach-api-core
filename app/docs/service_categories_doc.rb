@@ -10,8 +10,7 @@ module ServiceCategoriesDoc
   api :GET, '/service_categories', I18n.t('api.resource_description.descriptions.service_categories.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"service_categories\": [#{apipie_service_category_response}, ...]"
-  def index
-  end
+  def index; end
 
   api :POST, '/service_categories', I18n.t('api.resource_description.descriptions.service_categories.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -19,8 +18,7 @@ module ServiceCategoriesDoc
   example "\"service_category\": #{apipie_service_category_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create
-  end
+  def create; end
 
   api :PUT, '/service_categories/:id', I18n.t('api.resource_description.descriptions.service_categories.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -28,6 +26,5 @@ module ServiceCategoriesDoc
   example "\"service_category\": #{apipie_service_category_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def update
-  end
+  def update; end
 end

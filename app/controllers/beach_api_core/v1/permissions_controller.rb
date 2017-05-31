@@ -31,7 +31,6 @@ module BeachApiCore
       params.require(:permission).permit(:keeper_id, :keeper_type, :actor, actions: [])
     end
 
-
     def find_atom
       @atom ||= BeachApiCore::Atom.lookup!(params[:atom_id])
     end

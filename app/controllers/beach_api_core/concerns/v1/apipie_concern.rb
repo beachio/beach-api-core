@@ -7,7 +7,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     @_apipie_user.build_profile(first_name: Faker::Name.first_name,
                                 last_name: Faker::Name.last_name,
                                 sex: BeachApiCore::Profile.sexes.keys.sample,
-                                birth_date: Time.now - rand(50 * 365).days,
+                                birth_date: Time.now.utc - rand(50 * 365).days,
                                 avatar: apipie_asset)
     @_apipie_user.organisations = [apipie_organisation]
     @_apipie_user.assignments.build(keeper: @_apipie_user.organisations.first, role: BeachApiCore::Role.developer)
@@ -18,7 +18,8 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   def apipie_asset
     return @_apipie_asset if @_apipie_asset
     @_apipie_asset = BeachApiCore::Asset.new(id: fake_id,
-                                             file: Refile::FileDouble.new('dummy', 'logo.png', content_type: 'image/png'))
+                                             file: Refile::FileDouble.new('dummy', 'logo.png',
+                                                                          content_type: 'image/png'))
   end
 
   def apipie_entity
@@ -41,7 +42,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                          invitee: apipie_user,
                                                          email: Faker::Internet.email,
                                                          group: apipie_team,
-                                                         created_at: Time.now,
+                                                         created_at: Time.now.utc,
                                                          roles: [apipie_role])
   end
 
@@ -88,8 +89,11 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     @_apipie_atom ||= BeachApiCore::Atom.new(id: fake_id,
                                              title: Faker::Name.title,
                                              kind: Faker::Lorem.word)
-    @_apipie_atom.instance_variable_get(:@attributes)['atom_parent_id'] =
-        ActiveRecord::Attribute.from_database('atom_parent_id', fake_id, ActiveModel::Type::Integer.new)
+    @_apipie_atom
+      .instance_variable_get(:@attributes)['atom_parent_id'] = ActiveRecord::Attribute
+                                                               .from_database('atom_parent_id',
+                                                                              fake_id,
+                                                                              ActiveModel::Type::Integer.new)
     @_apipie_atom
   end
 
@@ -143,6 +147,6 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   private
 
   def fake_id
-    rand(1..100) * (-1)
+    rand(1..100) * -1
   end
 end

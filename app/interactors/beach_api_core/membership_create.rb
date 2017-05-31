@@ -12,5 +12,4 @@ class BeachApiCore::MembershipCreate
       context.fail! message: context.membership.errors.full_messages
     end
   end
-
 end

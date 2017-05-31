@@ -2,7 +2,7 @@ module BeachApiCore
   class V1::ApplicationsController < BeachApiCore::V1::BaseController
     include ApplicationsDoc
     before_action :doorkeeper_authorize!
-    before_action :get_resource, only: [:show, :update, :destroy]
+    before_action :get_resource, only: %i(show update destroy)
 
     resource_description do
       name I18n.t('activerecord.models.doorkeeper/application.other')

@@ -21,4 +21,3 @@ module BeachApiCore
     end
   end
 end
-

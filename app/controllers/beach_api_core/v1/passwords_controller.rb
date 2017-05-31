@@ -29,7 +29,6 @@ module BeachApiCore
       end
     end
 
-
     def reset_password_params
       params.permit(:token, :password, :password_confirmation)
     end

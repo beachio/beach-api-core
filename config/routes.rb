@@ -1,7 +1,7 @@
 BeachApiCore::Engine.routes.draw do
   use_doorkeeper
 
-  api_version(module: 'V1', path: { value: 'v1' }, defaults: { format: 'json' } ) do
+  api_version(module: 'V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
     resources :applications, except: %i(new edit)
     resources :sessions, only: :create, path: :auth
     resources :favourites, only: %i(index create destroy)

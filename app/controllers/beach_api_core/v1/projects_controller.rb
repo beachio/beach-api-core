@@ -50,7 +50,7 @@ module BeachApiCore
     end
 
     def project_params
-      params.require(:project).permit(:name, project_keepers_attributes: [:keeper_id, :keeper_type])
+      params.require(:project).permit(:name, project_keepers_attributes: %i(keeper_id keeper_type))
     end
   end
 end

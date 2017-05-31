@@ -9,11 +9,9 @@ class BeachApiCore::UserUpdate
   end
 
   def call
-    current_application = context.keepers.detect{ |k| k.is_a?(Doorkeeper::Application) }
-    if context.params[:user_preferences_attributes]
-      context.params[:user_preferences_attributes].each do |attr|
-        attr.merge!(application: current_application)
-      end
+    current_application = context.keepers.detect { |k| k.is_a?(Doorkeeper::Application) }
+    context.params[:user_preferences_attributes]&.each do |attr|
+      attr.merge!(application: current_application)
     end
     if context.user.update context.params
       context.status = :ok

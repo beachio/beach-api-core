@@ -11,13 +11,12 @@ module BeachApiCore
 
       if result.success?
         @current_user = result.user
-        render_json_success(
-            { user: BeachApiCore::UserSerializer.new(result.user, root: :user,
-                                                     keepers: [BeachApiCore::Instance.current, current_organisation].compact,
-                                                     current_user: result.user),
-              access_token: result.access_token&.token },
-            result.status
-        )
+        render_json_success({ user: BeachApiCore::UserSerializer.new(result.user,
+                                                                     root: :user,
+                                                                     keepers: [BeachApiCore::Instance.current,
+                                                                               current_organisation].compact,
+                                                                     current_user: result.user),
+                              access_token: result.access_token&.token }, result.status)
       else
         render_json_error({ message: result.message }, result.status)
       end

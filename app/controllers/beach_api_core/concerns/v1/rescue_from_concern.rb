@@ -6,15 +6,15 @@ module BeachApiCore::Concerns::V1::RescueFromConcern
       render_json_error({ message: exception.message }, :not_found)
     end
 
-    rescue_from Pundit::NotAuthorizedError do |exception|
+    rescue_from Pundit::NotAuthorizedError do |_|
       render_json_error({ message: 'You are not authorized to make this request' }, :forbidden)
     end
 
-    rescue_from BeachApiCore::Exception::NotAcceptable do |exception|
+    rescue_from BeachApiCore::Exception::NotAcceptable do |_|
       render_json_error({ message: 'Not acceptable' }, :not_acceptable)
     end
 
-    rescue_from ActiveSupport::MessageVerifier::InvalidSignature do |exception|
+    rescue_from ActiveSupport::MessageVerifier::InvalidSignature do |_|
       render_json_error({ message: 'Invalid token' }, :bad_request)
     end
   end

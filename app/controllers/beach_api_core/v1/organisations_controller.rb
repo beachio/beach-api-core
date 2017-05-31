@@ -71,11 +71,15 @@ module BeachApiCore
     private
 
     def organisation_params
-      params.require(:organisation).permit(:name, logo_properties: logo_params, logo_image_attributes: [:file, :base64])
+      params.require(:organisation).permit(:name, logo_properties: logo_params, logo_image_attributes: %i(file base64))
     end
 
     def logo_params
-      logo_properties = (params[:organisation] && params[:organisation][:logo_properties]) ? params[:organisation][:logo_properties] : {}
+      logo_properties = if params[:organisation] && params[:organisation][:logo_properties]
+                          params[:organisation][:logo_properties]
+                        else
+                          {}
+                        end
       logo_properties.keys
     end
   end

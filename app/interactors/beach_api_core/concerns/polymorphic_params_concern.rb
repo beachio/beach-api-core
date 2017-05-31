@@ -6,8 +6,8 @@ module BeachApiCore::Concerns::PolymorphicParamsConcern
 
     def normalize_polymorphic_class(params)
       params.each do |key, value|
-        next unless key.to_s.match(/\A.*_type\z/)
-        params[key] = "BeachApiCore::#{value}" unless value.match(/\ABeachApiCore::/)
+        next unless /\A.*_type\z/.match?(key.to_s)
+        params[key] = "BeachApiCore::#{value}" unless /\ABeachApiCore::/.match?(value)
       end
     end
   end

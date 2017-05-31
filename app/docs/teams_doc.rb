@@ -20,7 +20,7 @@ module TeamsDoc
   example "\"team\": #{apipie_team_response}"
   def show; end
 
-  api :PUT,  '/teams/:id', I18n.t('api.resource_description.descriptions.teams.update')
+  api :PUT, '/teams/:id', I18n.t('api.resource_description.descriptions.teams.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
   example "\"team\": #{apipie_team_response}

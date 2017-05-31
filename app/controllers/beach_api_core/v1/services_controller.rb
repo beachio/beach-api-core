@@ -30,7 +30,8 @@ module BeachApiCore
     private
 
     def service_params
-      params.require(:service).permit(:title, :name, :description, :service_category_id, icon_attributes: [:file, :base64])
+      params.require(:service).permit(:title, :name, :description, :service_category_id,
+                                      icon_attributes: [:file, :base64])
     end
   end
 end
