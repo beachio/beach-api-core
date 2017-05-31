@@ -15,7 +15,7 @@ module BeachApiCore
     end
 
     it 'should grab file extension' do
-      [:jpg, :jpeg, :bmp, :png, :gif, :doc, :docx, :xls, :xlsx, :pdf, :txt].each do |extension|
+      %i(jpg jpeg bmp png gif doc docx xls xlsx pdf txt).each do |extension|
         asset = create :asset,
                        file: Refile::FileDouble.new('dummy', 'logo.png', content_type: 'image/png'),
                        file_filename: "filename.#{extension}"
@@ -44,6 +44,5 @@ module BeachApiCore
         end
       end
     end
-
   end
 end

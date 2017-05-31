@@ -19,7 +19,7 @@ module BeachApiCore
 
         it 'should return bad request status if entity is invalid' do
           entity_params = {
-              kind: Faker::Lorem.word
+            kind: Faker::Lorem.word
           }
           expect do
             post beach_api_core.v1_entities_path, params: { entity: entity_params }, headers: bearer_auth

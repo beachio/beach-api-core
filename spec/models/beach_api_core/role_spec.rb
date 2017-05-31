@@ -27,12 +27,12 @@ module BeachApiCore
 
     context 'when class methods' do
       before do
-        [:admin, :developer, :user].each do |name|
+        %i(admin developer user).each do |name|
           create :role, name: name
         end
       end
       it 'should return role instance' do
-        [:admin, :developer, :user].each do |name|
+        %i(admin developer user).each do |name|
           expect(Role.send(name)).to be_present
           expect(Role.send(name).send("#{name}?")).to be_truthy
         end

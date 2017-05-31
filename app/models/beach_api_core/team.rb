@@ -12,7 +12,7 @@ module BeachApiCore
     def owners
       User.where.has do |u|
         (u.id.in organisation&.owners&.select(:id)).or(
-            u.id.in members.where(Membership.table_name => { owner: true }).select(:id)
+          u.id.in(members.where(Membership.table_name => { owner: true }).select(:id))
         )
       end.distinct
     end

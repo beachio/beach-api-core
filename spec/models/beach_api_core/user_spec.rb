@@ -45,7 +45,7 @@ module BeachApiCore
     context 'when email format' do
       it 'should be invalid' do
         addresses = %w(user@foo,com user_at_foo.org example.user@foo. foo@g.c foo@go.c
-                     foo@bar_baz.com foo@bar+baz.com foo@bar..com foo@.com)
+                       foo@bar_baz.com foo@bar+baz.com foo@bar..com foo@.com)
         addresses.each do |invalid_address|
           expect(build(:user, email: invalid_address)).not_to be_valid
         end

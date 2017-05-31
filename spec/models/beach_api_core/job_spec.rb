@@ -41,7 +41,7 @@ module BeachApiCore
       before do
         create :job, last_run: nil, every: '1.hour'
         create :job, last_run: 1.hour.ago, every: '1.hour'
-        create :job, last_run: Time.now, every: '1.hour'
+        create :job, last_run: Time.now.utc, every: '1.hour'
         create :job, last_run: 1.hour.ago, every: '2.hours'
       end
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Favourite', type: :request do
-    FAVOURITE_KEYS = [:id, :favouritable_id, :favouritable_type].freeze
+    FAVOURITE_KEYS = %i(id favouritable_id favouritable_type).freeze
 
     describe 'when index' do
       include_context 'signed up developer'

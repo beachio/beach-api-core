@@ -128,7 +128,6 @@ module BeachApiCore
         it { expect(response.status).to eq 200 }
         it_behaves_like 'valid team response'
       end
-
     end
   end
 end

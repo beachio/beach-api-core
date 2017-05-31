@@ -6,7 +6,7 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    SERVICE_CATEGORY_KEYS = [:id, :name, :services].freeze
+    SERVICE_CATEGORY_KEYS = %i(id name services).freeze
 
     describe 'when create' do
       it_behaves_like 'an forbidden resource' do

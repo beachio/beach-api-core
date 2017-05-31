@@ -53,7 +53,7 @@ module BeachApiCore
       before do
         @atom = create :atom
         create :assignment, role: (create :role, name: 'admin'),
-               user: oauth_user, keeper: BeachApiCore::Instance.current
+                            user: oauth_user, keeper: BeachApiCore::Instance.current
       end
 
       context 'when create' do
@@ -109,8 +109,6 @@ module BeachApiCore
           expect(@permission.reload.actions).to eq actions
         end
       end
-
     end
-
   end
 end

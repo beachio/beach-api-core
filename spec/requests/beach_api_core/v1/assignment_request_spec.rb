@@ -6,7 +6,7 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    ASSIGNMENT_KEYS = [:id, :keeper_id, :keeper_type, :role_id, :user].freeze
+    ASSIGNMENT_KEYS = %i(id keeper_id keeper_type role_id user).freeze
 
     describe 'when create' do
       let(:organisation) { create :organisation }

@@ -11,7 +11,7 @@ module BeachApiCore
     it 'should have basic validations' do
       should validate_presence_of :title
       should define_enum_for(:status).with(enabled: 0, disabled: 1)
-      should validate_uniqueness_of(:name).scoped_to([:keeper_id, :keeper_type])
+      should validate_uniqueness_of(:name).scoped_to(%i(keeper_id keeper_type))
     end
 
     it 'should generate name' do

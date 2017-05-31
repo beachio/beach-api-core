@@ -2,7 +2,6 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Password', type: :request do
-
     describe 'when create' do
       let(:user) { create :user }
       it 'should send reset password instructions' do
@@ -27,7 +26,7 @@ module BeachApiCore
               params: { token: token,
                         password: new_password,
                         password_confirmation: new_password }
-        end.to change { user.reload.password_digest }
+        end.to(change { user.reload.password_digest })
         expect(response.status).to eq 200
         expect(json_body[:user].keys).to contain_exactly(*BeachApiCore::USER_SIMPLE_KEYS)
       end

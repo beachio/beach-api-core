@@ -22,7 +22,7 @@ module BeachApiCore
     end
 
     context 'template params' do
-      let(:template_params) { { first_name:  Faker::Name.first_name } }
+      let(:template_params) { { first_name: Faker::Name.first_name } }
 
       before do
         @template = create :template, value: 'Hello, {first_name}'
@@ -35,8 +35,8 @@ module BeachApiCore
       end
 
       it 'should set correct body from template' do
-        subject.perform(@email_params.merge({ template: @template.name,
-                                              template_params: template_params }))
+        subject.perform(@email_params.merge(template: @template.name,
+                                            template_params: template_params))
         expect(ActionMailer::Base.deliveries.last.text_part.body.to_s).to eq("Hello, #{template_params[:first_name]}")
       end
     end

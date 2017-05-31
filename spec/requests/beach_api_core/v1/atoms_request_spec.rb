@@ -6,7 +6,7 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    ATOM_KEYS = [:id, :title, :name, :kind, :atom_parent_id, :actions].freeze
+    ATOM_KEYS = %i(id title name kind atom_parent_id actions).freeze
 
     before do
       create :assignment, role: (create :role, name: 'admin'),
@@ -37,7 +37,7 @@ module BeachApiCore
       end
 
       context 'atom parent' do
-        before { @atom_parent = create :atom  }
+        before { @atom_parent = create :atom }
 
         it 'should set an atom parent' do
           [@atom_parent.id, @atom_parent.name].each do |value|
@@ -147,14 +147,35 @@ module BeachApiCore
 
       before do
         create :assignment, user: user, keeper: BeachApiCore::Instance.current
-        create :permission, atom: (create :atom, kind: kind), actions: { update: true }, keeper: user
-        create :permission, atom: (create :atom, kind: kind), actions: { update: true, execute: true }, keeper: (create :role)
-        create :permission, atom: (create :atom, kind: kind), actions: { update: true, create: true }, keeper: user.roles.first
-        create :permission, atom: (create :atom, kind: kind), actions: { update: true, create: true }, keeper: oauth_user.roles.first
-        create :permission, atom: (create :atom, kind: kind), actions: { create: true }, keeper: (create :user)
-        create :permission, atom: (create :atom), actions: { create: true, update: true }, keeper: (create :user)
-        create :permission, atom: (create :atom, kind: kind), actions: { create: true, update: true }, keeper: user
-        create :permission, atom: (create :atom, kind: kind), actions: { create: true, update: true }, keeper: user.organisations.first
+        create :permission, atom: create(:atom, kind: kind), actions: { update: true }, keeper: user
+        create :permission,
+               atom: create(:atom, kind: kind),
+               actions: { update: true, execute: true },
+               keeper: create(:role)
+        create :permission,
+               atom: create(:atom, kind: kind),
+               actions: { update: true, create: true },
+               keeper: user.roles.first
+        create :permission,
+               atom: create(:atom, kind: kind),
+               actions: { update: true, create: true },
+               keeper: oauth_user.roles.first
+        create :permission,
+               atom: create(:atom, kind: kind),
+               actions: { create: true },
+               keeper: (create :user)
+        create :permission,
+               atom: create(:atom),
+               actions: { create: true, update: true },
+               keeper: (create :user)
+        create :permission,
+               atom: create(:atom, kind: kind),
+               actions: { create: true, update: true },
+               keeper: user
+        create :permission,
+               atom: create(:atom, kind: kind),
+               actions: { create: true, update: true },
+               keeper: user.organisations.first
       end
 
       it 'should return list of atoms' do

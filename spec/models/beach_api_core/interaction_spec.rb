@@ -27,7 +27,7 @@ module BeachApiCore
       interaction = create :interaction
       interaction.interaction_attributes = create_list(:interaction_attribute, 2, interaction: interaction)
       expect { interaction.destroy }.to change(BeachApiCore::Interaction, :count)
-                                            .and change(BeachApiCore::InteractionAttribute, :count)
+        .and change(BeachApiCore::InteractionAttribute, :count)
     end
 
     it 'should not create interation with duplicated attributes keys' do
@@ -45,6 +45,5 @@ module BeachApiCore
                                                              { key: key, values: { name: Faker::Lorem.word } }])
       expect(interaction).to be_invalid
     end
-
   end
 end

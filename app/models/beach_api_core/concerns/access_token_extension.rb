@@ -33,9 +33,7 @@ module BeachApiCore::Concerns::AccessTokenExtension
       def find_or_create_for(application, resource_owner_id, scopes, expires_in, use_refresh_token, organisation_id = nil)
         if Doorkeeper.configuration.reuse_access_token
           access_token = matching_token_for(application, resource_owner_id, scopes, organisation_id)
-          if access_token && !access_token.expired?
-            return access_token
-          end
+          return access_token if access_token && !access_token.expired?
         end
 
         create!(
@@ -49,11 +47,11 @@ module BeachApiCore::Concerns::AccessTokenExtension
       end
 
       def last_authorized_token_for(application_id, resource_owner_id, organisation_id = nil)
-        send(order_method, created_at_desc).
-            find_by(application_id: application_id,
-                    organisation_id: organisation_id,
-                    resource_owner_id: resource_owner_id,
-                    revoked_at: nil)
+        send(order_method, created_at_desc)
+          .find_by(application_id: application_id,
+                   organisation_id: organisation_id,
+                   resource_owner_id: resource_owner_id,
+                   revoked_at: nil)
       end
     end
 

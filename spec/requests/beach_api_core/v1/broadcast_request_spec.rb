@@ -10,7 +10,7 @@ module BeachApiCore
       before do
         @broadcast_params = {
           user_id: create(:user).id,
-          payload: { Faker::Lorem.word => Faker::Lorem.word },
+          payload: { Faker::Lorem.word => Faker::Lorem.word }
         }
       end
 

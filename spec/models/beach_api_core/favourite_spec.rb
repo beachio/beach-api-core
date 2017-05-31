@@ -13,7 +13,7 @@ module BeachApiCore
     end
     it 'should have uniqueness' do
       create :favourite
-      should validate_uniqueness_of(:user).scoped_to([:favouritable_id, :favouritable_type])
+      should validate_uniqueness_of(:user).scoped_to(%i(favouritable_id favouritable_type))
     end
   end
 end

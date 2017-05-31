@@ -6,7 +6,7 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    SETTING_KEYS = [:id, :name, :value, :keeper_type, :keeper_id].freeze
+    SETTING_KEYS = %i(id name value keeper_type keeper_id).freeze
 
     describe 'when update' do
       let(:owned_organisation) do

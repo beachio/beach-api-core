@@ -6,7 +6,7 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    PROJECT_KEYS = [:id, :name, :project_keepers].freeze
+    PROJECT_KEYS = %i(id name project_keepers).freeze
 
     let!(:organisation) do
       (create :membership, member: oauth_user, group: (create :organisation)).group

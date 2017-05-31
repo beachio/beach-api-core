@@ -30,9 +30,9 @@ module BeachApiCore
     it 'should remove relations after destroy' do
       atom = create :atom
       create_list :permission, 2, atom: atom
-      expect{ atom.destroy }
+      expect { atom.destroy }
         .to change(BeachApiCore::Atom, :count).by(-1)
-        .and change(BeachApiCore::Permission, :count).by(-2)
+                                              .and change(BeachApiCore::Permission, :count).by(-2)
     end
   end
 end

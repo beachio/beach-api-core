@@ -18,7 +18,7 @@ module BeachApiCore
             create_user_request
             create_user_request email: Faker::Internet.email
           end.to change(User, :count).by(2)
-            .and change(ActionMailer::Base.deliveries, :count).by(2)
+                                     .and change(ActionMailer::Base.deliveries, :count).by(2)
         end
 
         it_behaves_like 'valid user response' do
@@ -51,7 +51,7 @@ module BeachApiCore
         it 'creates a bearer token for authorized application' do
           expect { create_user_request(headers: application_auth) }
             .to change(Doorkeeper::AccessToken, :count).by(1)
-            .and change(User, :count).by(1)
+                                                       .and change(User, :count).by(1)
           expect(json_body[:access_token]).to be_present
         end
 
@@ -249,33 +249,36 @@ module BeachApiCore
             put beach_api_core.v1_user_path(oauth_user),
                 params: { user: { password: new_password } },
                 headers: bearer_auth
-          end.to_not change{ oauth_user.reload.password_digest }
+          end.to_not(change { oauth_user.reload.password_digest })
           expect(response.status).to eq 400
           expect do
             put beach_api_core.v1_user_path(oauth_user),
-              params: { user: {
-                password: new_password,
-                password_confirmation: 'nomatch' } },
-              headers: bearer_auth
-          end.to_not change{ oauth_user.reload.password_digest }
+                params: { user: {
+                  password: new_password,
+                  password_confirmation: 'nomatch'
+                } },
+                headers: bearer_auth
+          end.to_not(change { oauth_user.reload.password_digest })
           expect(response.status).to eq 400
           expect do
             put beach_api_core.v1_user_path(oauth_user),
-              params: { user: {
-                current_password: 'invalid',
-                password: new_password,
-                password_confirmation: new_password } },
-              headers: bearer_auth
-          end.to_not change{ oauth_user.reload.password_digest }
+                params: { user: {
+                  current_password: 'invalid',
+                  password: new_password,
+                  password_confirmation: new_password
+                } },
+                headers: bearer_auth
+          end.to_not(change { oauth_user.reload.password_digest })
           expect(response.status).to eq 400
           expect do
             put beach_api_core.v1_user_path(oauth_user),
                 params: { user: {
                   current_password: current_password,
                   password: new_password,
-                  password_confirmation: new_password } },
+                  password_confirmation: new_password
+                } },
                 headers: bearer_auth
-          end.to change{ oauth_user.reload.password_digest }
+          end.to(change { oauth_user.reload.password_digest })
           expect(response.status).to eq 200
           expect(json_body[:user].keys).to contain_exactly(*BeachApiCore::USER_KEYS)
         end
@@ -298,4 +301,3 @@ module BeachApiCore
     end
   end
 end
-

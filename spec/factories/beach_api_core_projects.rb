@@ -5,8 +5,10 @@ FactoryGirl.define do
     organisation
 
     after(:build) do |project|
-      project.project_keepers << build(:project_keeper,
-                                       project: project) if project.project_keepers.empty?
+      if project.project_keepers.empty?
+        project.project_keepers << build(:project_keeper,
+                                         project: project)
+      end
     end
   end
 end

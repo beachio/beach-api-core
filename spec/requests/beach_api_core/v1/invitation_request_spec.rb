@@ -6,7 +6,7 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    INVITATION_KEYS = [:id, :email, :created_at, :invitee, :group, :roles].freeze
+    INVITATION_KEYS = %i(id email created_at invitee group roles).freeze
 
     describe 'when index' do
       let!(:organisation) do
@@ -58,10 +58,11 @@ module BeachApiCore
                                last_name: Faker::Name.last_name,
                                role_ids: [(create :role).id] },
                  group_id: team.id,
-                 group_type: 'Team' },
+                 group_type: 'Team'
+               },
                headers: bearer_auth
         end.to change(Invitation, :count).by(1)
-           .and change(ActionMailer::Base.deliveries, :count).by(1)
+                                         .and change(ActionMailer::Base.deliveries, :count).by(1)
         expect(response.status).to eq 201
         expect(json_body[:invitation].keys).to contain_exactly(*INVITATION_KEYS)
         expect(Invitation.last.user).to eq(oauth_user)
@@ -99,7 +100,7 @@ module BeachApiCore
 
     describe 'when accept' do
       let(:invitee) { create :user, status: :invitee }
-      let(:user) { create :user, confirmed_at: Time.now }
+      let(:user) { create :user, confirmed_at: Time.now.utc }
       let!(:invitation) { create :invitation, email: user.email, group: (create :organisation) }
       let!(:other_invitation) { create :invitation, email: invitee.email }
 
@@ -107,18 +108,20 @@ module BeachApiCore
         expect do
           post beach_api_core.accept_v1_invitation_path(other_invitation, token: other_invitation.token)
           invitee.reload
-        end.to change(Invitation, :count).by(-1)
-           .and change(BeachApiCore::Membership, :count).by(1)
-           .and change(BeachApiCore::Assignment, :count).by(1)
-           .and change(ActionMailer::Base.deliveries, :count).by(1)
-           .and change(invitee, :status).to 'active'
+        end.to change(Invitation, :count)
+          .by(-1)
+          .and change(BeachApiCore::Membership, :count)
+          .by(1)
+          .and change(BeachApiCore::Assignment, :count)
+          .by(1)
+          .and change(invitee, :status).to 'active'
         expect(json_body[:access_token]).to be_present
         expect(response.status).to eq 200
         expect(other_invitation.group.members).to include(invitee)
         expect do
           post beach_api_core.accept_v1_invitation_path(invitation, token: invitation.token)
         end.to change(Invitation, :count).by(-1)
-           .and change(ActionMailer::Base.deliveries, :count).by(0)
+                                         .and change(ActionMailer::Base.deliveries, :count).by(0)
         expect(response.status).to eq 200
         expect(invitation.group.users).to include(user)
       end

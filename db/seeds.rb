@@ -7,7 +7,7 @@ Doorkeeper::Application.destroy_all
 BeachApiCore::Instance.current
 
 # Create basic roles
-[:admin, :developer].each do |name|
+%i(admin developer).each do |name|
   role = BeachApiCore::Role.create(name: name)
   user = BeachApiCore::User.create(email: Faker::Internet.email, password: Faker::Internet.password)
   BeachApiCore::Assignment.create(role: role, keeper: BeachApiCore::Instance.current, user: user)

@@ -7,7 +7,7 @@ describe BeachApiCore::OrganisationPolicy do
   let!(:owner) { (create :membership, group: organisation, owner: true).member }
   let!(:user) { (create :membership, group: organisation).member }
 
-  [:update?, :destroy?].each do |action|
+  %i(update? destroy?).each do |action|
     permissions action do
       it { is_expected.to permit(owner, organisation) }
       it { is_expected.to_not permit(user, organisation) }

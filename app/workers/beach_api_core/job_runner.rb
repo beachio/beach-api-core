@@ -44,7 +44,7 @@ module BeachApiCore
                                                                 Doorkeeper.configuration.refresh_token_enabled?,
                                                                 headers[:platform_organisation_id])
       headers.without(:platform_user_id, :platform_organisation_id)
-        .merge('Authorization': "Bearer #{access_token.token}")
+             .merge('Authorization': "Bearer #{access_token.token}")
     end
 
     def parse(body)
