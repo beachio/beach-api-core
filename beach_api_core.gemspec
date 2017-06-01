@@ -42,4 +42,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'slim-rails'
 
   s.add_dependency 'apipie-rails'
+  s.add_dependency 'rmagick'
 end
