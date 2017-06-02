@@ -32,6 +32,7 @@ module BeachApiCore
 
     has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :user, dependent: :destroy
     has_many :entities, inverse_of: :user, dependent: :destroy
+    has_many :interactions, inverse_of: :user, dependent: :destroy
 
     validates :email,
               presence: true,

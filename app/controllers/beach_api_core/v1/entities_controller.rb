@@ -36,10 +36,23 @@ module BeachApiCore
       end
     end
 
+    def lookup
+      if params[:entity][:uid].blank? || params[:entity][:kind].blank?
+        return render_json_error({ message: I18n.t('api.errors.some_parameters_are_absent') }, :bad_request)
+      end
+      @entity = Entity.find_by(entity_lookup_params)
+      authorize @entity
+      render_json_success(@entity, :ok, root: :entity)
+    end
+
     private
 
     def entity_params
       params.require(:entity).permit(:uid, :kind, settings: {})
+    end
+
+    def entity_lookup_params
+      params.require(:entity).permit(:uid, :kind)
     end
   end
 end
