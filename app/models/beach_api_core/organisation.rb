@@ -1,6 +1,7 @@
 module BeachApiCore
   class Organisation < ApplicationRecord
     include BeachApiCore::Concerns::AssetConcern
+    include BeachApiCore::Concerns::GenerateImageConcern
     validates :name, :application, presence: true
 
     belongs_to :application, class_name: 'Doorkeeper::Application'
@@ -14,8 +15,15 @@ module BeachApiCore
     has_one :logo_image, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
     accepts_nested_attributes_for :logo_image, allow_destroy: true, reject_if: :file_blank?
 
+    before_save -> { generate_image(:logo_image, color: logo_properties && logo_properties['color']) },
+                if: proc { generate_image? }
+
     def owners
       users.where(Membership.table_name => { owner: true })
+    end
+
+    def generate_image?
+      logo_image.blank? || ((name_changed? || logo_properties_changed?) && logo_image.generated?)
     end
   end
 end
