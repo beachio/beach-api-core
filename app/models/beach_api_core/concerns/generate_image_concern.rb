@@ -8,8 +8,9 @@ module BeachApiCore::Concerns::GenerateImageConcern
       gc = Magick::Draw.new do |draw|
         draw.pointsize = 150
         draw.gravity = Magick::CenterGravity
+        draw.font = BeachApiCore::Engine.root.join('app', 'assets', 'fonts', 'generator', 'helveticalt.ttf').to_s
       end
-      gc.text(0, 0, (name[/[a-zA-Z]/] || name.first).upcase)
+      gc.text(0, 20, (name[/[a-zA-Z]/] || name.first).upcase)
       gc.draw(canvas)
       Tempfile.open(%w(logo .png)) do |file|
         canvas.write(file.path)
