@@ -9,7 +9,6 @@ module BeachApiCore
     attributes :id, :title, :name, :kind, :atom_parent_id, :actions
 
     def actions
-      puts current_user.inspect
       return [] unless current_user
       current_user.permissions_for(object, current_organisation)
     end
