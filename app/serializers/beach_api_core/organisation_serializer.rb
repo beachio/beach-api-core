@@ -4,7 +4,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::OptionSerializerConcern
 
     acts_as_abs_doc_id
-    acts_with_options :current_user
+    acts_with_options(:current_user)
 
     attributes :id, :name, :logo_url, :logo_properties, :current_user_roles
 

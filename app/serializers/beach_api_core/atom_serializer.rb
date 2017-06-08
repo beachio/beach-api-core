@@ -3,8 +3,8 @@ module BeachApiCore
     include BeachApiCore::Concerns::DocIdAbsSerializerConcern
     include BeachApiCore::Concerns::OptionSerializerConcern
 
-    acts_as_abs_doc_id :id, :atom_parent_id
-    acts_with_options :current_user, :current_organisation
+    acts_as_abs_doc_id(:id, :atom_parent_id)
+    acts_with_options(:current_user, :current_organisation)
 
     attributes :id, :title, :name, :kind, :atom_parent_id, :actions
 

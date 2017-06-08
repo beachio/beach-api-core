@@ -4,7 +4,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::OptionSerializerConcern
 
     acts_as_abs_doc_id
-    acts_with_options :current_organisation
+    acts_with_options(:current_organisation)
 
     attributes :id, :email, :joined_at, :assignments
 
