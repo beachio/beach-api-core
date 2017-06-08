@@ -184,6 +184,7 @@ module BeachApiCore
             headers: bearer_auth
         expect(response.status).to eq 200
         expect(json_body[:atoms].first.keys).to contain_exactly(*ATOM_KEYS)
+        puts json_body[:atoms].inspect
         expect(json_body[:atoms].all? { |a| a[:actions].present? }).to be_truthy
         expect(json_body[:atoms].size).to eq 3
         get beach_api_core.v1_atoms_path,

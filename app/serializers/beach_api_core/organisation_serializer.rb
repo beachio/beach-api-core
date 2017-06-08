@@ -1,7 +1,10 @@
 module BeachApiCore
   class OrganisationSerializer < ActiveModel::Serializer
     include BeachApiCore::Concerns::DocIdAbsSerializerConcern
+    include BeachApiCore::Concerns::OptionSerializerConcern
+
     acts_as_abs_doc_id
+    acts_with_options :current_user
 
     attributes :id, :name, :logo_url, :logo_properties, :current_user_roles
 
@@ -10,15 +13,9 @@ module BeachApiCore
     end
 
     def current_user_roles
-      return [] unless user
-      Role.joins(:assignments).where.has { |r| (r.assignments.user_id == user.id) & (r.assignments.keeper == object) }
-          .pluck(:name)
-    end
-
-    private
-
-    def user
-      instance_options[:current_user]
+      return [] unless current_user
+      Role.joins(:assignments).where.has { |r| (r.assignments.user_id == current_user.id) &
+        (r.assignments.keeper == object) }.pluck(:name)
     end
   end
 end
