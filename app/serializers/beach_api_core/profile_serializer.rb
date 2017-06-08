@@ -1,7 +1,10 @@
 module BeachApiCore
   class ProfileSerializer < ActiveModel::Serializer
     include BeachApiCore::Concerns::DocIdAbsSerializerConcern
+    include BeachApiCore::Concerns::OptionSerializerConcern
+
     acts_as_abs_doc_id
+    acts_with_options :keepers
 
     attributes :id, :first_name, :last_name, :birth_date, :sex, :time_zone, :avatar_url
 
@@ -16,12 +19,6 @@ module BeachApiCore
 
     def avatar_url
       object.avatar&.file_url
-    end
-
-    private
-
-    def keepers
-      instance_options[:keepers]
     end
   end
 end
