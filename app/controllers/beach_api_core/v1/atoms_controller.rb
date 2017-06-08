@@ -3,7 +3,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     include AtomsDoc
 
-    before_action :application_authorize!
+    before_action :application_with_user_authorize!
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/atom.other')

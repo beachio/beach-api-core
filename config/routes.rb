@@ -45,5 +45,10 @@ BeachApiCore::Engine.routes.draw do
     resources :broadcasts, only: %i(create)
     resources :interactions, only: %i(create)
     resources :channels, only: %i(index)
+    resources :chats, only: %i(index create) do
+      put :add_recipient, on: :member
+      put :read, on: :member
+      resources :messages, only: %i(create index)
+    end
   end
 end

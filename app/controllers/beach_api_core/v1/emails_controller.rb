@@ -1,7 +1,7 @@
 module BeachApiCore
   class V1::EmailsController < BeachApiCore::V1::BaseController
     include EmailsDoc
-    before_action :explicit_application_authorize!
+    before_action :explicit_application_with_user_authorize!
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/email.other')

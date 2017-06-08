@@ -47,3 +47,46 @@ shared_examples_for 'request: job request result has an empty body' do
     expect(@job.result[:body]).to be_empty
   end
 end
+
+shared_examples_for 'request: returns chat' do |chat_keys|
+  it do
+    chat = BeachApiCore::Chat.last
+    expect(response.status).to eq 200
+    expect(json_body[:chat]).to be_present
+    expect(json_body[:chat].keys).to contain_exactly(*chat_keys)
+    expect(json_body[:chat][:id]).to eq chat.id
+    expect(json_body[:chat][:users].map { |user| user[:id] }).to match_array chat.user_ids
+  end
+end
+
+
+shared_examples_for 'request: returns chats' do |chat_keys|
+  it do
+    expect(response.status).to eq 200
+    expect(json_body[:chats]).to be_present
+    expect(json_body[:chats].size).to eq 1
+    expect(json_body[:chats].first.keys).to contain_exactly(*chat_keys)
+  end
+end
+
+shared_examples_for 'request: returns chat messages' do |message_keys|
+  before do
+    @chat = build(:chat, :with_one_user)
+    @user ||= @chat.chats_users.first.user
+    @chat.add_recipient(oauth_user)
+    @message = build(:message, sender: @user)
+    @chat.messages << @message
+    @chat.chats_users.map(&:user).each { |user| @message.messages_users.build(user: user) }
+    @chat.save!
+    create(:chat, :with_chats_users, :with_messages)
+  end
+
+  it do
+    expect(response.status).to eq 200
+    expect(json_body[:messages]).to be_present
+    expect(json_body[:messages].size).to eq 1
+    expect(json_body[:messages].first.keys).to contain_exactly(*message_keys)
+    expect(json_body[:messages].first[:sender][:id]).to eq @user.id
+    expect(json_body[:messages].first[:message]).to eq @message.message
+  end
+end

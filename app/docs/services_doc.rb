@@ -4,7 +4,7 @@ module ServicesDoc
 
   api :GET, '/services', I18n.t('api.resource_description.descriptions.services.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "\"services\": [#{apipie_service_response},...]"
+  example "\"services\": [#{apipie_service_response}, ...]"
   def index; end
 
   api :PUT, '/services/:id', I18n.t('api.resource_description.descriptions.services.update')

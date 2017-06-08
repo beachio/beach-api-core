@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170526084931) do
+ActiveRecord::Schema.define(version: 20170606121753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170526084931) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "file_extension"
+    t.boolean "generated", default: false, null: false
     t.index ["entity_id", "entity_type"], name: "index_beach_api_core_assets_on_entity_id_and_entity_type"
     t.index ["entity_type", "entity_id"], name: "index_beach_api_core_assets_on_entity_type_and_entity_id"
     t.index ["file_content_type"], name: "index_beach_api_core_assets_on_file_content_type"
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 20170526084931) do
     t.integer "atom_parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["atom_parent_id"], name: "index_beach_api_core_atoms_on_atom_parent_id"
     t.index ["name"], name: "index_beach_api_core_atoms_on_name", unique: true
   end
 
@@ -61,6 +63,23 @@ ActiveRecord::Schema.define(version: 20170526084931) do
     t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_beach_api_core_capabilities_on_application_id"
     t.index ["service_id"], name: "index_beach_api_core_capabilities_on_service_id"
+  end
+
+  create_table "beach_api_core_chats", force: :cascade do |t|
+    t.string "keeper_type"
+    t.bigint "keeper_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_chats_on_keeper_type_and_keeper_id"
+  end
+
+  create_table "beach_api_core_chats_users", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_beach_api_core_chats_users_on_chat_id"
+    t.index ["user_id"], name: "index_beach_api_core_chats_users_on_user_id"
   end
 
   create_table "beach_api_core_entities", force: :cascade do |t|
@@ -121,8 +140,8 @@ ActiveRecord::Schema.define(version: 20170526084931) do
   end
 
   create_table "beach_api_core_invitation_roles", id: :serial, force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "invitation_id"
+    t.integer "role_id", null: false
+    t.integer "invitation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["invitation_id"], name: "index_beach_api_core_invitation_roles_on_invitation_id"
@@ -166,6 +185,26 @@ ActiveRecord::Schema.define(version: 20170526084931) do
     t.datetime "updated_at", null: false
     t.index ["group_type", "group_id"], name: "index_beach_api_core_memberships_on_group_type_and_group_id"
     t.index ["member_type", "member_id"], name: "index_beach_api_core_memberships_on_member_type_and_member_id"
+  end
+
+  create_table "beach_api_core_messages", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.bigint "sender_id", null: false
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_beach_api_core_messages_on_chat_id"
+    t.index ["sender_id"], name: "index_beach_api_core_messages_on_sender_id"
+  end
+
+  create_table "beach_api_core_messages_users", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "message_id", null: false
+    t.boolean "read", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id"], name: "index_beach_api_core_messages_users_on_message_id"
+    t.index ["user_id"], name: "index_beach_api_core_messages_users_on_user_id"
   end
 
   create_table "beach_api_core_organisations", id: :serial, force: :cascade do |t|
@@ -368,6 +407,9 @@ ActiveRecord::Schema.define(version: 20170526084931) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  add_foreign_key "beach_api_core_atoms", "beach_api_core_atoms", column: "atom_parent_id"
+  add_foreign_key "beach_api_core_chats_users", "beach_api_core_chats", column: "chat_id"
+  add_foreign_key "beach_api_core_chats_users", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_entities", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
@@ -375,6 +417,10 @@ ActiveRecord::Schema.define(version: 20170526084931) do
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
   add_foreign_key "beach_api_core_jobs", "oauth_applications", column: "application_id"
+  add_foreign_key "beach_api_core_messages", "beach_api_core_chats", column: "chat_id"
+  add_foreign_key "beach_api_core_messages", "beach_api_core_users", column: "sender_id"
+  add_foreign_key "beach_api_core_messages_users", "beach_api_core_messages", column: "message_id"
+  add_foreign_key "beach_api_core_messages_users", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_project_keepers", "beach_api_core_projects", column: "project_id"
   add_foreign_key "beach_api_core_projects", "beach_api_core_organisations", column: "organisation_id"
   add_foreign_key "beach_api_core_projects", "beach_api_core_users", column: "user_id"

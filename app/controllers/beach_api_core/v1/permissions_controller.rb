@@ -1,7 +1,7 @@
 module BeachApiCore
   class V1::PermissionsController < BeachApiCore::V1::BaseController
     include PermissionsDoc
-    before_action :application_authorize!, :find_atom
+    before_action :application_with_user_authorize!, :find_atom
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/permission.other')

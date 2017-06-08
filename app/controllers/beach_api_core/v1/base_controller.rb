@@ -8,11 +8,17 @@ module BeachApiCore
 
     private
 
-    def explicit_application_authorize!
+    def explicit_application_with_user_authorize!
       if !doorkeeper_token && request.headers['HTTP_AUTHORIZATION'].present? && application_authorized?
         return @current_user = @doorkeeper_application.owner
       end
       render_json_error({ message: I18n.t('api.resource_description.errors.unauthorized') }, :unauthorized)
+    end
+
+    def application_with_user_authorize!
+      application_authorize! do
+        @current_user = @doorkeeper_application.owner
+      end
     end
 
     def application_authorize!
@@ -21,7 +27,7 @@ module BeachApiCore
           return render_json_error({ message: I18n.t('api.resource_description.errors.unauthorized') },
                                    :unauthorized)
         end
-        @current_user = @doorkeeper_application.owner
+        yield if block_given?
       else
         doorkeeper_authorize!
       end
