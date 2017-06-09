@@ -6,7 +6,7 @@ module BeachApiCore
     validates :kind, uniqueness: { scope: :uid }
 
     def self.lookup_by_instance(instance)
-      find_by(uid: instance.id, kind: instance.class.name)
+      find_by(uid: instance.id, kind: instance.class)
     end
   end
 end
