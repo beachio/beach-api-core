@@ -24,6 +24,7 @@ module BeachApiCore
       { channel: 'UserChannel', id: current_user.id }
     end
 
+    # TODO: add policy
     def entity_channel
       return @_entity_channel if @_entity_channel
       return unless params[:entity]
@@ -32,13 +33,12 @@ module BeachApiCore
     end
 
     def entity_lookup_params
-      params.require(:entity).permit(:uid, :kind).merge(user: current_user)
+      params.require(:entity).permit(:uid, :kind)
     end
 
     def ensure_entity_params
-      if params[:entity].present? && !(params[:entity][:uid] && params[:entity][:kind])
-        render_json_error({ message: I18n.t('api.errors.some_parameters_are_absent') }, :bad_request)
-      end
+      return unless params[:entity].present? && !(params[:entity][:uid].present? && params[:entity][:kind].present?)
+      render_json_error({ message: I18n.t('api.errors.some_parameters_are_absent') }, :bad_request)
     end
   end
 end

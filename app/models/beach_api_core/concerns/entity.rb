@@ -3,7 +3,7 @@ module BeachApiCore::Concerns::Entity
 
   included do
     def entity
-      @_entity ||= BeachApiCore::Entity.find_by_instance(self)
+      @_entity ||= BeachApiCore::Entity.lookup_by_instance(self)
     end
   end
 end
