@@ -12,10 +12,12 @@ module BeachApiCore
     end
 
     def index
+      authorize chat
       render_json_success(chat.messages, :ok, root: :messages)
     end
 
     def create
+      authorize chat
       result = BeachApiCore::MessageCreate.call(chat: chat, params: message_params)
 
       if result.success?
@@ -28,7 +30,7 @@ module BeachApiCore
     private
 
     def chat
-      current_user.chats.find(params[:chat_id])
+      @_chat ||= Chat.find(params[:chat_id])
     end
 
     def message_params

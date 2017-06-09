@@ -9,7 +9,7 @@ module BeachApiCore::Concerns::ApplicationExtension
     has_many :organisations, class_name: 'BeachApiCore::Organisation', dependent: :destroy
     has_many :jobs, class_name: 'BeachApiCore::Job', dependent: :destroy
     has_many :webhooks, class_name: 'BeachApiCore::Webhook', dependent: :destroy
-    has_many :owned_chats, class_name: 'BeachApiCore::Chat', as: :keeper, inverse_of: :keeper
+    has_many :owned_chats, class_name: 'BeachApiCore::Chat', as: :keeper, inverse_of: :keeper, dependent: :destroy
 
     def policy_class
       BeachApiCore::OAuthApplicationPolicy

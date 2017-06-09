@@ -67,7 +67,9 @@ module BeachApiCore
         context 'when valid' do
           context 'without user in params' do
             it 'should create new chat with correct users' do
-              expect { post beach_api_core.v1_chats_path, headers: application_auth }.to change(Chat, :count).by(1)
+              expect do
+                post beach_api_core.v1_chats_path, headers: application_auth
+              end.to change(Chat, :count).by(1)
               chat = Chat.last
               expect(chat.user_ids).to be_empty
               expect(chat.keeper).to eq oauth_application
@@ -100,47 +102,24 @@ module BeachApiCore
     end
 
     describe 'when index' do
-      context 'without keeper' do
+      context 'when invalid' do
         it_behaves_like 'an authenticated resource' do
           before { get beach_api_core.v1_chats_path }
         end
-      end
-
-      context 'when user keeper' do
-        context 'when invalid' do
-          it_behaves_like 'an authenticated resource' do
-            before { get beach_api_core.v1_chats_path, headers: invalid_bearer_auth }
-          end
-        end
-
-        context 'when valid' do
-          before do
-            chat = build(:chat, keeper: oauth_user)
-            chat.add_recipient(oauth_user)
-            chat.save!
-            create(:chat, :with_chats_users)
-          end
-          it_behaves_like 'request: returns chats', CHAT_KEYS do
-            before { get beach_api_core.v1_chats_path, headers: bearer_auth }
-          end
+        it_behaves_like 'an authenticated resource' do
+          before { get beach_api_core.v1_chats_path, headers: invalid_bearer_auth }
         end
       end
 
-      context 'when application keeper' do
-        context 'when invalid' do
-          it_behaves_like 'an authenticated resource' do
-            before { get beach_api_core.v1_chats_path, headers: invalid_app_auth }
-          end
+      context 'when valid' do
+        before do
+          chat = build(:chat)
+          chat.add_recipient(oauth_user)
+          chat.save!
+          create(:chat, :with_chats_users)
         end
-
-        context 'when valid' do
-          before do
-            create(:chat, :with_one_user, keeper: oauth_application)
-            create(:chat, :with_chats_users)
-          end
-          it_behaves_like 'request: returns chats', CHAT_KEYS do
-            before { get beach_api_core.v1_chats_path, headers: application_auth }
-          end
+        it_behaves_like 'request: returns chats', CHAT_KEYS do
+          before { get beach_api_core.v1_chats_path, headers: bearer_auth }
         end
       end
     end

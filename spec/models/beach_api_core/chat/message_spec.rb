@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module BeachApiCore
-  RSpec.describe Message, type: :model do
+  RSpec.describe Chat::Message, type: :model do
     subject { build(:message, :with_chat) }
 
     it 'should be valid with factory attributes' do

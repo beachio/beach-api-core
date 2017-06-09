@@ -2,8 +2,10 @@ module BeachApiCore
   class V1::ChatsController < BeachApiCore::V1::BaseController
     include ChatsDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
-    before_action :application_authorize!
+    before_action :application_authorize!, only: [:create, :add_recipient]
+    before_action :doorkeeper_authorize!, except: [:create, :add_recipient]
     before_action :ensure_add_recipient_params, only: [:add_recipient]
+    before_action :get_resource, only: [:read, :add_recipient]
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/chat.other')
@@ -13,7 +15,7 @@ module BeachApiCore
     end
 
     def index
-      render_json_success(keeper.owned_chats, :ok, root: :chats)
+      render_json_success(current_user.chats, :ok, root: :chats)
     end
 
     def create
@@ -27,7 +29,8 @@ module BeachApiCore
     end
 
     def add_recipient
-      result = BeachApiCore::ChatAddRecipient.call(recipient: recipient, chat: owned_chat)
+      authorize @chat
+      result = BeachApiCore::ChatAddRecipient.call(recipient: recipient, chat: @chat)
 
       if result.success?
         render_json_success(result.chat, result.status, root: :chat, current_user: current_user)
@@ -37,7 +40,8 @@ module BeachApiCore
     end
 
     def read
-      result = BeachApiCore::ChatRead.call(chat: chat, user: current_user)
+      authorize @chat
+      result = BeachApiCore::ChatRead.call(chat: @chat, user: current_user)
 
       if result.success?
         render_json_success(result.chat, result.status, root: :chat, current_user: current_user)
@@ -54,14 +58,6 @@ module BeachApiCore
 
     def keeper
       current_user || current_application
-    end
-
-    def chat
-      current_user.chats.find(params[:id])
-    end
-
-    def owned_chat
-      keeper.owned_chats.find(params[:id])
     end
 
     def recipient

@@ -1,5 +1,5 @@
 module BeachApiCore
-  class MessageSerializer < ActiveModel::Serializer
+  class Chat::MessageSerializer < ActiveModel::Serializer
     include BeachApiCore::Concerns::DocIdAbsSerializerConcern
     acts_as_abs_doc_id(:id)
 
@@ -8,12 +8,12 @@ module BeachApiCore
     belongs_to :sender
 
     def read
-      object.read(user) if user
+      object.read(current_user) if current_user
     end
 
     private
 
-    def user
+    def current_user
       instance_options[:current_user]
     end
   end

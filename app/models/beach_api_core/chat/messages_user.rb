@@ -1,5 +1,5 @@
 module BeachApiCore
-  class MessagesUser < ApplicationRecord
+  class Chat::MessagesUser < ApplicationRecord
     belongs_to :user, inverse_of: :messages_users
     belongs_to :message, inverse_of: :messages_users
 

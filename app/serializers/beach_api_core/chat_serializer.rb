@@ -6,6 +6,6 @@ module BeachApiCore
     attributes :id
 
     has_many :users
-    has_one :last_message, current_user: [:current_user]
+    has_one :last_message
   end
 end

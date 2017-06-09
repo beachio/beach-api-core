@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module BeachApiCore
-  describe 'V1::Message', type: :request do
+  describe 'V1::Chat::Message', type: :request do
     include_context 'signed up developer'
     include_context 'authenticated user'
     include_context 'bearer token authentication'
@@ -31,15 +31,15 @@ module BeachApiCore
         it 'should create new message with correct fields' do
           expect do
             post beach_api_core.v1_chat_messages_path(chat), params: { message: message_params }, headers: bearer_auth
-          end.to change(Message, :count).by(1).and change(MessagesUser, :count)
-          message = Message.last
+          end.to change(Chat::Message, :count).by(1).and change(Chat::MessagesUser, :count)
+          message = Chat::Message.last
           expect(message.sender).to eq oauth_user
           expect(message.message).to eq message_params[:message]
         end
 
         it 'should return message' do
           post beach_api_core.v1_chat_messages_path(chat), params: { message: message_params }, headers: bearer_auth
-          message = Message.last
+          message = Chat::Message.last
           expect(response.status).to eq 200
           expect(json_body[:message]).to be_present
           expect(json_body[:message].keys).to contain_exactly(*MESSAGE_KEYS)

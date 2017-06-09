@@ -1,5 +1,5 @@
 module BeachApiCore
-  class Message < ApplicationRecord
+  class Chat::Message < ApplicationRecord
     belongs_to :chat
     belongs_to :sender, class_name: 'BeachApiCore::User'
     has_many :messages_users, inverse_of: :message

@@ -177,14 +177,14 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   end
 
   def apipie_messages_user
-    @_apipie_messages_user ||= BeachApiCore::MessagesUser.new(id: fake_id, user: apipie_user)
+    @_apipie_messages_user ||= BeachApiCore::Chat::MessagesUser.new(id: fake_id, user: apipie_user)
   end
 
   def apipie_message
-    @_apipie_message ||= BeachApiCore::Message.new(id: fake_id,
-                                                   messages_users: [apipie_messages_user],
-                                                   message: Faker::Lorem.sentence,
-                                                   sender: apipie_user)
+    @_apipie_message ||= BeachApiCore::Chat::Message.new(id: fake_id,
+                                                         messages_users: [apipie_messages_user],
+                                                         message: Faker::Lorem.sentence,
+                                                         sender: apipie_user)
   end
 
   def pretty(serializer)

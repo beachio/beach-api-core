@@ -33,10 +33,10 @@ module BeachApiCore
     has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :user, dependent: :destroy
     has_many :entities, inverse_of: :user, dependent: :destroy
     has_many :interactions, inverse_of: :user, dependent: :destroy
-    has_many :chats_users, class_name: 'BeachApiCore::ChatsUser', inverse_of: :user
+    has_many :chats_users, class_name: 'BeachApiCore::Chat::ChatsUser', inverse_of: :user
     has_many :chats, through: :chats_users
-    has_many :messages_users, class_name: 'BeachApiCore::MessagesUser'
-    has_many :owned_chats, class_name: 'BeachApiCore::Chat', as: :keeper, inverse_of: :keeper
+    has_many :messages_users, class_name: 'BeachApiCore::Chat::MessagesUser'
+    has_many :owned_chats, class_name: 'BeachApiCore::Chat', as: :keeper, inverse_of: :keeper, dependent: :destroy
 
     validates :email,
               presence: true,

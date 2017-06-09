@@ -100,6 +100,6 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
   end
 
   def apipie_message_response
-    pretty BeachApiCore::MessageSerializer.new(apipie_message)
+    pretty BeachApiCore::Chat::MessageSerializer.new(apipie_message)
   end
 end
