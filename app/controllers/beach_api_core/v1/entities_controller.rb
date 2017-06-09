@@ -3,6 +3,7 @@ module BeachApiCore
     include EntitiesDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
+    before_action :ensure_entity_params, only: [:lookup]
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/entity.other')
@@ -37,9 +38,6 @@ module BeachApiCore
     end
 
     def lookup
-      if params[:entity][:uid].blank? || params[:entity][:kind].blank?
-        return render_json_error({ message: I18n.t('api.errors.some_parameters_are_absent') }, :bad_request)
-      end
       @entity = Entity.find_by(entity_lookup_params)
       authorize @entity
       render_json_success(@entity, :ok, root: :entity)
@@ -53,6 +51,11 @@ module BeachApiCore
 
     def entity_lookup_params
       params.require(:entity).permit(:uid, :kind)
+    end
+
+    def ensure_entity_params
+      return if params[:entity][:uid].present? && params[:entity][:kind].present?
+      render_json_error({ message: I18n.t('api.errors.some_parameters_are_absent') }, :bad_request)
     end
   end
 end

@@ -24,6 +24,7 @@ module BeachApiCore
       { channel: 'UserChannel', id: current_user.id }
     end
 
+    # TODO: add policy
     def entity_channel
       return @_entity_channel if @_entity_channel
       return unless params[:entity]
