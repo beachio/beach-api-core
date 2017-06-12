@@ -3,7 +3,7 @@ module BeachApiCore
     include MessagesDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
-    before_action :set_chat
+    before_action :load_chat
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/message.other')
@@ -30,7 +30,7 @@ module BeachApiCore
 
     private
 
-    def set_chat
+    def load_chat
       @chat = Chat.find(params[:chat_id])
     end
 

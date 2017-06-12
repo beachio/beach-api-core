@@ -4,7 +4,6 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :application_authorize!, only: [:create, :add_recipient]
     before_action :doorkeeper_authorize!, except: [:create, :add_recipient]
-    before_action :ensure_add_recipient_params, only: [:add_recipient]
     before_action :get_resource, only: [:read, :add_recipient]
 
     resource_description do
@@ -63,10 +62,6 @@ module BeachApiCore
 
     def recipient
       User.find(params[:chat][:recipient_id])
-    end
-
-    def ensure_add_recipient_params
-      params.require(:chat).require(:recipient_id)
     end
   end
 end

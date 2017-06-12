@@ -140,12 +140,6 @@ module BeachApiCore
           it_behaves_like 'an authenticated resource' do
             before { put beach_api_core.add_recipient_v1_chat_path(chat), headers: invalid_bearer_auth }
           end
-
-          it 'should return bad request status if chat is invalid' do
-            expect do
-              put beach_api_core.add_recipient_v1_chat_path(chat), headers: bearer_auth
-            end.to raise_error(ActionController::ParameterMissing).and change(chat.users, :count).by(0)
-          end
         end
 
         context 'when valid' do
@@ -180,12 +174,6 @@ module BeachApiCore
           end
           it_behaves_like 'an authenticated resource' do
             before { put beach_api_core.add_recipient_v1_chat_path(chat), headers: invalid_app_auth }
-          end
-
-          it 'should return bad request status if chat is invalid' do
-            expect do
-              put beach_api_core.add_recipient_v1_chat_path(chat), headers: application_auth
-            end.to raise_error(ActionController::ParameterMissing).and change(chat.users, :count).by(0)
           end
         end
 
