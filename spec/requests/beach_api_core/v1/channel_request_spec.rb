@@ -21,14 +21,15 @@ module BeachApiCore
           let(:entity) { build :entity }
 
           it 'should return bad request if uid is not provided' do
-            get beach_api_core.v1_channels_path(entity: { kind: entity.kind }), headers: bearer_auth
-            expect(response.status).to eq 400
+            expect do
+              get beach_api_core.v1_channels_path(entity: { kind: entity.kind }), headers: bearer_auth
+            end.to raise_error(ActionController::ParameterMissing)
           end
 
           it 'should return bad request if kind is not provided' do
-            get beach_api_core.v1_channels_path(entity: { uid: entity.uid }), headers: bearer_auth
-            expect(response.status).to eq 400
-            expect(json_body[:error]).to be_present
+            expect do
+              get beach_api_core.v1_channels_path(entity: { uid: entity.uid }), headers: bearer_auth
+            end.to raise_error(ActionController::ParameterMissing)
           end
         end
       end

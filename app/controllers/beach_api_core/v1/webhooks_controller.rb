@@ -2,7 +2,7 @@ module BeachApiCore
   class V1::WebhooksController < BeachApiCore::V1::BaseController
     include WebhooksDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
-    before_action :explicit_application_authorize!
+    before_action :explicit_application_with_user_authorize!
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/webhook.other')

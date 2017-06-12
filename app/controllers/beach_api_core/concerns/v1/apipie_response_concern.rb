@@ -94,4 +94,12 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
   def apipie_webhook_response
     pretty BeachApiCore::WebhookSerializer.new(apipie_webhook)
   end
+
+  def apipie_chat_response
+    pretty BeachApiCore::ChatSerializer.new(apipie_chat)
+  end
+
+  def apipie_message_response
+    pretty BeachApiCore::Chat::MessageSerializer.new(apipie_message)
+  end
 end

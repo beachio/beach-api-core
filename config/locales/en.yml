@@ -10,7 +10,6 @@ en:
       email_has_been_created: "Email has been created"
       favourite_item_could_not_be_deleted: "This favourite item could not be deleted"
       could_not_revoke_invitation: "Could not revoke an invitation"
-      some_parameters_are_absent: "Some required parameters are absent"
     resource_description:
       resources:
         authorization: "Authorization"
@@ -68,6 +67,11 @@ en:
           remove: "Remove capability"
         channels:
           list: "List of available channels"
+        chats:
+          create: "Create a new chat"
+          list: "List of available chats"
+          add_recipient: "Add recipient to chat"
+          read: "Mark all messages in the chat as read"
         emails:
           send: "Send an email"
         entities:
@@ -93,6 +97,9 @@ en:
         memberships:
           create: "Create a membership"
           destroy: "Destroy membership"
+        messages:
+          list: "List of messages in chat"
+          create: "Create a message in a chat"
         organisations:
           list: "List of user organisations"
           create: "Create an organisation"
@@ -190,6 +197,12 @@ en:
         downcase: "channel"
       channel:
         <<: *channel
+      beach_api_core/chat: &chat
+        one: "Chat"
+        other: "Chats"
+        downcase: "chat"
+      chat:
+        <<: *chat
       beach_api_core/email: &email
         one: "Email"
         other: "Emails"
@@ -226,6 +239,12 @@ en:
         downcase: "membership"
       membership:
         <<: *membership
+      beach_api_core/message: &message
+        one: "Message"
+        other: "Messages"
+        downcase: "message"
+      message:
+        <<: *message
       beach_api_core/organisation: &organisation
         one: "Organisation"
         other: "Organisations"

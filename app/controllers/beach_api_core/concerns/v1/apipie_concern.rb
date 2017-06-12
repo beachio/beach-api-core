@@ -170,6 +170,23 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                    kind: BeachApiCore::Webhook.kinds.keys.first)
   end
 
+  def apipie_chat
+    @_apipie_chat ||= BeachApiCore::Chat.new(id: fake_id,
+                                             users: [apipie_user],
+                                             messages: [apipie_message])
+  end
+
+  def apipie_messages_user
+    @_apipie_messages_user ||= BeachApiCore::Chat::MessagesUser.new(id: fake_id, user: apipie_user)
+  end
+
+  def apipie_message
+    @_apipie_message ||= BeachApiCore::Chat::Message.new(id: fake_id,
+                                                         messages_users: [apipie_messages_user],
+                                                         message: Faker::Lorem.sentence,
+                                                         sender: apipie_user)
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end
