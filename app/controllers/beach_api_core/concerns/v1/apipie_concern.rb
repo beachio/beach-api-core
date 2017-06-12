@@ -60,10 +60,10 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
   def apipie_interaction
     @_apipie_interaction ||= BeachApiCore::Interaction.new(id: fake_id,
-                                                          user: apipie_user,
-                                                          kind: Faker::Lorem.word,
-                                                          interaction_attributes: [apipie_interaction_attributes],
-                                                          interaction_keepers: [apipie_interaction_keeper])
+                                                           user: apipie_user,
+                                                           kind: Faker::Lorem.word,
+                                                           interaction_attributes: [apipie_interaction_attributes],
+                                                           interaction_keepers: [apipie_interaction_keeper])
   end
 
   def apipie_invitation
