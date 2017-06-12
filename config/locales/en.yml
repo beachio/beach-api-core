@@ -10,6 +10,7 @@ en:
       email_has_been_created: "Email has been created"
       favourite_item_could_not_be_deleted: "This favourite item could not be deleted"
       could_not_revoke_invitation: "Could not revoke an invitation"
+      some_parameters_are_absent: "Some required parameters are absent"
     resource_description:
       resources:
         authorization: "Authorization"
@@ -65,16 +66,21 @@ en:
         capabilities:
           create: "Create capability"
           remove: "Remove capability"
+        channels:
+          list: "List of available channels"
         emails:
           send: "Send an email"
         entities:
           show: "Show an entity"
           create: "Create an entity"
           remove: "Remove an entity"
+          lookup: "Find entity by params"
         favourites:
           create: "Create favourite item"
           list: "List of user favourites items"
           remove: "Remove favourite item"
+        interactions:
+          create: "Create an interaction"
         invitations:
           create: "Create an invitation"
           list: "Get a list of pending invitations for group"
@@ -178,6 +184,12 @@ en:
         downcase: "capability"
       capability:
         <<: *capability
+      beach_api_core/channel: &channel
+        one: "Channel"
+        other: "Channels"
+        downcase: "channel"
+      channel:
+        <<: *channel
       beach_api_core/email: &email
         one: "Email"
         other: "Emails"
@@ -190,6 +202,12 @@ en:
         downcase: "favourite"
       favourite:
         <<: *favourite
+      beach_api_core/interaction: &interaction
+        one: "Interaction"
+        other: "Interactions"
+        downcase: "interaction"
+      interaction:
+        <<: *interaction
       beach_api_core/invitation: &invitation
         one: "Invitation"
         other: "Invitations"

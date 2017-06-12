@@ -23,4 +23,11 @@ module EntitiesDoc
                  description: I18n.t('api.errors.could_not_remove',
                                      model: I18n.t('activerecord.models.beach_api_core/entity.downcase')))
   def destroy; end
+
+  api :GET, '/entities/lookup', I18n.t('api.resource_description.descriptions.entities.lookup')
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  param :uid, String, required: true
+  param :kind, String, required: true
+  example "\"entity\": #{apipie_entity_response}"
+  def lookup; end
 end

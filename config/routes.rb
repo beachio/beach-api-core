@@ -5,7 +5,9 @@ BeachApiCore::Engine.routes.draw do
     resources :applications, except: %i(new edit)
     resources :sessions, only: :create, path: :auth
     resources :favourites, only: %i(index create destroy)
-    resources :entities, only: %i(show create destroy)
+    resources :entities, only: %i(show create destroy) do
+      get :lookup, on: :collection
+    end
     resources :webhooks, only: %i(index create destroy)
     resources :users, only: %i(create) do
       post :confirm, on: :member
@@ -41,5 +43,7 @@ BeachApiCore::Engine.routes.draw do
     resources :jobs, only: %i(create show destroy)
     resources :projects, only: %i(create show update destroy)
     resources :broadcasts, only: %i(create)
+    resources :interactions, only: %i(create)
+    resources :channels, only: %i(index)
   end
 end

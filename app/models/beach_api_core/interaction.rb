@@ -12,6 +12,7 @@ module BeachApiCore
              class_name: 'BeachApiCore::InteractionKeeper',
              inverse_of: :interaction,
              dependent: :destroy
+    has_one :template, foreign_key: :name, primary_key: :kind
 
     accepts_nested_attributes_for :interaction_attributes, allow_destroy: true
     accepts_nested_attributes_for :interaction_keepers, allow_destroy: true

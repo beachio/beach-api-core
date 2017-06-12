@@ -7,5 +7,9 @@ module BeachApiCore
     def destroy?
       record.user == user
     end
+
+    def lookup?
+      record.user == user
+    end
   end
 end

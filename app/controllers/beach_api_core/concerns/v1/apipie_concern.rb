@@ -36,6 +36,36 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                        favouritable: apipie_asset)
   end
 
+  def apipie_user_channel
+    { channel: 'UserChannel', id: fake_id.abs }
+  end
+
+  def apipie_entity_channel
+    { channel: 'EntityChannel', id: fake_id.abs }
+  end
+
+  def apipie_interaction_attributes
+    @_apipie_interaction_attributes ||=
+        BeachApiCore::InteractionAttribute.new(id: fake_id,
+                                               key: "#{Faker::Lorem.word}-#{Faker::Number.number(2)}",
+                                               values: { text: Faker::Lorem.sentence })
+  end
+
+  def apipie_interaction_keeper
+    @_apipie_interaction_keeper ||=
+        BeachApiCore::InteractionKeeper.new(id: fake_id,
+                                            keeper: apipie_entity)
+  end
+
+
+  def apipie_interaction
+    @_apipie_interaction ||= BeachApiCore::Interaction.new(id: fake_id,
+                                                           user: apipie_user,
+                                                           kind: Faker::Lorem.word,
+                                                           interaction_attributes: [apipie_interaction_attributes],
+                                                           interaction_keepers: [apipie_interaction_keeper])
+  end
+
   def apipie_invitation
     @_apipie_invitation ||= BeachApiCore::Invitation.new(id: fake_id,
                                                          user: apipie_user,

@@ -23,12 +23,24 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     pretty BeachApiCore::FavouriteSerializer.new(apipie_favourite)
   end
 
+  def apipie_user_channel_response
+    pretty apipie_user_channel
+  end
+
+  def apipie_entity_channel_response
+    pretty apipie_entity_channel
+  end
+
   def apipie_assignment_response
     pretty BeachApiCore::AssignmentSerializer.new(apipie_assignment)
   end
 
   def apipie_service_category_response
     pretty BeachApiCore::ServiceCategorySerializer.new(apipie_service_category)
+  end
+
+  def apipie_interaction_response
+    pretty BeachApiCore::SimpleInteractionSerializer.new(apipie_interaction)
   end
 
   def apipie_invitation_response

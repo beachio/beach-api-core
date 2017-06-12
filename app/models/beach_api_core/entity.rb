@@ -4,5 +4,9 @@ module BeachApiCore
 
     validates :user, :uid, :kind, presence: true
     validates :kind, uniqueness: { scope: :uid }
+
+    def self.lookup_by_instance(instance)
+      find_by(uid: instance.id, kind: instance.class.name)
+    end
   end
 end

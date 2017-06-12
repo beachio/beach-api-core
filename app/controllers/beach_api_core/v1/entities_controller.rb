@@ -3,6 +3,7 @@ module BeachApiCore
     include EntitiesDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
+    before_action :ensure_entity_params, only: [:lookup]
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/entity.other')
@@ -36,10 +37,24 @@ module BeachApiCore
       end
     end
 
+    def lookup
+      @entity = Entity.find_by(entity_lookup_params)
+      authorize @entity
+      render_json_success(@entity, :ok, root: :entity)
+    end
+
     private
 
     def entity_params
       params.require(:entity).permit(:uid, :kind, settings: {})
+    end
+
+    def entity_lookup_params
+      params.require(:entity).permit(:uid, :kind)
+    end
+
+    def ensure_entity_params
+      %i(uid kind).each { |param| params.require(:entity).require(param) }
     end
   end
 end
