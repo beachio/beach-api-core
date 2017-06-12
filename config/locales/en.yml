@@ -10,7 +10,6 @@ en:
       email_has_been_created: "Email has been created"
       favourite_item_could_not_be_deleted: "This favourite item could not be deleted"
       could_not_revoke_invitation: "Could not revoke an invitation"
-      some_parameters_are_absent: "Some required parameters are absent"
     resource_description:
       resources:
         authorization: "Authorization"

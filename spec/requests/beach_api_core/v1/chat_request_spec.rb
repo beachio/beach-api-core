@@ -113,9 +113,7 @@ module BeachApiCore
 
       context 'when valid' do
         before do
-          chat = build(:chat)
-          chat.add_recipient(oauth_user)
-          chat.save!
+          create(:chat, :with_oauth_user, oauth_user: oauth_user)
           create(:chat, :with_chats_users)
         end
         it_behaves_like 'request: returns chats', CHAT_KEYS do
@@ -133,12 +131,7 @@ module BeachApiCore
       end
 
       context 'with user keeper' do
-        let!(:chat) do
-          chat = build(:chat, keeper: oauth_user)
-          chat.add_recipient(oauth_user)
-          chat.save!
-          chat
-        end
+        let!(:chat) { create(:chat, :with_oauth_user, oauth_user: oauth_user, keeper: oauth_user) }
 
         context 'when invalid' do
           it_behaves_like 'an authenticated resource' do
@@ -151,9 +144,7 @@ module BeachApiCore
           it 'should return bad request status if chat is invalid' do
             expect do
               put beach_api_core.add_recipient_v1_chat_path(chat), headers: bearer_auth
-            end.not_to change(chat.users, :count)
-            expect(response.status).to eq 400
-            expect(json_body[:error]).to be_present
+            end.to raise_error(ActionController::ParameterMissing).and change(chat.users, :count).by(0)
           end
         end
 
@@ -194,9 +185,7 @@ module BeachApiCore
           it 'should return bad request status if chat is invalid' do
             expect do
               put beach_api_core.add_recipient_v1_chat_path(chat), headers: application_auth
-            end.not_to change(chat.users, :count)
-            expect(response.status).to eq 400
-            expect(json_body[:error]).to be_present
+            end.to raise_error(ActionController::ParameterMissing).and change(chat.users, :count).by(0)
           end
         end
 
@@ -228,7 +217,7 @@ module BeachApiCore
       before do
         @chat = build(:chat, :with_one_user)
         @user = @chat.chats_users.first.user
-        @chat.add_recipient(oauth_user)
+        @chat.chats_users << build(:chats_user, user: oauth_user)
         @message = build(:message, sender: @user)
         @chat.messages << @message
         @chat.chats_users.map(&:user).each { |user| @message.messages_users.build(user: user) }
@@ -248,7 +237,7 @@ module BeachApiCore
         it 'should change read field' do
           expect do
             put beach_api_core.read_v1_chat_path(@chat), headers: bearer_auth
-          end.to(change{ @message.read(oauth_user) })
+          end.to(change{ @message.read_by?(oauth_user) })
         end
 
         it 'should return message' do

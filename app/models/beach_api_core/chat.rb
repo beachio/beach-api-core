@@ -10,10 +10,6 @@ module BeachApiCore
     validates :keeper, presence: true
     validate :validate_user_uniqueness
 
-    def add_recipient(recipient)
-      chats_users.build(user: recipient)
-    end
-
     def last_message
       messages.first
     end
@@ -22,7 +18,7 @@ module BeachApiCore
 
     def validate_user_uniqueness
       user_ids = chats_users.map(&:user)
-      return if user_ids.uniq.length == user_ids.length
+      return if user_ids.uniq.size == user_ids.size
       errors.add(:users, :taken)
     end
   end

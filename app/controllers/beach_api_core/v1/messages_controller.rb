@@ -3,6 +3,7 @@ module BeachApiCore
     include MessagesDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
+    before_action :set_chat
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/message.other')
@@ -12,13 +13,13 @@ module BeachApiCore
     end
 
     def index
-      authorize chat
-      render_json_success(chat.messages, :ok, root: :messages)
+      authorize @chat
+      render_json_success(@chat.messages, :ok, root: :messages)
     end
 
     def create
-      authorize chat
-      result = BeachApiCore::MessageCreate.call(chat: chat, params: message_params)
+      authorize @chat
+      result = BeachApiCore::MessageCreate.call(chat: @chat, current_user: current_user, params: message_params)
 
       if result.success?
         render_json_success(result.message, result.status, current_user: current_user, root: :message)
@@ -29,12 +30,12 @@ module BeachApiCore
 
     private
 
-    def chat
-      @_chat ||= Chat.find(params[:chat_id])
+    def set_chat
+      @chat = Chat.find(params[:chat_id])
     end
 
     def message_params
-      params.require(:message).permit(:message).merge(sender: current_user)
+      params.require(:message).permit(:message)
     end
   end
 end

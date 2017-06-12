@@ -8,6 +8,16 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_oauth_user do
+      transient do
+        oauth_user nil
+      end
+
+      after(:build) do |chat, evaluator|
+        chat.chats_users << build(:chats_user, user: evaluator.oauth_user) if evaluator.oauth_user
+      end
+    end
+
     trait :with_chats_users do
       after(:build) do |chat|
         2.times { chat.chats_users << build(:chats_user, chat: chat) } if chat.chats_users.blank?

@@ -53,7 +53,8 @@ module BeachApiCore
     private
 
     def chat_params
-      params.require(:chat).permit(chats_users_attributes: [:user_id]) if params[:chat]
+      return unless params[:chat]
+      params.require(:chat).permit(chats_users_attributes: [:user_id])
     end
 
     def keeper
@@ -65,8 +66,7 @@ module BeachApiCore
     end
 
     def ensure_add_recipient_params
-      return if params.dig(:chat, :recipient_id).present?
-      render_json_error({ message: I18n.t('api.errors.some_parameters_are_absent') }, :bad_request)
+      params.require(:chat).require(:recipient_id)
     end
   end
 end

@@ -9,12 +9,7 @@ module BeachApiCore
     MESSAGE_KEYS = %i(id message read sender).freeze
 
     describe 'when create' do
-      let!(:chat) do
-        chat = build(:chat, :with_one_user, keeper: oauth_user)
-        chat.add_recipient(oauth_user)
-        chat.save!
-        chat
-      end
+      let!(:chat) { create(:chat, :with_one_user, :with_oauth_user, oauth_user: oauth_user, keeper: oauth_user) }
 
       context 'when invalid' do
         it_behaves_like 'an authenticated resource' do
@@ -44,7 +39,7 @@ module BeachApiCore
           expect(json_body[:message]).to be_present
           expect(json_body[:message].keys).to contain_exactly(*MESSAGE_KEYS)
           %i(id message).each { |field| expect(json_body[:message][field]).to eq message.send(field) }
-          expect(json_body[:message][:read]).to eq message.read(oauth_user)
+          expect(json_body[:message][:read]).to eq message.read_by?(oauth_user)
           expect(json_body[:message][:sender][:id]).to eq oauth_user.id
         end
       end
@@ -65,7 +60,7 @@ module BeachApiCore
         before do
           @chat = build(:chat, :with_one_user)
           @user = @chat.chats_users.first.user
-          @chat.add_recipient(oauth_user)
+          @chat.chats_users << build(:chats_user, user: oauth_user)
           @message = build(:message, sender: @user)
           @chat.messages << @message
           @chat.chats_users.map(&:user).each { |user| @message.messages_users.build(user: user) }

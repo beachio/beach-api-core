@@ -8,7 +8,7 @@ module BeachApiCore
 
     validates :chat, :sender, :message, presence: true
 
-    def read(user)
+    def read_by?(user)
       messages_users.find_by(user: user).read
     end
   end

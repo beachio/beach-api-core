@@ -10,7 +10,7 @@ module BeachApiCore
     belongs_to :sender
 
     def read
-      object.read(current_user) if current_user
+      object.read_by?(current_user) if current_user
     end
   end
 end

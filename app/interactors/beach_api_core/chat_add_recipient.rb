@@ -2,7 +2,7 @@ class BeachApiCore::ChatAddRecipient
   include Interactor
 
   def call
-    context.chat.add_recipient(context.recipient)
+    context.chat.chats_users.build(user: context.recipient)
 
     if context.chat.save
       context.status = :ok

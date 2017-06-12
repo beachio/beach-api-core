@@ -12,7 +12,7 @@ module BeachApiCore
     end
 
     it 'should validate users uniqueness' do
-      subject.add_recipient(subject.chats_users.first.user)
+      subject.chats_users << build(:chats_user, user: subject.chats_users.first.user)
       expect(subject).not_to be_valid
     end
   end
