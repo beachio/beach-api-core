@@ -132,14 +132,15 @@ module BeachApiCore
           before { entity.update(user: oauth_user) }
 
           it 'should return bad request if uid is not provided' do
-            get beach_api_core.lookup_v1_entities_path(entity: { kind: entity.kind }), headers: bearer_auth
-            expect(response.status).to eq 400
+            expect do
+              get beach_api_core.lookup_v1_entities_path(entity: { kind: entity.kind }), headers: bearer_auth
+            end.to raise_error(ActionController::ParameterMissing)
           end
 
           it 'should return bad request if kind is not provided' do
-            get beach_api_core.lookup_v1_entities_path(entity: { uid: entity.uid }), headers: bearer_auth
-            expect(response.status).to eq 400
-            expect(json_body[:error]).to be_present
+            expect do
+              get beach_api_core.lookup_v1_entities_path(entity: { uid: entity.uid }), headers: bearer_auth
+            end.to raise_error(ActionController::ParameterMissing)
           end
         end
       end
