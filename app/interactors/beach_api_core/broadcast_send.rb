@@ -2,12 +2,12 @@ module BeachApiCore
   class BroadcastSend
     include Interactor
 
-    before do
-      context.user = User.find(context.params[:user_id])
-    end
-
     def call
-      UserChannel.broadcast_to(context.user, payload: context.params[:user_id])
+      klass = context.params[:name].gsub(/Channel/, '')
+      channel = "BeachApiCore::#{context.params[:name]}".constantize
+      object = "BeachApiCore::#{klass}".constantize.find(context.params[:id])
+
+      channel.broadcast_to(object, payload: context.params[:payload], klass.underscore => object)
       context.status = :created
     end
   end
