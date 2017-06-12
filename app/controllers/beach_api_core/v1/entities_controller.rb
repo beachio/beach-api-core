@@ -54,8 +54,7 @@ module BeachApiCore
     end
 
     def ensure_entity_params
-      return if params[:entity][:uid].present? && params[:entity][:kind].present?
-      render_json_error({ message: I18n.t('api.errors.some_parameters_are_absent') }, :bad_request)
+      %i(uid kind).each { |param| params.require(:entity).require(param) }
     end
   end
 end
