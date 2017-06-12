@@ -32,7 +32,7 @@ module BeachApiCore
         let(:interaction_params) do
           { kind: Faker::Lorem.word,
             interaction_attributes_attributes: [key: "#{Faker::Lorem.word}-#{Faker::Number.number(2)}",
-                                                values: { text: Faker::Lorem.sentence }],
+                                                values: { 'text' => Faker::Lorem.sentence }],
             interaction_keepers_attributes: [keeper_type: entity.class.to_s,
                                              keeper_id: entity.id] }
         end

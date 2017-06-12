@@ -7,9 +7,5 @@ module BeachApiCore
     def value
       object.decorate.pretty_value(interaction)
     end
-
-    def interaction
-      instance_options[:interaction]
-    end
   end
 end
