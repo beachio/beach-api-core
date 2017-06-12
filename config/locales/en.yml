@@ -10,6 +10,7 @@ en:
       email_has_been_created: "Email has been created"
       favourite_item_could_not_be_deleted: "This favourite item could not be deleted"
       could_not_revoke_invitation: "Could not revoke an invitation"
+      should_be_valid_channel_name: "Name should be UserChannel or EntityChannel"
     resource_description:
       resources:
         authorization: "Authorization"

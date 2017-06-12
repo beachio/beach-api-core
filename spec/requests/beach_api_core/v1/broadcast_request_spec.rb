@@ -7,22 +7,57 @@ module BeachApiCore
     include_context 'bearer token authentication'
 
     describe 'when create' do
-      before do
-        @broadcast_params = {
-          user_id: create(:user).id,
-          payload: { Faker::Lorem.word => Faker::Lorem.word }
-        }
+      context 'UserChannel' do
+        before do
+          @channel_params = {
+              name: 'UserChannel',
+              id: create(:user).id,
+              payload: { Faker::Lorem.word => Faker::Lorem.word }
+          }
+        end
+
+        it_behaves_like 'an authenticated resource' do
+          before { post beach_api_core.v1_broadcasts_path }
+        end
+
+        it 'should send broadcats' do
+          post beach_api_core.v1_broadcasts_path, params: { channel: @channel_params }, headers: application_auth
+          expect(response.status).to eq 204
+        end
       end
 
-      it_behaves_like 'an authenticated resource' do
-        before { post beach_api_core.v1_broadcasts_path }
+      context 'EntityChannel' do
+        before do
+          @channel_params = {
+              name: 'EntityChannel',
+              id: create(:entity).id,
+              payload: { Faker::Lorem.word => Faker::Lorem.word }
+          }
+        end
+
+        it_behaves_like 'an authenticated resource' do
+          before { post beach_api_core.v1_broadcasts_path }
+        end
+
+        it 'should send broadcats' do
+          post beach_api_core.v1_broadcasts_path, params: { channel: @channel_params }, headers: application_auth
+          expect(response.status).to eq 204
+        end
       end
 
-      it 'should send broadcats' do
-        post beach_api_core.v1_broadcasts_path,
-             params: { broadcast: @broadcast_params },
-             headers: application_auth
-        expect(response.status).to eq 204
+      context 'wrong channel name' do
+        before do
+          @channel_params = {
+              name: Faker::Lorem.word,
+              id: create(:entity).id,
+              payload: { Faker::Lorem.word => Faker::Lorem.word }
+          }
+        end
+
+        it 'should return bad request status' do
+          post beach_api_core.v1_broadcasts_path, params: { channel: @channel_params }, headers: application_auth
+          expect(response.status).to eq 400
+        end
       end
     end
   end
