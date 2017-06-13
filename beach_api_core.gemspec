@@ -43,4 +43,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'apipie-rails'
   s.add_dependency 'rmagick'
+
+  s.add_dependency 'draper'
 end
