@@ -36,6 +36,7 @@ module BeachApiCore
             interaction_keepers_attributes: [keeper_type: entity.class.to_s,
                                              keeper_id: entity.id] }
         end
+        before { create(:template, name: interaction_params[:kind]) }
 
         it 'should create new interaction with correct fields' do
           expect do
