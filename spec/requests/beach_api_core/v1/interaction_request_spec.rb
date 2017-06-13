@@ -46,7 +46,7 @@ module BeachApiCore
             post beach_api_core.v1_interactions_path, params: { interaction: interaction_params }, headers: bearer_auth
             interaction = BeachApiCore::Interaction.last
             expect(json_body[:interaction][:template][:value])
-              .to eq interaction.templete.decorate.pretty_value(interaction)
+              .to eq interaction.template.decorate.pretty_value(interaction)
           end
         end
 
