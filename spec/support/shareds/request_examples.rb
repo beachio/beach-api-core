@@ -90,3 +90,32 @@ shared_examples_for 'request: returns chat messages' do |message_keys|
     expect(json_body[:messages].first[:message]).to eq @message.message
   end
 end
+
+shared_examples_for 'request: valid interaction create request' do |interaction_keys|
+  it 'should create new interaction with correct fields' do
+    expect do
+      post beach_api_core.v1_interactions_path, params: { interaction: interaction_params }, headers: bearer_auth
+    end.to change(BeachApiCore::Interaction, :count).by(1)
+    interaction = BeachApiCore::Interaction.last
+    expect(interaction.kind).to eq interaction_params[:kind]
+    expect(interaction.user_id).to eq oauth_user.id
+    %i(key values).each do |key|
+      expect(interaction.interaction_attributes.first.send(key))
+        .to eq interaction_params[:interaction_attributes_attributes].first[key]
+    end
+    %i(keeper_type keeper_id).each do |key|
+      expect(interaction.interaction_keepers.first.send(key))
+        .to eq interaction_params[:interaction_keepers_attributes].first[key]
+    end
+  end
+
+  it 'should return interaction' do
+    post beach_api_core.v1_interactions_path, params: { interaction: interaction_params }, headers: bearer_auth
+    interaction = BeachApiCore::Interaction.last
+    expect(response.status).to eq 200
+    expect(json_body[:interaction]).to be_present
+    expect(json_body[:interaction].keys).to contain_exactly(*interaction_keys)
+    %i(id kind).each { |key| expect(json_body[:interaction][key]).to eq interaction.send(key) }
+    expect(json_body[:interaction][:user][:id]).to eq oauth_user.id
+  end
+end
