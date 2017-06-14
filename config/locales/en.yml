@@ -145,7 +145,7 @@ en:
           update: "Update current user"
           confirm: "Confirm user"
         broadcasts:
-          create: "Notify user"
+          create: "Notify channel"
         webhooks:
           list: "List of webhooks"
           create: "Create a webhook"
