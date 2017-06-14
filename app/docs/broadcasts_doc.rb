@@ -3,8 +3,9 @@ module BroadcastsDoc
 
   api :POST, '/broadcasts', I18n.t('api.resource_description.descriptions.broadcasts.create')
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
-  param :broadcast, Hash, required: true do
-    param :user_id, Integer, required: true
+  param :channel, Hash, required: true do
+    param :name, String, required: true, desc: I18n.t('api.resource_description.descriptions.params.channel_name')
+    param :id, Integer, required: true
     param :payload, Hash, required: true
   end
   example I18n.t('api.resource_description.fail',
