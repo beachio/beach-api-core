@@ -1,14 +1,14 @@
 module BeachApiCore
   class InvitationMailer < ApplicationMailer
-    default from: 'noreply@example.com'
-
     def group_invite(invitation)
       @invitation = invitation
       @user = invitation.user
       @group_name = invitation.group.name
       @app_name = app_name(invitation)
       @organisation = organisation(invitation)
-      mail(to: @invitation.email, subject: "Invitation to join a #{app_name(invitation)} team")
+      @application = invitation.group.application
+      mail(from: from(:noreply_from), to: @invitation.email,
+           subject: "Invitation to join a #{app_name(invitation)} team")
     end
 
     private
@@ -22,7 +22,7 @@ module BeachApiCore
     end
 
     def organisation(invitation)
-      return invitation.group if invitation.group.is_a?(Organisation)
+      return invitation.group if invitation.group.is_a?(BeachApiCore::Organisation)
       return unless invitation.group.respond_to?(:organisation)
       invitation.group.organisation
     end

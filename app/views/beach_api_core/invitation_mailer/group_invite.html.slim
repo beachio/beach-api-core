@@ -18,4 +18,4 @@ tr
             otherwise you can login and link your existing account to this organisation.
       tr
         td(align="center" style="padding-top: 35px;")
-          a(href="#" style="text-decoration: none; font-weight: normal; color: #376E50; background: #3FD485; font-size: 12px; padding: 15px 20px; border-radius: 2px;") JOIN #{@group_name}
+          = link_to "JOIN #{@group_name}", client_url("invitation/accept?token=#{@invitation.token}"), style: "text-decoration: none; font-weight: normal; color: #376E50; background: #3FD485; font-size: 12px; padding: 15px 20px; border-radius: 2px;"
