@@ -40,6 +40,10 @@ module BeachApiCore
 
     describe 'when create' do
       let(:team) { create :team, :with_organisation }
+      before do
+        create :setting, keeper: team.application, name: :noreply_from, value: Faker::Internet.email
+        create :setting, keeper: team.application, name: :client_domain, value: Faker::Internet.redirect_uri
+      end
       it_behaves_like 'an authenticated resource' do
         before do
           post beach_api_core.v1_invitations_path,

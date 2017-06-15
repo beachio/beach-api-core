@@ -8,7 +8,8 @@ module BeachApiCore
 
     def create
       user = BeachApiCore::User.find_by(email: params[:email])
-      result = BeachApiCore::ForgotPassword.call(user: user)
+      result = BeachApiCore::ForgotPassword.call(user: user,
+                                                 headers: request.headers['HTTP_AUTHORIZATION'])
       if result.success?
         render_json_success(result.user, :ok,
                             serializer: BeachApiCore::UserSimpleSerializer,
@@ -19,7 +20,8 @@ module BeachApiCore
     end
 
     def update
-      result = BeachApiCore::ResetPassword.call(params: reset_password_params)
+      result = BeachApiCore::ResetPassword.call(params: reset_password_params,
+                                                headers: request.headers['HTTP_AUTHORIZATION'])
       if result.success?
         render_json_success(result.user, :ok,
                             serializer: BeachApiCore::UserSimpleSerializer,
