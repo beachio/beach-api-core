@@ -39,7 +39,7 @@ module BeachApiCore
     end
 
     describe 'when create' do
-      let(:team) { create :team }
+      let(:team) { create :team, :with_organisation }
       it_behaves_like 'an authenticated resource' do
         before do
           post beach_api_core.v1_invitations_path,
@@ -49,7 +49,8 @@ module BeachApiCore
         end
       end
 
-      it 'should create an invitation' do
+      it 'should create an invitation and send email' do
+        team.organisation.update_attributes(send_email: true)
         expect do
           post beach_api_core.v1_invitations_path,
                params: {
@@ -66,6 +67,23 @@ module BeachApiCore
         expect(response.status).to eq 201
         expect(json_body[:invitation].keys).to contain_exactly(*INVITATION_KEYS)
         expect(Invitation.last.user).to eq(oauth_user)
+      end
+
+      it 'should create an invitation' do
+        expect do
+          post beach_api_core.v1_invitations_path,
+               params: {
+                   invitation: { email: Faker::Internet.email,
+                                 first_name: Faker::Name.first_name,
+                                 last_name: Faker::Name.last_name,
+                                 role_ids: [(create :role).id] },
+                   group_id: team.id,
+                   group_type: 'Team'
+               },
+               headers: bearer_auth
+        end.to change(Invitation, :count).by(1)
+                                         .and change(ActionMailer::Base.deliveries, :count).by(0)
+        expect(response.status).to eq 201
       end
     end
 

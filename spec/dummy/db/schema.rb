@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606121753) do
+ActiveRecord::Schema.define(version: 20170615130411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 20170606121753) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.hstore "logo_properties"
+    t.boolean "send_email", default: false
     t.index ["application_id"], name: "index_beach_api_core_organisations_on_application_id"
   end
 
