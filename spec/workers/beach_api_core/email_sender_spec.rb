@@ -25,7 +25,7 @@ module BeachApiCore
       let(:template_params) { { first_name: Faker::Name.first_name } }
 
       before do
-        @template = create :template, value: 'Hello, {first_name}'
+        @template = create :template, value: 'Hello, {first_name}', name: SecureRandom.hex
         allow_any_instance_of(TemplateParser).to receive(:email_first_name).and_return(template_params[:first_name])
       end
 
