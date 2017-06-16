@@ -4,6 +4,7 @@ module PasswordsDoc
 
   api :POST, '/password', I18n.t('api.resource_description.descriptions.passwords.send')
   param :email, String, required: true
+  header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   example "\"user\": #{apipie_user_response}"
   def create; end
 
@@ -13,6 +14,7 @@ module PasswordsDoc
         desc: I18n.t('api.resource_description.descriptions.params.reset_password_token')
   param :password, String, required: true
   param :password_confirmation, String, required: true
+  header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   example "\"user\": #{apipie_user_response}"
   def update; end
 end

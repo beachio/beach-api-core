@@ -1,6 +1,9 @@
 module BeachApiCore
   class ApplicationMailer < ActionMailer::Base
-    default from: 'from@example.com'
+    include BeachApiCore::Concerns::OrganisationRestrictionMailerConcern
+    include BeachApiCore::Concerns::ApplicationMailerConcern
+
+    add_template_helper(BeachApiCore::Concerns::ApplicationMailerConcern)
     layout 'mailer'
   end
 end

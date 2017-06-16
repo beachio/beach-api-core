@@ -18,3 +18,6 @@ application = Doorkeeper::Application.create(name: Faker::Company.name, redirect
 
 BeachApiCore::Engine.eager_load!
 BeachApiCore::ActionsPermissions.grant_permissions!(application)
+
+BeachApiCore::Setting(name: :noreply_from, keeper: application, value: Faker::Internet.email)
+BeachApiCore::Setting(name: :client_domain, keeper: application, value: Faker::Internet.redirect_uri)

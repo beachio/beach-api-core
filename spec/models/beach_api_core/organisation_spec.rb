@@ -18,6 +18,7 @@ module BeachApiCore
       should have_one :logo_image
       should have_many :assignments
       should have_many :projects
+      should respond_to :send_email
     end
 
     describe 'generate image' do
