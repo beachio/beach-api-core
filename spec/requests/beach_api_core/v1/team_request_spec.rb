@@ -5,6 +5,7 @@ module BeachApiCore
     include_context 'signed up developer'
     include_context 'authenticated user'
     include_context 'bearer token authentication'
+    include_context 'controller actions permissions'
 
     describe 'when create' do
       it_behaves_like 'an authenticated resource' do

@@ -13,5 +13,8 @@ BeachApiCore::Instance.current
   BeachApiCore::Assignment.create(role: role, keeper: BeachApiCore::Instance.current, user: user)
 end
 
-Doorkeeper::Application.create(name: Faker::Company.name, redirect_uri: Faker::Internet.redirect_uri,
-                               owner: BeachApiCore::Instance.current.developers.first)
+application = Doorkeeper::Application.create(name: Faker::Company.name, redirect_uri: Faker::Internet.redirect_uri,
+                                             owner: BeachApiCore::Instance.current.developers.first)
+
+BeachApiCore::Engine.eager_load!
+BeachApiCore::ActionsPermissions.grant_permissions!(application)

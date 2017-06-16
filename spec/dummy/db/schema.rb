@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606121753) do
+ActiveRecord::Schema.define(version: 20170615081401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "beach_api_core_actions_controllers", force: :cascade do |t|
+    t.string "name"
+    t.bigint "controllers_service_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["controllers_service_id"], name: "index_beach_api_core_actions_cont_on_controllers_service_id"
+  end
 
   create_table "beach_api_core_assets", id: :serial, force: :cascade do |t|
     t.string "file_id", null: false
@@ -100,6 +108,14 @@ ActiveRecord::Schema.define(version: 20170606121753) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_chats_on_keeper_type_and_keeper_id"
+  end
+
+  create_table "beach_api_core_controllers_services", force: :cascade do |t|
+    t.string "name"
+    t.bigint "service_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_beach_api_core_controllers_services_on_service_id"
   end
 
   create_table "beach_api_core_entities", force: :cascade do |t|
@@ -407,6 +423,7 @@ ActiveRecord::Schema.define(version: 20170606121753) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  add_foreign_key "beach_api_core_actions_controllers", "beach_api_core_controllers_services", column: "controllers_service_id"
   add_foreign_key "beach_api_core_atoms", "beach_api_core_atoms", column: "atom_parent_id"
   add_foreign_key "beach_api_core_chat_chats_users", "beach_api_core_chats", column: "chat_id"
   add_foreign_key "beach_api_core_chat_chats_users", "beach_api_core_users", column: "user_id"
@@ -414,6 +431,7 @@ ActiveRecord::Schema.define(version: 20170606121753) do
   add_foreign_key "beach_api_core_chat_messages", "beach_api_core_users", column: "sender_id"
   add_foreign_key "beach_api_core_chat_messages_users", "beach_api_core_chat_messages", column: "message_id"
   add_foreign_key "beach_api_core_chat_messages_users", "beach_api_core_users", column: "user_id"
+  add_foreign_key "beach_api_core_controllers_services", "beach_api_core_services", column: "service_id"
   add_foreign_key "beach_api_core_entities", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_favourites", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"

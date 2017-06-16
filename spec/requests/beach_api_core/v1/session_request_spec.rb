@@ -4,6 +4,7 @@ module BeachApiCore
   describe 'V1::Session', type: :request do
     include_context 'signed up developer'
     include_context 'bearer token authentication'
+    include_context 'controller actions permissions'
 
     context 'when valid' do
       it 'should access the bearer token' do

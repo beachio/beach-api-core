@@ -2,6 +2,7 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Favourite', type: :request do
+    include_context 'controller actions permissions'
     FAVOURITE_KEYS = %i(id favouritable_id favouritable_type).freeze
 
     describe 'when index' do

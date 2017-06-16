@@ -9,6 +9,7 @@ require 'apipie-rails'
 require 'activerecord_lookup_or_initialize'
 require 'rmagick'
 require 'draper'
+require 'sidekiq'
 
 module BeachApiCore
   class Engine < ::Rails::Engine

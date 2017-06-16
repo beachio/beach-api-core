@@ -4,6 +4,7 @@ module BeachApiCore
   describe 'V1::Email', type: :request do
     include_context 'signed up developer'
     include_context 'bearer token authentication'
+    include_context 'controller actions permissions'
 
     describe 'when create' do
       before do

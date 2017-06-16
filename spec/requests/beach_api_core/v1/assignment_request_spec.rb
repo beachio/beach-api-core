@@ -5,6 +5,7 @@ module BeachApiCore
     include_context 'signed up developer'
     include_context 'authenticated user'
     include_context 'bearer token authentication'
+    include_context 'controller actions permissions'
 
     ASSIGNMENT_KEYS = %i(id keeper_id keeper_type role_id user).freeze
 

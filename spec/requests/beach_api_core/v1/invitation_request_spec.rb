@@ -5,6 +5,7 @@ module BeachApiCore
     include_context 'signed up developer'
     include_context 'authenticated user'
     include_context 'bearer token authentication'
+    include_context 'controller actions permissions'
 
     INVITATION_KEYS = %i(id email created_at invitee group roles).freeze
 

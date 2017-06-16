@@ -5,6 +5,7 @@ module BeachApiCore
     include Pundit
     include BeachApiCore::Concerns::V1::RescueFromConcern
     include BeachApiCore::Concerns::V1::BaseControllerConcern
+    include BeachApiCore::Concerns::ActionsPermissionsConcern
 
     private
 

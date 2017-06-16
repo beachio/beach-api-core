@@ -2,6 +2,8 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Password', type: :request do
+    include_context 'controller actions permissions'
+
     describe 'when create' do
       let(:user) { create :user }
       it 'should send reset password instructions' do

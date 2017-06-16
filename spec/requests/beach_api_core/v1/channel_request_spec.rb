@@ -3,6 +3,7 @@ require 'rails_helper'
 module BeachApiCore
   describe 'V1::Channel', type: :request do
     CHANNEL_KEYS = %i(channel id).freeze
+    include_context 'controller actions permissions'
 
     describe 'when index' do
       include_context 'signed up developer'

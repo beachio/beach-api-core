@@ -5,6 +5,7 @@ module BeachApiCore
     include_context 'signed up developer'
     include_context 'authenticated user'
     include_context 'bearer token authentication'
+    include_context 'controller actions permissions'
 
     INTERACTION_KEYS = %i(id created_at kind template user interaction_attributes interaction_keepers).freeze
 

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Application', type: :request do
+    include_context 'controller actions permissions'
     APPLICATION_KEYS = %i(id name).freeze
 
     describe 'when index' do

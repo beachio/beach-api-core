@@ -43,3 +43,9 @@ shared_context 'bearer token authentication' do
     { 'HTTP_AUTHORIZATION' => 'Bearer not a real token' }
   end
 end
+
+shared_context 'controller actions permissions' do
+  before do
+    allow_any_instance_of(BeachApiCore::V1::BaseController).to receive(:check_action_permissions!).and_return(true)
+  end
+end
