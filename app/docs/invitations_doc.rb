@@ -30,6 +30,7 @@ module InvitationsDoc
   def destroy; end
 
   api :POST, '/invitations/:id/accept', I18n.t('api.resource_description.descriptions.invitations.accept')
+  param :token, String
   example "\"access_token\": \"#{SecureRandom.hex(16)}\"
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
