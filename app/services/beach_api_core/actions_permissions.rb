@@ -1,12 +1,5 @@
 module BeachApiCore
   class ActionsPermissions
-    FILTERED_CONTROLLERS = %w(ApplicationController BeachApiCore::ApplicationController BeachApiCore::V1::BaseController
-                              BeachApiCore::V1::ApplicationsController
-                              Inventions::ApplicationController Inventions::V1::BaseController
-                              Patents::ApplicationController Patents::V1::ApplicationsController
-                              Patents::V1::BaseController).freeze
-    FILTERED_CONTROLLER_PREFIXES = %w(ActiveAdmin:: Admin:: Doorkeeper:: Apipie:: InheritedResources::).freeze
-
     class << self
       def controllers
         filter_controllers ActionController::Base.descendants.map(&:to_s)
@@ -17,8 +10,8 @@ module BeachApiCore
       end
 
       def grant_permissions!(application)
-        service_category = BeachApiCore::ServiceCategory.new(name: 'Main')
-        service = BeachApiCore::Service.new(title: 'Grant', service_category: service_category)
+        service_category = BeachApiCore::ServiceCategory.new(name: BeachApiCore.grant_service_category_name)
+        service = BeachApiCore::Service.new(title: BeachApiCore.grant_service_name, service_category: service_category)
         BeachApiCore::ActionsPermissions.controllers.each do |controller_name|
           service.controllers_services.build(name: controller_name)
         end
@@ -26,20 +19,11 @@ module BeachApiCore
         capability.save
       end
 
-      def grant_permission!(application, controller_name, action_name = nil)
-        service_category = BeachApiCore::ServiceCategory.new(name: 'Main')
-        service = BeachApiCore::Service.new(title: 'Grant', service_category: service_category)
-        controller = service.controllers_services.build(name: controller_name)
-        controller.actions_controllers.build(name: action_name) if action_name
-        capability = application.capabilities.build(service: service)
-        capability.save
-      end
-
       private
 
       def filter_controllers(controllers)
-        (controllers - FILTERED_CONTROLLERS).reject do |controller|
-          FILTERED_CONTROLLER_PREFIXES.any? { |prefix| controller.start_with?(prefix) }
+        (controllers - BeachApiCore.filtered_controllers).reject do |controller|
+          BeachApiCore.filtered_controller_prefixes.any? { |prefix| controller.start_with?(prefix) }
         end
       end
 

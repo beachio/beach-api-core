@@ -139,14 +139,12 @@ module BeachApiCore
                 params: { user: { username: Faker::Internet.user_name } },
                 headers: bearer_auth
           expect(response.status).to eq 403
+          expect(json_body[:error]).to eq "You haven't permissions to perform this action"
         end
       end
 
       context 'with actions permissions' do
-        before do
-          BeachApiCore::ActionsPermissions.grant_permission!(oauth_application,
-                                                             BeachApiCore::V1::UsersController.name, 'update')
-        end
+        before { grant_permission!(oauth_application, BeachApiCore::V1::UsersController.name, 'update') }
 
         context 'when valid' do
           context 'when success' do
