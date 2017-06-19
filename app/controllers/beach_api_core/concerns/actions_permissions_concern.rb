@@ -6,14 +6,15 @@ module BeachApiCore::Concerns::ActionsPermissionsConcern
 
     def check_action_permissions!
       return unless current_application
+      controller_classname = self.class.name
 
       controllers_with_actions =
         BeachApiCore::ControllersService.joins(:actions_controllers)
-                                        .where(name: controller_name,
+                                        .where(name: controller_classname,
                                                beach_api_core_actions_controllers: { name: action_name }).select(:id)
       controllers_without_actions =
         BeachApiCore::ControllersService.left_outer_joins(:actions_controllers).group(:id, :name)
-                                        .having(name: controller_name)
+                                        .having(name: controller_classname)
                                         .having('COUNT(beach_api_core_actions_controllers.*) = 0').select(:id)
 
       has_action_permissions =
