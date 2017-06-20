@@ -153,15 +153,15 @@ module BeachApiCore
             before do
               patch beach_api_core.v1_user_path,
                     params: {
-                        user: {
-                            email: new_email,
-                            username: Faker::Internet.user_name,
-                            profile_attributes: { id: oauth_user.profile.id,
-                                                  first_name: Faker::Name.first_name,
-                                                  last_name: Faker::Name.last_name,
-                                                  sex: %i(male female).sample },
-                            user_preferences_attributes: [{ preferences: { text: Faker::Lorem.word } }]
-                        }
+                      user: {
+                        email: new_email,
+                        username: Faker::Internet.user_name,
+                        profile_attributes: { id: oauth_user.profile.id,
+                                              first_name: Faker::Name.first_name,
+                                              last_name: Faker::Name.last_name,
+                                              sex: %i(male female).sample },
+                        user_preferences_attributes: [{ preferences: { text: Faker::Lorem.word } }]
+                      }
                     },
                     headers: bearer_auth
             end
@@ -182,9 +182,9 @@ module BeachApiCore
             before do
               patch beach_api_core.v1_user_path,
                     params: {
-                        user: { profile_attributes: { id: oauth_user.profile.id,
-                                                      profile_custom_field1.name => new_value1,
-                                                      profile_custom_field2.name => new_value2 } }
+                      user: { profile_attributes: { id: oauth_user.profile.id,
+                                                    profile_custom_field1.name => new_value1,
+                                                    profile_custom_field2.name => new_value2 } }
                     },
                     headers: bearer_auth
             end
@@ -202,8 +202,8 @@ module BeachApiCore
             before do
               patch beach_api_core.v1_user_path,
                     params: {
-                        user: { profile_attributes: { id: oauth_user.profile.id,
-                                                      profile_custom_field.name => Faker::Lorem.word } }
+                      user: { profile_attributes: { id: oauth_user.profile.id,
+                                                    profile_custom_field.name => Faker::Lorem.word } }
                     },
                     headers: bearer_auth
             end
@@ -226,8 +226,8 @@ module BeachApiCore
               expect do
                 patch beach_api_core.v1_user_path(oauth_user),
                       params: {
-                          user: { profile_attributes: { id: oauth_user.profile.id,
-                                                        avatar_attributes: { file: simple_avatar } } }
+                        user: { profile_attributes: { id: oauth_user.profile.id,
+                                                      avatar_attributes: { file: simple_avatar } } }
                       },
                       headers: bearer_auth
               end.to change(Asset, :count).by(1)
@@ -238,8 +238,8 @@ module BeachApiCore
               expect do
                 patch beach_api_core.v1_user_path(oauth_user),
                       params: {
-                          user: { profile_attributes: { id: oauth_user.profile.id,
-                                                        avatar_attributes: { base64: base64_avatar } } }
+                        user: { profile_attributes: { id: oauth_user.profile.id,
+                                                      avatar_attributes: { base64: base64_avatar } } }
                       },
                       headers: bearer_auth
               end.to change(Asset, :count).by(1)
@@ -252,8 +252,8 @@ module BeachApiCore
                 oauth_user.profile.update_attributes(avatar: asset)
                 patch beach_api_core.v1_user_path(oauth_user),
                       params: {
-                          user: { profile_attributes: { id: oauth_user.profile.id,
-                                                        avatar_attributes: { base64: base64_avatar } } }
+                        user: { profile_attributes: { id: oauth_user.profile.id,
+                                                      avatar_attributes: { base64: base64_avatar } } }
                       },
                       headers: bearer_auth
               end

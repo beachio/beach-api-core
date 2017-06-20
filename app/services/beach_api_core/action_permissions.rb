@@ -1,5 +1,5 @@
 module BeachApiCore
-  class ActionsPermissions
+  class ActionPermissions
     class << self
       def controllers
         filter_controllers ActionController::Base.descendants.map(&:to_s)
@@ -9,12 +9,14 @@ module BeachApiCore
         controller.constantize.action_methods.to_a - pundit_methods
       end
 
-      def grant_permissions!(application)
-        service_category = BeachApiCore::ServiceCategory.new(name: BeachApiCore.grant_service_category_name)
-        service = BeachApiCore::Service.new(title: BeachApiCore.grant_service_name, service_category: service_category)
-        BeachApiCore::ActionsPermissions.controllers.each do |controller_name|
-          service.controllers_services.build(name: controller_name)
+      def grant_permissions!(application, service_category_name = 'Main', service_title = 'Grant')
+        service_category = BeachApiCore::ServiceCategory.new(name: service_category_name)
+        service = BeachApiCore::Service.new(title: service_title, service_category: service_category)
+
+        BeachApiCore::ActionPermissions.controllers.each do |controller_name|
+          service.controllers.build(name: controller_name)
         end
+
         capability = application.capabilities.build(service: service)
         capability.save
       end

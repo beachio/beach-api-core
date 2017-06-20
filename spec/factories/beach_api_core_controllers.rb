@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :controllers_service, class: 'BeachApiCore::ControllersService' do
+  factory :controller, class: 'BeachApiCore::Controller' do
     service { build(:service) }
     name { Faker::Lorem.word }
   end

@@ -14,21 +14,14 @@ require 'sidekiq'
 module BeachApiCore
   # Controller names that should be filtered from available controller list
   mattr_accessor :filtered_controllers
-  @@filtered_controllers = []
 
   # Controller names' prefixes that should be filtered from available controller list
   mattr_accessor :filtered_controller_prefixes
-  @@filtered_controller_prefixes = []
 
-  # Service category name that contains full permissions service
-  mattr_accessor :grant_service_category_name
-  @@grant_service_category_name = 'Main'
+  def self.configure
+    @@filtered_controllers = []
+    @@filtered_controller_prefixes = []
 
-  # Service name that grants all permissions to application
-  mattr_accessor :grant_service_name
-  @@grant_service_name = 'Grant'
-
-  def self.setup
     yield self
   end
 
