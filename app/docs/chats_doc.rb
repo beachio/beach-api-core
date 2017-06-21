@@ -9,8 +9,10 @@ module ChatsDoc
 
   api :POST, '/chats', I18n.t('api.resource_description.descriptions.chats.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :chats_users_attributes, Array, required: true do
-    param :user_id, Integer, required: true
+  param :chat, Hash, required: true do
+    param :chats_users_attributes, Array, required: true do
+      param :user_id, Integer, required: true
+    end
   end
   example "\"chat\": #{apipie_chat_response}
     \n#{I18n.t('api.resource_description.fail',
@@ -19,7 +21,9 @@ module ChatsDoc
 
   api :POST, '/chats/:id/add_recipient', I18n.t('api.resource_description.descriptions.chats.add_recipient')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :recipient_id, Integer, required: true
+  param :chat, Hash, required: true do
+    param :recipient_id, Integer, required: true
+  end
   example "\"chat\": #{apipie_chat_response}
     \n#{I18n.t('api.resource_description.fail',
                description: I18n.t('api.resource_description.fails.errors_description'))}"
@@ -27,7 +31,9 @@ module ChatsDoc
 
   api :POST, '/chats/:id/read', I18n.t('api.resource_description.descriptions.chats.read')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :recipient_id, Integer, required: true
+  param :chat, Hash, required: true do
+    param :recipient_id, Integer, required: true
+  end
   example "\"chat\": #{apipie_chat_response}
     \n#{I18n.t('api.resource_description.fail',
                description: I18n.t('api.resource_description.fails.errors_description'))}"
