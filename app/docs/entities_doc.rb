@@ -9,9 +9,11 @@ module EntitiesDoc
 
   api :POST, '/entities', I18n.t('api.resource_description.descriptions.entities.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :uid, String, required: true
-  param :kind, String, required: true
-  param :settings, Hash
+  param :entity, Hash, required: true do
+    param :uid, String, required: true
+    param :kind, String, required: true
+    param :settings, Hash
+  end
   example "\"entity\": #{apipie_entity_response}
                   \n#{I18n.t('api.resource_description.fail',
                              description: I18n.t('api.resource_description.fails.errors_description'))}"
@@ -26,8 +28,10 @@ module EntitiesDoc
 
   api :GET, '/entities/lookup', I18n.t('api.resource_description.descriptions.entities.lookup')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :uid, String, required: true
-  param :kind, String, required: true
+  param :entity, Hash, required: true do
+    param :uid, String, required: true
+    param :kind, String, required: true
+  end
   example "\"entity\": #{apipie_entity_response}"
   def lookup; end
 end
