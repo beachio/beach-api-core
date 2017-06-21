@@ -15,5 +15,5 @@ end
 
 application = Doorkeeper::Application.create(name: Faker::Company.name, redirect_uri: Faker::Internet.redirect_uri,
                                              owner: BeachApiCore::Instance.current.developers.first)
-BeachApiCore::Setting(name: :noreply_from, keeper: application, value: Faker::Internet.email)
-BeachApiCore::Setting(name: :client_domain, keeper: application, value: Faker::Internet.redirect_uri)
+BeachApiCore::Setting.create(name: :noreply_from, keeper: application, value: Faker::Internet.email)
+BeachApiCore::Setting.create(name: :client_domain, keeper: application, value: Faker::Internet.redirect_uri)
