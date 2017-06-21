@@ -1,12 +1,12 @@
 module BeachApiCore
   class InvitationMailer < ApplicationMailer
-    def group_invite(invitation)
+    def group_invite(invitation, application)
       @invitation = invitation
       @user = invitation.user
       @group_name = invitation.group.name
       @app_name = app_name(invitation)
       @organisation = organisation(invitation)
-      @application = invitation.group.application
+      @application = application
       mail(from: from(:noreply_from), to: @invitation.email,
            subject: "Invitation to join a #{app_name(invitation)} team")
     end
