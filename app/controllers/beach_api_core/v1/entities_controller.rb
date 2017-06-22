@@ -38,7 +38,7 @@ module BeachApiCore
     end
 
     def lookup
-      @entity = Entity.find_by(entity_lookup_params)
+      @entity = Entity.find_by!(entity_lookup_params)
       authorize @entity
       render_json_success(@entity, :ok, root: :entity)
     end
