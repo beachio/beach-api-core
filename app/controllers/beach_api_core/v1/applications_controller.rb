@@ -12,13 +12,13 @@ module BeachApiCore
     end
 
     def index
-      authorize Instance.current, :developer?
+      authorize Instance.current, :developer_or_admin?
       render_json_success(current_user.applications, :ok,
                           each_serializer: AppSerializer, root: :applications)
     end
 
     def create
-      authorize Instance.current, :developer?
+      authorize Instance.current, :developer_or_admin?
 
       result = BeachApiCore::DoorkeeperInteractor::ApplicationCreate.call(
         user: current_user, params: application_create_params
@@ -33,13 +33,13 @@ module BeachApiCore
     end
 
     def show
-      authorize Instance.current, :developer?
+      authorize Instance.current, :developer_or_admin?
       authorize @application
       render_json_success(@application, :ok, serializer: AppSerializer, root: :application)
     end
 
     def update
-      authorize Instance.current, :developer?
+      authorize Instance.current, :developer_or_admin?
       authorize @application
 
       result = BeachApiCore::DoorkeeperInteractor::ApplicationUpdate.call(
@@ -55,7 +55,7 @@ module BeachApiCore
     end
 
     def destroy
-      authorize Instance.current, :developer?
+      authorize Instance.current, :developer_or_admin?
       authorize @application
 
       if @application.destroy
