@@ -1,10 +1,12 @@
 module BeachApiCore
   class EntityPolicy < ApplicationPolicy
-    alias show? entity_user?
-    alias destroy? entity_user?
-    alias lookup? entity_user?
-    alias create? entity_user?
-    alias index? entity_user?
+    def show?
+      entity_user?
+    end
+    alias destroy? show?
+    alias lookup? show?
+    alias create? show?
+    alias index? show?
 
     private
 
