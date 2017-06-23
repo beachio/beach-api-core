@@ -1,14 +1,14 @@
 module BeachApiCore
   class EntityPolicy < ApplicationPolicy
-    def show?
-      record.user == user
-    end
+    alias show? entity_user?
+    alias destroy? entity_user?
+    alias lookup? entity_user?
+    alias create? entity_user?
+    alias index? entity_user?
 
-    def destroy?
-      record.user == user
-    end
+    private
 
-    def lookup?
+    def entity_user?
       record.user == user
     end
   end
