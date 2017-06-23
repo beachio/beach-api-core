@@ -5,7 +5,7 @@ module BeachApiCore
     end
 
     def update?
-      organisation_owner?
+      organisation_owner? || admin?
     end
     alias destroy? update?
 
@@ -13,6 +13,10 @@ module BeachApiCore
 
     def organisation_owner?
       record.owners.include?(user)
+    end
+
+    def admin?
+      user.role?(Role.admin, record)
     end
   end
 end

@@ -101,7 +101,8 @@ module BeachApiCore
 
     def generate_username
       return if email.blank? || username.present?
-      self.username = Regexp.last_match[1] if email =~ /\A(.*)@/
+      uniq_number = BeachApiCore::User.maximum(:id).to_i + 1
+      self.username = "#{Regexp.last_match[1]}-#{uniq_number}" if email =~ /\A(.*)@/
     end
   end
 end

@@ -24,6 +24,7 @@ module BeachApiCore
     def create
       result = BeachApiCore::InvitationCreate.call(params: invitation_params,
                                                    group: @group,
+                                                   application: current_application,
                                                    user: current_user)
       if result.success?
         render_json_success(result.invitation, result.status, root: :invitation)

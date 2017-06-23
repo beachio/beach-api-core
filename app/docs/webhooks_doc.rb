@@ -9,8 +9,10 @@ module WebhooksDoc
 
   api :POST, '/webhooks', I18n.t('api.resource_description.descriptions.webhooks.create')
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
-  param :uri, String, required: true
-  param :kind, String, required: true, desc: I18n.t('api.resource_description.descriptions.params.event_type')
+  param :webhook, Hash, required: true do
+    param :uri, String, required: true
+    param :kind, String, required: true, desc: I18n.t('api.resource_description.descriptions.params.event_type')
+  end
   example "\"webhook\": #{apipie_webhook_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"

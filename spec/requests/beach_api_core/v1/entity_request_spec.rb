@@ -143,6 +143,13 @@ module BeachApiCore
               get beach_api_core.lookup_v1_entities_path(entity: { uid: entity.uid }), headers: bearer_auth
             end.to raise_error(ActionController::ParameterMissing)
           end
+
+          it_behaves_like 'resource not found' do
+            before do
+              get beach_api_core.lookup_v1_entities_path(entity: { uid: Faker::Crypto.md5, kind: Faker::Lorem.word }),
+                  headers: bearer_auth
+            end
+          end
         end
       end
 
