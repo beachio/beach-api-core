@@ -119,3 +119,38 @@ shared_examples_for 'request: valid interaction create request' do |interaction_
     expect(json_body[:interaction][:user][:id]).to eq oauth_user.id
   end
 end
+
+shared_examples 'request: entity message response' do
+  it 'should return correct interaction' do
+    expect(interaction_body.keys).to match_array BeachApiCore::INTERACTION_KEYS
+    %i(id kind).each { |key| expect(interaction_body[key]).to eq @interaction.send(key) }
+  end
+
+  it 'should return correct user' do
+    expect(interaction_body[:user].keys).to match_array BeachApiCore::USER_KEYS
+    BeachApiCore::USER_KEYS.without(:avatar_url).each do |key|
+      expect(interaction_body[:user][key]).to eq @interaction.user.send(key)
+    end
+  end
+
+  it 'should return correct interaction keepers' do
+    expect(interaction_body[:interaction_keepers].size).to eq 1
+    expect(interaction_body[:interaction_keepers].first.keys).to match_array BeachApiCore::INTERACTION_KEEPER_KEYS
+    BeachApiCore::INTERACTION_KEEPER_KEYS.each do |key|
+      expect(interaction_body[:interaction_keepers].first[key])
+        .to eq @interaction.interaction_keepers.first.send(key)
+    end
+  end
+
+  it 'should return correct interaction attributes' do
+    expect(interaction_body[:interaction_attributes].size).to eq 1
+    expect(interaction_body[:interaction_attributes].first.keys)
+      .to match_array BeachApiCore::INTERACTION_ATTRIBUTE_KEYS
+    %i(id key).each do |key|
+      expect(interaction_body[:interaction_attributes].first[key])
+        .to eq @interaction.interaction_attributes.first.send(key)
+    end
+    expect(interaction_body[:interaction_attributes].first[:values].keys).to eq %i(text)
+    expect(interaction_body[:interaction_attributes].first[:values][:text]).to eq message_text
+  end
+end

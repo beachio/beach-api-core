@@ -187,6 +187,27 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                          sender: apipie_user)
   end
 
+  def apipie_message_interaction_attributes
+    @_apipie_interaction_attributes ||=
+        BeachApiCore::InteractionAttribute.new(id: fake_id,
+                                               key: 'message',
+                                               values: { text: Faker::Lorem.sentence })
+  end
+
+  def apipie_message_interaction_keeper
+    @_apipie_interaction_keeper ||= BeachApiCore::InteractionKeeper.new(id: fake_id,
+                                                                        keeper: apipie_entity)
+  end
+
+  def apipie_message_interaction
+    @_apipie_message_interaction ||=
+        BeachApiCore::Interaction.new(id: fake_id,
+                                      user: apipie_user,
+                                      kind: 'chat',
+                                      interaction_attributes: [apipie_message_interaction_attributes],
+                                      interaction_keepers: [apipie_message_interaction_keeper])
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end
