@@ -127,8 +127,8 @@ shared_examples 'request: entity message response' do
   end
 
   it 'should return correct user' do
-    expect(interaction_body[:user].keys).to match_array BeachApiCore::USER_KEYS
-    BeachApiCore::USER_KEYS.without(:avatar_url).each do |key|
+    expect(interaction_body[:user].keys).to match_array BeachApiCore::INTERACTION_USER_KEYS
+    BeachApiCore::INTERACTION_USER_KEYS.without(:avatar_url).each do |key|
       expect(interaction_body[:user][key]).to eq @interaction.user.send(key)
     end
   end

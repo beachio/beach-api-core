@@ -6,8 +6,6 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    INTERACTION_KEYS = %i(id created_at kind template user interaction_attributes interaction_keepers).freeze
-
     describe 'when create' do
       context 'when invalid' do
         it_behaves_like 'an authenticated resource' do

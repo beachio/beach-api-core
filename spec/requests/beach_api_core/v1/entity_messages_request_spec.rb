@@ -2,8 +2,7 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::EntityMessages', type: :request do
-    INTERACTION_KEYS = %i(id created_at kind template user interaction_attributes interaction_keepers).freeze
-    USER_KEYS = %i(id email username first_name last_name avatar_url).freeze
+    INTERACTION_USER_KEYS = %i(id email username first_name last_name avatar_url).freeze
     INTERACTION_KEEPER_KEYS = %i(id keeper_type keeper_id).freeze
     INTERACTION_ATTRIBUTE_KEYS = %i(id key values).freeze
 
