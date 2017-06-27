@@ -96,6 +96,10 @@ module BeachApiCore
                                .joins(:interaction_keepers).distinct
     end
 
+    def interaction_serializer
+      BeachApiCore::SimpleInteractionSerializer
+    end
+
     private
 
     def load_entity
@@ -104,10 +108,6 @@ module BeachApiCore
 
     def load_interaction
       @interaction = BeachApiCore::Interaction.find(params[:id])
-    end
-
-    def interaction_serializer
-      BeachApiCore::SimpleInteractionSerializer
     end
   end
 end
