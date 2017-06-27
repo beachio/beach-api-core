@@ -5,4 +5,5 @@ module BeachApiCore
   USER_KEYS = %i(id email username profile organisations user_preferences is_me).freeze
   USER_SIMPLE_KEYS = %i(id email username first_name last_name avatar_url).freeze
   TEAM_KEYS = %i(id name).freeze
+  INTERACTION_KEYS = %i(id created_at kind template user interaction_attributes interaction_keepers).freeze
 end
