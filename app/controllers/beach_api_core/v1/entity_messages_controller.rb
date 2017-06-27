@@ -13,8 +13,8 @@ module BeachApiCore
       error code: 400, desc: I18n.t('api.resource_description.errors.bad_request')
     end
 
+    # TODO: add policy
     def index
-      authorize @entity
       yield if block_given?
 
       render_json_success(interactions, :ok,
@@ -23,8 +23,8 @@ module BeachApiCore
                           doorkeeper_token: doorkeeper_token)
     end
 
+    # TODO: add policy
     def create
-      authorize @entity
       if block_given?
         yield
       else
@@ -43,7 +43,7 @@ module BeachApiCore
     end
 
     def update
-      authorize @entity
+      authorize @interaction
       if block_given?
         yield
       else
@@ -60,7 +60,7 @@ module BeachApiCore
     end
 
     def destroy
-      authorize @entity
+      authorize @interaction
       if block_given?
         yield
       else

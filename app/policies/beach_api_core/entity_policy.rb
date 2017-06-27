@@ -3,8 +3,6 @@ module BeachApiCore
     def show?
       entity_user?
     end
-    alias index? show?
-    alias create? show?
     alias destroy? show?
     alias lookup? show?
     alias update? show?
