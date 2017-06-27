@@ -14,12 +14,12 @@ module MembershipsDoc
   example "\"team(or organisation)\": #{apipie_team_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create; end
+  def create_doc; end
 
   api :DELETE, '/memberships/:id', I18n.t('api.resource_description.descriptions.memberships.destroy')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example I18n.t('api.resource_description.fail',
                  description: I18n.t('api.errors.could_not_remove',
                                      model: I18n.t('activerecord.models.beach_api_core/membership.downcase')))
-  def destroy; end
+  def destroy_doc; end
 end

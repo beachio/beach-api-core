@@ -16,5 +16,5 @@ module EmailsDoc
     param :scheduled_time, Integer, desc: I18n.t('api.resource_description.descriptions.params.email_timestamp')
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
-  def create; end
+  def create_doc; end
 end

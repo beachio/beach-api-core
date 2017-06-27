@@ -5,7 +5,7 @@ module ApplicationsDoc
   api :GET, '/applications', I18n.t('api.resource_description.descriptions.applications.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"applications\": [#{apipie_application_response}, ...]"
-  def index; end
+  def index_doc; end
 
   api :POST, '/applications', I18n.t('api.resource_description.descriptions.applications.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -16,12 +16,12 @@ module ApplicationsDoc
   example "\"application\": #{apipie_application_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create; end
+  def create_doc; end
 
   api :GET, '/applications/:id', I18n.t('api.resource_description.descriptions.applications.get')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"application\": #{apipie_application_response}"
-  def show; end
+  def show_doc; end
 
   api :PUT, '/applications/:id', I18n.t('api.resource_description.descriptions.applications.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -31,12 +31,12 @@ module ApplicationsDoc
   example "\"application\": #{apipie_application_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def update; end
+  def update_doc; end
 
   api :DELETE, '/applications/:id', I18n.t('api.resource_description.descriptions.applications.delete')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example I18n.t('api.resource_description.fail',
                  description: I18n.t('api.errors.could_not_remove',
                                      model: I18n.t('activerecord.models.doorkeeper/application.downcase')))
-  def destroy; end
+  def destroy_doc; end
 end

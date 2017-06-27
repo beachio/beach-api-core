@@ -16,7 +16,7 @@ module OrganisationsDoc
   api :GET, '/organisations', I18n.t('api.resource_description.descriptions.organisations.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"organisations\": [#{apipie_organisation_response}, ...]"
-  def index; end
+  def index_doc; end
 
   api :POST, '/organisations', I18n.t('api.resource_description.descriptions.organisations.create')
   param_group :organisation
@@ -24,12 +24,12 @@ module OrganisationsDoc
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  def create; end
+  def create_doc; end
 
   api :GET, '/organisations/:id', I18n.t('api.resource_description.descriptions.organisations.get')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"organisation\": #{apipie_organisation_response}"
-  def show; end
+  def show_doc; end
 
   api :PUT, '/organisations/:id', I18n.t('api.resource_description.descriptions.organisations.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -37,22 +37,22 @@ module OrganisationsDoc
   example "\"organisation\": #{apipie_organisation_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def update; end
+  def update_doc; end
 
   api :DELETE, '/organisations/:id', I18n.t('api.resource_description.descriptions.organisations.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example I18n.t('api.resource_description.fail',
                  description: I18n.t('api.errors.could_not_remove',
                                      model: I18n.t('activerecord.models.beach_api_core/organisation.downcase')))
-  def destroy; end
+  def destroy_doc; end
 
   api :GET, '/organisations/users', I18n.t('api.resource_description.descriptions.organisations.get_users')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :term, String, desc: I18n.t('api.resource_description.descriptions.params.term_for_autocomplete')
   example "\"users\": [#{apipie_organisation_user_response}, ...]"
-  def users; end
+  def users_doc; end
 
   api :PUT, '/organisations/:id/current', I18n.t('api.resource_description.descriptions.organisations.set_context')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  def current; end
+  def current_doc; end
 end

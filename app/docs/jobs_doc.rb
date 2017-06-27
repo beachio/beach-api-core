@@ -25,15 +25,15 @@ module JobsDoc
   end
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   example "\"job\": #{apipie_job_response}"
-  def create; end
+  def create_doc; end
 
   api :GET, '/job/:id', I18n.t('api.resource_description.descriptions.jobs.show')
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   example "\"job\": #{apipie_job_response}"
-  def show; end
+  def show_doc; end
 
   api :DELETE, '/jobs/:id', I18n.t('api.resource_description.descriptions.jobs.destroy')
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   example "\"job\": #{apipie_job_response}"
-  def destroy; end
+  def destroy_doc; end
 end

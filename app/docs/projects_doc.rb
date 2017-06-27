@@ -12,12 +12,12 @@ module ProjectsDoc
   end
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
-  def create; end
+  def create_doc; end
 
   api :GET, '/projects/:id', I18n.t('api.resource_description.descriptions.projects.get')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
-  def show; end
+  def show_doc; end
 
   api :PUT, '/projects/:id', I18n.t('api.resource_description.descriptions.projects.update')
   param :project, Hash, required: true do
@@ -29,10 +29,10 @@ module ProjectsDoc
   end
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
-  def update; end
+  def update_doc; end
 
   api :DELETE, '/projects/:id', I18n.t('api.resource_description.descriptions.projects.destroy')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"project\": #{apipie_project_response}"
-  def destroy; end
+  def destroy_doc; end
 end

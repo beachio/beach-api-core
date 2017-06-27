@@ -9,5 +9,5 @@ module ChannelsDoc
     param :kind, String, required: true
   end
   example "\"channels\": [#{apipie_user_channel_response}, #{apipie_entity_channel_response}]"
-  def index; end
+  def index_doc; end
 end
