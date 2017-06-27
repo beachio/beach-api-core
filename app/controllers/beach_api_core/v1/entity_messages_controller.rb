@@ -5,7 +5,6 @@ module BeachApiCore
     before_action :doorkeeper_authorize!
     before_action :load_entity
     before_action :load_interaction, only: %i(update destroy)
-    before_action :set_default_serializer
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/entity_message.capital_other')
@@ -15,17 +14,17 @@ module BeachApiCore
     end
 
     def index
-      authorize @entity, :show?
+      authorize @entity
       yield if block_given?
 
       render_json_success(interactions, :ok,
                           root: :interactions,
-                          each_serializer: @serializer,
+                          each_serializer: interaction_serializer,
                           doorkeeper_token: doorkeeper_token)
     end
 
     def create
-      authorize @entity, :update?
+      authorize @entity
       if block_given?
         yield
       else
@@ -36,18 +35,15 @@ module BeachApiCore
                                                                      params: interaction_params)
       end
 
-      if @result.success?
-        render_json_success(@result.interaction, @result.status,
-                            root: :interaction,
-                            serializer: @serializer,
-                            doorkeeper_token: doorkeeper_token)
-      else
-        render_json_error({ message: @result.message }, @result.status)
-      end
+      return render_json_error({ message: @result.message }, @result.status) unless @result.success?
+
+      render_json_success(@result.interaction, @result.status,
+                          root: :interaction, serializer: interaction_serializer,
+                          doorkeeper_token: doorkeeper_token)
     end
 
     def update
-      authorize @entity, :update?
+      authorize @entity
       if block_given?
         yield
       else
@@ -56,30 +52,23 @@ module BeachApiCore
                                                                      message_text: message_text)
       end
 
-      if @result.success?
-        render_json_success(@result.interaction, @result.status,
-                            root: :interaction,
-                            serializer: @serializer,
-                            doorkeeper_token: doorkeeper_token)
-      else
-        render_json_error({ message: @result.message }, @result.status)
-      end
+      return render_json_error({ message: @result.message }, @result.status) unless @result.success?
+
+      render_json_success(@result.interaction, @result.status,
+                          root: :interaction, serializer: interaction_serializer,
+                          doorkeeper_token: doorkeeper_token)
     end
 
     def destroy
-      authorize @entity, :update?
+      authorize @entity
       if block_given?
         yield
       else
-        @result = BeachApiCore::InteractionDestroy.call(doorkeeper_token: doorkeeper_token,
-                                                        interaction: @interaction)
+        @result = BeachApiCore::InteractionDestroy.call(doorkeeper_token: doorkeeper_token, interaction: @interaction)
       end
 
-      if @result.success?
-        head :no_content
-      else
-        render_json_error({ message: @result.message }, @result.status)
-      end
+      return head(:no_content) if @result.success?
+      render_json_error({ message: @result.message }, @result.status)
     end
 
     protected
@@ -102,9 +91,9 @@ module BeachApiCore
 
     def interactions
       entity_interaction_keepers = BeachApiCore::InteractionKeeper.where(keeper: @entity).select(:id)
-      BeachApiCore::Interaction.joins(:interaction_keepers)
-        .where(kind: 'chat', beach_api_core_interaction_keepers: { id: entity_interaction_keepers })
-        .distinct
+      BeachApiCore::Interaction.where(kind: 'chat',
+                                      beach_api_core_interaction_keepers: { id: entity_interaction_keepers })
+                               .joins(:interaction_keepers).distinct
     end
 
     private
@@ -117,8 +106,8 @@ module BeachApiCore
       @interaction = BeachApiCore::Interaction.find(params[:id])
     end
 
-    def set_default_serializer
-      @serializer = BeachApiCore::SimpleInteractionSerializer
+    def interaction_serializer
+      BeachApiCore::SimpleInteractionSerializer
     end
   end
 end
