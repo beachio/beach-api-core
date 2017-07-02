@@ -9,6 +9,7 @@ require 'apipie-rails'
 require 'activerecord_lookup_or_initialize'
 require 'rmagick'
 require 'draper'
+require 'acts_as_downcasable_on'
 
 module BeachApiCore
   class Engine < ::Rails::Engine

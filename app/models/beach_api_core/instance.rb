@@ -1,6 +1,5 @@
 module BeachApiCore
   class Instance < ApplicationRecord
-    include Concerns::Downcasable
     include BeachApiCore::Concerns::KeeperRoles
 
     has_many :profile_custom_fields, as: :keeper, inverse_of: :keeper, dependent: :destroy
@@ -8,7 +7,7 @@ module BeachApiCore
     validates :name, presence: true, uniqueness: true
     validate :validate_single_record
 
-    acts_as_downcasable_on [:name]
+    acts_as_downcasable_on :name
 
     class << self
       def current
