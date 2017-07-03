@@ -6,5 +6,6 @@ module BeachApiCore
     validates :interaction, :key, presence: true
 
     acts_as_downcasable_on :key
+    acts_as_strippable_on :key
   end
 end

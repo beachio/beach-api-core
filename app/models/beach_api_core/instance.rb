@@ -8,6 +8,7 @@ module BeachApiCore
     validate :validate_single_record
 
     acts_as_downcasable_on :name
+    acts_as_strippable_on :name
 
     class << self
       def current

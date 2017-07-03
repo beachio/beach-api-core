@@ -50,6 +50,7 @@ module BeachApiCore
 
     has_secure_password
     acts_as_downcasable_on :email, :username
+    acts_as_strippable_on :email, :username
 
     accepts_nested_attributes_for :profile
     accepts_nested_attributes_for :organisation_memberships,
