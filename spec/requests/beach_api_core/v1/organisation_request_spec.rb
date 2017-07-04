@@ -180,9 +180,10 @@ module BeachApiCore
           access_token.update(organisation: organisation)
         end
 
-        it 'should should respond with forbidden status' do
+        it 'should should list of users' do
           get beach_api_core.users_v1_organisations_path, headers: bearer_auth
-          expect(response.status).to eq 403
+          expect(response.status).to eq 200
+          expect(json_body[:users]).to be_present
         end
       end
 
