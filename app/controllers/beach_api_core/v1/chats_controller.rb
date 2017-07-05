@@ -2,9 +2,9 @@ module BeachApiCore
   class V1::ChatsController < BeachApiCore::V1::BaseController
     include ChatsDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
-    before_action :application_authorize!, only: [:create, :add_recipient]
-    before_action :doorkeeper_authorize!, except: [:create, :add_recipient]
-    before_action :get_resource, only: [:read, :add_recipient]
+    before_action :application_authorize!, only: %i(create add_recipient)
+    before_action :doorkeeper_authorize!, except: %i(create add_recipient)
+    before_action :get_resource, only: %i(read add_recipient)
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/chat.other')

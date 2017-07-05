@@ -8,15 +8,14 @@ Metrics/ClassLength:
   Max: 200
 Metrics/ModuleLength:
   Exclude:
+    - 'app/controllers/beach_api_core/concerns/v1/apipie_concern.rb'
     - '**/*_spec.rb'
     - 'spec/factories/**/*'
     - 'spec/dummy/db/migrate/*'
 Metrics/BlockLength:
   Exclude:
     - 'config/routes.rb'
-    - '**/*_spec.rb'
-    - 'spec/factories/**/*'
-    - 'spec/dummy/db/migrate/*'
+    - 'spec/**/*'
 Documentation:
   Enabled: false
 Style/SignalException:

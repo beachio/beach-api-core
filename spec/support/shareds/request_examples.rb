@@ -59,7 +59,6 @@ shared_examples_for 'request: returns chat' do |chat_keys|
   end
 end
 
-
 shared_examples_for 'request: returns chats' do |chat_keys|
   it do
     expect(response.status).to eq 200

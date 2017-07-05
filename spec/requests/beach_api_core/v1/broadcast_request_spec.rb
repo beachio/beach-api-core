@@ -10,9 +10,9 @@ module BeachApiCore
       context 'UserChannel' do
         before do
           @channel_params = {
-              name: 'UserChannel',
-              id: create(:user).id,
-              payload: { Faker::Lorem.word => Faker::Lorem.word }
+            name: 'UserChannel',
+            id: create(:user).id,
+            payload: { Faker::Lorem.word => Faker::Lorem.word }
           }
         end
 
@@ -29,9 +29,9 @@ module BeachApiCore
       context 'EntityChannel' do
         before do
           @channel_params = {
-              name: 'EntityChannel',
-              id: create(:entity).id,
-              payload: { Faker::Lorem.word => Faker::Lorem.word }
+            name: 'EntityChannel',
+            id: create(:entity).id,
+            payload: { Faker::Lorem.word => Faker::Lorem.word }
           }
         end
 
@@ -48,9 +48,9 @@ module BeachApiCore
       context 'wrong channel name' do
         before do
           @channel_params = {
-              name: Faker::Lorem.word,
-              id: create(:entity).id,
-              payload: { Faker::Lorem.word => Faker::Lorem.word }
+            name: Faker::Lorem.word,
+            id: create(:entity).id,
+            payload: { Faker::Lorem.word => Faker::Lorem.word }
           }
         end
 

@@ -11,8 +11,7 @@ module BeachApiCore
       result = BeachApiCore::SignUp.call(user_create_params.merge(headers: request.headers['HTTP_AUTHORIZATION']))
       if result.success?
         render_json_success({ user: BeachApiCore::UserSerializer.new(result.user, root: :user),
-                              access_token: result.access_token&.token },
-                            result.status,
+                              access_token: result.access_token&.token }, result.status,
                             keepers: [Instance.current],
                             current_user: result.user,
                             root: :user)

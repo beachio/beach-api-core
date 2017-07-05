@@ -77,12 +77,12 @@ module BeachApiCore
         expect do
           post beach_api_core.v1_invitations_path,
                params: {
-                   invitation: { email: Faker::Internet.email,
-                                 first_name: Faker::Name.first_name,
-                                 last_name: Faker::Name.last_name,
-                                 role_ids: [(create :role).id] },
-                   group_id: team.id,
-                   group_type: 'Team'
+                 invitation: { email: Faker::Internet.email,
+                               first_name: Faker::Name.first_name,
+                               last_name: Faker::Name.last_name,
+                               role_ids: [(create :role).id] },
+                 group_id: team.id,
+                 group_type: 'Team'
                },
                headers: bearer_auth
         end.to change(Invitation, :count).by(1)

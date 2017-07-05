@@ -225,7 +225,7 @@ module BeachApiCore
         it 'should change read field' do
           expect do
             put beach_api_core.read_v1_chat_path(@chat), headers: bearer_auth
-          end.to(change{ @message.read_by?(oauth_user) })
+          end.to(change { @message.read_by?(oauth_user) })
         end
 
         it 'should return message' do
