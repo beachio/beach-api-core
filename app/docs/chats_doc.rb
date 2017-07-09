@@ -5,7 +5,7 @@ module ChatsDoc
   api :GET, '/chats', I18n.t('api.resource_description.descriptions.chats.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"chats\": [#{apipie_chat_response}, ...]"
-  def show_doc; end
+  def show; end
 
   api :POST, '/chats', I18n.t('api.resource_description.descriptions.chats.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -17,7 +17,7 @@ module ChatsDoc
   example "\"chat\": #{apipie_chat_response}
     \n#{I18n.t('api.resource_description.fail',
                description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create_doc; end
+  def create; end
 
   api :POST, '/chats/:id/add_recipient', I18n.t('api.resource_description.descriptions.chats.add_recipient')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -27,7 +27,7 @@ module ChatsDoc
   example "\"chat\": #{apipie_chat_response}
     \n#{I18n.t('api.resource_description.fail',
                description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def add_recipient_doc; end
+  def add_recipient; end
 
   api :POST, '/chats/:id/read', I18n.t('api.resource_description.descriptions.chats.read')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -37,5 +37,5 @@ module ChatsDoc
   example "\"chat\": #{apipie_chat_response}
     \n#{I18n.t('api.resource_description.fail',
                description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def read_doc; end
+  def read; end
 end

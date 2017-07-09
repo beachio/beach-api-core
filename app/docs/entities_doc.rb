@@ -5,7 +5,7 @@ module EntitiesDoc
   api :GET, '/entities/:id', I18n.t('api.resource_description.descriptions.entities.show')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"entity\": #{apipie_entity_response}"
-  def show_doc; end
+  def show; end
 
   api :POST, '/entities', I18n.t('api.resource_description.descriptions.entities.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -17,14 +17,14 @@ module EntitiesDoc
   example "\"entity\": #{apipie_entity_response}
                   \n#{I18n.t('api.resource_description.fail',
                              description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create_doc; end
+  def create; end
 
   api :DELETE, '/entities/:id', I18n.t('api.resource_description.descriptions.entities.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example I18n.t('api.resource_description.fail',
                  description: I18n.t('api.errors.could_not_remove',
                                      model: I18n.t('activerecord.models.beach_api_core/entity.downcase')))
-  def destroy_doc; end
+  def destroy; end
 
   api :GET, '/entities/lookup', I18n.t('api.resource_description.descriptions.entities.lookup')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -33,5 +33,5 @@ module EntitiesDoc
     param :kind, String, required: true
   end
   example "\"entity\": #{apipie_entity_response}"
-  def lookup_doc; end
+  def lookup; end
 end

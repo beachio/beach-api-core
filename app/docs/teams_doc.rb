@@ -14,11 +14,11 @@ module TeamsDoc
   example "\"team\": #{apipie_team_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create_doc; end
+  def create; end
 
   api :GET, '/teams/:id', I18n.t('api.resource_description.descriptions.teams.get')
   example "\"team\": #{apipie_team_response}"
-  def show_doc; end
+  def show; end
 
   api :PUT, '/teams/:id', I18n.t('api.resource_description.descriptions.teams.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -26,12 +26,12 @@ module TeamsDoc
   example "\"team\": #{apipie_team_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def update_doc; end
+  def update; end
 
   api :DELETE, '/teams/:id', I18n.t('api.resource_description.descriptions.teams.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example I18n.t('api.resource_description.fail',
                  description: I18n.t('api.errors.could_not_remove',
                                      model: I18n.t('activerecord.models.beach_api_core/team.downcase')))
-  def destroy_doc; end
+  def destroy; end
 end

@@ -13,5 +13,5 @@ module SessionsDoc
                                 description: I18n.t('api.resource_description.fails.could_not_authorize_user')),
         meta: { message: I18n.t('api.resource_description.fail',
                                 description: I18n.t('api.resource_description.fails.error_description')) }
-  def create_doc; end
+  def create; end
 end

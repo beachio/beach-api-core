@@ -5,7 +5,7 @@ module MessagesDoc
   api :GET, '/chats/:id/messages', I18n.t('api.resource_description.descriptions.messages.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"messages\": [#{apipie_message_response}, ...]"
-  def index_doc; end
+  def index; end
 
   api :POST, '/chats/:id/messages', I18n.t('api.resource_description.descriptions.messages.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -13,5 +13,5 @@ module MessagesDoc
   example "\"message\": #{apipie_message_response}
     \n#{I18n.t('api.resource_description.fail',
                description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create_doc; end
+  def create; end
 end

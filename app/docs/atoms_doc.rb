@@ -16,7 +16,7 @@ module AtomsDoc
   example "\"atom\": #{apipie_atom_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create_doc; end
+  def create; end
 
   api :PUT, '/atoms', I18n.t('api.resource_description.descriptions.atoms.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -25,14 +25,14 @@ module AtomsDoc
   example "\"atom\": #{apipie_atom_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def update_doc; end
+  def update; end
 
   api :GET, '/atoms/:id', I18n.t('api.resource_description.descriptions.atoms.get')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"atom\": #{apipie_atom_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def show_doc; end
+  def show; end
 
   api :GET, '/atoms', I18n.t('api.resource_description.descriptions.atoms.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -40,7 +40,7 @@ module AtomsDoc
   param :kind, String, required: true
   param :actions, Array, required: true
   example "\"atoms\": [#{apipie_atom_response}, ...]"
-  def index_doc; end
+  def index; end
 
   api :DELETE, '/atoms', I18n.t('api.resource_description.descriptions.atoms.remove')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -48,5 +48,5 @@ module AtomsDoc
   example I18n.t('api.resource_description.fail',
                  description: I18n.t('api.errors.could_not_remove',
                                      model: I18n.t('activerecord.models.beach_api_core/atom.downcase')))
-  def destroy_doc; end
+  def destroy; end
 end

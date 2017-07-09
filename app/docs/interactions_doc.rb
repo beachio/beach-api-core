@@ -18,5 +18,5 @@ module InteractionsDoc
   example "\"interaction\": #{apipie_interaction_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def create_doc; end
+  def create; end
 end

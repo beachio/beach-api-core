@@ -12,12 +12,12 @@ module UsersDoc
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
-  def create_doc; end
+  def create; end
 
   api :GET, '/user', I18n.t('api.resource_description.descriptions.users.get')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"user\": #{apipie_user_response}"
-  def show_doc; end
+  def show; end
 
   api :PUT, '/user', I18n.t('api.resource_description.descriptions.users.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
@@ -46,10 +46,10 @@ module UsersDoc
   example "\"user\": #{apipie_user_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
-  def update_doc; end
+  def update; end
 
   api :POST, '/users/:id/confirm', I18n.t('api.resource_description.descriptions.users.confirm')
   param :confirmation_token, String, required: true
   example "\"user\": #{apipie_user_response}"
-  def confirm_doc; end
+  def confirm; end
 end
