@@ -22,5 +22,8 @@ module BeachApiCore::Concerns::V1::RescueFromConcern
       render_json_error({ message: e.message }, :unprocessable_entity)
     end
 
+    rescue_from BeachApiCore::Exception::ParamMissing do |e|
+      render_json_error({ message: e.message }, :unprocessable_entity)
+    end
   end
 end
