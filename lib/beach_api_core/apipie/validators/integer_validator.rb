@@ -1,5 +1,4 @@
 class IntegerValidator < Apipie::Validator::BaseValidator
-
   def initialize(param_description, argument)
     super(param_description)
     @type = argument
