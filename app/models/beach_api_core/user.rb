@@ -1,6 +1,5 @@
 module BeachApiCore
   class User < ApplicationRecord
-    include Concerns::Downcasable
     include Concerns::UserConfirm
     include Concerns::UserRoles
     include Concerns::UserPermissions
@@ -50,7 +49,8 @@ module BeachApiCore
     validate :correct_current_password, if: :require_current_password
 
     has_secure_password
-    acts_as_downcasable_on %i(email username)
+    acts_as_downcasable_on :email, :username
+    acts_as_strippable_on :email, :username
 
     accepts_nested_attributes_for :profile
     accepts_nested_attributes_for :organisation_memberships,

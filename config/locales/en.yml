@@ -82,6 +82,11 @@ en:
           create: "Create an entity"
           remove: "Remove an entity"
           lookup: "Find entity by params"
+        entity_messages:
+          list: "Get list of entity messages"
+          create: "Create an entity message"
+          update: "Update an entity message"
+          remove: "Remove an entity message"
         favourites:
           create: "Create favourite item"
           list: "List of user favourites items"
@@ -212,6 +217,13 @@ en:
         downcase: "email"
       email:
         <<: *email
+      beach_api_core/entity_message: &entity_message
+        one: "Entity Message"
+        other: "Entity Messages"
+        downcase: "entity message"
+        capital_other: "Entity messages"
+      entity_message:
+        <<: *entity_message
       beach_api_core/favourite: &favourite
         one: "Favourite"
         other: "Favourites"

@@ -10,6 +10,8 @@ require 'activerecord_lookup_or_initialize'
 require 'rmagick'
 require 'draper'
 require 'sidekiq'
+require 'acts_as_downcasable_on'
+require 'acts_as_strippable_on'
 
 module BeachApiCore
   # Controller names that should be filtered from available controller list

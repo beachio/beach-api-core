@@ -62,7 +62,7 @@ module BeachApiCore
     it 'should generate unique username from email' do
       user = create :user, email: 'user.email@example.com'
       expect(user.username).to match(/user.email-\d/)
-      expect{ create :user, email: 'user.email@example1.com' }
+      expect { create :user, email: 'user.email@example1.com' }
         .to change(BeachApiCore::User, :count).by(1)
     end
 

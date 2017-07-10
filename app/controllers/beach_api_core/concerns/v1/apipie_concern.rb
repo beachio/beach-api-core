@@ -4,11 +4,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   def apipie_user
     return @_apipie_user if @_apipie_user
     @_apipie_user = BeachApiCore::User.new(id: fake_id, email: Faker::Internet.email)
-    @_apipie_user.build_profile(first_name: Faker::Name.first_name,
-                                last_name: Faker::Name.last_name,
-                                sex: BeachApiCore::Profile.sexes.keys.sample,
-                                birth_date: Time.now.utc - rand(50 * 365).days,
-                                avatar: apipie_asset)
+    build_apipie_user_profile
     @_apipie_user.organisations = [apipie_organisation]
     @_apipie_user.assignments.build(keeper: @_apipie_user.organisations.first, role: BeachApiCore::Role.developer)
     @_apipie_user.valid?
@@ -45,18 +41,16 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   end
 
   def apipie_interaction_attributes
-    @_apipie_interaction_attributes ||=
-        BeachApiCore::InteractionAttribute.new(id: fake_id,
-                                               key: "#{Faker::Lorem.word}-#{Faker::Number.number(2)}",
-                                               values: { text: Faker::Lorem.sentence })
+    @_apipie_interaction_attributes ||= BeachApiCore::
+            InteractionAttribute.new(id: fake_id,
+                                     key: "#{Faker::Lorem.word}-#{Faker::Number.number(2)}",
+                                     values: { text: Faker::Lorem.sentence })
   end
 
   def apipie_interaction_keeper
-    @_apipie_interaction_keeper ||=
-        BeachApiCore::InteractionKeeper.new(id: fake_id,
-                                            keeper: apipie_entity)
+    @_apipie_interaction_keeper ||= BeachApiCore::InteractionKeeper.new(id: fake_id,
+                                                                        keeper: apipie_entity)
   end
-
 
   def apipie_interaction
     @_apipie_interaction ||= BeachApiCore::Interaction.new(id: fake_id,
@@ -187,6 +181,26 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                          sender: apipie_user)
   end
 
+  def apipie_message_interaction_attributes
+    @_apipie_interaction_attributes ||= BeachApiCore::InteractionAttribute.new(id: fake_id,
+                                                                               key: 'message',
+                                                                               values: { text: Faker::Lorem.sentence })
+  end
+
+  def apipie_message_interaction_keeper
+    @_apipie_interaction_keeper ||= BeachApiCore::InteractionKeeper.new(id: fake_id,
+                                                                        keeper: apipie_entity)
+  end
+
+  def apipie_message_interaction
+    @_apipie_message_interaction ||= BeachApiCore::
+            Interaction.new(id: fake_id,
+                            user: apipie_user,
+                            kind: 'chat',
+                            interaction_attributes: [apipie_message_interaction_attributes],
+                            interaction_keepers: [apipie_message_interaction_keeper])
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end
@@ -195,5 +209,13 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
   def fake_id
     rand(1..100) * -1
+  end
+
+  def build_apipie_user_profile
+    @_apipie_user.build_profile(first_name: Faker::Name.first_name,
+                                last_name: Faker::Name.last_name,
+                                sex: BeachApiCore::Profile.sexes.keys.sample,
+                                birth_date: Time.now.utc - rand(50 * 365).days,
+                                avatar: apipie_asset)
   end
 end

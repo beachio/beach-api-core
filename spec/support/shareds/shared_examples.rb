@@ -16,6 +16,12 @@ shared_examples 'resource not found' do
   end
 end
 
+shared_examples 'successful response' do
+  it 'has status 200' do
+    expect(response.status).to eq(200)
+  end
+end
+
 shared_examples 'valid user response' do
   it do
     expect(json_body[:user]).to be_present

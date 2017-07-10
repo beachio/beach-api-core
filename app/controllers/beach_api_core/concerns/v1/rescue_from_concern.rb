@@ -17,5 +17,17 @@ module BeachApiCore::Concerns::V1::RescueFromConcern
     rescue_from ActiveSupport::MessageVerifier::InvalidSignature do |_|
       render_json_error({ message: 'Invalid token' }, :bad_request)
     end
+
+    rescue_from Apipie::ParamMissing do |e|
+      render_json_error({ message: e.message }, :unprocessable_entity)
+    end
+
+    rescue_from Apipie::ParamInvalid do |e|
+      render_json_error({ message: e.message }, :unprocessable_entity)
+    end
+
+    rescue_from BeachApiCore::Exception::ParamMissing do |e|
+      render_json_error({ message: e.message }, :unprocessable_entity)
+    end
   end
 end

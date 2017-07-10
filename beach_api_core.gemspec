@@ -35,6 +35,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'elasticsearch-model'
   s.add_dependency 'sidekiq'
   s.add_dependency 'whenever'
+  s.add_dependency 'acts_as_downcasable_on'
+  s.add_dependency 'acts_as_strippable_on'
 
   s.add_dependency 'interactor'
   s.add_dependency 'interactor-rails'

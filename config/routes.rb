@@ -6,6 +6,7 @@ BeachApiCore::Engine.routes.draw do
     resources :sessions, only: :create, path: :auth
     resources :favourites, only: %i(index create destroy)
     resources :entities, only: %i(show create destroy) do
+      resources :messages, only: %i(index create update destroy), controller: 'entity_messages'
       get :lookup, on: :collection
     end
     resources :webhooks, only: %i(index create destroy)

@@ -46,13 +46,13 @@ module BeachApiCore
         head :no_content
       else
         render_json_error({ message: I18n.t('api.errors.could_not_remove',
-                                            model: I18n.t('activerecord.models.beach_api_core/organisation.downcase')) },
+                                            model: I18n.t('activerecord.models.organisation.downcase')) },
                           :bad_request)
       end
     end
 
     def users
-      authorize current_organisation, :update?
+      authorize current_organisation, :show?
       # @todo: exclude current user from response?
       users = current_organisation.users.order(:id)
       render_json_success(users, :ok,

@@ -52,7 +52,6 @@ module BeachApiCore
           end
         end
 
-
         context 'with entity param' do
           context 'when entity exists' do
             before { entity.save! }
