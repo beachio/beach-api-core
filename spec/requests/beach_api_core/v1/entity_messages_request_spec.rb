@@ -2,6 +2,7 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::EntityMessages', type: :request do
+    include_context 'controller actions permissions'
     INTERACTION_USER_KEYS = %i(id email username first_name last_name avatar_url).freeze
     INTERACTION_KEEPER_KEYS = %i(id keeper_type keeper_id).freeze
     INTERACTION_ATTRIBUTE_KEYS = %i(id key values).freeze
