@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: https://github.com/vitalinfo/apipie-rails.git
-  revision: 878a604656f7e72efee8b06ee7c473c9d17b2966
+  revision: e83b91f2ce8b1336164689fcf41c8a7cf143dec0
   specs:
     apipie-rails (0.5.1)
       rails (>= 4.1)
@@ -169,7 +169,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.8.4)
       i18n (~> 0.5)
-    faraday (0.12.1)
+    faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -192,7 +192,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_portile2 (2.2.0)
-    minitest (5.10.2)
+    minitest (5.10.3)
     multi_json (1.12.1)
     multipart-post (2.0.0)
     mustermann (1.0.0)
@@ -310,7 +310,7 @@ GEM
     temple (0.8.0)
     thor (0.19.4)
     thread_safe (0.3.6)
-    tilt (2.0.7)
+    tilt (2.0.8)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     unf (0.1.4)
@@ -359,4 +359,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.1
+   1.15.3
