@@ -1,4 +1,4 @@
-module ActiveAdminBaseControllerExtension
+module BeachApiCore::ActiveAdminBaseControllerExtension
   extend ActiveSupport::Concern
 
   included do
