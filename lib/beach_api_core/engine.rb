@@ -20,7 +20,7 @@ module BeachApiCore
     end
 
     initializer :beach_api_core do
-      ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'admin'))
+      ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'admin')) if defined?(ActiveAdmin)
     end
 
     config.generators do |g|
