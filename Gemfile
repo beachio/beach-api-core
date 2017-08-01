@@ -30,3 +30,4 @@ group :test do
 end
 
 gem 'apipie-rails', git: 'https://github.com/vitalinfo/apipie-rails.git'
+gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin.git', ref: '54dcfe'
