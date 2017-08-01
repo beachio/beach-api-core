@@ -11,6 +11,7 @@ require 'rmagick'
 require 'draper'
 require 'acts_as_downcasable_on'
 require 'acts_as_strippable_on'
+require 'rails-jquery-autocomplete'
 
 module BeachApiCore
   class Engine < ::Rails::Engine

@@ -1,0 +1,9 @@
+#login
+  h2
+    = title 'Login'
+  = semantic_form_for :session, url: admin_sessions_create_path, class: 'formtastic' do |f|
+    = f.inputs do
+      = f.input :email, label: 'Email'
+      = f.input :password, label: 'Password'
+      = f.actions do
+        = f.action :submit, label: 'Login'

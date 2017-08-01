@@ -1,0 +1,63 @@
+@import "activeadmin_addons/all";
+@import "active_admin/mixins";
+@import "active_admin/base";
+
+.ui-autocomplete { position: absolute; cursor: default; background:#CCC }
+
+$in_queue-color: #FF9900;
+$on_hold-color: #FF0000;
+$in_review-color: #08A510;
+
+.status_tag {
+  &.in_queue { background: $in_queue-color; }
+  &.on_hold { background: $on_hold-color; }
+  &.in_review { background: $in_review-color; }
+}
+
+/* workarounds */
+html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+.ui-menu {
+  list-style:none;
+  padding: 2px;
+  margin: 0;
+  display:block;
+  float: left;
+}
+.ui-menu .ui-menu {
+  margin-top: -3px;
+}
+.ui-menu .ui-menu-item {
+  margin:0;
+  padding: 0;
+  zoom: 1;
+  float: left;
+  clear: left;
+  width: 100%;
+}
+.ui-menu .ui-menu-item .ui-menu-item-wrapper{
+  text-decoration: none;
+  display: block;
+  padding: .2em .4em;
+  line-height: 1.5;
+  zoom: 1;
+}
+.ui-menu .ui-menu-item .ui-menu-item-wrapper.ui-state-hover,
+.ui-menu .ui-menu-item .ui-menu-item-wrapper.ui-state-active {
+  font-weight: normal;
+  background:#FFF
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+form fieldset > ol > li.boolean label {
+  width: auto;
+}
+
+.ba-add-action {
+  input[type=text] {
+    margin-left: 20%;
+    width: calc(80% - 85px);
+  }
+}
