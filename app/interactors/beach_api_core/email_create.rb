@@ -3,7 +3,9 @@ module BeachApiCore
     include Interactor
 
     before do
-      Template.find_by!(name: context.email[:template], kind: :email) if context.email[:template].present?
+      if context.email[:template].present? && context.email[:mailer].blank?
+        Template.find_by!(name: context.email[:template], kind: :email)
+      end
     end
 
     def call
@@ -17,6 +19,7 @@ module BeachApiCore
       params = context.email.slice(:from, :cc, :subject, :body, :plain)
       params[:to] = recipients
       if context.email[:template].present?
+        params[:mailer] = context.email[:mailer] if context.email[:mailer].present?
         params[:template] = context.email[:template]
         params[:template_params] = context.email[:template_params] || {}
       end
