@@ -11,6 +11,7 @@ module EmailsDoc
     param :subject, String
     param :body, String, desc: I18n.t('api.resource_description.descriptions.params.email_html_body')
     param :plain, String, desc: I18n.t('api.resource_description.descriptions.params.email_plain_text_body')
+    param :mailer, String, desc: I18n.t('api.resource_description.descriptions.params.mailer')
     param :template, String, desc: I18n.t('api.resource_description.descriptions.params.template_name')
     param :template_params, Hash, desc: I18n.t('api.resource_description.descriptions.params.template_params')
     param :scheduled_time, Integer, desc: I18n.t('api.resource_description.descriptions.params.email_timestamp')
