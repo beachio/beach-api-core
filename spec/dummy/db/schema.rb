@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615130411) do
+ActiveRecord::Schema.define(version: 20170901094431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,19 @@ ActiveRecord::Schema.define(version: 20170615130411) do
     t.datetime "updated_at", null: false
     t.index ["invitation_id"], name: "index_beach_api_core_invitation_roles_on_invitation_id"
     t.index ["role_id"], name: "index_beach_api_core_invitation_roles_on_role_id"
+  end
+
+  create_table "beach_api_core_invitation_tokens", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "entity_type"
+    t.bigint "entity_id"
+    t.string "token", null: false
+    t.datetime "expire_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entity_type", "entity_id"], name: "index_beach_api_core_i_tokens_on_entity_type_and_entity_id"
+    t.index ["token"], name: "index_beach_api_core_invitation_tokens_on_token"
+    t.index ["user_id"], name: "index_beach_api_core_invitation_tokens_on_user_id"
   end
 
   create_table "beach_api_core_invitations", id: :serial, force: :cascade do |t|
@@ -420,6 +433,7 @@ ActiveRecord::Schema.define(version: 20170615130411) do
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interaction_keepers", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
+  add_foreign_key "beach_api_core_invitation_tokens", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
   add_foreign_key "beach_api_core_jobs", "oauth_applications", column: "application_id"
   add_foreign_key "beach_api_core_project_keepers", "beach_api_core_projects", column: "project_id"
