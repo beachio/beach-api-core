@@ -1,9 +1,10 @@
 module BeachApiCore
   class InvitationToken < ApplicationRecord
     belongs_to :user
+    belongs_to :organisation
     belongs_to :entity, polymorphic: true
 
-    validates :user, :entity, :expire_at, presence: true
+    validates :user, :organisation, :entity, :expire_at, presence: true
     validates :token, presence: true, uniqueness: true
 
     before_validation :set_expire_at, :generate_token

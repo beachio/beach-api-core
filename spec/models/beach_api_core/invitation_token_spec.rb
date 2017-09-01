@@ -11,11 +11,13 @@ module BeachApiCore
     it 'should have relations' do
       should belong_to :user
       should belong_to :entity
+      should belong_to :organisation
     end
 
     it 'should have basic validations' do
       should validate_presence_of :user
       should validate_presence_of :entity
+      should validate_presence_of :organisation
     end
 
     it 'should generate random url safe token on save' do

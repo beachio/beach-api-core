@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901094431) do
+ActiveRecord::Schema.define(version: 20170901123125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,7 +176,9 @@ ActiveRecord::Schema.define(version: 20170901094431) do
     t.datetime "expire_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organisation_id"
     t.index ["entity_type", "entity_id"], name: "index_beach_api_core_i_tokens_on_entity_type_and_entity_id"
+    t.index ["organisation_id"], name: "index_beach_api_core_invitation_tokens_on_organisation_id"
     t.index ["token"], name: "index_beach_api_core_invitation_tokens_on_token"
     t.index ["user_id"], name: "index_beach_api_core_invitation_tokens_on_user_id"
   end
@@ -433,6 +435,7 @@ ActiveRecord::Schema.define(version: 20170901094431) do
   add_foreign_key "beach_api_core_interaction_attributes", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interaction_keepers", "beach_api_core_interactions", column: "interaction_id"
   add_foreign_key "beach_api_core_interactions", "beach_api_core_users", column: "user_id"
+  add_foreign_key "beach_api_core_invitation_tokens", "beach_api_core_organisations", column: "organisation_id"
   add_foreign_key "beach_api_core_invitation_tokens", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
   add_foreign_key "beach_api_core_jobs", "oauth_applications", column: "application_id"
