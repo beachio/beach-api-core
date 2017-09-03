@@ -10,7 +10,7 @@ This Engine is designed for organisations and teams that want to focus on buildi
 
 Not only does Beach API Core give you rich Development features, it also present new Business opportunities, enabling to to control how Developers interact with your API services, under subscription plans which you define, with Developer accounts and Sandboxed Applications - opening new Channels for your business Services.
 
-It's designed so that your own custom business domain logic can sit in its own Engine and interact with this Engine's features (in manny, many ways!), so you can keep your valuable intellectual property private, secure and seperated from all this stuff.
+It's designed so that your own custom business domain logic can sit in its own Engine and interact with this Engine's features (in many, many ways!), so you can keep your valuable intellectual property private, secure and seperated from all this stuff.
 
 ## Features
 
@@ -31,7 +31,7 @@ It's designed so that your own custom business domain logic can sit in its own E
 - Services & Integrations - exposing Engine functionalities and 3rd party integrations through Service wrappers
 
 ## Requirements
-If you want to use [elasticsearch](#elasticsearch) you need to start sidekiq in your main app for `elsaticsearch` query.
+If you want to use [elasticsearch](#elasticsearch) you need to start sidekiq in your main app for `elasticsearch` query.
 For cloud66 you can add to your main project's Procfile:
 
 ```
@@ -39,7 +39,7 @@ worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec si
 ```
 
 In order to send emails using **Emails API** endpoints you need to start sidekiq queue in your main app for `email` query.
-For cloud66 you can add to your main project's Procfile:
+For cloud66 (which we recommend!) you can add to your main project's Procfile:
 
 ```
 worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q email
