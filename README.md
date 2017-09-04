@@ -1,13 +1,37 @@
 [ ![Codeship Status for beachio/beach-api-core](https://app.codeship.com/projects/0589cfb0-ccde-0134-cf09-32338ebbb7ed/status?branch=master)](https://app.codeship.com/projects/200292)
 
 # Beach Api Core Engine
-Short description and motivation.
 
-## Usage
-How to use my plugin.
+Beach API Core Engine is designed to provide out of the box, a full range of features necessary to build backend Services and API's to power the next generation of User Experiences - from Mobile applications, modern Web Applications, Enterprise SaaS products, chatbots, voice bots, IoT devices and more.
+
+Heck, it's designed to be the foundation of a complete micro-services architecture for your business.
+
+This Engine is designed for organisations and teams that want to focus on building out their Domain Specific knowledge and functionality and bringing these services to their audiences faster and more effectively than ever before.
+
+Not only does Beach API Core give you rich Development features, it also present new Business opportunities, enabling to to control how Developers interact with your API services, under subscription plans which you define, with Developer accounts and Sandboxed Applications - opening new Channels for your business Services.
+
+It's designed so that your own custom business domain logic can sit in its own Engine and interact with this Engine's features (in many, many ways!), so you can keep your valuable intellectual property private, secure and seperated from all this stuff.
+
+## Features
+
+- Single Federated User Identity with Permissions Scopes
+- User Roles & Policies
+- Invitations & Memberships
+- Developer OAuth Applications
+- Existing Models / Classes / Relations for popular use cases - Organisations, Teams, Projects, Favourites, Interactions etc.
+- Jobs Scheduling Service
+- Email Service with Templating
+- Permissions Service
+- Webhooks
+- Entity mapping for external integrations that want to consume Platform Services
+- Auto Generating Documentation
+- Real-time websockets notifications & Chat service
+- Developer Accounts - Define Pricing Plans for consumption of your API
+- Payments & Subscriptions - Enable app Developers to define Pricing Plans for their client Applications
+- Services & Integrations - exposing Engine functionalities and 3rd party integrations through Service wrappers
 
 ## Requirements
-If you want to use [elasticsearch](#elasticsearch) you need to start sidekiq in your main app for `elsaticsearch` query.
+If you want to use [elasticsearch](#elasticsearch) you need to start sidekiq in your main app for `elasticsearch` query.
 For cloud66 you can add to your main project's Procfile:
 
 ```
@@ -15,7 +39,7 @@ worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec si
 ```
 
 In order to send emails using **Emails API** endpoints you need to start sidekiq queue in your main app for `email` query.
-For cloud66 you can add to your main project's Procfile:
+For cloud66 (which we recommend!) you can add to your main project's Procfile:
 
 ```
 worker: env RAILS_ENV=$RAILS_ENV REDIS_URL=redis://$REDIS_ADDRESS bundle exec sidekiq -q email
@@ -74,7 +98,11 @@ run seeds:
 rake beach_api_core:seed
 ```
 ## Contributing
-Contribution directions go here.
+
+Steve - Beach Core Team
+Vital - Beach Core Team
+Kate - Beach Core Team
+
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
