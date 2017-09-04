@@ -16,11 +16,14 @@ require 'rails-jquery-autocomplete'
 module BeachApiCore
   # Mailer actions that could be used to send emails
   mattr_accessor :allowed_mailer_actions
+  # Company name, use in mailers
+  mattr_accessor :company_names
 
   def self.configure
     @@allowed_mailer_actions = []
+    @@company_names = { short: 'BeachApi', long: 'BeachApiCore' }
 
-    yield self
+    yield self if block_given?
   end
 
   class Engine < ::Rails::Engine
