@@ -20,7 +20,7 @@ module BeachApiCore
   mattr_accessor :company_names
 
   def self.configure
-    @@allowed_mailer_actions = []
+    @@allowed_mailer_actions ||= []
     @@company_names = { short: 'BeachApi', long: 'BeachApiCore' }
 
     yield self if block_given?
