@@ -8,7 +8,7 @@ module BeachApiCore
     end
 
     def create
-      result = EmailCreate.call(params.permit!.to_h)
+      result = EmailCreate.call(params.permit!.to_h.merge(current_application: current_application))
       if result.success?
         # @todo: more meaningful message?
         render_json_success({ message: I18n.t('api.errors.email_has_been_created') }, result.status)

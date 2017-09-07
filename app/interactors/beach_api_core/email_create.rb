@@ -9,7 +9,8 @@ module BeachApiCore
     end
 
     def call
-      BeachApiCore::EmailSender.perform_at(context.scheduled_time || DateTime.now.utc, email_params)
+      BeachApiCore::EmailSender.perform_at(context.scheduled_time || DateTime.now.utc,
+                                           context.current_application, email_params)
       context.status = :created
     end
 

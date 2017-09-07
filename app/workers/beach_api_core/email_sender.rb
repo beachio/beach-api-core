@@ -4,7 +4,7 @@ module BeachApiCore
     sidekiq_options queue: 'email'
     sidekiq_options retry: 10
 
-    def perform(opts = {})
+    def perform(current_application, opts = {})
       normalize_opts!(opts)
       parse_body!(opts) if opts[:template] && !opts[:mailer]
       if opts[:mailer]
