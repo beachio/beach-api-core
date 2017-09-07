@@ -8,7 +8,7 @@ module BeachApiCore
       normalize_opts!(opts)
       parse_body!(opts) if opts[:template] && !opts[:mailer]
       if opts[:mailer]
-        mail_options = opts.except(:mailer, :template)
+        mail_options = opts.except(:mailer, :template, :body)
         if BeachApiCore.allowed_mailer_actions.include?("#{opts[:mailer]}.#{opts[:template]}")
           opts[:mailer].constantize.send(opts[:template], mail_options).deliver
         end
