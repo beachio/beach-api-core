@@ -29,7 +29,7 @@ module BeachApiCore
       if template_params
         template_params.symbolize_keys!
         template_params[:url] = URI.join(BeachApiCore::Setting.client_domain(keeper: current_application),
-                                         template_params[:url]).to_s
+                                         template_params.delete(:path)).to_s
       end
     end
 
