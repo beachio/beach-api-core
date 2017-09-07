@@ -8,8 +8,8 @@ module BeachApiCore
       normalize_opts!(opts)
       parse_body!(opts) if opts[:template] && !opts[:mailer]
       if opts[:mailer]
-        normalize_template_params!(opts[:template_params])
         mail_options = opts.except(:mailer, :template, :body)
+        mail_options[:template_params][:base_url] = BeachApiCore::Setting.client_domain(keeper: current_application)
         if BeachApiCore.allowed_mailer_actions.include?("#{opts[:mailer]}.#{opts[:template]}")
           opts[:mailer].constantize.send(opts[:template], mail_options).deliver
         end
@@ -21,16 +21,8 @@ module BeachApiCore
     private
 
     def normalize_opts!(opts)
-      opts.symbolize_keys!
+      opts.deep_symbolize_keys!
       opts.merge!(defaults) { |_, v1, v2| v1 || v2 }
-    end
-
-    def normalize_template_params!(template_params)
-      if template_params
-        template_params.symbolize_keys!
-        template_params[:url] = URI.join(BeachApiCore::Setting.client_domain(keeper: current_application),
-                                         template_params.delete(:path)).to_s
-      end
     end
 
     def parse_body!(opts)
