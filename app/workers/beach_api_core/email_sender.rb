@@ -4,12 +4,13 @@ module BeachApiCore
     sidekiq_options queue: 'email'
     sidekiq_options retry: 10
 
-    def perform(current_application, opts = {})
+    def perform(application_id, opts = {})
       normalize_opts!(opts)
       parse_body!(opts) if opts[:template] && !opts[:mailer]
       if opts[:mailer]
         mail_options = opts.except(:mailer, :template, :body)
-        mail_options[:template_params][:base_url] = BeachApiCore::Setting.client_domain(keeper: current_application)
+        application = Doorkeeper::Application.find(application_id)
+        mail_options[:template_params][:base_url] = BeachApiCore::Setting.client_domain(keeper: application)
         if BeachApiCore.allowed_mailer_actions.include?("#{opts[:mailer]}.#{opts[:template]}")
           opts[:mailer].constantize.send(opts[:template], mail_options).deliver
         end
