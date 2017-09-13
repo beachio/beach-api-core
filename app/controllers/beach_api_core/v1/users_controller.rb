@@ -56,7 +56,7 @@ module BeachApiCore
     private
 
     def user_create_params
-      params.require(:user).permit(:email, :username, :password)
+      params.require(:user).permit!
     end
 
     def user_update_params
