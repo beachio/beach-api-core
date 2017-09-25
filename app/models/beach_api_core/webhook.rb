@@ -12,7 +12,7 @@ module BeachApiCore
       end
 
       def class_to_kind(klass)
-        kind = "#{klass.name.demodulize}_created"
+        kind = "#{klass.name.demodulize.downcase}_created"
         kind if kinds.keys.include?(kind)
       end
     end
