@@ -17,7 +17,7 @@ module BeachApiCore
 
     def create
       result = BeachApiCore::OrganisationCreate.call(params: organisation_params, user: current_user,
-                                                     application: current_application)
+                                                     application: current_application, access_token: doorkeeper_token)
       if result.success?
         render_json_success(result.organisation, result.status, current_user: current_user, root: :organisation)
       else

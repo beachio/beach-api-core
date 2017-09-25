@@ -7,8 +7,8 @@ module BeachApiCore
     validates :uri, :kind, :application, presence: true
 
     class << self
-      def notify(kind, entity_class, entity_id)
-        BeachApiCore::WebhooksNotifier.perform_async(kind, entity_class, entity_id)
+      def notify(kind, entity_class, entity_id, doorkeeper_token_id)
+        BeachApiCore::WebhooksNotifier.perform_async(kind, entity_class, entity_id, doorkeeper_token_id)
       end
 
       def class_to_kind(klass)

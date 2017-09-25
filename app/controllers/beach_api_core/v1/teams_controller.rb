@@ -14,7 +14,7 @@ module BeachApiCore
 
     def create
       result = BeachApiCore::TeamCreate.call(params: team_params, user: current_user,
-                                             application: current_application)
+                                             application: current_application, access_token: doorkeeper_token)
       if result.success?
         render_json_success(result.team, result.status, root: :team)
       else
