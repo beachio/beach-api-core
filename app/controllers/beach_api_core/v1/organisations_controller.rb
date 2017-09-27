@@ -42,12 +42,11 @@ module BeachApiCore
 
     def destroy
       authorize @organisation
-      if @organisation.destroy
+      result = BeachApiCore::OrganisationDelete.call(organisation: @organisation, access_token: doorkeeper_token)
+      if result.success?
         head :no_content
       else
-        render_json_error({ message: I18n.t('api.errors.could_not_remove',
-                                            model: I18n.t('activerecord.models.organisation.downcase')) },
-                          :bad_request)
+        render_json_error({ message: result.message }, :bad_request)
       end
     end
 

@@ -2,9 +2,13 @@ module BeachApiCore::UserInteractor
   class Create
     include Interactor
 
+    before do
+      context.user = context.model = new_user # create with alias
+      context.event = 'created'
+    end
+
     def call
-      if new_user.save
-        context.user = context.model = new_user # create with alias
+      if context.user.save
         context.status = :created
       else
         context.status = :bad_request

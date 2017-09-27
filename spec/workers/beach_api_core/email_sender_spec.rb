@@ -37,7 +37,7 @@ module BeachApiCore
 
       it 'should set correct body from template' do
         subject.perform(application.id, @email_params.merge(template: @template.name,
-                                                         template_params: template_params))
+                                                            template_params: template_params))
         expect(ActionMailer::Base.deliveries.last.text_part.body.to_s).to eq("Hello, #{template_params[:first_name]}")
       end
     end

@@ -14,7 +14,7 @@ ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
       f.input :name
       f.input :redirect_uri, required: true
       f.input :owner, as: :select,
-              collection: BeachApiCore::Instance.current.developers + BeachApiCore::Instance.current.admins
+                      collection: BeachApiCore::Instance.current.developers + BeachApiCore::Instance.current.admins
       f.input :owner_type, as: :hidden, input_html: { value: 'BeachApiCore::User' }
     end
     f.actions

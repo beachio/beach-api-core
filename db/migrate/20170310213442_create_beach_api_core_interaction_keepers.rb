@@ -1,4 +1,4 @@
-class Interaction20170310213442 < ActiveRecord::Base
+class Interaction20170310213442 < ApplicationRecord
   self.table_name = 'beach_api_core_interactions'
   belongs_to :keeper, polymorphic: true
 end

@@ -1,5 +1,4 @@
 ActiveAdmin.register BeachApiCore::Webhook, as: 'Webhook' do
-
   permit_params :kind, :application_id, :uri
 
   index do

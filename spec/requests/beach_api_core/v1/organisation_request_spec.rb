@@ -123,6 +123,9 @@ module BeachApiCore
       let(:organisation) do
         (create :membership, member: oauth_user, group: (create :organisation)).group
       end
+      let(:organisation_to_notify) do
+        (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
+      end
 
       it 'should allow owner to delete the organisation' do
         delete beach_api_core.v1_organisation_path(owned_organisation),
@@ -135,6 +138,13 @@ module BeachApiCore
           delete beach_api_core.v1_organisation_path(organisation),
                  headers: bearer_auth
         end
+      end
+
+      it 'should create webhooks notifier job' do
+        expect do
+          delete beach_api_core.v1_organisation_path(organisation_to_notify),
+                 headers: bearer_auth
+        end.to change(WebhooksNotifier.jobs, :count).by(1)
       end
     end
 

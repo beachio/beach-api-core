@@ -7,10 +7,10 @@ module BeachApiCore::Admin::ApplicationHelper
 
   def keeper_name(keeper)
     case keeper.class.to_s
-      when 'BeachApiCore::Instance' then 'Current Instance'
-      else
-        keeper.class.to_s =~ /(.+)::(.+)/
-        "#{Regexp.last_match(2)} - #{keeper.name} (#{keeper.id})"
+    when 'BeachApiCore::Instance' then 'Current Instance'
+    else
+      keeper.class.to_s =~ /(.+)::(.+)/
+      "#{Regexp.last_match(2)} - #{keeper.name} (#{keeper.id})"
     end
   end
 
