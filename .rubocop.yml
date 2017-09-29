@@ -16,6 +16,7 @@ Metrics/BlockLength:
   Exclude:
     - 'config/routes.rb'
     - 'spec/**/*'
+    - 'lib/admin/*'
 Documentation:
   Enabled: false
 Style/SignalException:

@@ -35,7 +35,7 @@ module BeachApiCore::Concerns::V1::BaseControllerConcern
 
     def current_organisation
       # TODO: remove after frontend support multiple organisation
-      if doorkeeper_token && !doorkeeper_token.organisation_id && current_user.organisations.first
+      if !doorkeeper_token&.organisation_id && current_user.organisations.first
         doorkeeper_token.update(organisation: current_user.organisations.first)
       end
       @current_organisation ||= current_user.organisations.find_by(id: doorkeeper_token&.organisation_id)
