@@ -54,7 +54,7 @@ module BeachApiCore
       authorize current_organisation, :show?
       # @todo: exclude current user from response?
       users = current_organisation.users.order(:id)
-      render_json_success(users, :ok,
+      render_json_success(users_by_roles(users), :ok,
                           each_serializer: BeachApiCore::OrganisationUserSerializer,
                           current_organisation: current_organisation,
                           root: :users)
@@ -80,6 +80,17 @@ module BeachApiCore
                           {}
                         end
       logo_properties.keys
+    end
+
+    def users_by_roles(users)
+      return users unless params[:roles].present?
+      puts params[:roles].inspect
+
+      if (filtered_users = users.with_role(params[:roles], current_organisation)).any?
+        filtered_users
+       else
+        users
+      end
     end
   end
 end

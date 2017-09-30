@@ -221,6 +221,18 @@ module BeachApiCore
           expect(json_body[:users].last).to include(:joined_at, :assignments, :profile)
           expect(json_body[:users].last[:assignments].first.keys).to include(:id, :role)
         end
+
+        it 'should return users with provided roles' do
+          role = create :role
+          puts 'id', role.id
+          create :assignment, user: oauth_user, keeper: owned_organisation, role: BeachApiCore::Role.developer
+          puts 'oauth_user', oauth_user.assignments.inspect
+          get beach_api_core.users_v1_organisations_path(roles: [role.id]), headers: bearer_auth
+          expect(json_body[:users].size).to eq 3
+          # get beach_api_core.users_v1_organisations_path(roles: [BeachApiCore::Role.developer.id]),
+          #     headers: bearer_auth
+          # expect(json_body[:users].size).to eq 1
+        end
       end
     end
 
