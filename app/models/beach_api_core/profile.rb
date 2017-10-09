@@ -13,6 +13,10 @@ module BeachApiCore
     validates :user, presence: true, uniqueness: true
     enum sex: %i(male female)
 
+    def name
+      "#{first_name} #{last_name}".strip
+    end
+
     def _assign_attribute(k, v)
       public_send("#{k}=", v)
     rescue NameError, NoMethodError, ActiveModel::UnknownAttributeError

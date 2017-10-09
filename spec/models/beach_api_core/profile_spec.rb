@@ -17,5 +17,10 @@ module BeachApiCore
       should have_many :profile_custom_fields
       should define_enum_for(:sex).with(male: 0, female: 1)
     end
+
+    it 'should have a name' do
+      profile = create(:profile)
+      expect(profile.name).to eq "#{profile.first_name} #{profile.last_name}"
+    end
   end
 end

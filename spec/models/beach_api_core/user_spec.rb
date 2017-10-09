@@ -22,6 +22,7 @@ module BeachApiCore
       should have_many :projects
       should respond_to :first_name
       should respond_to :last_name
+      should respond_to :name
     end
 
     it 'should have basic validations' do
