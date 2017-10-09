@@ -49,6 +49,7 @@ module OrganisationsDoc
   api :GET, '/organisations/users', I18n.t('api.resource_description.descriptions.organisations.get_users')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :term, String, desc: I18n.t('api.resource_description.descriptions.params.term_for_autocomplete')
+  param :roles, Array, desc: I18n.t('api.resource_description.descriptions.params.roles')
   example "\"users\": [#{apipie_organisation_user_response}, ...]"
   def users; end
 
