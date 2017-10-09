@@ -190,7 +190,7 @@ module BeachApiCore
           access_token.update(organisation: organisation)
         end
 
-        it 'should should list of users' do
+        it 'should return list of users' do
           get beach_api_core.users_v1_organisations_path, headers: bearer_auth
           expect(response.status).to eq 200
           expect(json_body[:users]).to be_present
@@ -224,14 +224,12 @@ module BeachApiCore
 
         it 'should return users with provided roles' do
           role = create :role
-          puts 'id', role.id
           create :assignment, user: oauth_user, keeper: owned_organisation, role: BeachApiCore::Role.developer
-          puts 'oauth_user', oauth_user.assignments.inspect
           get beach_api_core.users_v1_organisations_path(roles: [role.id]), headers: bearer_auth
           expect(json_body[:users].size).to eq 3
-          # get beach_api_core.users_v1_organisations_path(roles: [BeachApiCore::Role.developer.id]),
-          #     headers: bearer_auth
-          # expect(json_body[:users].size).to eq 1
+          get beach_api_core.users_v1_organisations_path(roles: [BeachApiCore::Role.developer.id]),
+              headers: bearer_auth
+          expect(json_body[:users].size).to eq 1
         end
       end
     end
