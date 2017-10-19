@@ -20,6 +20,8 @@ module BeachApiCore
       should have_many :organisations
       should have_many :teams
       should have_many :projects
+      should have_many(:user_accesses).dependent(:destroy)
+      should have_many :access_levels
       should respond_to :first_name
       should respond_to :last_name
       should respond_to :name
