@@ -8,7 +8,8 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
                                                       avatar_attributes: %i(id file)]),
      team_memberships_attributes: %i(id group_id owner _destroy),
      organisation_memberships_attributes: %i(id group_id owner),
-     assignments_attributes: %i(id role_id keeper_id keeper_type _destroy)]
+     assignments_attributes: %i(id role_id keeper_id keeper_type _destroy),
+     organisation_accesses_attributes: %i(id access_level_id keeper_id keeper_type _destroy)]
   end
 
   index do
@@ -67,6 +68,13 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
                         label: t('activerecord.models.organisation.one')
         o.input :owner
       end
+      f.has_many :organisation_accesses, allow_destroy: true,
+                                 heading: t('activerecord.models.access_level.other'), class: 'js-keeper_wrapper' do |a|
+        a.input :access_level, collection: BeachApiCore::AccessLevel.all, label_method: :title, include_blank: false
+        a.input :keeper, as: :select,
+                         collection: BeachApiCore::Organisation.all,
+                         label: t('activerecord.models.organisation.one')
+      end
     end
     f.actions
   end
@@ -116,6 +124,11 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
           safe_join(user.teams.map do |team|
             link_to team.name, admin_team_path(team)
           end, ', ')
+        end
+      end
+      if user.user_accesses.any?
+        row :access_levels do
+          user.user_accesses.map { |user_access| "#{user_access.access_level.title}: #{keeper_name(user_access.keeper)}" }
         end
       end
       row :organisations do

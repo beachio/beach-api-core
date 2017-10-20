@@ -344,3 +344,9 @@ en:
         downcase: "webhook"
       webhook:
         <<: *webhook
+      beach_api_core/access_level: &access_level
+        one: "Access Level"
+        other: "Access Levels"
+        downcase: "access_level"
+      access_level:
+        <<: *access_level

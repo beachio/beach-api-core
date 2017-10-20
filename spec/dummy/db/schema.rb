@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901123125) do
+ActiveRecord::Schema.define(version: 20171019202136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "beach_api_core_access_levels", force: :cascade do |t|
+    t.string "title"
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_beach_api_core_access_levels_on_name"
+  end
 
   create_table "beach_api_core_assets", id: :serial, force: :cascade do |t|
     t.string "file_id", null: false
@@ -348,6 +356,18 @@ ActiveRecord::Schema.define(version: 20170901123125) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_beach_api_core_templates_on_name"
+  end
+
+  create_table "beach_api_core_user_accesses", force: :cascade do |t|
+    t.bigint "access_level_id"
+    t.bigint "user_id"
+    t.string "keeper_type"
+    t.bigint "keeper_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_level_id"], name: "index_beach_api_core_user_accesses_on_access_level_id"
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_user_accesses_on_keeper_type_and_keeper_id"
+    t.index ["user_id"], name: "index_beach_api_core_user_accesses_on_user_id"
   end
 
   create_table "beach_api_core_user_preferences", id: :serial, force: :cascade do |t|

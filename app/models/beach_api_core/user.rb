@@ -36,6 +36,10 @@ module BeachApiCore
     has_many :chats, through: :chats_users
     has_many :messages_users, class_name: 'BeachApiCore::Chat::MessagesUser'
     has_many :owned_chats, class_name: 'BeachApiCore::Chat', as: :keeper, inverse_of: :keeper, dependent: :destroy
+    has_many :user_accesses, inverse_of: :user, dependent: :destroy
+    has_many :access_levels, through: :user_accesses
+    has_many :organisation_accesses, -> { where(keeper_type: 'BeachApiCore::Organisation') },
+             inverse_of: :user, class_name: 'BeachApiCore::UserAccess'
 
     validates :email,
               presence: true,
@@ -58,6 +62,7 @@ module BeachApiCore
     accepts_nested_attributes_for :team_memberships, allow_destroy: true
     accepts_nested_attributes_for :assignments, allow_destroy: true
     accepts_nested_attributes_for :user_preferences, allow_destroy: true
+    accepts_nested_attributes_for :organisation_accesses, allow_destroy: true
 
     after_initialize :generate_profile
     before_validation :generate_username
