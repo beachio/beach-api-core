@@ -350,3 +350,9 @@ en:
         downcase: "access_level"
       access_level:
         <<: *access_level
+      beach_api_core/plan: &plan
+        one: "Plan"
+        other: "Plans"
+        downcase: "plan"
+      plan:
+        <<: *plan

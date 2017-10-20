@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171019202136) do
+ActiveRecord::Schema.define(version: 20171020211116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -229,6 +229,15 @@ ActiveRecord::Schema.define(version: 20171019202136) do
     t.index ["member_type", "member_id"], name: "index_beach_api_core_memberships_on_member_type_and_member_id"
   end
 
+  create_table "beach_api_core_organisation_plans", force: :cascade do |t|
+    t.bigint "organisation_id"
+    t.bigint "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_beach_api_core_organisation_plans_on_organisation_id"
+    t.index ["plan_id"], name: "index_beach_api_core_organisation_plans_on_plan_id"
+  end
+
   create_table "beach_api_core_organisations", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "application_id", null: false
@@ -251,6 +260,22 @@ ActiveRecord::Schema.define(version: 20171019202136) do
     t.index ["atom_id", "actor", "keeper_id", "keeper_type"], name: "index_bac_permissions_on_atom_id_and_actor_and_k_id_and_k_type", unique: true
     t.index ["atom_id"], name: "index_beach_api_core_permissions_on_atom_id"
     t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_permissions_on_keeper_type_and_keeper_id"
+  end
+
+  create_table "beach_api_core_plan_items", force: :cascade do |t|
+    t.bigint "plan_id"
+    t.bigint "access_level_id"
+    t.integer "users_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_level_id"], name: "index_beach_api_core_plan_items_on_access_level_id"
+    t.index ["plan_id"], name: "index_beach_api_core_plan_items_on_plan_id"
+  end
+
+  create_table "beach_api_core_plans", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "beach_api_core_profile_attributes", id: :serial, force: :cascade do |t|
