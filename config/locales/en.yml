@@ -356,3 +356,9 @@ en:
         downcase: "plan"
       plan:
         <<: *plan
+      beach_api_core/plan_option: &plan_option
+        one: "Plan Option"
+        other: "Plans Options"
+        downcase: "plan_option"
+      plan_option:
+        <<: *plan_option
