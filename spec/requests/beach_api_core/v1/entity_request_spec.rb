@@ -122,12 +122,6 @@ module BeachApiCore
                 headers: invalid_bearer_auth
           end
         end
-        it_behaves_like 'an forbidden resource' do
-          before do
-            get beach_api_core.lookup_v1_entities_path(entity: { uid: entity.uid, kind: entity.kind }),
-                headers: bearer_auth
-          end
-        end
         context 'with authenticated user' do
           before { entity.update(user: oauth_user) }
 
