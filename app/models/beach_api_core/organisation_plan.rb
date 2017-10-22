@@ -4,5 +4,6 @@ module BeachApiCore
     belongs_to :plan
 
     validates :organisation, :plan, presence: true
+    validates :organisation, uniqueness: { scope: :plan_id }
   end
 end
