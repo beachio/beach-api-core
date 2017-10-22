@@ -1,4 +1,5 @@
 ActiveAdmin.register BeachApiCore::AccessLevel, as: 'AccessLevel' do
+  menu parent: 'Permissions', priority: 53, label: I18n.t('activerecord.models.access_level.other')
   permit_params :title
 
   index do
@@ -16,7 +17,7 @@ ActiveAdmin.register BeachApiCore::AccessLevel, as: 'AccessLevel' do
     f.actions
   end
 
-  show do |_atom|
+  show do |_access_level|
     attributes_table do
       row :id
       row :title

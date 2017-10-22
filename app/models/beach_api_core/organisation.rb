@@ -11,9 +11,12 @@ module BeachApiCore
     has_many :invitations, as: :group, inverse_of: :group
     has_many :assignments, as: :keeper, inverse_of: :keeper
     has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :organisation, dependent: :destroy
+    has_one :organisation_plan, dependent: :destroy
+    has_one :plan, through: :organisation_plan
 
     has_one :logo_image, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
     accepts_nested_attributes_for :logo_image, allow_destroy: true, reject_if: :file_blank?
+    accepts_nested_attributes_for :organisation_plan, allow_destroy: true
 
     before_save -> { generate_image(:logo_image, color: logo_properties && logo_properties['color']) },
                 if: proc { generate_image? }
