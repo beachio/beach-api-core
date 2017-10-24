@@ -16,7 +16,8 @@ module BeachApiCore
 
     has_one :logo_image, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
     accepts_nested_attributes_for :logo_image, allow_destroy: true, reject_if: :file_blank?
-    accepts_nested_attributes_for :organisation_plan, allow_destroy: true
+    accepts_nested_attributes_for :organisation_plan,
+                                  allow_destroy: true, reject_if: proc { |attr| attr[:plan_id].blank? }
 
     before_save -> { generate_image(:logo_image, color: logo_properties && logo_properties['color']) },
                 if: proc { generate_image? }

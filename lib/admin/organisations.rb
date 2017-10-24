@@ -47,7 +47,9 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
           image_tag attachment_url(organisation.logo_image, :file, :fill, 150, 150)
         end
       end
-      row :plan
+      if organisation.plan.present?
+        row :plan
+      end
       row :send_email
     end
   end
