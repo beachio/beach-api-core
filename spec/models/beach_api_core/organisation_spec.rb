@@ -13,6 +13,8 @@ module BeachApiCore
       should validate_presence_of :application
       should belong_to :application
       should have_many :users
+      should have_one :organisation_plan
+      should have_one :plan
       should have_many :teams
       should have_many :invitations
       should have_one :logo_image
