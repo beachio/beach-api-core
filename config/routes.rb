@@ -25,6 +25,7 @@ BeachApiCore::Engine.routes.draw do
       put :current, on: :member
     end
     resources :assignments, only: %i(create destroy)
+    resources :user_accesses, only: %i(create destroy)
     resources :memberships, only: %i(create destroy)
     resources :invitations, only: %i(index create destroy) do
       post :accept, on: :member

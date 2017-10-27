@@ -157,6 +157,9 @@ en:
           list: "List of webhooks"
           create: "Create a webhook"
           remove: "Remove a webhook"
+        user_accesses:
+          create: "Assign user an access level"
+          remove: "Remove access level from user"
   interactors:
     errors:
       email_must_be_present: "Email must be present"
@@ -350,6 +353,12 @@ en:
         downcase: "access_level"
       access_level:
         <<: *access_level
+      beach_api_core/user_access: &user_access
+        one: "User access level"
+        other: "User access levels"
+        downcase: "user_access"
+      user_access:
+        <<: *user_access
       beach_api_core/plan: &plan
         one: "Plan"
         other: "Plans"
