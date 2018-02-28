@@ -48,7 +48,7 @@ module BeachApiCore::Concerns::AccessTokenExtension
       end
 
       def last_authorized_token_for(application_id, resource_owner_id, organisation_id = nil)
-        send(order_method, created_at_desc)
+        ordered_by(:created_at, :desc)
           .find_by(application_id: application_id,
                    organisation_id: organisation_id,
                    resource_owner_id: resource_owner_id,

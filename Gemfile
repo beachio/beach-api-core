@@ -13,6 +13,7 @@ gem 'refile', require: 'refile/rails', git: 'https://github.com/manfe/refile.git
 gem 'elasticsearch-model', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'sidekiq'
+gem 'doorkeeper', '~> 4.3.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
