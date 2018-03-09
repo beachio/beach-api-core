@@ -6,6 +6,7 @@ module ActiveAdmin::Views
         :locals => {
           screens: object.screens,
           initial_screen: object.initial_screen,
+          object_name: object_name,
           name: "#{object_name}[#{method}]"
         }
       )

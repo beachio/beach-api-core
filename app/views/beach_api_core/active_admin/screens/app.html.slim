@@ -2,6 +2,7 @@ script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.
 script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.19.0/sortable.min.js" type="text/javascript"
 script src="https://cdnjs.cloudflare.com/ajax/libs/checklist-model/0.11.0/checklist-model.min.js" type="text/javascript"
 script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/js/ngDialog.min.js" type="text/javascript"
+script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"
 link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/css/ngDialog.min.css"
 link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/css/ngDialog-theme-default.min.css"
 link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
@@ -11,7 +12,7 @@ hr
 div ng-app="app"
   div ng-controller="ScreensCtrl as ctrl"
     div ng-init="ctrl.screens = #{screens.to_json}; ctrl.initial_screen = #{initial_screen.to_json}"
-    screens list="ctrl.screens" initial-screen="ctrl.initial_screen"
+    screens name="#{object_name}" list="ctrl.screens" initial-screen="ctrl.initial_screen"
 
     
 

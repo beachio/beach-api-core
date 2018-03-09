@@ -5,14 +5,23 @@ script type="text/ng-template" id="button/settings.html"
     br
     div
       input.form-control type="text" ng-model="parentScope.data.label"
-  label.label
-    | Action (NEXT_SCREEN, DO_SOMETHING, etc):
-    br
-    div
-    input.form-control type="text" ng-model="parentScope.data.action"
+  div
   label.label
     | Width, %:&nbsp;
     input.form-control type="number" ng-model="parentScope.data.width"
 
+  hr
+  label.label
+    | Action (NEXT_SCREEN, DO_SOMETHING, etc):
+    br
+    div
+    select.form-control ng-options="option for option in ['NEXT_SCREEN', 'PREV_SCREEN', 'GO_TO_SCREEN_BY_ID']" ng-model="parentScope.data.action.type"
+    
+  div ng-show="parentScope.data.action.type == 'GO_TO_SCREEN_BY_ID'"
+    label
+      | ID: 
+      br
+      input.form-control type="text" ng-model="parentScope.data.action.payload.screen_id"
+  hr
   .text-right
     button ng-click="closeThisDialog()" Save
