@@ -6,7 +6,7 @@ module ActiveAdmin::Views
         :locals => {
           screens: object.screens,
           initial_screen: object.initial_screen,
-          object_name: "#{object_name}[#{method}]"
+          name: "#{object_name}[#{method}]"
         }
       )
       insert_tag ScreensBuilder, html.html_safe
