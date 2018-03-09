@@ -1,0 +1,28 @@
+script type="text/ng-template" id="input/settings.html"
+  h2
+    | Input settings
+  label.label
+    | Model:&nbsp;
+    input class="form-control" type="text" ng-model="parentScope.data.model"
+
+  label.label
+    | Type:&nbsp;
+    input class="form-control" type="text" ng-model="parentScope.data.type"
+
+  label.label
+    | Placeholder:&nbsp;
+    input class="form-control" type="text" ng-model="parentScope.data.placeholder"
+
+  br
+  label.label
+    input type="checkbox" ng-model="parentScope.data.required"
+    | required
+
+  br
+  label.label
+    | Width, %:&nbsp;
+    input class="form-control" type="number" ng-model="parentScope.data.width"
+
+  hr
+  .text-right
+    button ng-click="closeThisDialog()" Save

@@ -1,0 +1,18 @@
+script type="text/ng-template" id="screens.html"
+  div
+    .screens ui-sortable="{handle: '> .screen-handler'}" ng-model="list"
+      .screen ng-repeat='screen in list track by $index'
+        .screen-settings ng-click="openSettingsWindow(screen)"
+          i.material-icons settings
+
+        .screen-delete ng-click="list.splice($index, 1)"
+          | &times;
+        .screen-handler
+        .screen-head
+          .screen-head-description contenteditable="" ng-model="screen.header.description"
+        .screen-body
+          div controls="screen.body" types="['checkbox-list', 'radio-list']"
+        .screen-footer
+          div controls="screen.footer" types="['input', 'select', 'button']"
+
+    button type="button" ng-click='addScreen()' Add screens

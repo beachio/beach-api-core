@@ -9,25 +9,12 @@ link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesh
 
 hr
 div ng-app="app"
-  div ng-controller="ScreensCtrl as ctrl" ng-init="ctrl.screens = #{screens.to_json};"
-    .screens ui-sortable="{handle: '> .screen-handler'}" ng-model="ctrl.screens"
-      .screen ng-repeat='screen in ctrl.screens'
-        .screen-settings ng-click="ctrl.openSettingsWindow(screen)"
-          i.material-icons settings
+  div ng-controller="ScreensCtrl as ctrl" ng-init="ctrl.screens = #{screens.to_json}; ctrl.initial_screen = #{initial_screen.to_json}"
+    screens list="ctrl.screens"
 
-        .screen-delete ng-click="ctrl.screens.splice($index, 1)"
-          | &times;
-        .screen-handler
-        .screen-head
-          .screen-head-description contenteditable="" ng-model="screen.header.description"
-        .screen-body
-          div controls="screen.body" types="['checkbox-list', 'radio-list']" models="ctrl.models" cube="true"
-        .screen-footer
-          div controls="screen.footer" types="['input', 'select', 'button']" models="ctrl.models"
+    
 
-    button type="button" ng-click='ctrl.screens.push(#{initial_screen.to_json})' Add screen1s
-
-    textarea.ng-hide name="#{object_name}123" ng-model="ctrl.screens | json" rows="5" columns="5"
+    textarea.ng-hide json-text="" name="#{object_name}123" ng-model="ctrl.screens" rows="5" columns="5"
 
   = render template: "beach_api_core/active_admin/screens/components/build.slim"
 

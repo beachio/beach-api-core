@@ -18,23 +18,7 @@ app.directive('sSelect', ['ngDialog', function(ngDialog){
     link: function($scope, iElm, iAttrs, controller) {
       $scope.openDialog = function () {
         ngDialog.open({
-          template: '<h2>Select settings</h2>'
-                    + '<label class="label block" ng-repeat="option in parentScope.data.list">'
-                      + '{{$index+1}}:&nbsp;'
-                      + '<input class="form-control" type="text" ng-model="option.label">'
-                    + '</label>'
-                   
-                    + '<a ng-click="parentScope.data.list.push({})">Add option</a>'
-                    + '<br>'
-                    + '<br>'
-                    + '<label class="label">'
-                      + 'Width, %:&nbsp;'
-                      + '<input class="form-control" type="number" ng-model="parentScope.data.width">'
-                    + '</label>'
-                    + '<hr>'
-                    + '<div class="text-right"><button ng-click="closeThisDialog()">Save</button></div>'
-                    + '',
-          plain: true,
+          template: 'select/settings.html',
           controller: ['$scope', function (scope) {
             scope.parentScope = $scope
           }]

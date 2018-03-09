@@ -1,0 +1,12 @@
+script type="text/ng-template" id="screens/settings.html"
+  h2 Screen settings
+  label.label
+    input type="checkbox" ng-model="screen.rotator" Rotator
+
+  br
+  label.label ng-show="screen.rotator"
+    | Rotation Delay, ms:&nbsp;
+    input.form-control type="text" ng-model="screen.rotation_delay"
+  hr
+  .text-right
+    button ng-click="closeThisDialog()" Save

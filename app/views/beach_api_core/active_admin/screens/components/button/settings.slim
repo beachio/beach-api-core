@@ -1,0 +1,18 @@
+script type="text/ng-template" id="button/settings.html"
+  h2 Button settings
+  label.label
+    | Label:
+    br
+    div
+      input.form-control type="text" ng-model="parentScope.data.label"
+  label.label
+    | Action (NEXT_SCREEN, DO_SOMETHING, etc):
+    br
+    div
+    input.form-control type="text" ng-model="parentScope.data.action"
+  label.label
+    | Width, %:&nbsp;
+    input.form-control type="number" ng-model="parentScope.data.width"
+
+  .text-right
+    button ng-click="closeThisDialog()" Save
