@@ -77,20 +77,11 @@ app.directive('dynamicElement', ['$compile', function ($compile) {
      }
  }])
 
-app.directive('jsonText', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attr, ngModel) {            
-          function into(input) {
-            return JSON.parse(input);
-          }
-          function out(data) {
-            return JSON.stringify(data);
-          }
-          ngModel.$parsers.push(into);
-          ngModel.$formatters.push(out);
-
-        }
-    };
+app.directive('toJson', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+     ctrl.$formatters.push(JSON.stringify);
+    }
+  }
 });

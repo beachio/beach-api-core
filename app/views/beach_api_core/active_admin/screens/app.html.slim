@@ -9,12 +9,13 @@ link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesh
 
 hr
 div ng-app="app"
-  div ng-controller="ScreensCtrl as ctrl" ng-init="ctrl.screens = #{screens.to_json}; ctrl.initial_screen = #{initial_screen.to_json}"
-    screens list="ctrl.screens"
+  div ng-controller="ScreensCtrl as ctrl"
+    div ng-init="ctrl.screens = #{screens.to_json}; ctrl.initial_screen = #{initial_screen.to_json}"
+    screens list="ctrl.screens" initial-screen="ctrl.initial_screen"
 
     
 
-    textarea.ng-hide json-text="" name="#{name}" ng-model="ctrl.screens" rows="5" columns="5"
+    textarea name="#{name}" ng-model="ctrl.textScreens" rows="5" columns="5"
 
   = render template: "beach_api_core/active_admin/screens/components/build.slim"
 
