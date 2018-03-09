@@ -1,0 +1,11 @@
+script type="text/ng-template" id="checkbox_list.html"
+  .checkbox-list
+    .control-title contenteditable="" ng-model="data.title"
+    ul
+      li ng-repeat="item in data.list"
+        input type="checkbox" checklist-model="$parent.ngModel" checklist-value="item.label"
+        label ng-model="item.label" contenteditable=""
+        span.delete-from-list ng-click="data.list.splice($index, 1)"
+          | &times;
+      li ng-click="pushNewItem()"
+        a Add checkbox

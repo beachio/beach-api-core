@@ -1,0 +1,277 @@
+.screens {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.screen {
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  width: 375px;
+  background: #f7f2f7;
+  position: relative;
+  margin-bottom: 20px;
+}
+.screen-head {
+  position: relative;
+  height: 200px;
+  background: url(<%=asset_path "beach_api_core/mobile_header.png"%>);
+  background-size: cover;
+}
+.screen-head-description{
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  transform: translateY(50%);
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 5px;
+  font-size: 12px;
+  left: 15px;
+  right: 15px;
+  box-shadow: 1px 1px 10px rgba(0,0,0,.2);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.screen-body {
+  padding: 50px 30px;
+  height: 400px;
+  overflow: auto;
+  position: relative;
+}
+.screen-footer {
+  min-height: 75px;
+  border-top: 1px solid #e7e7e7;
+  padding: 18px;
+  box-sizing: border-box;
+  position: relative;
+}
+.screen-footer .control-types {
+  bottom: 100%;
+  top: auto;
+}
+
+.add-control {
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  margin: auto;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b441bf+0,4c0860+83,390461+100 */
+  background: #6C0A75; /* Old browsers */
+  
+  width: 30px;
+  height: 30px;
+  right: 0;
+  position: absolute;
+  border-radius: 5px 0 0 5px;
+  transform: translateY(-50%);
+  top: 50%;
+  transition: .3s;
+}
+
+.add-control:hover,
+.add-control.active {
+  background: #B441BF;
+}
+
+.add-control:before {
+  content: "+";
+  font-size: 16px;
+}
+
+.screen-handler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 130px;
+  z-index: 1;
+  cursor: move;
+}
+
+.screen-delete, .screen-settings{
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+.screen-delete {
+  color: white;
+  background: #ff40ff;
+}
+
+.screen-settings {
+  right: 30px;
+  background: white;
+  color: #620b65;
+}
+
+.screen-delete:hover {
+  background: #c614fc;
+}
+
+.screen-settings:hover {
+  background: #f7f7f7;
+}
+
+.control-types {
+  position: absolute;
+  top: 100%;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+  right: 0;
+  border: 1px solid #ccc;
+  background: white;
+  min-height: 100%;
+  z-index: 2;
+  font-size: 14px;
+  color: #333;
+}
+
+.control-types li {
+  padding: 14px;
+  text-align: left;
+}
+
+.control-types li:hover {
+  background: #f7f7f7;
+  color: #333;
+}
+
+.checkbox-list, .radio-list {
+  background: white;
+  border-radius: 5px;
+  padding: 8px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,.13);
+}
+.checkbox-list li,
+.radio-list li {
+  font-size: 13px;
+  padding: 5px;
+}
+.checkbox-list li input[type="checkbox"],
+.radio-list li input[type="radio"] {
+  margin-right: 10px;
+}
+
+.control {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.control-handler {
+  height: 15px;
+  width: 100%;
+  background: #646a6f;
+  cursor: move;
+  margin-bottom: 15px;
+}
+
+.control-title {
+  margin-bottom: 13px;
+  font-size: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.delete-from-list {
+  color: red;
+  margin-left: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.screen-footer .control-handler {
+  display: none;
+}
+.screen-footer [ui-sortable] {
+  display: flex;
+  justify-content: space-around;
+}
+.screen-footer .control {
+  padding: 0;
+  border: none;
+  display: inline-block;
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+.screen-footer .control:first-child {
+  margin-left: 0;
+}
+
+.s-input {
+  height: 30px;
+  border-radius: 5px !important;
+  width: 100% !important;
+  box-sizing: border-box;
+  height: 50px;
+  background: #7f088d;
+  vertical-align: middle;
+  color: white;
+  background: -moz-linear-gradient(45deg, #7f088d 0%, #4c0860 60%, #390461 100%);
+  background: -webkit-linear-gradient(45deg, #7f088d 0%,#4c0860 60%,#390461 100%);
+  background: linear-gradient(45deg, #7f088d 0%,#4c0860 60%,#390461 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7f088d', endColorstr='#390461',GradientType=1 );
+}
+
+.s-button {
+  display: inline-block;
+  padding: 14px 18px;
+  box-shadow: 0px 0px 5px rgba(0,0,0,.15);
+  border-radius: 5px !important;
+  cursor: pointer;
+  height: 47px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  background: white;
+  width: 100%;
+}
+
+.form-control {
+  height: 34px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  width: calc(100% - 30px);
+  padding-left: 10px;
+  margin-bottom: 15px;
+}
+
+.block {
+  display: block;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.s-button .material-icons {
+  line-height: 20px;
+}
+.control-remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 15px;
+  width: 15px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  background: #ff3fff;
+  line-height: 13px;
+}
+
+a {
+  cursor: pointer;
+}
