@@ -17,6 +17,11 @@ app.directive('screens', ['ngDialog', function(ngDialog){
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
+      $scope.$watchCollection('list', function (list) {
+        _.each(list, function (screen, index) {
+          screen.position = index;
+        })
+      })
       $scope.openSettingsWindow = function (screen) {
           ngDialog.open({
             template: "screens/settings.html",
@@ -27,7 +32,7 @@ app.directive('screens', ['ngDialog', function(ngDialog){
         }
 
       $scope.addScreen = function () {
-        $scope.list.push(_.extend({id: id}, {content: $scope.initialScreen}))
+        $scope.list.push({content: $scope.initialScreen})
       }
     }
   };
