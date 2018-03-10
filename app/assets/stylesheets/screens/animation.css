@@ -1,0 +1,18 @@
+div[ui-view].slide {
+    left: 0;
+    transition: .5s ease all;
+}
+
+div[ui-view].slide.ng-enter {
+  left: 375px;
+}
+div[ui-view].slide.ng-enter.ng-enter-active {
+  left: 0;
+}
+ 
+div[ui-view].slide.ng-leave {
+  left: 0
+}
+div[ui-view].slide.ng-leave.ng-leave-active {
+  left: -375px;
+}

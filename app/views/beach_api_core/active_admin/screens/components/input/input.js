@@ -16,14 +16,7 @@ app.directive('sInput', ['ngDialog', function(ngDialog){
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
-      $scope.openDialog = function () {
-        ngDialog.open({
-          template: 'input/settings.html',
-          controller: ['$scope', function (scope) {
-            scope.parentScope = $scope
-          }]
-        })
-      }
+      
     }
   };
 }]);

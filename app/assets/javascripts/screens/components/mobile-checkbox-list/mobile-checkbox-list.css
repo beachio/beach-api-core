@@ -1,0 +1,24 @@
+.mobile-checkbox-list {
+  background: white;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,.13);
+}
+
+.mobile-checkbox-list__title {
+  margin-bottom: 13px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.mobile-checkbox-list ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.mobile-checkbox-list md-checkbox .md-icon {
+  top: -3px;
+}

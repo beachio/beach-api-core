@@ -1,4 +1,4 @@
-app.directive('sButton', ['ngDialog', function(ngDialog){
+app.directive('mobileInput', ["Model", function(Model){
   // Runs during compile
   return {
     // name: '',
@@ -11,11 +11,12 @@ app.directive('sButton', ['ngDialog', function(ngDialog){
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
-    templateUrl: 'button.html',
+    templateUrl: 'mobile-input.html',
     // replace: true,
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
+      $scope.Model = Model
     }
   };
 }]);

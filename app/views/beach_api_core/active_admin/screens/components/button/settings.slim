@@ -4,36 +4,36 @@ script type="text/ng-template" id="button/settings.html"
     | Label:
     br
     div
-      input.form-control type="text" ng-model="parentScope.settings.label"
+      input.form-control type="text" ng-model="control.settings.label"
   div
   label.label
     | Width, %:&nbsp;
-    input.form-control type="number" ng-model="parentScope.settings.width"
+    input.form-control type="number" ng-model="control.settings.width"
 
   hr
   label.label
     | Action (NEXT_SCREEN, DO_SOMETHING, etc):
     br
     div
-    select.form-control ng-options="option for option in ['NEXT_SCREEN', 'PREV_SCREEN', 'GO_TO_SCREEN_BY_ID', 'SUBMIT_ON_SERVER', 'OPEN_POPUP']" ng-model="parentScope.settings.action.type"
+    select.form-control ng-options="option for option in ['NEXT_SCREEN', 'PREV_SCREEN', 'GO_TO_SCREEN_BY_ID', 'SUBMIT_ON_SERVER']" ng-model="control.settings.action.type"
     
-  div ng-show="parentScope.settings.action.type == 'GO_TO_SCREEN_BY_ID'"
+  div ng-show="control.settings.action.type == 'GO_TO_SCREEN_BY_ID'"
     label
       | ID: 
       br
-      input.form-control type="text" ng-model="parentScope.settings.action.payload.screen_id"
+      input.form-control type="text" ng-model="control.settings.action.payload.screen_id"
     
-  div ng-show="parentScope.settings.action.type == 'SUBMIT_ON_SERVER'"
+  div ng-show="control.settings.action.type == 'SUBMIT_ON_SERVER'"
     label
       | Params (optional): 
       br
-      input.form-control type="text" ng-model="parentScope.settings.action.payload.params"
+      input.form-control type="text" ng-model="control.settings.action.payload.params"
     
-  div ng-show="parentScope.settings.action.type == 'OPEN_POPUP'"
+  div ng-show="control.settings.action.type == 'OPEN_POPUP'"
     label
       | Content: 
       br
-      textarea.form-control rows="5" ng-model="parentScope.settings.action.payload.content"
+      textarea.form-control rows="5" ng-model="control.settings.action.payload.content"
   hr
   .text-right
     button ng-click="closeThisDialog()" Save

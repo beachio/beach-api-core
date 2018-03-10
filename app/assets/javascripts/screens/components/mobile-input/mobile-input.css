@@ -1,0 +1,29 @@
+.mobile-input {
+  height: 30px;
+  border-radius: 5px !important;
+  width: 100% !important;
+  box-sizing: border-box;
+  height: 50px;
+  background: #7f088d;
+  padding: 20px;
+  border: none;
+  vertical-align: middle;
+  color: white;
+  background: -moz-linear-gradient(45deg, #7f088d 0%, #4c0860 60%, #390461 100%);
+  background: -webkit-linear-gradient(45deg, #7f088d 0%,#4c0860 60%,#390461 100%);
+  background: linear-gradient(45deg, #7f088d 0%,#4c0860 60%,#390461 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7f088d', endColorstr='#390461',GradientType=1 );
+}
+
+.mobile-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+.mobile-input::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+}
+.mobile-input:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+.mobile-input:-moz-placeholder { /* Firefox 18- */
+  color: white;
+}

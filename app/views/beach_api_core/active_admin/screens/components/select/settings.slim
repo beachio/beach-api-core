@@ -1,15 +1,15 @@
 script type="text/ng-template" id="select/settings.html"
   h2 Select settings
-  label.label.block ng-repeat="option in parentScope.settings.list"
+  label.label.block ng-repeat="option in control.settings.list"
     | {{$index+1}}:&nbsp;
     input class="form-control" type="text" ng-model="option.label"
 
-  a ng-click="parentScope.settings.list.push({})" Add option
+  a ng-click="control.settings.list.push({})" Add option
   br
   br
   label.label
     | Width, %:&nbsp;
-    input.form-control type="number" ng-model="parentScope.settings.width"
+    input.form-control type="number" ng-model="control.settings.width"
   hr
   .text-right
     button ng-click="closeThisDialog()" Save

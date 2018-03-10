@@ -1,0 +1,8 @@
+script type="text/ng-template" id="screen.html"
+  .header
+    .header__description ng-bind-html-compile="screen.content.header.description"
+  .body
+    dynamic-control ng-repeat="control in screen.content.body" control="control"
+  .footer
+    .footer__actions
+      dynamic-control ng-repeat="control in screen.content.footer" control="control"

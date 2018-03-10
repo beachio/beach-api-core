@@ -1,0 +1,1 @@
+var app = angular.module("app", ['checklist-model', 'ngResource', 'ngMaterial', 'ui.router'])

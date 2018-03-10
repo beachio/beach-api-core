@@ -1,4 +1,4 @@
-app.directive('controls', [function(){
+app.directive('controls', ['ngDialog', function(ngDialog){
   // Runs during compile
   return {
     // name: '',
@@ -26,6 +26,15 @@ app.directive('controls', [function(){
             list: [],
             title: "Title"
           }
+        })
+      }
+
+      $scope.openSettingsWindow = function (control) {
+        ngDialog.open({
+          template: control.type+'/settings.html',
+          controller: ['$scope', function (scope) {
+            scope.control = control
+          }]
         })
       }
 

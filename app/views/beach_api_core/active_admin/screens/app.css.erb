@@ -297,19 +297,54 @@ select.form-control  {
 .s-button .material-icons {
   line-height: 20px;
 }
+.control-settings,
 .control-remove {
   position: absolute;
   top: 0;
-  right: 0;
   height: 15px;
   width: 15px;
-  color: white;
   text-align: center;
   cursor: pointer;
-  background: #ff3fff;
   line-height: 13px;
+}
+
+.control-remove {
+  color: white;
+  background: #ff3fff;
+  right: 0;
+}
+.control-settings {
+  right: 15px;
+  width: 15px;
+  height: 13px;
+  background: white;
+  color: #620b65;
+  border: 1px solid #620b65;
+}
+
+.control-settings i {
+  font-size: 13px;
 }
 
 a {
   cursor: pointer;
+}
+
+.item-handler {
+  display: inline-block;
+  padding: 5px;
+  vertical-align: top;
+  height: 32px;
+  width: 32px;
+  color: #6C0A75;
+  cursor: move;
+}
+
+.item-delete {
+  color: red;
+  display: inline-block;
+  font-size: 20px;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 8px;
 }

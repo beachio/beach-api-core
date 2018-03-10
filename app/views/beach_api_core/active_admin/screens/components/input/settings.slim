@@ -3,25 +3,25 @@ script type="text/ng-template" id="input/settings.html"
     | Input settings
   label.label
     | Model:&nbsp;
-    input class="form-control" type="text" ng-model="parentScope.settings.model"
+    input class="form-control" type="text" ng-model="control.settings.model"
 
   label.label
     | Type:&nbsp;
-    input class="form-control" type="text" ng-model="parentScope.settings.type"
+    input class="form-control" type="text" ng-model="control.settings.type"
 
   label.label
     | Placeholder:&nbsp;
-    input class="form-control" type="text" ng-model="parentScope.settings.placeholder"
+    input class="form-control" type="text" ng-model="control.settings.placeholder"
 
   br
   label.label
-    input type="checkbox" ng-model="parentScope.settings.required"
+    input type="checkbox" ng-model="control.settings.required"
     | required
 
   br
   label.label
     | Width, %:&nbsp;
-    input class="form-control" type="number" ng-model="parentScope.settings.width"
+    input class="form-control" type="number" ng-model="control.settings.width"
 
   hr
   .text-right

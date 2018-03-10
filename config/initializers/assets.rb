@@ -5,4 +5,6 @@ Rails.application.config.assets.precompile += %w( beach_api_core/mailer/team-bac
                                                   beach_api_core/mailer/organisation-background.jpg
                                                   beach_api_core/mailer/account-background.jpg
                                                   beach_api_core/mobile_header.png
+                                                  screens.js
+                                                  screens.scss
                                                   )
