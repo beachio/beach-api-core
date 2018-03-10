@@ -15,13 +15,25 @@ script type="text/ng-template" id="button/settings.html"
     | Action (NEXT_SCREEN, DO_SOMETHING, etc):
     br
     div
-    select.form-control ng-options="option for option in ['NEXT_SCREEN', 'PREV_SCREEN', 'GO_TO_SCREEN_BY_ID']" ng-model="parentScope.data.action.type"
+    select.form-control ng-options="option for option in ['NEXT_SCREEN', 'PREV_SCREEN', 'GO_TO_SCREEN_BY_ID', 'SUBMIT_ON_SERVER', 'OPEN_POPUP']" ng-model="parentScope.data.action.type"
     
   div ng-show="parentScope.data.action.type == 'GO_TO_SCREEN_BY_ID'"
     label
       | ID: 
       br
       input.form-control type="text" ng-model="parentScope.data.action.payload.screen_id"
+    
+  div ng-show="parentScope.data.action.type == 'SUBMIT_ON_SERVER'"
+    label
+      | Params (optional): 
+      br
+      input.form-control type="text" ng-model="parentScope.data.action.payload.params"
+    
+  div ng-show="parentScope.data.action.type == 'OPEN_POPUP'"
+    label
+      | Content: 
+      br
+      textarea.form-control rows="5" ng-model="parentScope.data.action.payload.content"
   hr
   .text-right
     button ng-click="closeThisDialog()" Save
