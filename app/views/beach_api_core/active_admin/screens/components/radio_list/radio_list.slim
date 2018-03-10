@@ -7,4 +7,5 @@ script type="text/ng-template" id="radio_list.html"
         label ng-model="item.label" contenteditable=""
         span.delete-from-list ng-click="data.list.splice($index, 1)"
           | &times;
-    button type="button" ng-click="pushNewItem()" Add radio-button
+      li ng-click="pushNewItem()"
+        a Add radio-button
