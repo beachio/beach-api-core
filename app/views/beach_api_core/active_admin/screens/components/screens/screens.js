@@ -32,7 +32,7 @@ app.directive('screens', ['ngDialog', function(ngDialog){
         }
 
       $scope.addScreen = function () {
-        $scope.list.push({content: $scope.initialScreen})
+        $scope.list.push({content: angular.copy($scope.initialScreen)})
       }
     }
   };
