@@ -22,7 +22,7 @@ app.directive('controls', [function(){
       $scope.addControl = function (type) {
         $scope.controls.push({
           type: type,
-          data: {
+          settings: {
             list: [],
             title: "Title"
           }
@@ -30,7 +30,7 @@ app.directive('controls', [function(){
       }
 
       $scope.getContentByType = function (type) {
-        return "<s-"+type+" data='$parent.control.data' ng-model='$parent.control.model'></c-"+type+">"
+        return "<s-"+type+" settings='$parent.control.settings' ng-model='$parent.control.model'></c-"+type+">"
       }
     }
   };

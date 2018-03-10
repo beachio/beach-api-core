@@ -1,11 +1,11 @@
 script type="text/ng-template" id="radio_list.html"
   .radio-list
-    .control-title contenteditable="" ng-model="data.title"
+    .control-title contenteditable="" ng-model="settings.title"
     ul
-      li ng-repeat="item in data.list"
+      li ng-repeat="item in settings.list"
         input type="radio" ng-value="item.label" ng-model="$parent.ngModel"
         label ng-model="item.label" contenteditable=""
-        span.delete-from-list ng-click="data.list.splice($index, 1)"
+        span.delete-from-list ng-click="settings.list.splice($index, 1)"
           | &times;
       li ng-click="pushNewItem()"
         a Add radio-button

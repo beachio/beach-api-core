@@ -27,17 +27,7 @@ app.directive('screens', ['ngDialog', function(ngDialog){
         }
 
       $scope.addScreen = function () {
-        var ids = _.sortBy(_.map($scope.list, function (screen) {
-          try {
-            return parseInt(screen.id.replace(iAttrs.name + "_", "")) || 0
-          }catch(e) {
-            return 0
-          }
-        }))
-        var uid = (ids[ids.length-1] || 0) + 1;
-        var id = iAttrs.name + "_" + uid;
-
-        $scope.list.push(_.extend({id: id}, $scope.initialScreen))
+        $scope.list.push(_.extend({id: id}, {content: $scope.initialScreen}))
       }
     }
   };

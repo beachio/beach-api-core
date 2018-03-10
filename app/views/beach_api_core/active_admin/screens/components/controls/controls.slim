@@ -1,6 +1,6 @@
 script type="text/ng-template" id="screen_controls.html"
   div ui-sortable="{handle: '> .control-handler'}" ng-model="controls"
-    div ng-style="{width: (control.data.width || 100) + '%'}" class="control" ng-repeat="control in controls"
+    div ng-style="{width: (control.settings.width || 100) + '%'}" class="control" ng-repeat="control in controls"
       .control-remove ng-click="controls.splice($index, 1)"
         | &times;
       dynamic-element content="getContentByType(control.type)"

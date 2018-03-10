@@ -6,7 +6,7 @@ app.directive('sCheckboxList', [function(){
     // terminal: true,
     scope: {
       ngModel: "=",
-      data: "="
+      settings: "="
     }, // {} = isolate, true = child, false/undefined = no change
     // controller: function($scope, $element, $attrs, $transclude) {},
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
@@ -18,7 +18,7 @@ app.directive('sCheckboxList', [function(){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.pushNewItem = function (item) {
-        $scope.data.list.push({label: 'label #' + ($scope.data.list.length+1)})
+        $scope.settings.list.push({label: 'label #' + ($scope.settings.list.length+1)})
       }
     }
   };

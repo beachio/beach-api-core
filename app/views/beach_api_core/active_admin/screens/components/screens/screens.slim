@@ -9,10 +9,10 @@ script type="text/ng-template" id="screens.html"
           | &times;
         .screen-handler
         .screen-head
-          .screen-head-description contenteditable="" ng-model="screen.header.description"
+          .screen-head-description contenteditable="" ng-model="screen.content.header.description"
         .screen-body
-          div controls="screen.body" types="['checkbox-list', 'radio-list']"
+          div controls="screen.content.body" types="['checkbox-list', 'radio-list']"
         .screen-footer
-          div controls="screen.footer" types="['input', 'select', 'button']"
+          div controls="screen.content.footer" types="['input', 'select', 'button']"
 
     button type="button" ng-click='addScreen()' Add screens
