@@ -18,7 +18,7 @@ module OpenInMobile
       </style>
       <a onclick="window.open('/screens/#{screen.id}/view','mobile_window','width=375,height=680,resizable=no');" class="open_in_mobile">Open in mobile</a>
     HTML
-    insert_tag OpenInMobileBtn, content.html_safe
+    insert_tag ActiveAdmin::Views::OpenInMobileBtn, content.html_safe
   end
 end
 
