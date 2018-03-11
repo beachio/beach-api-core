@@ -43,7 +43,7 @@ module ActiveAdmin::Views
     include OpenInMobile
   end
 
-  class IndexAsTable
+  class IndexAsBlock
     include OpenInMobile
 
     def directories_grid
@@ -51,6 +51,18 @@ module ActiveAdmin::Views
         :template => 'beach_api_core/active_admin/directories/app'
       )
       insert_tag ScreensBuilder, html.html_safe
+    end
+  end
+
+  class IndexAsDirectoriesGrid < IndexAsBlock
+    def build(page_presenter, collection)
+      add_class "index"
+      resource_selection_toggle_panel if active_admin_config.batch_actions.any?
+      instance_exec(collection.first, &page_presenter.block)
+    end
+
+    def self.index_name
+      "Directories"
     end
   end
 

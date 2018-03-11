@@ -2,6 +2,12 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
   menu priority: 102
 
   index do
+    id_column
+    column :name
+    actions
+  end
+
+  index as: :directories_grid, default: true do
     directories_grid
   end
 
