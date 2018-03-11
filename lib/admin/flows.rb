@@ -14,6 +14,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
     attributes_table do
       row :name
     end
+
     open_in_mobile(flow.screens.first)
   end
 

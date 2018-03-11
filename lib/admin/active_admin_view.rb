@@ -1,5 +1,6 @@
 module OpenInMobile
   def open_in_mobile screen
+    return unless screen
     content = <<-HTML
       <style>
         .open_in_mobile {
