@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180311111054) do
+ActiveRecord::Schema.define(version: 20180311153057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,14 @@ ActiveRecord::Schema.define(version: 20180311111054) do
     t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_chats_on_keeper_type_and_keeper_id"
   end
 
+  create_table "beach_api_core_directories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_beach_api_core_directories_on_ancestry"
+  end
+
   create_table "beach_api_core_entities", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "uid", null: false
@@ -136,6 +144,7 @@ ActiveRecord::Schema.define(version: 20180311111054) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "directory_id"
   end
 
   create_table "beach_api_core_instances", force: :cascade do |t|

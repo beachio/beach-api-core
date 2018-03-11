@@ -1,0 +1,17 @@
+- @components_path = "beach_api_core/active_admin/directories/components/"
+
+- Dir[File.dirname(__FILE__) + '/*/*.slim'].each do |partial|
+  - template =  @components_path + partial.gsub(File.dirname(__FILE__)+"/", "")
+  =render template: template
+
+script type="text/javascript"
+  = render template: "beach_api_core/active_admin/directories/app.js"
+script type="text/javascript"
+  - Dir[File.dirname(__FILE__) + '/*/*.js', File.dirname(__FILE__) + '/*.js'].each do |partial|
+    - template = @components_path + partial.gsub(File.dirname(__FILE__)+"/", "")
+    =render template: template
+
+style
+  - Dir[File.dirname(__FILE__) + '/*/*.css', File.dirname(__FILE__) + '/*/*.css.erb'].each do |partial|
+    - template = @components_path + partial.gsub(File.dirname(__FILE__)+"/", "")
+    =render template: template

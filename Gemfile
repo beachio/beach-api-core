@@ -30,5 +30,8 @@ group :test do
   gem 'webmock'
 end
 
+gem 'pg', '~> 0.18'
+
 gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin.git', ref: '54dcfe'
+gem 'ancestry'
 gem 'apipie-rails', git: 'https://github.com/vitalinfo/apipie-rails.git'

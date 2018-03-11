@@ -1,0 +1,22 @@
+.form-control {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  width: calc(100% - 30px);
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+input[type="string"].form-control,
+input[type="number"].form-control,
+input[type="email"].form-control,
+select.form-control  {
+  height: 34px;
+}
+
+.block {
+  display: block;
+}
+
+.text-right {
+  text-align: right;
+}

@@ -45,8 +45,20 @@ module ActiveAdmin::Views
 
   class IndexAsTable
     include OpenInMobile
+
+    def directories_grid
+      html = ApplicationController.render(
+        :template => 'beach_api_core/active_admin/directories/app'
+      )
+      insert_tag ScreensBuilder, html.html_safe
+    end
   end
 
+  class DirectoryGridClass
+    def build(options = {})
+      super(options)
+    end
+  end
 
   class ScreensBuilder < ActiveAdmin::Component
     def build(options = {})
