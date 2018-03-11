@@ -54,6 +54,7 @@ module ActiveAdmin::Views
     end
   end
 
+
   class IndexAsDirectoriesGrid < IndexAsBlock
     def build(page_presenter, collection)
       add_class "index"
