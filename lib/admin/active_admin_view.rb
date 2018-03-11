@@ -43,7 +43,8 @@ module ActiveAdmin::Views
     include OpenInMobile
   end
 
-  class IndexAsBlock
+
+  class IndexAsDirectoriesGrid < IndexAsBlock
     include OpenInMobile
 
     def directories_grid
@@ -52,10 +53,7 @@ module ActiveAdmin::Views
       )
       insert_tag ScreensBuilder, html.html_safe
     end
-  end
 
-
-  class IndexAsDirectoriesGrid < IndexAsBlock
     def build(page_presenter, collection)
       add_class "index"
       resource_selection_toggle_panel if active_admin_config.batch_actions.any?
