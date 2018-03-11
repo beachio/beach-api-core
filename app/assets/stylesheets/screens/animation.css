@@ -1,6 +1,7 @@
 div[ui-view].slide {
     left: 0;
     transition: .5s ease all;
+    transition-delay: .1s;
 }
 
 div[ui-view].slide.ng-enter {
