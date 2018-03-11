@@ -17,7 +17,7 @@ html ng-app="app"
     = stylesheet_link_tag 'screens'
   body
     .app-layout
-      .slide ui-view=""
+      div ui-view="" ng-class="Action.animation_class"
 
     - Dir[Gem.loaded_specs['beach_api_core'].full_gem_path + '/app/assets/javascripts/screens/components/*/*.slim'].each do |partial|
       =render file: partial

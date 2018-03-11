@@ -3,6 +3,14 @@ app.factory('Screen', ['$resource', function($resource){
     "next": {
       "method": "GET",
       "url": "/screens/:id/next"
-    }
+    },
+    "prev": {
+      "method": "GET",
+      "url": "/screens/:id/prev"
+    },
+    "open_flow": {
+      "method": "GET",
+      "url": "/screens/:id/open_flow"
+    },
   })
 }])

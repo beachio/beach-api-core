@@ -5,8 +5,7 @@ app.directive('screens', ['ngDialog', function(ngDialog){
     // priority: 1,
     // terminal: true,
     scope: {
-      list: "=",
-      initialScreen: "="
+      list: "="
     }, // {} = isolate, true = child, false/undefined = no change
     // controller: function($scope, $element, $attrs, $transclude) {},
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
@@ -32,7 +31,12 @@ app.directive('screens', ['ngDialog', function(ngDialog){
         }
 
       $scope.addScreen = function () {
-        $scope.list.push({content: angular.copy($scope.initialScreen || {})})
+        var defaultScreen = {
+          header: {},
+          body: [],
+          footer: []
+        }
+        $scope.list.push({content: defaultScreen})
       }
     }
   };

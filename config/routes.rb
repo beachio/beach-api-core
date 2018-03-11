@@ -10,6 +10,7 @@ BeachApiCore::Engine.routes.draw do
 
     collection do
       get "view"
+      get "open_flow"
     end
   end
 

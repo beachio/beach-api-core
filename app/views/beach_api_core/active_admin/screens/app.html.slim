@@ -11,8 +11,8 @@ link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesh
 hr
 div ng-app="app"
   div ng-controller="ScreensCtrl as ctrl"
-    div ng-init="ctrl.screens = #{screens.to_json}; ctrl.initial_screen = #{initial_screen.to_json}"
-    screens name="#{object_name}" list="ctrl.screens" initial-screen="ctrl.initial_screen"
+    div ng-init="ctrl.screens = #{screens.to_json};"
+    screens name="#{object_name}" list="ctrl.screens"
 
     
 

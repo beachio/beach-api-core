@@ -15,13 +15,19 @@ script type="text/ng-template" id="button/settings.html"
     | Action (NEXT_SCREEN, DO_SOMETHING, etc):
     br
     div
-    select.form-control ng-options="option for option in ['NEXT_SCREEN', 'PREV_SCREEN', 'GO_TO_SCREEN_BY_ID', 'SUBMIT_ON_SERVER']" ng-model="control.settings.action.type"
+    select.form-control ng-options="option for option in ['NEXT_SCREEN', 'PREV_SCREEN', 'GO_TO_SCREEN_BY_ID', 'OPEN_FLOW', 'SUBMIT_ON_SERVER']" ng-model="control.settings.action.type"
     
   div ng-show="control.settings.action.type == 'GO_TO_SCREEN_BY_ID'"
     label
-      | ID: 
+      | SCREEN ID: 
       br
       input.form-control type="text" ng-model="control.settings.action.payload.screen_id"
+    
+  div ng-show="control.settings.action.type == 'OPEN_FLOW'"
+    label
+      | FLOW: 
+      br
+      select.form-control ng-options="option.id as option.name for option in #{BeachApiCore::Flow.select(:id, :name).to_json}" ng-model="control.settings.action.payload.flow_id"
     
   div ng-show="control.settings.action.type == 'SUBMIT_ON_SERVER'"
     label
