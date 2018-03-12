@@ -22,4 +22,8 @@ module ScreensDoc
   param 'flow_id', Integer, :desc => "Flow ID", required: true
   def flow; end
 
+  api :GET, '/screens/main_flow', I18n.t('api.resource_description.descriptions.screens.main_flow')
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  def main_flow; end
+
 end

@@ -113,7 +113,8 @@ en:
           show: "Get screen by ID"
           next: "Get next screen"
           prev: "Get previous screen"
-          flow: "Get flow by ID"
+          flow: "Get first screen of flow by ID"
+          main_flow: "Get first screen of main flow"
         organisations:
           list: "List of user organisations"
           create: "Create an organisation"
