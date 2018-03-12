@@ -29,13 +29,16 @@ app.service('Action', ['$state', 'Screen', 'Model', function($state, Screen, Mod
     },
     OPEN_FLOW: function (payload) {
       Action.animation_class = 'slide-fade'
-      Screen.open_flow(payload, function (res) {
+      Screen.flow(payload, function (res) {
         $state.go('screen_path', {id: res.id})
       })
     },
     EXIT: function () {
       Action.animation_class = 'slide-down'
-      $state.go('screen_path', {id: 0})
+      Screen.main_flow(function (res) {
+        Model.data = {}
+        $state.go('screen_path', {id: res.id})
+      })
     },
     SUBMIT_ON_SERVER: function () {
       Action.animation_class = 'slide-down'

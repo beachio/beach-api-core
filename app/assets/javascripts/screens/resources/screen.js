@@ -8,9 +8,13 @@ app.factory('Screen', ['$resource', function($resource){
       "method": "GET",
       "url": "/screens/:id/prev"
     },
-    "open_flow": {
+    "flow": {
       "method": "GET",
-      "url": "/screens/:id/open_flow"
+      "url": "/screens/open_flow"
+    },
+    "main_flow": {
+      "method": "GET",
+      "url": "/screens/main_flow"
     },
   })
 }])

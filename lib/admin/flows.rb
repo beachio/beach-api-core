@@ -23,7 +23,9 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
     dirs = (BeachApiCore::Directory.where("ancestry is null").order(:ancestry) + BeachApiCore::Directory.where("ancestry is not null").order(:ancestry)).index_by &:id
     dirs = dirs.map{|k, t| [(t.ancestry || "").split("/").map{|n| dirs[n.to_i].name + "/"}.join + t.name, t.id]}
     f.inputs do
-      f.input :directory_id, :label => 'Directory', :as => :select, :collection => dirs
+      unless f.object.main?
+        f.input :directory_id, :label => 'Directory', :as => :select, :collection => dirs
+      end
       f.input :name
     end
     f.screens :screens
@@ -46,8 +48,11 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
     end
   end
 
-  collection_action :flows, method: [:post, :put, :delete] do
-    if request.post?
+  collection_action :flows, method: [:post, :put, :delete, :get] do
+    if request.get? && params[:main]
+      @flow = BeachApiCore::Flow.main
+      render json: @flow
+    elsif request.post?
       flow_params = params.require(:flow).permit(:name, :directory_id)
       render json: BeachApiCore::Flow.create(flow_params)
     elsif request.put?

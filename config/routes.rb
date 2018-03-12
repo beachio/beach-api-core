@@ -10,7 +10,8 @@ BeachApiCore::Engine.routes.draw do
 
     collection do
       get "view"
-      get "open_flow"
+      get "flow"
+      get "main_flow"
     end
   end
 
@@ -52,6 +53,19 @@ BeachApiCore::Engine.routes.draw do
         post :set
       end
     end
+
+    resources :screens do
+      member do
+        get "next"
+        get "prev"
+      end
+
+      collection do
+        get "flow"
+        get "main_flow"
+      end
+    end
+
     resources :roles, only: %i(index)
     resources :settings, only: %i(update)
     resources :emails, only: %i(create)

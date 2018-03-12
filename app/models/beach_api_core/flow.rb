@@ -4,5 +4,9 @@ module BeachApiCore
     validates :name, presence: true
 
     belongs_to :directory
+
+    def self.main
+      find_by(main: true)
+    end
   end
 end

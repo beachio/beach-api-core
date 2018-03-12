@@ -22,7 +22,13 @@ module BeachApiCore::Concerns::ScreensConcern
       render json: @prev
     end
 
-    def open_flow
+    def main_flow
+      @flow = BeachApiCore::Flow.main
+      @screen = @flow.screens.first
+      render json: @screen
+    end
+
+    def flow
       @flow = BeachApiCore::Flow.find(params[:flow_id])
       @screen = @flow.screens.first
       render json: @screen

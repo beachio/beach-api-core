@@ -108,6 +108,10 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
           .then(function (res) {
             $scope.directories = res.data;
           })
+        $http.get(window.location.pathname+'/flows', {params: {main: true}})
+          .then(function (res) {
+            $scope.main_flow = res.data;
+          })
       }
 
       $scope.delete = function (type, entity) {
