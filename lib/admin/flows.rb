@@ -20,7 +20,9 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
   end
 
   form do |f|
+    dirs = (BeachApiCore::Directory.where("ancestry is null").order(:ancestry) + BeachApiCore::Directory.where("ancestry is not null").order(:ancestry)).map{|t| ["-"*(t.ancestry || "").split("/").count + t.name, t.id]}
     f.inputs do
+      f.input :directory_id, :label => 'Directory', :as => :select, :collection => dirs
       f.input :name
     end
     f.screens :screens
@@ -64,7 +66,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
       return [] if request.get?
       res = params.require(:flow).permit(:name)
       res[:screens_attributes] = JSON.parse(params[:flow][:screens]) rescue []
-      res[:parent] = params[:flow][:parent_id]
+      res[:directory_id] = params[:flow][:directory_id]
       return res
     end
   end
