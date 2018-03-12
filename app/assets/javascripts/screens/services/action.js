@@ -28,6 +28,7 @@ app.service('Action', ['$state', 'Screen', 'Model', function($state, Screen, Mod
       $state.go('screen_path', {id: payload.screen_id})
     },
     OPEN_FLOW: function (payload) {
+      console.log(payload)
       Action.animation_class = 'slide-fade'
       Screen.flow(payload, function (res) {
         $state.go('screen_path', {id: res.id})
