@@ -18,7 +18,7 @@ app.directive('screen', ['Action', '$timeout', function(Action, $timeout){
     link: function($scope, iElm, iAttrs, controller) {
       var settings = $scope.screen.settings;
 
-      if (settings.rotator) {
+      if (settings && settings.rotator) {
         $timeout(function () {
           Action.call({type: "NEXT_SCREEN"})
         }, settings.rotation_delay)

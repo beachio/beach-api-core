@@ -1,3 +1,3 @@
 app.service('Screen', [function(){
-  
+
 }])
