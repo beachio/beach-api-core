@@ -1,0 +1,7 @@
+script type="text/ng-template" id="controls-actions.html"
+  .relative
+    .control-actions
+      .control-settings ng-click="openSettingsWindow(control)"
+        i.material-icons settings
+      .control-remove ng-click="controls.splice($index, 1)"
+        | &times;

@@ -1,0 +1,6 @@
+script type="text/ng-template" id="controls.html"
+  div
+    ng-transclude
+  .add-control click-outside-if="controlTypesIsOpen" click-outside="controlTypesIsOpen=false" ng-class="{active: controlTypesIsOpen}" ng-click="controlTypesIsOpen = !controlTypesIsOpen"
+    ul.control-types ng-show="controlTypesIsOpen"
+      li ng-repeat="type in availableControls" ng-bind="type" ng-click="addControl(type)"

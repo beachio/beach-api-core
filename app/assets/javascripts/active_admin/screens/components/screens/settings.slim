@@ -1,0 +1,23 @@
+script type="text/ng-template" id="screens/settings.html"
+  h2 Screen settings
+
+  label.label
+    | ID:
+    br
+    input.form-control type="text" ng-model="screen.id" disabled=""
+  br
+  label.label
+    | Description:
+    br
+    input.form-control type="text" ng-model="screen.content.header.description"
+  br
+  label.label
+    input type="checkbox" ng-model="screen.settings.rotator" Rotator
+
+  br
+  label.label ng-show="screen.settings.rotator"
+    | Rotation Delay, ms:&nbsp;
+    input.form-control type="text" ng-model="screen.settings.rotation_delay"
+  hr
+  .text-right
+    button ng-click="closeThisDialog()" Save

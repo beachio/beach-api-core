@@ -1,8 +1,14 @@
 script type="text/ng-template" id="screen.html"
-  .header
-    .header__description ng-bind-html-compile="screen.content.header.description"
-  .body
-    dynamic-control ng-repeat="control in screen.content.body" control="control"
-  .footer
-    .footer__actions
-      dynamic-control ng-repeat="control in screen.content.footer" control="control"
+  div
+    screen-wrapper
+      .app-header ng-show="screen.content.header.description"
+        .app-header__description ng-bind-html-compile="screen.content.header.description"
+      .app-body
+        controls controls="screen.content.body" available-controls="availableBodyControls"
+          .app-controls
+            dynamic-control.dynamic-control ng-repeat="control in screen.content.body" control="control" controls="$parent.$parent.controls"
+      .app-footer
+        .app-footer__actions
+          controls controls="screen.content.footer" available-controls="availableFooterControls"
+            .app-controls
+              dynamic-control.dynamic-control ng-repeat="control in screen.content.footer" control="control" controls="$parent.$parent.controls"

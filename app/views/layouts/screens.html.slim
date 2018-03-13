@@ -1,31 +1,27 @@
 html ng-app="app"
   head
-    script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js" type="text/javascript"
-    script src="https://cdnjs.cloudflare.com/ajax/libs/checklist-model/0.11.0/checklist-model.min.js" type="text/javascript"
-    script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"
-    script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"
-    script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"
-    script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-messages.min.js"
-    script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js" type="text/javascript"
-    script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js" type="text/javascript"
-    script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.4.7/angular-resource.min.js" type="text/javascript"
-
-    
-    link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css"
+    = stylesheet_link_tag 'normalize.min'
     link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
-    link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0/angular-material.min.css"
-    = stylesheet_link_tag 'screens'
+    = stylesheet_link_tag 'screens/vendor'
+    = stylesheet_link_tag 'screens/app'
+    = stylesheet_link_tag 'active_admin/screens/app'
   body
     .app-layout
       div ui-view="" ng-class="Action.animation_class"
 
-    - Dir[Gem.loaded_specs['beach_api_core'].full_gem_path + '/app/assets/javascripts/screens/components/*/*.slim'].each do |partial|
-      =render file: partial
+    = render "beach_api_core/screens/components"
 
     script type="text/ng-template" id="app.html"
       div screen="ctrl.screen" ng-if="ctrl.screen"
 
     script type="text/ng-template" id="results.html"
-      pre
-        | {{ctrl.Model.data | json}}
-    = javascript_include_tag 'screens'
+      pre ng-bind="ctrl.Model.data | json"
+
+    css:
+      body, html {
+        background: #ccc;
+      }
+
+
+    = javascript_include_tag 'screens/vendor'
+    = javascript_include_tag 'screens/app'

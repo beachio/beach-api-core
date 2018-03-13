@@ -1,26 +1,21 @@
-script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js" type="text/javascript"
-script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.19.0/sortable.min.js" type="text/javascript"
-script src="https://cdnjs.cloudflare.com/ajax/libs/checklist-model/0.11.0/checklist-model.min.js" type="text/javascript"
-script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/js/ngDialog.min.js" type="text/javascript"
-script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"
-link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/css/ngDialog.min.css"
-link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/css/ngDialog-theme-default.min.css"
+= stylesheet_link_tag 'normalize.min'
 link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
-
+= stylesheet_link_tag 'screens/vendor'
+= stylesheet_link_tag 'screens/app'
+= stylesheet_link_tag 'active_admin/screens/app'
 
 hr
 div ng-app="app"
   div ng-controller="ScreensCtrl as ctrl"
     div ng-init="ctrl.screens = #{screens.to_json};"
-    screens name="#{object_name}" list="ctrl.screens"
-
-    
+    screens list="ctrl.screens"
 
     textarea.ng-hide name="#{name}" ng-model="ctrl.textScreens" rows="5" columns="5"
 
     button.save-screens type="submit" Save
-  
-  = render template: "beach_api_core/active_admin/screens/components/build.slim"
-<style>
-  = render template: "beach_api_core/active_admin/screens/app.css"
-</style>
+
+    = render "beach_api_core/screens/components"
+    = render "beach_api_core/active_admin/screens/components"
+
+= javascript_include_tag 'screens/vendor'
+= javascript_include_tag 'active_admin/screens/app'

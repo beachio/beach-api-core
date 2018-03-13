@@ -1,0 +1,11 @@
+//= require angular.min
+//= require angular-ui-router.min
+//= require angular-resource.min
+//= require angular-material.min
+//= require angular-messages.min
+//= require angular-aria.min
+//= require angular-animate.min
+//= require checklist-model.min
+//= require underscore-min
+//= require sortable.min
+//= require ngDialog.min

@@ -1,0 +1,267 @@
+.save-screens {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  background: #90079c;
+  font-size: 18px;
+  height: auto;
+  padding: 10px 20px;
+  border: none;
+  z-index: 999;
+}
+
+.save-screens:hover {
+  background: #c610d6 !important;
+}
+
+.screens {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.screen {
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  width: 375px;
+  height: 680px;
+  background: #f7f2f7;
+  position: relative;
+  margin-bottom: 20px;
+}
+.add-screen {
+  width: 375px;
+  height: 680px;
+  background: #f7f7f7;
+  color: #ccc;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
+}
+.add-screen:hover {
+  background: #f7f2f7;
+}
+.footer .control-types {
+  bottom: 100%;
+  top: auto;
+}
+
+.add-control {
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  margin: auto;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b441bf+0,4c0860+83,390461+100 */
+  background: #6C0A75; /* Old browsers */
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  right: 0;
+  position: absolute;
+  border-radius: 5px 0 0 5px;
+  transform: translateY(-50%);
+  top: 50%;
+  transition: .3s;
+}
+
+.add-control:hover,
+.add-control.active {
+  background: #B441BF;
+}
+
+.add-control:before {
+  content: "+";
+  font-size: 16px;
+}
+
+.screen-handler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 130px;
+  z-index: 1;
+  cursor: move;
+}
+
+.screen-delete, .screen-settings{
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+.screen-delete {
+  color: white;
+  background: #ff40ff;
+}
+
+.screen-settings {
+  right: 30px;
+  background: white;
+  color: #620b65;
+}
+
+.screen-delete:hover {
+  background: #c614fc;
+}
+
+.screen-settings:hover {
+  background: #f7f7f7;
+}
+
+.control-types {
+  position: absolute;
+  top: 100%;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+  right: 0;
+  border: 1px solid #ccc;
+  background: white;
+  min-height: 100%;
+  z-index: 2;
+  font-size: 14px;
+  color: #333;
+  min-width: 100px;
+}
+
+.control-types li {
+  padding: 14px;
+  text-align: left;
+}
+
+.control-types li:hover {
+  background: #f7f7f7;
+  color: #333;
+}
+
+.control {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.control-handler {
+  height: 15px;
+  width: 100%;
+  background: #646a6f;
+  cursor: move;
+  margin-bottom: 15px;
+}
+
+.delete-from-list {
+  color: red;
+  margin-left: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.screen-footer .control-handler {
+  display: none;
+}
+.screen-footer [ui-sortable] {
+  display: flex;
+  justify-content: space-around;
+}
+.screen-footer .control {
+  padding: 0;
+  border: none;
+  display: inline-block;
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+.screen-footer .control:first-child {
+  margin-left: 0;
+}
+
+
+.form-control {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  width: calc(100% - 30px);
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+input[type="string"].form-control,
+input[type="number"].form-control,
+input[type="email"].form-control,
+select.form-control  {
+  height: 34px;
+}
+
+.block {
+  display: block;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.s-button .material-icons {
+  line-height: 20px;
+}
+.control-settings,
+.control-remove {
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 13px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.control-remove {
+  color: white;
+  background: #ff3fff;
+}
+.control-settings {
+  background: white;
+  color: #620b65;
+  border: 1px solid #620b65;
+}
+
+.control-settings i {
+  font-size: 13px;
+}
+
+.control-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+a {
+  cursor: pointer;
+}
+
+.item-handler {
+  display: inline-block;
+  padding: 5px;
+  vertical-align: top;
+  height: 32px;
+  width: 32px;
+  color: #6C0A75;
+  cursor: move;
+}
+
+.item-delete {
+  color: red;
+  display: inline-block;
+  font-size: 20px;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 8px;
+}
