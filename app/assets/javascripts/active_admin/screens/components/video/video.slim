@@ -1,0 +1,19 @@
+script type="text/ng-template" id="video/settings.html"
+  h2
+    | Video settings
+  br
+  hr
+
+  label.label
+    | ID:
+    br
+    input.form-control type="text" ng-model="control.settings.url"
+
+  label.label
+    | Preview (optional):
+    br
+  image-uploader ng-model="control.settings.preview"
+
+  hr
+  .text-right
+    button ng-click="save()" Save
