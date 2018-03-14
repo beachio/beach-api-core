@@ -14,7 +14,7 @@ script type="text/ng-template" id="screens/settings.html"
       input type="checkbox" ng-model="screen.settings.rotator" &nbsp;Rotator
     br
     label.label ng-show="screen.settings.rotator"
-      | Rotation Delay, ms:&nbsp;
+      | Rotation Delay, ms:
       input.form-control type="text" ng-model="screen.settings.rotation_delay"
     br
 
@@ -28,6 +28,13 @@ script type="text/ng-template" id="screens/settings.html"
       | Background Color:
       br
       input.form-control type="color" ng-model="screen.content.header.backgroundColor"
+    br
+    label.label
+      input type="checkbox" ng-model="screen.content.header.with_progress" &nbsp;Progress
+    br
+    label.label ng-show="screen.content.header.with_progress"
+      | Progress, %:
+      input.form-control type="number" ng-model="screen.content.header.progress"
     br
 
   div ng-show="activeTab=='body'"

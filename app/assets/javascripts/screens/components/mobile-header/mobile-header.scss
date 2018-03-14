@@ -12,3 +12,21 @@
   display: block;
   padding: 6px;
 }
+
+.mobile-header__progress {
+  height: 6px;
+  width: 200px;
+  position: absolute;
+  bottom: 60px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+  left: 50%;
+  margin-left: -100px;
+}
+
+.mobile-header__progress--filled {
+  position: absolute;
+  border-radius: 3px;
+  height: 6px;
+  background: white;
+}
