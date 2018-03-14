@@ -1,0 +1,11 @@
+script type="text/ng-template" id="chart/settings.html"
+  h2
+    | Chart settings
+  label.label
+    | Endpoint data source:&nbsp;
+    input class="form-control" type="text" ng-model="control.settings.dataSource"
+  br
+
+  hr
+  .text-right
+    button ng-click="save()" Save
