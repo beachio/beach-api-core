@@ -11,6 +11,11 @@ script type="text/ng-template" id="screens/settings.html"
       input.form-control type="text" ng-model="screen.id" disabled=""
     br
     label.label
+      | Main Color:
+      br
+      input.form-control type="color" ng-model="screen.settings.mainColor"
+    br
+    label.label
       input type="checkbox" ng-model="screen.settings.rotator" &nbsp;Rotator
     br
     label.label ng-show="screen.settings.rotator"
@@ -23,11 +28,6 @@ script type="text/ng-template" id="screens/settings.html"
       | Description:
       br
       textarea.form-control ng-model="screen.content.header.description"
-    br
-    label.label
-      | Background Color:
-      br
-      input.form-control type="color" ng-model="screen.content.header.backgroundColor"
     br
     label.label
       input type="checkbox" ng-model="screen.content.header.with_progress" &nbsp;Progress

@@ -2,10 +2,10 @@ script type="text/ng-template" id="screens.html"
   div
     .screens  ui-sortable="{handle: '> .screen-handler'}" ng-model="list"
       .screen ng-repeat='screen in list track by $index' ng-hide="screen._destroy"
-        .screen-settings ng-click="openSettingsWindow(screen)" ng-style="{color: screen.content.header.backgroundColor}"
+        .screen-settings ng-click="openSettingsWindow(screen)" ng-style="{color: screen.settings.mainColor}"
           i.material-icons settings
 
-        .screen-delete ng-style="{background: screen.content.header.backgroundColor}" ng-click="screen._destroy = true"
+        .screen-delete ng-style="{background: screen.settings.mainColor}" ng-click="screen._destroy = true"
           | &times;
         .screen-handler
         screen screen="screen"
