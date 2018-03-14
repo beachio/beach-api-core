@@ -1,10 +1,7 @@
-.mobile-image-background {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
+.mobile-image {
+  text-align: center;
+}
+
+.mobile-image img {
+  max-width: 100%;
 }
