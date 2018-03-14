@@ -3,8 +3,8 @@ html ng-app="app"
     = stylesheet_link_tag 'normalize.min'
     link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
     = stylesheet_link_tag 'screens/vendor'
-    = stylesheet_link_tag 'screens/app'
-    = stylesheet_link_tag 'active_admin/screens/app'
+    - ActiveAdmin::Screens.app_css_pathes.each do |path|
+      = stylesheet_link_tag path
   body
     .app-layout
       div ui-view="" ng-class="Action.animation_class"
@@ -12,7 +12,7 @@ html ng-app="app"
     = render "beach_api_core/screens/components"
 
     script type="text/ng-template" id="app.html"
-      div screen="ctrl.screen" ng-if="ctrl.screen"
+      screen screen="ctrl.screen" ng-if="ctrl.screen"
 
     script type="text/ng-template" id="results.html"
       pre ng-bind="ctrl.Model.data | json"
@@ -24,4 +24,5 @@ html ng-app="app"
 
 
     = javascript_include_tag 'screens/vendor'
-    = javascript_include_tag 'screens/app'
+    - ActiveAdmin::Screens.app_js_pathes.each do |path|
+      = javascript_include_tag path

@@ -1,0 +1,5 @@
+script type="text/ng-template" id="controls/control-selector.html"
+  h2 Select a control
+  ul.control-list
+    li ng-repeat="control in availableControls"
+      a ng-click="addControl(control)" ng-bind="control.split('-').join(' ')"

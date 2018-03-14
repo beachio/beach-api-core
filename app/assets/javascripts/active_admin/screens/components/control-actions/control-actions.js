@@ -5,6 +5,7 @@ app.directive('controlActions', ['ngDialog', function(ngDialog){
     // priority: 1,
     // terminal: true,
     scope: {
+      screen: "=",
       controls: "=",
       control: "="
     }, // {} = isolate, true = child, false/undefined = no change
@@ -22,9 +23,23 @@ app.directive('controlActions', ['ngDialog', function(ngDialog){
           template: control.type+'/settings.html',
           controller: ['$scope', function (scope) {
             scope.control = control
-          }]
+
+            scope.save = function () {
+              scope.control.settings.status = "added";
+              scope.closeThisDialog();
+            }
+          }],
+          preCloseCallback: function (value) {
+            if ($scope.control.settings.status == "new") {
+              $scope.controls.pop();
+              $scope.$apply();
+            }
+          }
         })
       }
+
+      if ($scope.control.settings.status == "new")
+        $scope.openSettingsWindow($scope.control)
     }
   };
 }]);

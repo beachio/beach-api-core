@@ -12,6 +12,7 @@ require 'draper'
 require 'acts_as_downcasable_on'
 require 'acts_as_strippable_on'
 require 'rails-jquery-autocomplete'
+require 'active_admin/screens'
 
 module BeachApiCore
   # Mailer actions that could be used to send emails
@@ -33,8 +34,11 @@ module BeachApiCore
     end
 
     initializer :beach_api_core do
-      ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'admin')) if defined?(ActiveAdmin)
-      ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'active_admin', 'views')) if defined?(ActiveAdmin)
+      if defined?(ActiveAdmin)
+        ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'admin'))
+        ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'active_admin'))
+        ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'active_admin', 'views'))
+      end
     end
 
     config.generators do |g|

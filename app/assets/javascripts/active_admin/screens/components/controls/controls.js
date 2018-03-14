@@ -5,6 +5,7 @@ app.directive('controls', ['ngDialog', function(ngDialog){
     // priority: 1,
     // terminal: true,
     scope: {
+      screen: "=",
       controls: "=",
       availableControls: "=",
     }, // {} = isolate, true = child, false/undefined = no change
@@ -17,13 +18,25 @@ app.directive('controls', ['ngDialog', function(ngDialog){
     transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
-      $scope.addControl = function (type) {
-        $scope.controls.push({
-          type: type,
-          settings: {
-            list: [],
-            title: "Title"
-          }
+      $scope.openControlSelector = function () {
+        ngDialog.open({
+          template: 'controls/control-selector.html',
+          controller: ['$scope', function (scope) {
+            scope.availableControls = $scope.availableControls
+
+            scope.addControl = function (type) {
+              $scope.controls.push({
+                type: type,
+                settings: {
+                  status: "new",
+                  list: [],
+                  title: "Title"
+                }
+              })
+
+              scope.closeThisDialog();
+            }
+          }]
         })
       }
     }

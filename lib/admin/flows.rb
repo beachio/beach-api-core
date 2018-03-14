@@ -62,7 +62,18 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
       BeachApiCore::Flow.find(params[:id]).destroy
       render json: {}
     end
+  end
 
+  collection_action :images, method: [:post, :delete] do
+    if request.post?
+      entity = BeachApiCore::Entity.create(user: current_user, uid: SecureRandom.uuid, kind: "FlowImage")
+      asset = BeachApiCore::Asset.create(file: params.permit![:attachments].first, entity: entity)
+      
+      render json: {url: asset.file_url, id: asset.id}
+    elsif request.delete?
+      BeachApiCore::Asset.find(params[:id]).destroy
+      render json: {}
+    end
   end
 
   controller do

@@ -1,0 +1,18 @@
+.control-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.control-list a {
+  padding: 8px;
+  display: block;
+  text-decoration: none;
+  color: #333;
+  border: 1px dotted #dadada;
+  margin-top: -1px;
+  text-transform: capitalize;
+}
+
+.control-list a:hover {
+  background: #f7f7f7;
+}

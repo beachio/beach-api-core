@@ -1,0 +1,11 @@
+script type="text/ng-template" id="image/settings.html"
+  h2
+    | Image settings
+  br
+  hr
+
+  image-uploader ng-model="control.settings.image"
+
+  hr
+  .text-right
+    button ng-click="save()" Save

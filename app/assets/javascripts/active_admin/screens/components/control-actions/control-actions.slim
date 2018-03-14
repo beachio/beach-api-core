@@ -1,7 +1,8 @@
 script type="text/ng-template" id="controls-actions.html"
   .relative
+    .control-title ng-bind="control.type" ng-style="{color: screen.content.header.backgroundColor}"
     .control-actions
-      .control-settings ng-click="openSettingsWindow(control)"
+      .control-settings ng-click="openSettingsWindow(control)" ng-style="{borderColor: screen.content.header.backgroundColor, color: screen.content.header.backgroundColor}"
         i.material-icons settings
-      .control-remove ng-click="controls.splice($index, 1)"
+      .control-remove ng-click="controls.splice($index, 1)" ng-style="{backgroundColor: screen.content.header.backgroundColor}"
         | &times;

@@ -1,0 +1,14 @@
+.mobile-header {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-image: asset-url("beach_api_core/mobile_header.png");
+  background-size: cover;
+}
+
+.mobile-header-bg {
+  display: block;
+  padding: 6px;
+}
