@@ -3,7 +3,6 @@
   height: 200px;
   background: white;
   border: 1px dashed;
-  display: block;
   display: flex;
   justify-content: center;
   flex-direction: column;
