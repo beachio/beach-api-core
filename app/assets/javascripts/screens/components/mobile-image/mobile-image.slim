@@ -1,4 +1,5 @@
 script type="text/ng-template" id="mobile-image.html"
-  .mobile-image ng-class="{fullscreen: fullscreen}" ng-click="fullscreen = true"
-    img ng-src="{{settings.image.url}}"
+  .mobile-image ng-class="{fullscreen: fullscreen}"
+    div
+      img ng-src="{{settings.image.url}}" ng-click="fullscreen = !fullscreen"
 
