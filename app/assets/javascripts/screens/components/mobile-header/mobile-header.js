@@ -17,6 +17,13 @@ app.directive('mobileHeader', [function(){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
+      $scope.descriptionNum = randomInteger(0, $scope.header.descriptions.length-1)
     }
   };
 }]);
+
+function randomInteger(min, max) {
+  var rand = min - 0.5 + Math.random() * (max - min + 1)
+  rand = Math.round(rand);
+  return rand;
+}

@@ -3,7 +3,6 @@ script type="text/ng-template" id="screen.html"
     screen-wrapper
       .app-header
         mobile-header header="screen.content.header"
-        .app-header__description ng-bind-html-compile="screen.content.header.description" ng-show="screen.content.header.description"
       .app-body ng-style="{backgroundImage: 'url('+screen.settings.backgroundImage.url+')'}"
         controls controls="screen.content.body" available-controls="availableBodyControls" screen="screen"
           .app-controls ui-sortable="{handle: '.control-title'}" ng-model="screen.content.body"

@@ -82,7 +82,11 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
     def resource_params
       return [] if request.get?
       res = params.require(:flow).permit(:name)
-      res[:screens_attributes] = JSON.parse(params[:flow][:screens]) rescue []
+
+      screens_attributes = JSON.parse(params[:flow][:screens])
+      screens_attributes.each{|t| t.delete("$$hashKey")} rescue []
+
+      res[:screens_attributes] = screens_attributes
       res[:directory_id] = params[:flow][:directory_id]
       return res
     end

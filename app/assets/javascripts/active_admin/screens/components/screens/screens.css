@@ -21,3 +21,17 @@
 .settings-tab:hover {
   color: #0bb4e0;
 }
+
+.delete-description {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: red;
+  color: white;
+  height: 15px;
+  width: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 14px;
+}

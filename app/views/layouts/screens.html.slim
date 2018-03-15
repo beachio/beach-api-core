@@ -6,7 +6,7 @@ html ng-app="app"
     - ActiveAdmin::Screens.app_css_pathes.each do |path|
       = stylesheet_link_tag path
   body
-    .app-layout
+    .app-layout ng-init="user = #{BeachApiCore::UserSerializer.new(current_user).to_json}"
       div ui-view="" ng-class="Action.animation_class"
 
     = render "beach_api_core/screens/components"
