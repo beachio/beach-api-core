@@ -1,4 +1,4 @@
-app.directive('additionalComponent', ['ngDialog', '$rootScope', function(ngDialog, $rootScope){
+app.directive('combinationControl', ['ngDialog', '$rootScope', function(ngDialog, $rootScope){
   // Runs during compile
   return {
     // name: '',
@@ -11,7 +11,7 @@ app.directive('additionalComponent', ['ngDialog', '$rootScope', function(ngDialo
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
-    templateUrl: 'additional-component.html',
+    templateUrl: 'combination-control.html',
     // replace: true,
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
@@ -26,15 +26,15 @@ app.directive('additionalComponent', ['ngDialog', '$rootScope', function(ngDialo
           },
           draggable: {
               enabled: true,
-              handle: '.additional-component__handle'
+              handle: '.combination-control__handle'
           }
       }
 
       $scope.openSettings = function (control) {
         ngDialog.open({
-          template: 'additional-component-item.html',
+          template: 'combination-control-item.html',
           controller: ['$scope', function (scope) {
-            scope.availableControls = _.without($rootScope.allControls, "additional-component")
+            scope.availableControls = _.without($rootScope.allControls, "combination-control")
             scope.control = control
             scope.control.settings = scope.control.settings || {}
             scope.control.settings.list = scope.control.settings.list || []

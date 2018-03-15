@@ -1,0 +1,14 @@
+script type="text/ng-template" id="combination-control.html"
+  .combination-control
+    div gridster="gridsterOpts"
+      ul
+        li.combination-control__subcomponent gridster-item="control" ng-repeat="control in ngModel"
+          .combination-control__handle
+            i.material-icons menu
+          .combination-control__actions
+            .combination-control__settings ng-click="openSettings(control)"
+              i.material-icons settings
+            .combination-control__delete ng-click="ngModel.splice($index, 1)"
+              i.material-icons close
+
+          dynamic-element ng-if="control.type" content="'<mobile-'+$parent.control.type+' settings=\'$parent.control.settings\'></mobile'+$parent.control.type+'>'"

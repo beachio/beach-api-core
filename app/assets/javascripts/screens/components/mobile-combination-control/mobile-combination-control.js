@@ -1,4 +1,4 @@
-app.directive('mobileAdditionalComponent', [function(){
+app.directive('mobileCombinationControl', [function(){
   // Runs during compile
   return {
     // name: '',
@@ -11,7 +11,7 @@ app.directive('mobileAdditionalComponent', [function(){
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
-    templateUrl: 'mobile-additional-component.html',
+    templateUrl: 'mobile-combination-control.html',
     require: '^screen',
     // replace: true,
     // transclude: true,

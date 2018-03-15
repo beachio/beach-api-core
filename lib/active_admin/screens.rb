@@ -4,7 +4,7 @@ module ActiveAdmin
     @app_css_pathes = ["screens/app"]
     @active_admin_js_pathes = ["active_admin/screens/app"]
     @active_admin_css_pathes = ["active_admin/screens/app"]
-    @body_controls = ['additional-component', 'checkbox-list', 'radio-list', 'image', 'video', 'chart']
+    @body_controls = ['combination-control', 'checkbox-list', 'radio-list', 'image', 'video', 'chart']
     @footer_controls = ['button', 'input', 'select']
 
     class << self

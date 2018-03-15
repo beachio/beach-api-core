@@ -1,34 +1,34 @@
-.additional-component {
+.combination-control {
   min-height: 50px;
   background: white;
   margin-bottom: 10px;
 }
 
-.additional-component__subcomponent {
+.combination-control__subcomponent {
   background: #f7f7f7;
 }
 
-.additional-component__actions {
+.combination-control__actions {
   position: absolute;
   right: 5px;
   top: 5px;
   z-index: 6;
 }
 
-.additional-component__actions i {
+.combination-control__actions i {
   font-size: 14px;
 }
-.additional-component__settings, .additional-component__delete {
+.combination-control__settings, .combination-control__delete {
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
 }
 
-.additional-component__delete {
+.combination-control__delete {
   color: red;
 }
 
-.additional-component__handle {
+.combination-control__handle {
   cursor: move;
   position: absolute;
   left: 5px;
@@ -37,6 +37,6 @@
 }
 
 
-.additional-component-item__settings h2 {
+.combination-control-item__settings h2 {
   display: none;
 }
