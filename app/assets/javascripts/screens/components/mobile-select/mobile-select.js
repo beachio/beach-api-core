@@ -11,12 +11,13 @@ app.directive('mobileSelect', [function(){
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
+    require: '^screen',
     templateUrl: 'mobile-select.html',
     // replace: true,
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
-      
+      $scope.screen = controller.screen;
     }
   };
 }]);

@@ -13,10 +13,12 @@ app.directive('mobileRadioList', ['Model', function(Model){
     // template: '',
     templateUrl: 'mobile-radio-list.html',
     // replace: true,
+    require: '^screen', // Array = multiple requires, ? = optional, ^ = check parent elements
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.Model = Model;
+      $scope.screen = controller.screen;
     }
   };
 }]);

@@ -2,8 +2,8 @@
   height: 180px;
 }
 .mobile-video__preview {
-  width: 295px;
-  height: 160px;
+  width: 280px;
+  height: 180px;
   position: absolute;
   background-size: cover;
   cursor: pointer;

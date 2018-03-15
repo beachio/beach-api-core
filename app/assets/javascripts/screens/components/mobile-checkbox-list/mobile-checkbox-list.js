@@ -11,12 +11,14 @@ app.directive('mobileCheckboxList', ['Model', function(Model){
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
+    require: '^screen',
     templateUrl: 'mobile-checkbox-list.html',
     // replace: true,
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.Model = Model;
+      $scope.screen = controller.screen;
     }
   };
 }]);

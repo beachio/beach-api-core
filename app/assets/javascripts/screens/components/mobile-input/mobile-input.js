@@ -12,11 +12,13 @@ app.directive('mobileInput', ["Model", function(Model){
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
     templateUrl: 'mobile-input.html',
+    require: '^screen',
     // replace: true,
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
-      $scope.Model = Model
+      $scope.Model = Model;
+      $scope.screen = controller.screen;
     }
   };
 }]);

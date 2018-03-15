@@ -7,7 +7,11 @@ app.directive('screen', ['Action', '$timeout', function(Action, $timeout){
     scope: {
       screen: "="
     }, // {} = isolate, true = child, false/undefined = no change
-    // controller: function($scope, $element, $attrs, $transclude) {},
+    controller: ['$scope', function($scope) {
+      var ctrl = this;
+      ctrl.screen = $scope.screen;
+    }],
+    controllerAs: "ctrl",
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',

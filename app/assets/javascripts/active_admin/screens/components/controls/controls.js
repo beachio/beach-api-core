@@ -5,7 +5,6 @@ app.directive('controls', ['ngDialog', function(ngDialog){
     // priority: 1,
     // terminal: true,
     scope: {
-      screen: "=",
       controls: "=",
       availableControls: "=",
     }, // {} = isolate, true = child, false/undefined = no change
@@ -14,10 +13,12 @@ app.directive('controls', ['ngDialog', function(ngDialog){
     restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
     templateUrl: 'controls.html',
+    require: '^screen',
     // replace: true,
     transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
+      $scope.screen = controller.screen;
       $scope.openControlSelector = function () {
         ngDialog.open({
           template: 'controls/control-selector.html',

@@ -1,5 +1,5 @@
 script type="text/ng-template" id="mobile-header.html"
-  .mobile-header ng-style="{backgroundColor: $parent.$parent.screen.settings.mainColor || '#650C65'}"
+  .mobile-header ng-style="{backgroundColor: screen.settings.mainColor || '#650C65'}"
     mobile-header-bg.mobile-header-bg
     .mobile-header__progress ng-if="header.with_progress"
       .mobile-header__progress--filled ng-style="{width: header.progress+'%'}"

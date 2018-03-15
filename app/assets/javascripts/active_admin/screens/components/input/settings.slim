@@ -7,7 +7,8 @@ script type="text/ng-template" id="input/settings.html"
 
   label.label
     | Type:&nbsp;
-    input class="form-control" type="text" ng-model="control.settings.type"
+
+    select.form-control ng-options="option for option in ['text', 'number', 'email', 'phone']" ng-model="control.settings.type"
 
   label.label
     | Placeholder:&nbsp;
