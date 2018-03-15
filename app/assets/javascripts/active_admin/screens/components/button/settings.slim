@@ -27,7 +27,8 @@ script type="text/ng-template" id="button/settings.html"
     label
       | FLOW: 
       br
-      select.form-control ng-options="option.id as option.name for option in #{BeachApiCore::Flow.select(:id, :name).to_json}" ng-model="control.settings.action.payload.flow_id"
+
+      select.form-control ng-options="option.id as option.path for option in #{BeachApiCore::Flow.full_path.to_json}" ng-model="control.settings.action.payload.flow_id"
     
   div ng-show="control.settings.action.type == 'SUBMIT_ON_SERVER'"
     label

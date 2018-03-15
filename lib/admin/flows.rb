@@ -20,11 +20,9 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
   end
 
   form do |f|
-    dirs = (BeachApiCore::Directory.where("ancestry is null").order(:ancestry) + BeachApiCore::Directory.where("ancestry is not null").order(:ancestry)).index_by &:id
-    dirs = dirs.map{|k, t| [(t.ancestry || "").split("/").map{|n| dirs[n.to_i].name + "/"}.join + t.name, t.id]}
     f.inputs do
       unless f.object.main?
-        f.input :directory_id, :label => 'Directory', :as => :select, :collection => dirs
+        f.input :directory_id, :label => 'Directory', :as => :select, :collection => BeachApiCore::Directory.dirs
       end
       f.input :name
     end
