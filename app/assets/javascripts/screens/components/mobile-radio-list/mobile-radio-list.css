@@ -18,3 +18,7 @@
   margin: 0;
   font-size: 13px;
 }
+
+.mobile-radio-list md-radio-button {
+  line-height: 21px;
+}

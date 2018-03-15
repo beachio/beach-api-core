@@ -21,14 +21,9 @@ app.directive('mobileAdditionalComponent', [function(){
       
 
       $scope.gridsterOpts = {
-          margins: [10, 10], // the pixel distance between each widget
+          margins: [20, 20], // the pixel distance between each widget
           mobileBreakPoint: 0, // if the screen is not wider that this, remove the grid layout and stack the items
-          resizable: {
-              enabled: true,
-          },
-          draggable: {
-              enabled: true,
-          }
+
       };
     }
   };
