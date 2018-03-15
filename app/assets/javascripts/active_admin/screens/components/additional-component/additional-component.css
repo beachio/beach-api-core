@@ -1,0 +1,42 @@
+.additional-component {
+  min-height: 50px;
+  background: white;
+  margin-bottom: 10px;
+}
+
+.additional-component__subcomponent {
+  background: #f7f7f7;
+}
+
+.additional-component__actions {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 6;
+}
+
+.additional-component__actions i {
+  font-size: 14px;
+}
+.additional-component__settings, .additional-component__delete {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.additional-component__delete {
+  color: red;
+}
+
+.additional-component__handle {
+  cursor: move;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  z-index: 6;
+}
+
+
+.additional-component-item__settings h2 {
+  display: none;
+}

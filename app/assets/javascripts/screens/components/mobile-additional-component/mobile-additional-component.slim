@@ -1,0 +1,6 @@
+script type="text/ng-template" id="mobile-additional-component.html"
+  .mobile-additional-component
+    div gridster="gridsterOpts"
+      ul
+        li.mobile-additional-component__subcomponent gridster-item="control" ng-repeat="control in settings.list"
+          dynamic-element ng-if="control.type" content="'<mobile-'+$parent.control.type+' settings=\'$parent.control.settings\'></mobile'+$parent.control.type+'>'"

@@ -35,3 +35,110 @@
   text-align: center;
   line-height: 14px;
 }
+
+.save-screens {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  background: #90079c;
+  font-size: 18px;
+  height: auto;
+  padding: 10px 20px;
+  border: none;
+  z-index: 999;
+}
+
+.save-screens:hover {
+  background: #c610d6 !important;
+}
+
+.screens {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.screen {
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  width: 375px;
+  height: 680px;
+  background: #f7f2f7;
+  position: relative;
+  margin-bottom: 20px;
+}
+.add-screen {
+  width: 375px;
+  height: 680px;
+  background: #f7f7f7;
+  color: #ccc;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
+}
+.add-screen:hover {
+  background: #f7f2f7;
+}
+
+.screen-handler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 130px;
+  z-index: 5;
+  cursor: move;
+}
+
+.screen-delete, .screen-settings{
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 0;
+  z-index: 6;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+.screen-delete {
+  color: white;
+  background: #ff40ff;
+}
+
+.screen-settings {
+  right: 30px;
+  background: white;
+  color: #620b65;
+}
+
+.screen-delete:hover {
+  background: #c614fc;
+}
+
+.screen-settings:hover {
+  background: #f7f7f7;
+}
+
+.screen-footer .control-handler {
+  display: none;
+}
+.screen-footer [ui-sortable] {
+  display: flex;
+  justify-content: space-around;
+}
+.screen-footer .control {
+  padding: 0;
+  border: none;
+  display: inline-block;
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+.screen-footer .control:first-child {
+  margin-left: 0;
+}

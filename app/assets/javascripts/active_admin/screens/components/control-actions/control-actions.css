@@ -2,8 +2,9 @@
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 1;
+  z-index: 3;
   cursor: move;
   background: white;
   padding: 0 7px;
 }
+

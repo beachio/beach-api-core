@@ -23,7 +23,7 @@ script type="text/ng-template" id="screens/settings.html"
       input.form-control type="text" ng-model="screen.settings.rotation_delay"
     br
 
-  div ng-show="activeTab=='header'"
+  div ng-show="activeTab=='header'" ng-init="screen.content.header.descriptions = screen.content.header.descriptions || []"
     label.label.relative ng-repeat="description in screen.content.header.descriptions"
       | Description (variant {{$index+1}}):
       br

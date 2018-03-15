@@ -1,0 +1,18 @@
+script type="text/ng-template" id="additional-component/settings.html"
+  h2
+    | Additional Component
+  
+  label.label
+    | Name:
+    br
+    div
+      input.form-control type="text" ng-model="control.settings.name"
+
+  additional-component ng-model="control.settings.list"
+
+  a.md-button.md-raised.md-success ng-click="control.settings.list.push({})" Add Item
+  hr
+  .text-right
+    button ng-click="save()" Save
+
+0,2,0,2

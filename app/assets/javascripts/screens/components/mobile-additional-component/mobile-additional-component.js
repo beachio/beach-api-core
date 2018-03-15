@@ -1,32 +1,35 @@
-app.directive('mobileHeader', [function(){
+app.directive('mobileAdditionalComponent', [function(){
   // Runs during compile
   return {
     // name: '',
     // priority: 1,
     // terminal: true,
     scope: {
-      header: "="
+      settings: "="
     }, // {} = isolate, true = child, false/undefined = no change
     // controller: function($scope, $element, $attrs, $transclude) {},
-    require: '^screen', // Array = multiple requires, ? = optional, ^ = check parent elements
+    // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
-    templateUrl: 'mobile-header.html',
+    templateUrl: 'mobile-additional-component.html',
+    require: '^screen',
     // replace: true,
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
-      $scope.$watch('header.descriptions', function () {
-        if ($scope.header.descriptions)
-          $scope.descriptionNum = randomInteger(0, $scope.header.descriptions.length-1)
-      }, true)
+      
+
+      $scope.gridsterOpts = {
+          margins: [10, 10], // the pixel distance between each widget
+          mobileBreakPoint: 0, // if the screen is not wider that this, remove the grid layout and stack the items
+          resizable: {
+              enabled: true,
+          },
+          draggable: {
+              enabled: true,
+          }
+      };
     }
   };
 }]);
-
-function randomInteger(min, max) {
-  var rand = min - 0.5 + Math.random() * (max - min + 1)
-  rand = Math.round(rand);
-  return rand;
-}

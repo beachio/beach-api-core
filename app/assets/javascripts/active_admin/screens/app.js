@@ -4,4 +4,4 @@
 //= require_tree ./controllers
 //= require ./../../screens/components
 
-var app = angular.module("app", ["ui.sortable", "checklist-model", "ngDialog", "ngMaterial"])
+var app = angular.module("app", ['gridster', "ui.sortable", "checklist-model", "ngDialog", "ngMaterial"])

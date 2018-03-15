@@ -2,6 +2,7 @@
 = require ngDialog.min
 = require ngDialog-theme-default.min
 = require angular-material.min
+= require angular-gridster.min
 = require_self
 */
 

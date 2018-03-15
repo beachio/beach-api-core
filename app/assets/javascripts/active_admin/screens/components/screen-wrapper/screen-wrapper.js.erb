@@ -1,4 +1,4 @@
-app.directive('screenWrapper', [function(){
+app.directive('screenWrapper', ['$rootScope', function($rootScope){
   // Runs during compile
   return {
     // name: '',
@@ -16,6 +16,8 @@ app.directive('screenWrapper', [function(){
     link: function($scope, iElm, iAttrs, controller) {
       $scope.availableBodyControls = <%= ActiveAdmin::Screens.body_controls %>
       $scope.availableFooterControls = <%= ActiveAdmin::Screens.footer_controls %>
+
+      $rootScope.allControls = _.union($scope.availableBodyControls, $scope.availableFooterControls)
     }
   };
 }]);
