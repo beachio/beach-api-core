@@ -21,6 +21,10 @@
   margin-bottom: 15px;
 }
 
+.ngdialog .form-control {
+  width: 100%;
+}
+
 input[type="string"].form-control,
 input[type="number"].form-control,
 input[type="email"].form-control,

@@ -1,0 +1,74 @@
+.mobile-card {
+  padding: 15px;
+  position: relative;
+  background-size: cover;
+  background-position: center center;
+}
+.mobile-card:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: asset-url("beach_api_core/card-background.png");
+  background-size: cover;
+  background-position: center center;
+}
+
+.mobile-card__body {
+  position: relative;
+  z-index: 2;
+}
+
+.mobile-card__title {
+  font-size: 14px;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.mobile-card__title:after {
+  content: "";
+  display: block;
+  width: 40px;
+  margin: auto;
+  background: white;
+  height: 2px;
+  z-index: 1;
+}
+
+.mobile-card__content {
+  color: white;
+  font-size: 13px;
+  text-align: center;
+  padding: 10px;
+  line-height: 1.5;
+}
+
+.mobile-card__rounded-boxes {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  text-align: center;
+}
+
+.mobile-card__rounded-box {
+  min-height: 30px;
+  min-width: 100px;
+  background: rgba(255,255,255,.3);
+  border-radius: 20px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.mobile-card__rounded-boxes .mobile-card__rounded-box:first-child {
+  margin-left: 0;
+}

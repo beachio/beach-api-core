@@ -1,0 +1,59 @@
+script type="text/ng-template" id="card/settings.html"
+  h2 Card settings
+  label.label
+    | Title:
+    br
+    div
+      input.form-control type="text" ng-model="control.settings.title"
+  label.label
+    | Content:
+    br
+    div
+      textarea.form-control ng-model="control.settings.content"
+  label.label
+    ' Background Color
+    small
+      ' (optional, Main Color by default)
+    ' :
+    br
+    input.form-control type="color" ng-model="screen.settings.mainColor"
+  label.label
+    | Background Image:
+  image-uploader ng-model="control.settings.image"
+
+  label.label ng-init="control.settings.boxes = control.settings.boxes || []"
+    ' Rounded Boxes:
+
+  .rounded-boxes ng-repeat="box in control.settings.boxes"
+    br
+    .relative
+      input.form-control type="text" ng-model="box.text" placeholder="Text"
+      .delete-rounded-box ng-click="control.settings.boxes.splice($index, 1)"
+        | &times;
+  br
+  md-button.md-raised.md-default ng-click="control.settings.boxes.push({})" Add Box
+
+
+  hr
+  label.label
+    | Action (NEXT_SCREEN, DO_SOMETHING, etc):
+    br
+    div
+    select.form-control ng-options="option for option in ['NONE', 'GO_TO_SCREEN_BY_ID', 'OPEN_FLOW']" ng-model="control.settings.action.type"
+    
+  div ng-show="control.settings.action.type == 'GO_TO_SCREEN_BY_ID'"
+    label
+      | SCREEN ID: 
+      br
+      input.form-control type="text" ng-model="control.settings.action.payload.screen_id"
+    
+  div ng-show="control.settings.action.type == 'OPEN_FLOW'"
+    label
+      | FLOW: 
+      br
+
+      select.form-control ng-options="option.id as option.path for option in #{BeachApiCore::Flow.full_path.to_json}" ng-model="control.settings.action.payload.flow_id"
+
+  hr
+  .text-right
+    button ng-click="save()" Save
