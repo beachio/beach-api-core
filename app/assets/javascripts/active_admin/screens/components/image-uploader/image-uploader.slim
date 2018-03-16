@@ -1,5 +1,5 @@
 script type="text/ng-template" id="image-uploader.html"
-  .image-uploader ng-style="{backgroundImage: 'url('+ngModel.url+')'}"
+  .image-uploader ng-style="{backgroundImage: 'url('+ngModel.url+')', width: (width || 200) + 'px', height: (height || 200) + 'px'}"
     .image-uploader-delete ng-click="remove()"
       | &times;
     label

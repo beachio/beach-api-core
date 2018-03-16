@@ -1,0 +1,19 @@
+script type="text/ng-template" id="action-selector.html"
+  label.label
+    | Action:
+    br
+    div
+    select.form-control ng-options="option for option in availableActions" ng-model="ngModel.type"
+
+  div ng-show="ngModel.type == 'GO_TO_SCREEN_BY_ID'"
+    label
+      | SCREEN ID: 
+      br
+      input.form-control type="text" ng-model="ngModel.payload.screen_id"
+    
+  div ng-show="ngModel.type == 'OPEN_FLOW'"
+    label
+      | FLOW: 
+      br
+
+      select.form-control ng-options="option.id as option.path for option in #{BeachApiCore::Flow.full_path.to_json}" ng-model="ngModel.payload.flow_id"

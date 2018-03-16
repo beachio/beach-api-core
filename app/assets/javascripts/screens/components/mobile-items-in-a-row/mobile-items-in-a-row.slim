@@ -1,0 +1,10 @@
+script type="text/ng-template" id="mobile-items-in-a-row.html"
+  .mobile-items-in-a-row
+    .mobile-items-in-a-row__title
+      div ng-bind="settings.title" ng-style="{color: screen.settings.mainColor || '#650C65'}"
+      .mobile-items-in-a-row__decor ng-style="{backgroundColor: screen.settings.mainColor || '#650C65'}"
+      
+    .mobile-items-in-a-row__items ng-style="{height: settings.height+'px'}"
+      slick slides-to-show="1" ng-if="settings.list.length" variable-width="true" infinite="false"
+        div ng-repeat="item in settings.list"
+          .mobile-items-in-a-row__item ng-click="fireAction(item.action)" ng-style="{width: settings.width+'px', height: settings.height+'px', backgroundImage: 'url('+item.image.url+')'}"

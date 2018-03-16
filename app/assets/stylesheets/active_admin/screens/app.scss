@@ -75,3 +75,17 @@ a {
   text-shadow: none !important;
   margin: 0;
 }
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}

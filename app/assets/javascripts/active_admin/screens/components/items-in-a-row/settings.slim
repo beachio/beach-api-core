@@ -1,0 +1,32 @@
+script type="text/ng-template" id="items-in-a-row/settings.html"
+  h2 Items In A Row settings
+  label.label
+    | Title:
+    br
+    div
+      input.form-control type="text" ng-model="control.settings.title"
+  hr
+    label.label ng-init="control.settings.width = control.settings.width || 135"
+      | Item Width, px:
+      br
+      div
+        input.form-control type="number" ng-model="control.settings.width"
+    label.label ng-init="control.settings.height = control.settings.height || 115"
+      | Item Height, px:
+      br
+      div
+        input.form-control type="number" ng-model="control.settings.height"
+  hr
+  .items-in-a-row__list
+    .items-in-a-row__item.clearfix ng-repeat="item in control.settings.list"
+      .pull-left
+        image-uploader height="100" width="100" ng-model="item.image"
+      .pull-right.items-in-a-row__item-actions
+        action-selector ng-model="item.action"
+
+  br
+  md-button.md-raised.md-default ng-click="control.settings.list.push({})" Add Item
+
+  hr
+  .text-right
+    button ng-click="save()" Save

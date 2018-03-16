@@ -10,3 +10,5 @@
 //= require underscore-min
 //= require sortable.min
 //= require ngDialog.min
+//= require slick
+//= require angular-slick

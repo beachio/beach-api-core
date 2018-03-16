@@ -11,24 +11,8 @@ script type="text/ng-template" id="button/settings.html"
     input.form-control type="number" ng-model="control.settings.width"
 
   hr
-  label.label
-    | Action (NEXT_SCREEN, DO_SOMETHING, etc):
-    br
-    div
-    select.form-control ng-options="option for option in ['NEXT_SCREEN', 'PREV_SCREEN', 'GO_TO_SCREEN_BY_ID', 'OPEN_FLOW', 'SUBMIT_ON_SERVER']" ng-model="control.settings.action.type"
-    
-  div ng-show="control.settings.action.type == 'GO_TO_SCREEN_BY_ID'"
-    label
-      | SCREEN ID: 
-      br
-      input.form-control type="text" ng-model="control.settings.action.payload.screen_id"
-    
-  div ng-show="control.settings.action.type == 'OPEN_FLOW'"
-    label
-      | FLOW: 
-      br
-
-      select.form-control ng-options="option.id as option.path for option in #{BeachApiCore::Flow.full_path.to_json}" ng-model="control.settings.action.payload.flow_id"
+  action-selector ng-model="item.action"
+  
     
   div ng-show="control.settings.action.type == 'SUBMIT_ON_SERVER'"
     label
