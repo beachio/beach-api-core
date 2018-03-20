@@ -1,6 +1,6 @@
 .image-uploader {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   background: white;
   border: 1px dashed;
   display: flex;
@@ -13,6 +13,10 @@
   background-repeat: no-repeat;
   text-shadow: 1px 1px 7px rgba(0,0,0,.3);
   position: relative;
+}
+
+.image-uploader-left {
+  margin: 5px 0;
 }
 
 .image-uploader input[type="file"]{

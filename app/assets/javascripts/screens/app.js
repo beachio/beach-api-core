@@ -5,7 +5,7 @@
 //= require_tree ./resources
 //= require_tree ./services
 
-var app = angular.module("app", ['slick', 'gridster', 'checklist-model', 'ngResource', 'ngMaterial', 'ui.router'])
+var app = angular.module("app", ['slick', 'ngDialog', 'gridster', 'checklist-model', 'ngResource', 'ngMaterial', 'ui.router'])
 
 app.run(['Action', '$rootScope', function(Action, $rootScope){
   $rootScope.Action = Action;

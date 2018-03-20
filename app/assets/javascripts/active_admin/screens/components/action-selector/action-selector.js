@@ -1,4 +1,4 @@
-app.directive('actionSelector', [function(){
+app.directive('actionSelector', ['$compile', 'ngDialog', function($compile, ngDialog){
   // Runs during compile
   return {
     // name: '',
@@ -12,11 +12,46 @@ app.directive('actionSelector', [function(){
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
     templateUrl: 'action-selector.html',
-    // replace: true,
+    replace: true,
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-    link: function($scope, iElm, iAttrs, controller) {
-      $scope.availableActions = ['NONE', 'GO_TO_SCREEN_BY_ID', 'OPEN_FLOW', 'NEXT_SCREEN', 'PREV_SCREEN', 'SUBMIT_ON_SERVER']
-    }
+    compile: function(tElement, tAttr, transclude) {
+      var contents = tElement.contents().remove();
+      var compiledContents;
+      return function(scope, iElement, iAttr) {
+
+        if(!compiledContents) {
+            compiledContents = $compile(contents, transclude);
+        }
+        compiledContents(scope, function(clone, scope) {
+           iElement.append(clone); 
+        });
+      };
+    },
+    controller: ['$scope', function($scope) {
+      $scope.availableActions = ['GO_TO_SCREEN_BY_ID', 'OPEN_FLOW', 'NEXT_SCREEN', 'PREV_SCREEN', 'OPEN_MODAL', 'SUBMIT_ON_SERVER']
+
+      $scope.$watch('ngModel.type', function (type, old) {
+        if (type && old && type != old)
+          $scope.ngModel = {type: type}
+      })
+
+      $scope.openModalBody = function (payload) {
+        if (!payload) payload = {}
+
+        ngDialog.open({
+          template: 'action-selector/open-modal-body.html',
+          className: 'ngdialog-open-modal-settings ngdialog-settings',
+          controller: ['$scope', function (scope) {
+            scope.payload = angular.copy(payload)
+
+            scope.save = function () {
+              _.extend(payload, scope.payload);
+              scope.closeThisDialog();
+            }
+          }]
+        })
+      }
+    }]
   };
 }]);

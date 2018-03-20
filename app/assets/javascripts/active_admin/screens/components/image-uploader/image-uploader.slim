@@ -1,6 +1,6 @@
 script type="text/ng-template" id="image-uploader.html"
-  .image-uploader ng-style="{backgroundImage: 'url('+ngModel.url+')', width: (width || 200) + 'px', height: (height || 200) + 'px'}"
-    .image-uploader-delete ng-click="remove()"
+  .image-uploader ng-style="{backgroundImage: 'url('+ngModel.url+')', border: ngModel.url ? 'none' : '1px dashed'}"
+    .image-uploader-delete ng-click="remove()" ng-show="ngModel.id"
       | &times;
     label
       span

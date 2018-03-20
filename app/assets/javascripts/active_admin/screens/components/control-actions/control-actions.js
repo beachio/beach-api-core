@@ -23,14 +23,17 @@ app.directive('controlActions', ['ngDialog', function(ngDialog){
       $scope.openSettingsWindow = function (control) {
         ngDialog.open({
           template: control.type+'/settings.html',
+          className: ['ngdialog-settings', 'ngdialog-settings-'+control.type].join(" "),
           controller: ['$scope', function (scope) {
-            scope.control = control
+            scope.control = angular.copy(control)
 
             scope.save = function () {
               scope.control.settings.status = "added";
+              _.extend(control, scope.control);
               scope.closeThisDialog();
             }
           }],
+          closeByDocument: false,
           preCloseCallback: function (value) {
             if ($scope.control.settings.status == "new") {
               $scope.controls.pop();

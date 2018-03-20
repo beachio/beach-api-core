@@ -1,9 +1,5 @@
+//= require active_admin/screens/material
 //=require_tree ../../../javascripts/active_admin/screens/components
-
-
-
-
-
 
 .delete-from-list {
   color: red;
@@ -88,4 +84,64 @@ a {
   content: "";
   display: table;
   clear: both;
+}
+
+.ngdialog.ngdialog-settings .ngdialog-content {
+  border-radius: 0;
+  background: white;
+  margin: 100px auto;
+  position: relative;
+}
+
+.ngdialog.ngdialog-settings h2 {
+  margin: 0;
+  padding: 5px 15px;
+}
+.ngdialog.ngdialog-settings .ngdialog-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  border-radius: 0;
+  background: rgb(16,108,200);
+  width: 44px;
+  height: 44px;
+  font-size: 27px;
+  padding: 0;
+  text-shadow: none;
+  font-weight: normal;
+}
+
+.ngdialog.ngdialog-settings .ngdialog-close:hover {
+  background: rgb(44, 133, 222);
+}
+
+.ngdialog {
+  z-index: 50 !important;
+}
+.ngdialog .ngdialog-content {
+  width: 450px;
+}
+
+md-input-container input.md-input {
+  width: 100%;
+  border-width: 0 0 1px !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  padding: 2px 2px 1px;
+}
+
+.md-button.md-primary.md-raised {
+  background: rgb(16,108,200);
+}
+
+.form-actions {
+  padding: 10px;
+  text-align: right;
+}
+
+hr.hr {
+  border: 1px dashed #e7e7e7;
+  border-width: 1px 0 0 0;
+  margin: 0;
 }

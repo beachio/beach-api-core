@@ -2,7 +2,7 @@ div[ui-view].slide-left, div[ui-view].slide-right, div[ui-view].slide-fade {
   left: 0;
   transition: .5s ease all;
   transform: scale(1);
-  transition-delay: .1s;
+  transition-delay: .3s;
 }
 
 div[ui-view].slide-fade:after {

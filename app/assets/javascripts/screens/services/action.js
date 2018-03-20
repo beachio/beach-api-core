@@ -1,4 +1,4 @@
-app.service('Action', ['$state', 'Screen', 'Model', function($state, Screen, Model){
+app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', function($state, Screen, Model, ngDialog){
   var Action = this;
 
 
@@ -28,7 +28,6 @@ app.service('Action', ['$state', 'Screen', 'Model', function($state, Screen, Mod
       $state.go('screen_path', {id: payload.screen_id})
     },
     OPEN_FLOW: function (payload) {
-      console.log(payload)
       Action.animation_class = 'slide-fade'
       Screen.flow(payload, function (res) {
         $state.go('screen_path', {id: res.id})
@@ -44,6 +43,19 @@ app.service('Action', ['$state', 'Screen', 'Model', function($state, Screen, Mod
     SUBMIT_ON_SERVER: function () {
       Action.animation_class = 'slide-down'
       $state.go('results_path')
+    },
+    OPEN_MODAL: function (payload) {
+      ngDialog.open({
+        template: 'mobile-modal.html',
+        className: 'ngdialog-mobile-modal',
+        controller: ['$scope', function (scope) {
+          $('.app-layout').css({filter: "blur(10px)"})
+          scope.settings = payload
+        }],
+        preCloseCallback: function (value) {
+          $('.app-layout').css({filter: "none"})
+        }
+      })
     }
   }
 }])

@@ -1,19 +1,29 @@
 script type="text/ng-template" id="action-selector.html"
-  label.label
-    | Action:
-    br
-    div
-    select.form-control ng-options="option for option in availableActions" ng-model="ngModel.type"
+  .action-selector
+    div layout-padding="" layout="row"
+      div flex="50"
+        md-input-container
+          label Action Type
+          md-select ng-model="ngModel.type" style="min-width: 175px;"
+            md-option
+              em None
+            md-option ng-value="action" ng-repeat="action in availableActions"
+              | {{action}}
+      div flex="25" ng-if="ngModel.type == 'GO_TO_SCREEN_BY_ID'"
+        md-input-container.md-block
+          label SCREEN ID
+          input type="text" ng-model="ngModel.payload.screen_id"
 
-  div ng-show="ngModel.type == 'GO_TO_SCREEN_BY_ID'"
-    label
-      | SCREEN ID: 
-      br
-      input.form-control type="text" ng-model="ngModel.payload.screen_id"
-    
-  div ng-show="ngModel.type == 'OPEN_FLOW'"
-    label
-      | FLOW: 
-      br
+      div flex="25" ng-if="ngModel.type == 'OPEN_FLOW'"
+        md-input-container
+          label Flow
+          md-select ng-model="ngModel.payload.flow_id"
+            md-option
+              em None
+            md-option ng-value="flow.id" ng-repeat="flow in #{BeachApiCore::Flow.full_path.to_json}"
+              | {{flow.path}}
+      
 
-      select.form-control ng-options="option.id as option.path for option in #{BeachApiCore::Flow.full_path.to_json}" ng-model="ngModel.payload.flow_id"
+    div ng-if="ngModel.type == 'OPEN_MODAL'"
+      hr.hr
+      div ng-include="'mobile-modal/settings.html'"

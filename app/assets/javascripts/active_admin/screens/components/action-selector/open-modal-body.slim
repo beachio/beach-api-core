@@ -1,0 +1,37 @@
+script type="text/ng-template" id="action-selector/open-modal-body.html"
+  h2 Modal Settings
+  form
+    md-content
+      div layout-padding="" layout="column"
+        div layout-padding="" layout="row"
+          div flex="50"
+            md-input-container.md-block ng-init="payload.backgroundColor = payload.backgroundColor || '#ffffff'" style="margin-top: 14px !important;"
+              label Modal Background Color
+              input type="color" ng-model="payload.backgroundColor"
+          
+          div flex="50"
+            label.md-label
+              ' Modal Background Image
+            image-uploader.image-uploader-left ng-model="payload.backgroundImage"
+
+        div flex="100"
+          md-input-container.md-block
+            label Modal Text Color
+            input type="color" ng-model="payload.color" ng-init="payload.color = payload.color || '#5B0A67'"
+
+        hr.hr
+
+        div flex="100"
+          md-input-container.md-block
+            label Button Background Color
+            input type="color" ng-model="payload.button.backgroundColor" ng-init="payload.button.backgroundColor = payload.button.backgroundColor || '#5B0A67'"
+        div flex="100"
+          md-input-container.md-block
+            label Button Text Color
+            input type="color" ng-model="payload.button.color" ng-init="payload.button.color = payload.button.color || '#ffffff'"
+        div flex="100"
+          label.md-label Button Action
+          action-selector.no-padding ng-model="payload.button.action"
+
+    .form-actions
+      md-button.md-raised.md-primary ng-click="save()" Save

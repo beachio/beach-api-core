@@ -1,4 +1,4 @@
-app.directive('mobileItemsInARow', ['Action', function(Action){
+app.directive('mobileItemsInARow', ['Action', '$timeout', function(Action, $timeout){
   // Runs during compile
   return {
     // name: '',
@@ -18,9 +18,18 @@ app.directive('mobileItemsInARow', ['Action', function(Action){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
+      
       $scope.fireAction = function (action) {
-        Action.call(action)
+        if (action)
+          Action.call(action)
       }
+
+      $scope.$watch('settings', function () {
+        $scope.rebuild = true;
+        $timeout(function () {
+          $scope.rebuild = false;
+        })
+      }, true)
     }
   };
 }]);

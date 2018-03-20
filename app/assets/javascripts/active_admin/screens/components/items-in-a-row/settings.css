@@ -1,0 +1,28 @@
+.ngdialog.ngdialog-settings-items-in-a-row .ngdialog-content {
+  width: 700px;
+}
+
+.items-in-a-row__item {
+  padding: 10px;
+  position: relative;
+}
+
+.items-in-a-row__item-actions {
+  padding: 16px;
+  width: 300px;
+}
+
+.items-in-a-row__item-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 20px;
+  width: 20px;
+  background: red;
+  color: white;
+  text-align: center;
+  line-height: 14px;
+  padding: 0;
+  cursor: pointer;
+  font-size: 24px;
+}

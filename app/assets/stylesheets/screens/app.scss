@@ -16,6 +16,7 @@
   margin: auto;
   overflow: hidden;
   position: relative;
+  transition: .3s;
 }
 [ui-view] {
   position: absolute;
@@ -66,4 +67,22 @@
   padding: 10px;
   display: block;
   max-width: 100%;
+}
+
+.add-item {
+  padding: 15px;
+  text-align: center;
+}
+
+[contenteditable] {
+  white-space: pre-wrap;
+}
+
+[contenteditable]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+}
+
+[contenteditable]:empty:focus:before {
+  opacity: 0.5;
 }

@@ -1,5 +1,5 @@
 script type="text/ng-template" id="mobile-items-in-a-row.html"
-  .mobile-items-in-a-row
+  .mobile-items-in-a-row ng-if="!rebuild"
     .mobile-items-in-a-row__title
       div ng-bind="settings.title" ng-style="{color: screen.settings.mainColor || '#650C65'}"
       .mobile-items-in-a-row__decor ng-style="{backgroundColor: screen.settings.mainColor || '#650C65'}"
