@@ -3,7 +3,11 @@ script type="text/ng-template" id="select/settings.html"
   form
     md-content
       div layout-padding="" layout="row"
-        div flex="100"
+        div flex="80"
+          md-input-container.md-block
+            label Model
+            input type="text" ng-model="control.settings.model"
+        div flex="20"
           md-input-container.md-block
             label Width, %
             input type="number" ng-model="control.settings.width"
