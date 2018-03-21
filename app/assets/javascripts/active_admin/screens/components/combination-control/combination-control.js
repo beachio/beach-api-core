@@ -35,11 +35,12 @@ app.directive('combinationControl', ['ngDialog', '$rootScope', function(ngDialog
           template: 'combination-control-item.html',
           controller: ['$scope', function (scope) {
             scope.availableControls = _.without($rootScope.allControls, "combination-control")
-            scope.control = control
+            scope.control = angular.copy(control)
             scope.control.settings = scope.control.settings || {}
             scope.control.settings.list = scope.control.settings.list || []
 
             scope.save = function () {
+              angular.extend(control, scope.control)
               scope.closeThisDialog()
             }
           }]
