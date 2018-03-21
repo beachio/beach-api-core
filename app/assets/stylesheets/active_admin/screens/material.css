@@ -49,3 +49,8 @@ md-input-container textarea:focus {
   font-size: 9px;
   color: #797979;
 }
+
+md-input-container input[type=text],
+md-input-container input[type=number] {
+  width: 100% !important;
+}

@@ -1,42 +1,51 @@
 script type="text/ng-template" id="card/settings.html"
   h2 Card settings
-  label.label
-    | Title:
-    br
-    div
-      input.form-control type="text" ng-model="control.settings.title"
-  label.label
-    | Content:
-    br
-    div
-      textarea.form-control ng-model="control.settings.content"
-  label.label
-    ' Background Color
-    small
-      ' (optional, Main Color by default)
-    ' :
-    br
-    input.form-control type="color" ng-model="screen.settings.mainColor"
-  label.label
-    | Background Image:
-  image-uploader ng-model="control.settings.image"
+  form
+    md-content
+      div layout-padding="" layout="column"
+        div flex="100"
+          md-input-container.md-block
+            label Title
+            input type="text" ng-model="control.settings.title"
+        div flex="100"
+          md-input-container.md-block
+            label Content
+            textarea ng-model="control.settings.content"
+        div layout="row" layout-padding=""
+          div flex=""
+            md-input-container.md-block style="margin-top: 14px !important;"  ng-init="control.settings.backgroundColor = control.settings.backgroundColor || '#650c65'"
+              label Background Color
+              input type="color" ng-model="control.settings.backgroundColor"
+            br
+            md-input-container.md-block  ng-init="control.settings.color = control.settings.color || '#ffffff'"
+              label Text Color
+              input type="color" ng-model="control.settings.color"
 
-  label.label ng-init="control.settings.boxes = control.settings.boxes || []"
-    ' Rounded Boxes:
-
-  .rounded-boxes ng-repeat="box in control.settings.boxes"
-    br
-    .relative
-      input.form-control type="text" ng-model="box.text" placeholder="Text"
-      .delete-rounded-box ng-click="control.settings.boxes.splice($index, 1)"
-        | &times;
-  br
-  md-button.md-raised.md-default ng-click="control.settings.boxes.push({})" Add Box
+          div flex=""
+            label.md-label
+              | Background Image:
+            image-uploader.image-uploader-left ng-model="control.settings.image"
 
 
-  hr
-  action-selector ng-model="control.settings.action"
+        div flex="100"
+          label.md-label ng-init="control.settings.boxes = control.settings.boxes || []"
+            ' Rounded Boxes:
 
-  hr
-  .text-right
-    button ng-click="save()" Save
+          .rounded-boxes layout="row"
+            .relative ng-repeat="box in control.settings.boxes" flex=""
+              md-input-container.md-block
+                label Text
+                input type="text" ng-model="box.text" placeholder="Text"
+              .delete-rounded-box ng-click="control.settings.boxes.splice($index, 1)"
+                | &times;
+          br
+          md-button.md-raised.md-success ng-click="control.settings.boxes.push({})" Add Box
+
+
+        div flex="100"
+          label.md-label
+            | Action On Click:
+          action-selector.no-padding ng-model="control.settings.action"
+
+    .form-actions
+      md-button.md-raised.md-primary ng-click="save()" Save

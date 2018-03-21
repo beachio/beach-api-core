@@ -1,11 +1,12 @@
 script type="text/ng-template" id="chart/settings.html"
-  h2
-    | Chart settings
-  label.label
-    | Endpoint data source:&nbsp;
-    input class="form-control" type="text" ng-model="control.settings.dataSource"
-  br
+  h2 Chart settings
+  form
+    md-content
+      div layout-padding="" layout="row"
+        div flex="80"
+          md-input-container.md-block
+            label Endpoint data source:
+            input type="text" ng-model="control.settings.dataSource"
 
-  hr
-  .text-right
-    button ng-click="save()" Save
+    .form-actions
+      md-button.md-raised.md-primary ng-click="save()" Save

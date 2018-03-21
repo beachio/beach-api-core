@@ -1,17 +1,15 @@
 script type="text/ng-template" id="combination-control/settings.html"
-  h2
-    | Additional Component
-  
-  label.label
-    | Name:
-    br
-    div
-      input.form-control type="text" ng-model="control.settings.name"
+  h2 Combination Control
+  form
+    md-content
+      div layout-padding="" layout="column"
+        div flex="100"
+          md-input-container.md-block
+            label Name
+            input type="text" ng-model="control.settings.name"
+        div flex="100"
+          combination-control ng-model="control.settings.list"
+          a.md-button.md-raised.md-success ng-click="control.settings.list.push({})" Add Item
 
-  combination-control ng-model="control.settings.list"
-
-  a.md-button.md-raised.md-success ng-click="control.settings.list.push({})" Add Item
-  hr
-  .text-right
-    button ng-click="save()" Save
-
+    .form-actions
+      md-button.md-raised.md-primary ng-click="save()" Save

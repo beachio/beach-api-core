@@ -1,29 +1,29 @@
 script type="text/ng-template" id="input/settings.html"
-  h2
-    | Input settings
-  label.label
-    | Model:&nbsp;
-    input class="form-control" type="text" ng-model="control.settings.model"
-
-  label.label
-    | Type:&nbsp;
-
-    select.form-control ng-options="option for option in ['text', 'number', 'email', 'phone']" ng-model="control.settings.type"
-
-  label.label
-    | Placeholder:&nbsp;
-    input class="form-control" type="text" ng-model="control.settings.placeholder"
-
-  br
-  label.label
-    input type="checkbox" ng-model="control.settings.required"
-    | required
-
-  br
-  label.label
-    | Width, %:&nbsp;
-    input class="form-control" type="number" ng-model="control.settings.width"
-
-  hr
-  .text-right
-    button ng-click="save()" Save
+  h2 Input settings
+  form
+    md-content
+      div layout-padding="" layout="column"
+        div layout-padding="" layout="row" flex="100"
+          div flex="80"
+            md-input-container.md-block
+              label Model
+              input type="text" ng-model="control.settings.model"
+          div flex="20"
+            label.label
+              md-input-container.md-block
+                label Width
+                input type="number" ng-model="control.settings.width"
+        div layout-padding="" layout="row" flex="100"
+          div flex="50"
+            label.md-label Type
+            md-select ng-model="control.settings.type"
+              md-option ng-repeat="option in ['text', 'number', 'email', 'phone']" ng-bind="option" ng-value="option"
+          div flex="50"
+            md-input-container.md-block style="margin: 15px"
+              label Placeholder
+              input type="text" ng-model="control.settings.placeholder"
+        div layout-padding="" layout="row" flex="100"
+          div flex="100"
+            md-checkbox ng-model="control.settings.required" Required
+    .form-actions
+      md-button.md-raised.md-primary ng-click="save()" Save

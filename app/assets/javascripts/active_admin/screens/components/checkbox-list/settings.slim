@@ -1,29 +1,36 @@
 script type="text/ng-template" id="checkbox-list/settings.html"
-  h2
-    | Checkbox list settings
-  label.label
-    | Title:&nbsp;
-    input class="form-control" type="text" ng-model="control.settings.title"
-  br
-  label.label
-    | Model:&nbsp;
-    input class="form-control" type="text" ng-model="control.settings.model"
-  br
-  label.label
-    input type="checkbox" ng-model="control.settings.required"
-    | required
-  hr
-    label.label
-      | Items:&nbsp;
-      div ui-sortable="{handle: '> .item-handler'}" ng-model="control.settings.list"
-        div ng-repeat="item in control.settings.list"
-          span.item-handler
-            i.material-icons menu
-          input style="width: 80%" class="form-control" type="text" ng-model="item.label"
-          span.item-delete ng-click="control.settings.list.splice($index, 1)"
-            | &times;
+  h2 Checkbox list settings
+  form
+    md-content
+      div layout-padding="" layout="row"
+        div flex="50"
+          md-input-container.md-block
+            label Title
+            input type="text" ng-model="control.settings.title"
+        div flex="50"
+          md-input-container.md-block
+            label Model
+            input type="text" ng-model="control.settings.model"
+      div layout-padding="" layout="row"
+        div flex="50"
+          md-checkbox ng-model="control.settings.required" required="true" Required
 
-      a ng-click="control.settings.list.push({label: 'Item'})" Add item
-  hr
-  .text-right
-    button ng-click="save()" Save
+      div layout-padding="" layout="column"
+        div flex="100"
+          label.md-label Items
+          div ui-sortable="{handle: '> .item-handler'}" ng-model="control.settings.list"
+            .relative layout="row" layout-padding="" ng-repeat="item in control.settings.list"
+              div flex="10"
+                span.item-handler
+                  i.material-icons menu
+              div flex="80"
+                md-input-container.md-block
+                  input type="text" ng-model="item.label" placeholder="Label"
+              div flex="10"
+                span.item-delete ng-click="control.settings.list.splice($index, 1)"
+                  | &times;
+
+          md-button.md-raised.md-success type="link" ng-click="control.settings.list.push({label: 'Item'})" Add item
+
+    .form-actions
+      md-button.md-raised.md-primary ng-click="save()" Save

@@ -1,7 +1,8 @@
 script type="text/ng-template" id="combination-control-item.html"
-  h2 Additional Component Item
+  h2 Combination Control Item
 
-  label.label Select control from list
-  select.form-control ng-options="option for option in availableControls" ng-model="control.type"
+  label.md-label Select control from list
+  md-select ng-model="control.type"
+    md-option ng-repeat="option in availableControls" ng-bind="option" ng-value="option"
   .combination-control-item__settings
     div ng-include="control.type + '/settings.html'"

@@ -1,19 +1,18 @@
 script type="text/ng-template" id="video/settings.html"
-  h2
-    | Video settings
-  br
-  hr
+  h2 Button settings
+  form
+    md-content
+      div layout-padding="" layout="column"
+        div flex=""
+          md-input-container.md-block
+            label Youtube / Vimeo Url:
+            input type="text" ng-model="control.settings.url"
+  
+        div flex=""
+          label.md-label
+            | Preview (optional):
+          br
+          image-uploader ng-model="control.settings.preview"
 
-  label.label
-    | Youtube / Vimeo Url:
-    br
-    input.form-control type="text" ng-model="control.settings.url"
-
-  label.label
-    | Preview (optional):
-    br
-  image-uploader ng-model="control.settings.preview"
-
-  hr
-  .text-right
-    button ng-click="save()" Save
+  .form-actions
+    md-button.md-raised.md-primary ng-click="save()" Save
