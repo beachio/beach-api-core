@@ -1,58 +1,58 @@
 script type="text/ng-template" id="screens/settings.html"
   h2 Screen settings
+  form
+    md-content
+      div layout-padding="" layout="column"
+        .settings-tabs ng-init="activeTab='general'"
+          .settings-tab ng-repeat="tab in ['general', 'header', 'body', 'footer']" ng-class="{active: $parent.activeTab==tab}" ng-click="$parent.activeTab=tab" ng-bind="tab"
 
-  .settings-tabs ng-init="activeTab='general'"
-    .settings-tab ng-repeat="tab in ['general', 'header', 'body', 'footer']" ng-class="{active: $parent.activeTab==tab}" ng-click="$parent.activeTab=tab" ng-bind="tab"
+        div ng-show="activeTab=='general'" layout-padding="" layout="column"
+          div layout-padding="" layout="row"
+            div flex="50"
+              md-input-container.md-block
+                label ID
+                input type="text" ng-model="screen.id" disabled=""
 
-  div ng-show="activeTab=='general'"
-    label.label
-      | ID:
-      br
-      input.form-control type="text" ng-model="screen.id" disabled=""
-    br
-    label.label
-      | Main Color:
-      br
-      input.form-control type="color" ng-model="screen.settings.mainColor"
-    br
-    label.label
-      input type="checkbox" ng-model="screen.settings.rotator" &nbsp;Rotator
-    br
-    label.label ng-show="screen.settings.rotator"
-      | Rotation Delay, ms:
-      input.form-control type="text" ng-model="screen.settings.rotation_delay"
-    br
+            div flex="50"
+              md-input-container.md-block
+                label Main Color
+                input type="color" ng-model="screen.settings.mainColor"
 
-  div ng-show="activeTab=='header'" ng-init="screen.content.header.descriptions = screen.content.header.descriptions || []"
-    label.label.relative ng-repeat="description in screen.content.header.descriptions"
-      | Description (variant {{$index+1}}):
-      br
-      textarea.form-control ng-model="description.text"
-      .delete-description ng-click="screen.content.header.descriptions.splice($index, 1)"
-        | &times;
-    br
-    md-button.md-raised.md-default ng-click="screen.content.header.descriptions.push({})" Add variant
-    br
-    br
-    hr
-    label.label
-      input type="checkbox" ng-model="screen.content.header.with_progress" &nbsp;Progress
-    br
-    label.label ng-show="screen.content.header.with_progress"
-      | Progress, %:
-      input.form-control type="number" ng-model="screen.content.header.progress"
-    br
+          div layout-padding="" layout="row"
+            div flex="20"
+              md-checkbox style="margin: 10px 0;" ng-model="screen.settings.rotator" Rotator
 
-  div ng-show="activeTab=='body'"
-    label.label
-      | Background Image:
-      br
-    image-uploader ng-model="screen.settings.backgroundImage"
+            div flex="80" ng-show="screen.settings.rotator"
+              md-input-container.md-block
+                label Rotation Delay, ms
+                input type="number" ng-model="screen.settings.rotation_delay"
       
-  div ng-show="activeTab=='footer'"
-    br
-    label.label
-      input type="checkbox" ng-model="screen.settings.hideFooter" &nbsp;Hide Footer
-  hr
-  .text-right
-    button ng-click="closeThisDialog()" Save
+        div ng-show="activeTab=='header'" layout-padding="" layout="column" ng-init="screen.content.header.descriptions = screen.content.header.descriptions || []"
+          .relative flex="100" ng-repeat="description in screen.content.header.descriptions"
+            md-input-container.md-block
+              label Description (variant {{$index+1}}):
+              textarea ng-model="description.text"
+            .delete-description ng-click="screen.content.header.descriptions.splice($index, 1)"
+              | &times;
+
+          div flex="100"
+            md-button.md-raised.md-success ng-click="screen.content.header.descriptions.push({})" Add variant
+          div flex="100" layout="row" layout-padding=""
+            div flex="20"
+              md-checkbox style="margin: 10px 0" ng-model="screen.content.header.with_progress" Progress
+            div flex="80"
+              md-input-container.md-block
+                label Progress, %
+                input type="number" ng-model="screen.content.header.progress"
+
+        div ng-show="activeTab=='body'" layout-padding="" layout="column"
+          label.md-label
+            | Background Image:
+            br
+          image-uploader ng-model="screen.settings.backgroundImage"
+      
+        div ng-show="activeTab=='footer'" layout-padding="" layout="column"
+          div flex="100"
+            md-checkbox ng-model="screen.settings.hideFooter" Hide Footer
+  .form-actions
+    md-button.md-raised.md-primary ng-click="save()" Save

@@ -23,6 +23,7 @@ app.directive('screens', ['ngDialog', function(ngDialog){
       })
       $scope.openSettingsWindow = function (screen) {
           ngDialog.open({
+            className: "ngdialog-settings",
             template: "screens/settings.html",
             controller: ['$scope', function (scope) {
               scope.screen = screen

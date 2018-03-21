@@ -1,6 +1,5 @@
 .settings-tabs {
   display: block;
-  border-bottom: 2px solid #9a9a9a;
   margin-bottom: 15px;
 }
 .settings-tab {
@@ -25,7 +24,7 @@
 .delete-description {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 16px;
   background: red;
   color: white;
   height: 15px;
