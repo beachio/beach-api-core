@@ -40,3 +40,7 @@
 .combination-control-item__settings h2 {
   display: none;
 }
+
+.combination-control .gridster {
+  min-height: 220px;
+}
