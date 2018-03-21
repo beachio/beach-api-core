@@ -26,7 +26,12 @@ app.directive('screens', ['ngDialog', function(ngDialog){
             className: "ngdialog-settings",
             template: "screens/settings.html",
             controller: ['$scope', function (scope) {
-              scope.screen = screen
+              scope.screen = angular.copy(screen);
+
+              scope.save = function () {
+                angular.extend(screen, scope.screen);
+                scope.closeThisDialog();
+              }
             }]
           })
         }

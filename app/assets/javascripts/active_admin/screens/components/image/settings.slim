@@ -1,11 +1,9 @@
 script type="text/ng-template" id="image/settings.html"
-  h2
-    | Image settings
-  br
-  hr
+  h2 Image settings
+  form
+    md-content
+      div layout-padding="" layout="column"
+        image-uploader ng-model="control.settings.image"
 
-  image-uploader ng-model="control.settings.image"
-
-  hr
-  .text-right
-    button ng-click="save()" Save
+    .form-actions
+      md-button.md-raised.md-primary ng-click="save()" Save

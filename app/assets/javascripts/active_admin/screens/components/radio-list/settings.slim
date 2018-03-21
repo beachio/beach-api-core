@@ -18,7 +18,7 @@ script type="text/ng-template" id="radio-list/settings.html"
       div layout-padding="" layout="column"
         div flex="100"
           label.md-label Items
-          div ui-sortable="{handle: '> .item-handler'}" ng-model="control.settings.list"
+          div ui-sortable="{handle: '.item-handler'}" ng-model="control.settings.list"
             .relative layout="row" layout-padding="" ng-repeat="item in control.settings.list"
               div flex="10"
                 span.item-handler
