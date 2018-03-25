@@ -1,36 +1,52 @@
 script type="text/ng-template" id="radio-list/settings.html"
   h2 Radio list settings
-  form
-    md-content
-      div layout-padding="" layout="row"
-        div flex="50"
-          md-input-container.md-block
-            label Title
-            input type="text" ng-model="control.settings.title"
-        div flex="50"
-          md-input-container.md-block
-            label Model
-            input type="text" ng-model="control.settings.model"
-      div layout-padding="" layout="row"
-        div flex="50"
-          md-checkbox ng-model="control.settings.required" required="true" Required
-
-      div layout-padding="" layout="column"
-        div flex="100"
-          label.md-label Items
-          div ui-sortable="{handle: '.item-handler'}" ng-model="control.settings.list"
-            .relative layout="row" layout-padding="" ng-repeat="item in control.settings.list"
-              div flex="10"
-                span.item-handler
-                  i.material-icons menu
-              div flex="80"
+  div
+    md-tabs.state-tabs.items-in-a-row-tabs md-border-bottom=""
+      md-tab ng-repeat="state in control.settings.states"
+        md-tab-label
+          span
+            | {{$index == 0 ? 'Default State' : (state.name || 'State #' + $index)}}
+          .delete-action ng-click="control.settings.states.splice($index, 1)"
+        md-tab-body
+          md-content
+            div layout-padding="" layout="row"
+              div flex="25"
                 md-input-container.md-block
-                  input type="text" ng-model="item.label" placeholder="Label"
-              div flex="10"
-                span.item-delete ng-click="control.settings.list.splice($index, 1)"
-                  | &times;
+                  label State Name
+                  input type="text" ng-model="state.name"
+              div flex="75"
+                md-input-container.md-block
+                  label State Condition
+                  input type="text" ng-model="state.condition"
+            div layout-padding="" layout="row"
+              div flex="50"
+                md-input-container.md-block
+                  label Title
+                  input type="text" ng-model="state.title"
+              div flex="50"
+                md-input-container.md-block
+                  label Model
+                  input type="text" ng-model="state.model"
+            div layout-padding="" layout="row"
+              div flex="50"
+                md-checkbox ng-model="state.required" required="true" Required
 
-          md-button.md-raised.md-success type="link" ng-click="control.settings.list.push({label: 'Item'})" Add item
+            div layout-padding="" layout="column"
+              div flex="100"
+                label.md-label Items
+                div ui-sortable="{handle: '.item-handler'}" ng-model="state.list"
+                  .relative layout="row" layout-padding="" ng-repeat="item in state.list"
+                    div flex="10"
+                      span.item-handler
+                        i.material-icons menu
+                    div flex="80"
+                      md-input-container.md-block
+                        input type="text" ng-model="item.label" placeholder="Label"
+                    div flex="10"
+                      span.item-delete ng-click="state.list.splice($index, 1)"
+                        | &times;
 
+                md-button.md-raised.md-success type="link" ng-click="state.list.push({label: 'Item'})" Add item
+      md-tab ng-click="control.settings.states.push({})" + Add state
     .form-actions
       md-button.md-raised.md-primary ng-click="save()" Save

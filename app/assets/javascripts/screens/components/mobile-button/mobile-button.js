@@ -1,11 +1,11 @@
-app.directive('mobileButton', ['Action', function(Action){
+app.directive('mobileButton', ['Action', 'ComponentState', function(Action, ComponentState){
   // Runs during compile
   return {
     // name: '',
     // priority: 1,
     // terminal: true,
     scope: {
-        settings: "="
+        state: "="
     }, // {} = isolate, true = child, false/undefined = no change
     // controller: function($scope, $element, $attrs, $transclude) {},
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
@@ -19,7 +19,7 @@ app.directive('mobileButton', ['Action', function(Action){
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
       iElm.bind('click', function () {
-        Action.call($scope.settings.action)
+        Action.call($scope.state.action)
       })
     }
   };

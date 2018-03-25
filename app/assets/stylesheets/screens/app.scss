@@ -86,3 +86,8 @@
 [contenteditable]:empty:focus:before {
   opacity: 0.5;
 }
+
+.ngdialog md-content,
+.ngdialog md-tab-content {
+  overflow-x: hidden !important;
+}

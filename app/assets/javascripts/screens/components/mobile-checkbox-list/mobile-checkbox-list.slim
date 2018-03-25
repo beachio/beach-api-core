@@ -1,8 +1,8 @@
 script type="text/ng-template" id="mobile-checkbox-list.html"
   .mobile-checkbox-list
-    .mobile-checkbox-list__title ng-bind-html-compile="settings.title"
+    .mobile-checkbox-list__title ng-bind-html-compile="state.title"
     .mobile-checkbox-list__content
       ul
-        li ng-repeat="option in settings.list"
-          md-checkbox aria-label="option" checklist-model="Model.data[settings.model]" checklist-value="option.label"
+        li ng-repeat="option in state.list"
+          md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option.label"
             span ng-bind="option.label"

@@ -1,58 +1,62 @@
 script type="text/ng-template" id="screens/settings.html"
+  .modal-help ng-click="openHelp()"
+    i.material-icons help_outline
+
   h2 Screen settings
   form
     md-content
       div layout-padding="" layout="column"
-        .settings-tabs ng-init="activeTab='general'"
-          .settings-tab ng-repeat="tab in ['general', 'header', 'body', 'footer']" ng-class="{active: $parent.activeTab==tab}" ng-click="$parent.activeTab=tab" ng-bind="tab"
+        md-tabs md-dynamic-height="" md-border-bottom=""
+          md-tab label="General"
+            md-content layout-padding="" layout="column"
+              div layout-padding="" layout="row"
+                div flex="50"
+                  md-input-container.md-block
+                    label ID
+                    input type="text" ng-model="screen.id" disabled=""
 
-        div ng-show="activeTab=='general'" layout-padding="" layout="column"
-          div layout-padding="" layout="row"
-            div flex="50"
-              md-input-container.md-block
-                label ID
-                input type="text" ng-model="screen.id" disabled=""
+                div flex="50"
+                  md-input-container.md-block
+                    label Main Color
+                    input type="color" ng-model="screen.settings.mainColor"
 
-            div flex="50"
-              md-input-container.md-block
-                label Main Color
-                input type="color" ng-model="screen.settings.mainColor"
+              div layout-padding="" layout="row"
+                div flex="20"
+                  md-checkbox style="margin: 10px 0;" ng-model="screen.settings.rotator" Rotator
 
-          div layout-padding="" layout="row"
-            div flex="20"
-              md-checkbox style="margin: 10px 0;" ng-model="screen.settings.rotator" Rotator
+                div flex="80" ng-show="screen.settings.rotator"
+                  md-input-container.md-block
+                    label Rotation Delay, ms
+                    input type="number" ng-model="screen.settings.rotation_delay"
+          md-tab label="Header"
+            md-content layout-padding="" layout="column" ng-init="screen.content.header.descriptions = screen.content.header.descriptions || []"
+              .relative flex="100" ng-repeat="description in screen.content.header.descriptions"
+                md-input-container.md-block
+                  label Description (variant {{$index+1}}):
+                  textarea ng-model="description.text"
+                .delete-description ng-click="screen.content.header.descriptions.splice($index, 1)"
+                  | &times;
 
-            div flex="80" ng-show="screen.settings.rotator"
-              md-input-container.md-block
-                label Rotation Delay, ms
-                input type="number" ng-model="screen.settings.rotation_delay"
-      
-        div ng-show="activeTab=='header'" layout-padding="" layout="column" ng-init="screen.content.header.descriptions = screen.content.header.descriptions || []"
-          .relative flex="100" ng-repeat="description in screen.content.header.descriptions"
-            md-input-container.md-block
-              label Description (variant {{$index+1}}):
-              textarea ng-model="description.text"
-            .delete-description ng-click="screen.content.header.descriptions.splice($index, 1)"
-              | &times;
+              div flex="100"
+                md-button.md-raised.md-success ng-click="screen.content.header.descriptions.push({})" Add variant
+              div flex="100" layout="row" layout-padding=""
+                div flex="20"
+                  md-checkbox style="margin: 10px 0" ng-model="screen.content.header.with_progress" Progress
+                div flex="80"
+                  md-input-container.md-block
+                    label Progress, %
+                    input type="number" ng-model="screen.content.header.progress"
+          md-tab label="Body"
+            md-content layout-padding="" layout="column"
+              label.md-label
+                | Background Image:
+                br
+              image-uploader ng-model="screen.settings.backgroundImage"
+          md-tab label="Footer"
+            md-content layout-padding="" layout="column"
+              div flex="100"
+                md-checkbox ng-model="screen.settings.hideFooter" Hide Footer
 
-          div flex="100"
-            md-button.md-raised.md-success ng-click="screen.content.header.descriptions.push({})" Add variant
-          div flex="100" layout="row" layout-padding=""
-            div flex="20"
-              md-checkbox style="margin: 10px 0" ng-model="screen.content.header.with_progress" Progress
-            div flex="80"
-              md-input-container.md-block
-                label Progress, %
-                input type="number" ng-model="screen.content.header.progress"
-
-        div ng-show="activeTab=='body'" layout-padding="" layout="column"
-          label.md-label
-            | Background Image:
-            br
-          image-uploader ng-model="screen.settings.backgroundImage"
-      
-        div ng-show="activeTab=='footer'" layout-padding="" layout="column"
-          div flex="100"
-            md-checkbox ng-model="screen.settings.hideFooter" Hide Footer
+          
   .form-actions
     md-button.md-raised.md-primary ng-click="save()" Save

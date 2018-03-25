@@ -5,7 +5,7 @@ app.directive('mobileVideo', ["Model", "Player", function(Model, Player){
     // priority: 1,
     // terminal: true,
     scope: {
-      settings: "="
+      state: "="
     }, // {} = isolate, true = child, false/undefined = no change
     // controller: function($scope, $element, $attrs, $transclude) {},
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
@@ -18,19 +18,19 @@ app.directive('mobileVideo', ["Model", "Player", function(Model, Player){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
-      $scope.$watch('[settings.url, settings.preview.url]', function () {
-        var url = $scope.settings.url
+      $scope.$watch('[state.url, state.preview.url]', function () {
+        var url = $scope.state.url
 
         if (Player.matchYoutube(url)) {
           $scope.type = "youtube"
           $scope.url = Player.getYoutubeUrl(url)
-          $scope.preview = $scope.settings.preview && $scope.settings.preview.url ? $scope.settings.preview.url : Player.youtubePreview(url)
+          $scope.preview = $scope.state.preview && $scope.state.preview.url ? $scope.state.preview.url : Player.youtubePreview(url)
         } else if (Player.matchVimeo(url)) {
           $scope.type = "vimeo"
           $scope.url = Player.getVimeoUrl(url)
 
           Player.vimeoPreview(url).then(function (res) {
-            $scope.preview = $scope.settings.preview && $scope.settings.preview.url ? $scope.settings.preview.url : res.data.thumbnail_url
+            $scope.preview = $scope.state.preview && $scope.state.preview.url ? $scope.state.preview.url : res.data.thumbnail_url
           })
         }
       })

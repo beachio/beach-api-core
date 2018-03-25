@@ -1,8 +1,10 @@
 script type="text/ng-template" id="combination-control-item.html"
   h2 Combination Control Item
-
-  label.md-label Select control from list
-  md-select ng-model="control.type"
-    md-option ng-repeat="option in availableControls" ng-bind="option" ng-value="option"
-  .combination-control-item__settings
-    div ng-include="control.type + '/settings.html'"
+  div layout-padding="" layout="column"
+    div flex="50"
+      label.md-label Select control from list
+      md-select ng-model="control.type"
+        md-option ng-repeat="option in availableControls" ng-bind="option" ng-value="option"
+    div flex="100"
+      .combination-control-item__settings
+        div render-template="control.type + '/settings.html'"

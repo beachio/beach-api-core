@@ -1,4 +1,4 @@
-app.directive('dynamicControl', [function(){
+app.directive('dynamicControl', ['ComponentState', function(ComponentState){
   // Runs during compile
   return {
     // name: '',
@@ -19,7 +19,11 @@ app.directive('dynamicControl', [function(){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       var type = $scope.control.type;
-      $scope.content = "<div><control-actions screen='$parent.screen' controls='$parent.controls' control='$parent.control' controls='controls'></control-actions><mobile-"+type+" settings='$parent.control.settings'></mobile-"+type+"></div>"
+      $scope.$watch('control.settings.states', function (states) {
+        var activeStates = ComponentState.activeStates(states);
+        $scope.componentState = _.last(activeStates);
+      }, true)
+      $scope.content = "<div><control-actions screen='$parent.screen' controls='$parent.controls' control='$parent.control' controls='controls'></control-actions><mobile-"+type+" state='$parent.componentState'></mobile-"+type+"></div>"
 
       try {
         iElm.css({width: ($scope.control.settings.width || 100) + '%'})

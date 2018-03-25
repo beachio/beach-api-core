@@ -1,7 +1,6 @@
 script type="text/ng-template" id="image-uploader.html"
   .image-uploader ng-style="{backgroundImage: 'url('+ngModel.url+')', border: ngModel.url ? 'none' : '1px dashed'}"
-    .image-uploader-delete ng-click="remove()" ng-show="ngModel.id"
-      | &times;
+    .delete-action ng-click="remove()" ng-show="ngModel.id"
     label
       span
         | Click To Upload

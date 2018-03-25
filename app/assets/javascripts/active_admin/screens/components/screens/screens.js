@@ -21,12 +21,20 @@ app.directive('screens', ['ngDialog', function(ngDialog){
           screen.position = index;
         })
       })
+
       $scope.openSettingsWindow = function (screen) {
           ngDialog.open({
             className: "ngdialog-settings",
             template: "screens/settings.html",
             controller: ['$scope', function (scope) {
               scope.screen = angular.copy(screen);
+
+              scope.openHelp = function () {
+                ngDialog.open({
+                  className: "ngdialog-settings",
+                  template: "screens/help.html",
+                })
+              }
 
               scope.save = function () {
                 angular.extend(screen, scope.screen);

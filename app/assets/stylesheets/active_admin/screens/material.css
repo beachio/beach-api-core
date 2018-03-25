@@ -54,3 +54,36 @@ md-input-container input[type=text],
 md-input-container input[type=number] {
   width: 100% !important;
 }
+
+.state-tabs md-tabs-canvas {
+  background: rgba(16, 107, 200, 0.14);
+}
+
+.delete-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 16px;
+  width: 16px;
+  line-height: 15px;
+  font-size: 17px;
+  background: red;
+  color: white;
+  font-family: "Material Icons";
+  text-align: center;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga' 1;
+  font-style: normal;
+  text-transform: none;
+  z-index: 1;
+  cursor: pointer !important;
+}
+
+.delete-action:after {
+  content: "close";
+  cursor: pointer !important;
+}
+
+.delete-action:hover {
+  opacity: .8;
+}

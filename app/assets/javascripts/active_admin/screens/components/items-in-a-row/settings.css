@@ -1,10 +1,13 @@
 .ngdialog.ngdialog-settings-items-in-a-row .ngdialog-content {
-  width: 700px;
+  width: 900px;
 }
 
 .items-in-a-row__item {
   padding: 10px;
   position: relative;
+}
+.items-in-a-row-tabs {
+  min-height: 485px !important;
 }
 
 .items-in-a-row__item-actions {
@@ -25,4 +28,5 @@
   padding: 0;
   cursor: pointer;
   font-size: 24px;
+  z-index: 1;
 }

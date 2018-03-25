@@ -30,8 +30,10 @@ app.directive('controls', ['ngDialog', function(ngDialog){
                 type: type,
                 settings: {
                   status: "new",
-                  list: [],
-                  title: "Title"
+                  states: [{
+                    list: [],
+                    title: "Title"
+                  }]
                 }
               })
 
