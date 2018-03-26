@@ -1,4 +1,6 @@
 script type="text/ng-template" id="screen.html"
+  div ng-if="!Template.loaded"
+    .spinner
   div ng-if="Template.loaded"
     screen-wrapper
       .app-header
