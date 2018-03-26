@@ -1,4 +1,4 @@
-app.directive('dynamicControl', ['ComponentState', function(ComponentState){
+app.directive('dynamicControl', ['ComponentState', 'Template', function(ComponentState,Template){
   // Runs during compile
   return {
     // name: '',

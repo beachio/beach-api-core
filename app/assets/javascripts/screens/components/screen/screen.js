@@ -1,4 +1,4 @@
-app.directive('screen', ['Action', '$timeout', function(Action, $timeout){
+app.directive('screen', ['Action', '$timeout', 'Template', function(Action, $timeout, Template){
   // Runs during compile
   return {
     // name: '',
@@ -21,6 +21,9 @@ app.directive('screen', ['Action', '$timeout', function(Action, $timeout){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       var settings = $scope.screen.settings;
+
+      Template.reloadTemplate();
+      $scope.Template = Template;
 
       if (settings && settings.rotator) {
         $timeout(function () {
