@@ -4,4 +4,8 @@ script type="text/ng-template" id="mobile-header.html"
     .mobile-header__progress ng-if="header.with_progress"
       .mobile-header__progress--filled ng-style="{width: header.progress+'%'}"
 
+    .mobile-header__rating ng-show="screen.content.header.with_rating"
+      i.material-icons equalizer
+      span ng-bind="screen.content.header.rating"
+
   .mobile-header__description ng-bind-html-compile="screen.content.header.descriptions[descriptionNum].text" ng-show="screen.content.header.descriptions.length"

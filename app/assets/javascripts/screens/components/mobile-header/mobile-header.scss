@@ -59,3 +59,22 @@
   z-index: 2;
   white-space: pre-wrap;
 }
+
+
+.mobile-header__rating {
+  background: rgba(255,255,255,.1);
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  padding: 5px 10px;
+  border-radius: 5px;
+  left: 15px;
+  top: 30px;
+}
+
+.mobile-header__rating * {
+  vertical-align: middle;
+}
+.mobile-header__rating span {
+  margin-left: 6px;
+}

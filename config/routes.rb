@@ -24,7 +24,7 @@ BeachApiCore::Engine.routes.draw do
       get :lookup, on: :collection
     end
     resources :webhooks, only: %i(index create destroy)
-    resources :users, only: %i(create) do
+    resources :users, only: %i(create index) do
       post :confirm, on: :member
     end
     resource :password, only: %i(create update)

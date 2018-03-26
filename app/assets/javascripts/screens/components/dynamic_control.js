@@ -20,8 +20,7 @@ app.directive('dynamicControl', ['ComponentState', function(ComponentState){
     link: function($scope, iElm, iAttrs, controller) {
       var type = $scope.control.type;
       $scope.$watch('control.settings.states', function (states) {
-        var activeStates = ComponentState.activeStates(states);
-        $scope.componentState = _.last(activeStates);
+        $scope.componentState = ComponentState.activeState(states);
       }, true)
       $scope.content = "<div><control-actions screen='$parent.screen' controls='$parent.controls' control='$parent.control' controls='controls'></control-actions><mobile-"+type+" state='$parent.componentState'></mobile-"+type+"></div>"
 

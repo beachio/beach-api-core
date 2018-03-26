@@ -19,6 +19,15 @@ script type="text/ng-template" id="button/settings.html"
                   label State Condition
                   input type="text" ng-model="state.condition"
             div layout-padding="" layout="row"
+              div flex="50"
+                md-input-container.md-block
+                  label Model (optional)
+                  input type="text" ng-model="state.model"
+              div flex="50"
+                md-input-container.md-block
+                  label Value (optional)
+                  input type="text" ng-model="state.value"
+            div layout-padding="" layout="row"
               div flex="80"
                 md-input-container.md-block
                   label Label

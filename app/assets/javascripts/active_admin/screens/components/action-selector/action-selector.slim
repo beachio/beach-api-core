@@ -1,10 +1,10 @@
 script type="text/ng-template" id="action-selector.html"
   .action-selector
     div layout-padding="" layout="row"
-      div flex="50"
-        md-input-container
+      div flex="25"
+        md-input-container.md-block
           label Action Type
-          md-select ng-model="ngModel.type" style="min-width: 175px;"
+          md-select ng-model="ngModel.type"
             md-option
               em None
             md-option ng-value="action" ng-repeat="action in availableActions"
@@ -12,7 +12,7 @@ script type="text/ng-template" id="action-selector.html"
       div flex="25" ng-if="ngModel.type == 'GO_TO_SCREEN_BY_ID'"
         md-input-container.md-block
           label SCREEN ID
-          input type="text" ng-model="ngModel.payload.screen_id"
+          input type="number" ng-model="ngModel.payload.screen_id"
 
       div flex="25" ng-if="ngModel.type == 'OPEN_FLOW'"
         md-input-container
@@ -23,6 +23,14 @@ script type="text/ng-template" id="action-selector.html"
             md-option ng-value="flow.id" ng-repeat="flow in #{BeachApiCore::Flow.full_path.to_json}"
               | {{flow.path}}
       
+      div flex="25" ng-if="ngModel.type == 'OPEN_APP'"
+        md-input-container
+          label APP
+          md-select ng-model="ngModel.payload.app"
+            md-option
+              em None
+            md-option ng-value="app" ng-repeat="app in ['email', 'sms']"
+              | {{flow.path}}
 
     div ng-if="ngModel.type == 'OPEN_MODAL'"
       mobile-modal

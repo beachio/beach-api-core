@@ -1,4 +1,4 @@
-app.directive('mobileItemsInARow', ['Action', '$timeout', function(Action, $timeout){
+app.directive('mobileItemsInARow', ['Action', '$timeout', 'ComponentState', function(Action, $timeout, ComponentState){
   // Runs during compile
   return {
     // name: '',
@@ -18,6 +18,7 @@ app.directive('mobileItemsInARow', ['Action', '$timeout', function(Action, $time
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
+      $scope.ComponentState = ComponentState;
       
       $scope.fireAction = function (action) {
         if (action)

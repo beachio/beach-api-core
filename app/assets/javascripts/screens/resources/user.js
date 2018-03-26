@@ -1,3 +1,3 @@
 app.factory('User', ['$resource', function($resource){
-  return $resource('/user')
+  return $resource('/mixfit-core/v1/user-info')
 }])

@@ -12,8 +12,6 @@ BeachApiCore::Screen.find_each do |screen|
 end
 
 BeachApiCore::Screen.find_each do |screen|
-  screen.content["header"]["settings"] = {states: [screen.content["header"]["settings"]]}
-
   screen.content["body"].each do |t|
     t["settings"] = {states: [t["settings"]]}
   end
