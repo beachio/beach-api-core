@@ -19,7 +19,7 @@ app.directive('mobileButton', ['Action', 'ComponentState', function(Action, Comp
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
       iElm.bind('click', function () {
-        if (state.model) Model.data[state.model] = state.value;
+        if ($scope.state.model) Model.data[$scope.state.model] = $scope.state.value;
         Action.call($scope.state.action)
       })
     }
