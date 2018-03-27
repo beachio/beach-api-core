@@ -1,18 +1,38 @@
 .control-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  padding: 20px;
 }
-.control-list a {
-  padding: 8px;
-  display: block;
-  text-decoration: none;
-  color: #333;
-  border: 1px dotted #dadada;
-  margin-top: -1px;
+.control-row {
+
+}
+.control-row-title {
+  font-size: 16px;
+  margin: 20px 0 0 10px;
   text-transform: capitalize;
 }
-
-.control-list a:hover {
+.control-cell {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin: 10px;
+  vertical-align: top;
+  cursor: pointer;
+  position: relative;
+}
+.control-cell:hover {
+  opacity: .8;
   background: #f7f7f7;
+}
+.control-cell-icon {
+  width: 60px;
+  height: 60px;
+  margin: 3px auto;
+  background-color: #e7e7e7;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.control-cell-title {
+  text-transform: capitalize;
+  text-align: center;
+  padding: 5px;
+  line-height: 14px;
 }

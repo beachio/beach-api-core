@@ -36,7 +36,6 @@ module BeachApiCore
     initializer :beach_api_core do
       if defined?(ActiveAdmin)
         ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'admin'))
-        ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'active_admin'))
         ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'active_admin', 'views'))
       end
     end
@@ -47,7 +46,6 @@ module BeachApiCore
       g.assets false
       g.helper false
     end
-
     config.after_initialize do
       @elasticsearch_enabled = ENV['ELASTICSEARCH_ENABLED'] == 'true'
     end

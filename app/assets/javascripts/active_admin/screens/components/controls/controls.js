@@ -22,6 +22,7 @@ app.directive('controls', ['ngDialog', function(ngDialog){
       $scope.openControlSelector = function () {
         ngDialog.open({
           template: 'controls/control-selector.html',
+          className: ['ngdialog-settings', 'ngdialog-controls'].join(" "),
           controller: ['$scope', function (scope) {
             scope.availableControls = $scope.availableControls
 

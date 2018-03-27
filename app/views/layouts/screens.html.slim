@@ -10,7 +10,8 @@ html ng-app="app"
     .app-layout ng-init="user = #{BeachApiCore::UserSerializer.new(current_user).to_json}"
       div ui-view="" ng-class="Action.animation_class"
 
-    = render "beach_api_core/screens/components"
+    - ActiveAdmin::Screens.app_components.each do |path|
+      = render path
 
     script type="text/ng-template" id="app.html"
       screen screen="ctrl.screen" ng-if="ctrl.screen"
@@ -25,5 +26,6 @@ html ng-app="app"
 
 
     = javascript_include_tag 'screens/vendor'
+    = javascript_include_tag 'screens/app'
     - ActiveAdmin::Screens.app_js_pathes.each do |path|
       = javascript_include_tag path

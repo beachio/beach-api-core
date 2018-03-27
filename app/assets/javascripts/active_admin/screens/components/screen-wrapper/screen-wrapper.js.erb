@@ -14,8 +14,8 @@ app.directive('screenWrapper', ['$rootScope', function($rootScope){
     transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
-      $scope.availableBodyControls = <%= ActiveAdmin::Screens.body_controls %>
-      $scope.availableFooterControls = <%= ActiveAdmin::Screens.footer_controls %>
+      $scope.availableBodyControls = <%= ActiveAdmin::Screens.body_controls.to_json %>
+      $scope.availableFooterControls = <%= ActiveAdmin::Screens.footer_controls.to_json %>
 
       $rootScope.allControls = _.union($scope.availableBodyControls, $scope.availableFooterControls)
     }

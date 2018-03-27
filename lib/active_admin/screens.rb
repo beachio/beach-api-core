@@ -1,11 +1,20 @@
 module ActiveAdmin
   class Screens
-    @app_js_pathes = ["screens/app"]
+    @app_components = ["beach_api_core/screens/components"]
+    @active_admin_components = ["beach_api_core/active_admin/screens/components"]
+    @app_js_pathes = ["screens/components"]
     @app_css_pathes = ["screens/app"]
     @active_admin_js_pathes = ["active_admin/screens/app"]
     @active_admin_css_pathes = ["active_admin/screens/app"]
-    @body_controls = ['combination-control', 'card', 'items-in-a-row', 'checkbox-list', 'radio-list', 'image', 'video', 'chart']
-    @footer_controls = ['button', 'input', 'select']
+    @body_controls = {
+        content: ["card", "items-in-a-row", 'combination-control'],
+        forms: ["checkbox-list", "radio-list", "input", "button"],
+        "graphical-elements": ["video", "image"],
+        "data-visualization": ["chart"]
+    }
+    @footer_controls = {
+        forms: ['button', 'input', 'select']
+    }
 
     class << self
       attr_accessor :app_js_pathes,
@@ -13,7 +22,9 @@ module ActiveAdmin
                     :active_admin_js_pathes,
                     :active_admin_css_pathes,
                     :body_controls,
-                    :footer_controls
+                    :footer_controls,
+                    :app_components,
+                    :active_admin_components
     end
   end
 end

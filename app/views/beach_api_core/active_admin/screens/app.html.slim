@@ -1,9 +1,12 @@
 = stylesheet_link_tag 'normalize.min'
 link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
 = stylesheet_link_tag 'screens/vendor'
-= stylesheet_link_tag 'screens/app'
-= stylesheet_link_tag 'active_admin/screens/app'
 
+- ActiveAdmin::Screens.app_css_pathes.each do |path|
+  = stylesheet_link_tag path
+
+- ActiveAdmin::Screens.active_admin_css_pathes.each do |path|
+  = stylesheet_link_tag path
 hr
 div ng-app="app"
   div ng-controller="ScreensCtrl as ctrl"
@@ -14,8 +17,16 @@ div ng-app="app"
 
     button.save-screens type="submit" Save
 
-    = render "beach_api_core/screens/components"
-    = render "beach_api_core/active_admin/screens/components"
+    - ActiveAdmin::Screens.app_components.each do |path|
+      = render path
+    - ActiveAdmin::Screens.active_admin_components.each do |path|
+      = render path
+
 
 = javascript_include_tag 'screens/vendor'
-= javascript_include_tag 'active_admin/screens/app'
+
+- ActiveAdmin::Screens.active_admin_js_pathes.each do |path|
+  = javascript_include_tag path
+
+- ActiveAdmin::Screens.app_js_pathes.each do |path|
+  = javascript_include_tag path

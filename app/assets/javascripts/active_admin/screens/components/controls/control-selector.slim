@@ -1,5 +1,8 @@
 script type="text/ng-template" id="controls/control-selector.html"
   h2 Select a control
-  ul.control-list
-    li ng-repeat="control in availableControls"
-      a ng-click="addControl(control)" ng-bind="control.split('-').join(' ')"
+  .control-list
+    .control-row ng-repeat="(k, v) in availableControls"
+      .control-row-title ng-bind="k.split('-').join(' ')"
+      .control-cell ng-repeat="control in v" ng-click="addControl(control)"
+        .control-cell-icon ng-style="{backgroundImage: 'url(/components/'+control+'.png)'}"
+        .control-cell-title ng-bind="control.split('-').join(' ')"
