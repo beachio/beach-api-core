@@ -6,6 +6,6 @@
 var app = angular.module("app", ['slick', 'ngResource', 'gridster', "ui.sortable", "checklist-model", "ngDialog", "ngMaterial"])
 
 app.run(['$http', 'Template', function($http, Template){
-  $http.defaults.headers.common.Authorization = 'Bearer 39a4680f9f6aee65cc94b49d5e81fc866e2fe15a6fd04af79eac9cdf99d035a3';
+  $http.defaults.headers.common.Authorization = 'Bearer 6552bb812ffff1a3e13d858b4065be49aee48f8013245003339567400c1510bd';
   Template.loaded = true;
 }])
