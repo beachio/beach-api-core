@@ -4,17 +4,16 @@ require 'rails_helper'
 module BeachApiCore
   describe 'Admin::Endpoints', type: :request do
 
-    let!(:admin){FactoryGirl.create(:admin)}
+    # let!(:admin){FactoryGirl.create(:admin)}
 
 
-    it "index" do
+    # it "index" do
 
-    end
+    # end
 
-    it "show" do
-      get(admin_endpoint_path(""))
-
-    end
+    # it "show" do
+    #   get(admin_endpoint_path(""))
+    # end
 
   end
 end
