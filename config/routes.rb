@@ -1,6 +1,10 @@
 BeachApiCore::Engine.routes.draw do
   use_doorkeeper
 
+  namespace :admin do
+    resources :endpoints
+  end
+
   resources :screens do
     member do
       get "next"
