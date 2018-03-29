@@ -2,10 +2,10 @@
 link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
 = stylesheet_link_tag 'screens/vendor'
 
-- ActiveAdmin::Screens.app_css_pathes.each do |path|
+- EngineStore.screen.app_css_pathes.each do |path|
   = stylesheet_link_tag path
 
-- ActiveAdmin::Screens.active_admin_css_pathes.each do |path|
+- EngineStore.screen.active_admin_css_pathes.each do |path|
   = stylesheet_link_tag path
 hr
 div ng-app="app"
@@ -17,16 +17,16 @@ div ng-app="app"
 
     button.save-screens type="submit" Save
 
-    - ActiveAdmin::Screens.app_components.each do |path|
+    - EngineStore.screen.app_components.each do |path|
       = render path
-    - ActiveAdmin::Screens.active_admin_components.each do |path|
+    - EngineStore.screen.active_admin_components.each do |path|
       = render path
 
 
 = javascript_include_tag 'screens/vendor'
 
-- ActiveAdmin::Screens.active_admin_js_pathes.each do |path|
+- EngineStore.screen.active_admin_js_pathes.each do |path|
   = javascript_include_tag path
 
-- ActiveAdmin::Screens.app_js_pathes.each do |path|
+- EngineStore.screen.app_js_pathes.each do |path|
   = javascript_include_tag path

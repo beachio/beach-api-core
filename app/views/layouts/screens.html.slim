@@ -4,13 +4,13 @@ html ng-app="app"
     script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"
     link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
     = stylesheet_link_tag 'screens/vendor'
-    - ActiveAdmin::Screens.app_css_pathes.each do |path|
+    - EngineStore.screen.app_css_pathes.each do |path|
       = stylesheet_link_tag path
   body
     .app-layout ng-init="user = #{BeachApiCore::UserSerializer.new(current_user).to_json}"
       div ui-view="" ng-class="Action.animation_class"
 
-    - ActiveAdmin::Screens.app_components.each do |path|
+    - EngineStore.screen.app_components.each do |path|
       = render path
 
     script type="text/ng-template" id="app.html"
@@ -27,5 +27,5 @@ html ng-app="app"
 
     = javascript_include_tag 'screens/vendor'
     = javascript_include_tag 'screens/app'
-    - ActiveAdmin::Screens.app_js_pathes.each do |path|
+    - EngineStore.screen.app_js_pathes.each do |path|
       = javascript_include_tag path

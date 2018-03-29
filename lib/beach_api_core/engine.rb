@@ -12,7 +12,7 @@ require 'draper'
 require 'acts_as_downcasable_on'
 require 'acts_as_strippable_on'
 require 'rails-jquery-autocomplete'
-require 'active_admin/screens'
+require 'engine_store'
 
 module BeachApiCore
   # Mailer actions that could be used to send emails
