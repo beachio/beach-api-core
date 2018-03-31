@@ -4,15 +4,21 @@ module BeachApiCore
   class Admin::EndpointsController < ApplicationController
     before_action :authenticate_admin_user!
 
-    def index
-      render json: [{name: "Submit Task", id: "MixfitCore::Task" }, {name: "Submit Challenge", id: "MixfitCore::Challenge" }]
+    def models
+      render json: BeachApiCore::Endpoint.where(request_type: params[:request_type]).pluck(:model).uniq, adapter: :attributes
     end
 
-    def show
-      render json: params[:id].constantize.all, adapter: :attributes
+    def actions
+      render json: BeachApiCore::Endpoint.where(request_type: params[:request_type], model: params[:model]).pluck(:action_name).uniq, adapter: :attributes
     end
 
-    def update
+    def entities
+      @endpoint = BeachApiCore::Endpoint.find_by(request_type: params[:request_type], model: params[:model], action_name: params[:action_name])
+      if @endpoint.on == "member"
+        render json: params[:model].constantize.all, adapter: :attributes
+      else
+        render json: nil
+      end
     end
   end
 end

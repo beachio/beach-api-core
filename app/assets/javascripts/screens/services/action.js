@@ -1,4 +1,4 @@
-app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', function($state, Screen, Model, ngDialog){
+app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', function($state, Screen, Model, ngDialog, $http){
   var Action = this;
 
 
@@ -25,6 +25,7 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', function($state,
       
     },
     GO_TO_SCREEN_BY_ID: function (payload) {
+      Action.animation_class = 'slide-fade'
       $state.go('screen_path', {id: payload.screen_id})
     },
     OPEN_FLOW: function (payload) {
@@ -40,9 +41,11 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', function($state,
         $state.go('screen_path', {id: res.id})
       })
     },
-    SUBMIT_ON_SERVER: function () {
-      Action.animation_class = 'slide-down'
-      $state.go('results_path')
+    SUBMIT_ON_SERVER: function (payload) {
+      $http.post('/v1/endpoints', _.extend({data: Model.data}, payload))
+        .then(function (res) {
+          Action.call(payload.after_submit_action);
+        })
     },
     OPEN_MODAL: function (payload) {
       ngDialog.open({

@@ -2,7 +2,9 @@ BeachApiCore::Engine.routes.draw do
   use_doorkeeper
 
   namespace :admin do
-    resources :endpoints
+    get "endpoints/models"
+    get "endpoints/actions"
+    get "endpoints/entities"
   end
 
   resources :screens do
@@ -20,6 +22,7 @@ BeachApiCore::Engine.routes.draw do
   end
 
   api_version(module: 'V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
+    resources :endpoints
     resources :applications, except: %i(new edit)
     resources :sessions, only: :create, path: :auth
     resources :favourites, only: %i(index create destroy)

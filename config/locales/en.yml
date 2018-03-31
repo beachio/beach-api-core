@@ -166,6 +166,8 @@ en:
         user_accesses:
           create: "Assign user an access level"
           remove: "Remove access level from user"
+        endpoints:
+          index: "Endpoints"
   interactors:
     errors:
       email_must_be_present: "Email must be present"
@@ -379,5 +381,7 @@ en:
         one: "Plan Option"
         other: "Plans Options"
         downcase: "plan_option"
+      beach_api_core/endpoints:
+        other: "Endpoints"
       plan_option:
         <<: *plan_option
