@@ -46,6 +46,6 @@ script type="text/ng-template" id="action-selector.html"
         div flex="33"
           autocomplete-select ng-model="ngModel.payload.entity_id" placeholder="Action" ng-if="ngModel.payload.action_name && ngModel.payload.model" url="/admin/endpoints/entities?request_type=post&model={{ngModel.payload.model}}&action_name={{ngModel.payload.action_name}}" filter-field="title"
 
-      div layout="row" layout-padding=""
-        label.md-label After Submit Action
-        action-selector.no-padding ng-model="ngModel.payload.after_submit_action"
+      div layout="column" layout-padding=""
+        label.md-label flex="100" After Submit Action
+        action-selector.no-padding flex="100" ng-model="ngModel.payload.after_submit_action"
