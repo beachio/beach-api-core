@@ -35,7 +35,7 @@ app.directive('mobileSelect', ['Model', function(Model){
         } else {
           $scope.activeItem = $scope.state.list[0]
         }
-        if ($scope.state.model) Model.data[$scope.state.model] = $scope.activeItem.label
+        if ($scope.state.model) Model.data[$scope.state.model] = $scope.activeItem
       }
     }
   };
