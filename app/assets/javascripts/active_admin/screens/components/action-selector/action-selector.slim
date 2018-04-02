@@ -22,7 +22,7 @@ script type="text/ng-template" id="action-selector.html"
               em None
             md-option ng-value="flow.id" ng-repeat="flow in #{BeachApiCore::Flow.full_path.to_json}"
               | {{flow.path}}
-      
+
       div flex="25" ng-if="ngModel.type == 'OPEN_APP'"
         md-input-container
           label APP
@@ -37,9 +37,12 @@ script type="text/ng-template" id="action-selector.html"
 
     div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'"
       div layout="row" layout-padding=""
+        div flex="100"
+          autocomplete-select ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
+
+      div layout="row" layout-padding=""
         div flex="33"
           autocomplete-select ng-model="ngModel.payload.model" placeholder="Model" url="/admin/endpoints/models?request_type=post"
-
         div flex="33"
           autocomplete-select ng-model="ngModel.payload.action_name" placeholder="Action" ng-if="ngModel.payload.model" url="/admin/endpoints/actions?request_type=post&model={{ngModel.payload.model}}"
 

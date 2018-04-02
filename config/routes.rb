@@ -5,6 +5,7 @@ BeachApiCore::Engine.routes.draw do
     get "endpoints/models"
     get "endpoints/actions"
     get "endpoints/entities"
+    get "endpoints/handlers"
   end
 
   resources :screens do

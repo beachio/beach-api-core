@@ -20,5 +20,9 @@ module BeachApiCore
         render json: nil
       end
     end
+
+    def handlers
+      render json: Handler::Base.descendants.map(&:to_s)
+    end
   end
 end
