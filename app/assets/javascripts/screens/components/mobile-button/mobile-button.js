@@ -1,4 +1,4 @@
-app.directive('mobileButton', ['Action', 'ComponentState', function(Action, ComponentState){
+app.directive('mobileButton', ['Action', 'ComponentState', 'Model', function(Action, ComponentState, Model){
   // Runs during compile
   return {
     // name: '',
