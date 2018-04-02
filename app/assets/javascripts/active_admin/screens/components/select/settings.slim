@@ -30,7 +30,11 @@ script type="text/ng-template" id="select/settings.html"
             hr.hr
             div layout-padding="" layout="row" ng-repeat="option in state.list"
               .select-option-num flex="5" ng-bind="$index+1+':'"
-              div flex="95"
+              div flex="50"
+                md-input-container.md-block
+                  label ID
+                  input type="text" ng-model="option.ID"
+              div flex="50"
                 md-input-container.md-block
                   label Label
                   input type="text" ng-model="option.label"

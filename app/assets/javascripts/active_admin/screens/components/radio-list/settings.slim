@@ -39,7 +39,10 @@ script type="text/ng-template" id="radio-list/settings.html"
                     div flex="10"
                       span.item-handler
                         i.material-icons menu
-                    div flex="80"
+                    div flex="40"
+                      md-input-container.md-block
+                        input type="text" ng-model="item.id" placeholder="ID"
+                    div flex="40"
                       md-input-container.md-block
                         input type="text" ng-model="item.label" placeholder="Label"
                     div flex="10"
