@@ -6,4 +6,4 @@ script type="text/ng-template" id="mobile-radio-list.html"
         ul
           li ng-repeat="option in state.list"
             md-radio-button ng-value="option.label" aria-label="option"
-              span ng-bind="option.label"
+              span ng-bind-html-compile="option.label"

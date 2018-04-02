@@ -23,10 +23,11 @@ app.directive('clickOutside', ['$document', function ($document) {
   }
 }])
 
-app.directive('ngBindHtmlCompile', ['$compile', '$filter', function ($compile, $filter) {
+app.directive('ngBindHtmlCompile', ['$compile', '$filter', 'Template', function ($compile, $filter, Template) {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
+      _.extend(scope, Template);
       scope.$watch(function () {
         return scope.$eval(attrs.ngBindHtmlCompile);
       }, function (value) {

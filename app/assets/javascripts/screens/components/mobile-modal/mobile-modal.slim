@@ -1,12 +1,12 @@
 script type="text/ng-template" id="mobile-modal.html"
   .mobile-modal
-    .mobile-modal__body ng-style="{backgroundImage: settings.backgroundImage ? 'url('+settings.backgroundImage.url+')' : '', backgroundColor: settings.backgroundColor, color: settings.color}"
+    .mobile-modal__body ng-style="{backgroundImage: settings.modal.backgroundImage ? 'url('+settings.modal.backgroundImage.url+')' : '', backgroundColor: settings.modal.backgroundColor, color: settings.modal.color}"
     
       .mobile-modal__title ng-bind-html-compile="settings.title"
       .mobile-modal__icon ng-if="settings.modal.icon.url"
         img ng-src="{{settings.modal.icon.url}}" width="100" height="100"
-      .mobile-modal__content ng-bind-html-compile="settings.content"
+      .mobile-modal__content ng-bind-html-compile="settings.modal.content"
     
-    .mobile-modal__button ng-bind-html-compile="settings.button.text" ng-style="{backgroundColor: settings.button.backgroundColor, color: settings.button.color}"
+    .mobile-modal__button ng-bind-html-compile="settings.modal.button.text" ng-style="{backgroundColor: settings.modal.button.backgroundColor, color: settings.modal.button.color}"
 
-    .mobile-modal__description ng-bind-html-compile="settings.description"
+    .mobile-modal__description ng-bind-html-compile="settings.modal.description"

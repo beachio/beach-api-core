@@ -1,9 +1,9 @@
 script type="text/ng-template" id="mobile-card.html"
   .mobile-card ng-style="{backgroundColor: state.backgroundColor || screen.state.mainColor || '#650C65', backgroundImage: 'url('+state.image.url+')', cursor: state.action.type && state.action.type == 'NONE' ? 'default' : 'pointer' }"
     .mobile-card__body
-      .mobile-card__title ng-bind="state.title"
-      .mobile-card__content ng-bind="state.content"
+      .mobile-card__title ng-bind-html-compile="state.title"
+      .mobile-card__content ng-bind-html-compile="state.content"
       .mobile-card__rounded-boxes
         .mobile-card__rounded-box ng-repeat="box in state.boxes"
-          span ng-bind="box.text"
+          span ng-bind-html-compile="box.text"
 
