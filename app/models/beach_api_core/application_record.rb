@@ -11,9 +11,9 @@ module BeachApiCore
         @@permited_actions = actions
       end
 
-      def execute_action action_name, current_user
+      def execute_action action_name, current_user, data, handler
         if permited_actions.include?(action_name.to_sym)
-          self.send(action_name, current_user)
+          self.send(action_name, current_user, data, handler)
         end
       end
     end
@@ -22,9 +22,9 @@ module BeachApiCore
       @@permited_actions
     end
 
-    def execute_action action_name, current_user, data
+    def execute_action action_name, current_user, data, handler
       if permited_actions.include?(action_name.to_sym)
-        send(action_name, current_user, data)
+        send(action_name, current_user, data, handler)
       end
     end
   end

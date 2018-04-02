@@ -19,7 +19,7 @@ module BeachApiCore
       if params[:entity_id]
         @model = @model.find(params[:entity_id])
       end
-      @model.execute_action(params[:action_name], current_user, params[:data])
+      @model.execute_action(params[:action_name], current_user, params[:data], params[:handler])
       render json: {}
     end
   end
