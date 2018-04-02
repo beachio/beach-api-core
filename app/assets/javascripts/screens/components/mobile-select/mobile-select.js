@@ -19,20 +19,23 @@ app.directive('mobileSelect', ['Model', function(Model){
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
       $scope.$watch('state', function (state) {
-        if (state && state.list && state.list[0]) {
-          $scope.activeItem = state.list[0].label;
-        }
+        $scope.setActiveItem()
       }, true)
 
       $scope.setActiveItem = function () {
-        var index = _.pluck($scope.state.list, 'label').indexOf($scope.activeItem)
+        if ($scope.activeItem) {
+          var index = _.pluck($scope.state.list, 'label').indexOf($scope.activeItem.label)
 
-        if (index >= $scope.state.list.length-1)
-          index = 0;
-        else
-          index = index + 1;
-        
-        $scope.activeItem = $scope.state.list[index].label;
+          if (index >= $scope.state.list.length-1)
+            index = 0;
+          else
+            index = index + 1;
+          
+          $scope.activeItem = $scope.state.list[index]
+        } else {
+          $scope.activeItem = $scope.state.list[0]
+        }
+        if ($scope.state.model) Model.data[$scope.state.model] = $scope.activeItem.label
       }
     }
   };
