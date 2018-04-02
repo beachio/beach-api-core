@@ -20,6 +20,9 @@ app.directive('contenteditable', ['$timeout', function($timeout) { return {
         opts[opt] = o && o !== 'false'
       })
 
+      opts.stripTags = true;
+      opts.stripBr = true;
+
       // view -> model
       element.bind('input', function(e) {
         scope.$apply(function() {
