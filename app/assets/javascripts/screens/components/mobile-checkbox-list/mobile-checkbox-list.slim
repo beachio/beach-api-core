@@ -4,5 +4,5 @@ script type="text/ng-template" id="mobile-checkbox-list.html"
     .mobile-checkbox-list__content
       ul
         li ng-repeat="option in state.list"
-          md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option.label"
+          md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option"
             span ng-bind-html-compile="option.label"
