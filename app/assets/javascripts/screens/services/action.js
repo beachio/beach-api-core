@@ -73,9 +73,10 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', functio
         controller: ['$scope', '$interval', '$timeout', function (scope, $interval, $timeout) {
           $timeout(function () {
             $("#open_iframe").load(function () {
-              $interval(function () {
+              scope.interval = $interval(function () {
                 if ($('#open_iframe')[0].contentWindow.$('iframe').length === 0) {
                   scope.closeThisDialog();
+                  scope.interval.cancel()
                 }
               },300)
               scope.$apply();
