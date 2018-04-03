@@ -15,21 +15,10 @@ module BeachApiCore
     end
 
     def create
-      if @model = params[:model]&.constantize
-        if params[:entity_id]
-          @model = @model.find(params[:entity_id])
-        end
-        @model.execute_action(params[:action_name], current_user, params[:data], params[:handler])
-      else
-        handler_process
-      end
-      render json: {}
+      handler = MixfitCore::Handler.find(params[:handler])
+      json = handler.process(current_user.id, data: params.permit!.to_h[:data])
+      render json: json
     end
 
-    private
-    def handler_process
-      handler_class = (params[:handler] || '::Handler::Base').constantize
-      handler_class.new(user_id: current_user.id, handler: params[:handler], data: params.permit!.to_h[:data]).process
-    end
   end
 end

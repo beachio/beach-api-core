@@ -38,16 +38,8 @@ script type="text/ng-template" id="action-selector.html"
     div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'"
       div layout="row" layout-padding=""
         div flex="100"
-          autocomplete-select ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
+          autocomplete-select filter-field="title" ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
 
-      div layout="row" layout-padding=""
-        div flex="33"
-          autocomplete-select ng-model="ngModel.payload.model" placeholder="Model" url="/admin/endpoints/models?request_type=post"
-        div flex="33"
-          autocomplete-select ng-model="ngModel.payload.action_name" placeholder="Action" ng-if="ngModel.payload.model" url="/admin/endpoints/actions?request_type=post&model={{ngModel.payload.model}}"
-
-        div flex="33"
-          autocomplete-select ng-model="ngModel.payload.entity_id" placeholder="Entity" ng-if="ngModel.payload.action_name && ngModel.payload.model" url="/admin/endpoints/entities?request_type=post&model={{ngModel.payload.model}}&action_name={{ngModel.payload.action_name}}" filter-field="title"
 
       div layout="column" layout-padding=""
         label.md-label flex="100" After Submit Action
