@@ -45,6 +45,9 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', functio
       $http.post('/v1/endpoints', _.extend({data: Model.data}, payload))
         .then(function (res) {
           Action.call(payload.after_submit_action);
+          if (res.data.action) {
+            Action.call(res.data.action)
+          }
         })
     },
     OPEN_MODAL: function (payload) {
