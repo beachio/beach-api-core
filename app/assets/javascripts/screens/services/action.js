@@ -59,6 +59,25 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', functio
           $('.app-layout').css({filter: "none"})
         }
       })
+    },
+    OPEN_IFRAME: function (payload) {
+      ngDialog.open({
+        template: "<iframe id='open_iframe' src='"+payload.url+"'></iframe>",
+        plain: true,
+        className: 'ngdialog-mobile-modal',
+        controller: ['$scope', '$interval', '$timeout', function (scope, $interval, $timeout) {
+          $timeout(function () {
+            $("#open_iframe").load(function () {
+              $interval(function () {
+                if ($('#open_iframe')[0].contentWindow.$('iframe').length === 0) {
+                  scope.closeThisDialog();
+                }
+              },300)
+              scope.$apply();
+            })
+          }, 100)
+        }],
+      })
     }
   }
 }])
