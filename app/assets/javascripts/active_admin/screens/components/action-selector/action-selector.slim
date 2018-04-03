@@ -32,15 +32,20 @@ script type="text/ng-template" id="action-selector.html"
             md-option ng-value="app" ng-repeat="app in ['email', 'sms']"
               | {{flow.path}}
 
-    div ng-if="ngModel.type == 'OPEN_MODAL'"
-      mobile-modal
+    div layout-padding="" layout="row"
+      div ng-if="ngModel.type == 'OPEN_MODAL'"
+        mobile-modal
+      div ng-if="ngModel.type == 'OPEN_IFRAME'"
+        md-input-container.md-block
+          label Url
+          input type="text" ng-model="ngModel.payload.url"
 
-    div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'"
-      div layout="row" layout-padding=""
-        div flex="100"
-          autocomplete-select filter-field="title" ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
+      div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'"
+        div layout="row" layout-padding=""
+          div flex="100"
+            autocomplete-select filter-field="title" ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
 
 
-      div layout="column" layout-padding=""
-        label.md-label flex="100" After Submit Action
-        action-selector.no-padding flex="100" ng-model="ngModel.payload.after_submit_action"
+        div layout="column" layout-padding=""
+          label.md-label flex="100" After Submit Action
+          action-selector.no-padding flex="100" ng-model="ngModel.payload.after_submit_action"
