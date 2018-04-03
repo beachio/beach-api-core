@@ -22,16 +22,22 @@ app.directive('contenteditable', ['$timeout', function($timeout) { return {
 
       opts.stripTags = true;
       opts.stripBr = true;
+      opts.moveCaretToEndOnChange = true
 
       // view -> model
       element.bind('paste', function(e) {
+        $timeout(function() {
+          var html = element.html().replace(/<\S[^><]*>/g, '').replace(/<br>$/, '')
+          element.html(html)
+        })
+      })
+
+      element.bind('input', function(e) {
         scope.$apply(function() {
           var html, html2, rerender
           html = element.html()
           rerender = false
-          if (opts.stripBr) {
-            html = html.replace(/<br>$/, '')
-          }
+
           if (opts.noLineBreaks) {
             html2 = html.replace(/<div>/g, '').replace(/<br>/g, '').replace(/<\/div>/g, '')
             if (html2 !== html) {
@@ -39,10 +45,7 @@ app.directive('contenteditable', ['$timeout', function($timeout) { return {
               html = html2
             }
           }
-          if (opts.stripTags) {
-            rerender = true
-            html = html.replace(/<\S[^><]*>/g, '')
-          }
+
           ngModel.$setViewValue(html)
           if (rerender) {
             ngModel.$render()
@@ -84,6 +87,7 @@ app.directive('contenteditable', ['$timeout', function($timeout) { return {
           range.collapse(true)
           sel.removeAllRanges()
           sel.addRange(range)
+          // opts.moveCaretToEndOnChange = false;
         }
       }
       if (opts.selectNonEditable) {
