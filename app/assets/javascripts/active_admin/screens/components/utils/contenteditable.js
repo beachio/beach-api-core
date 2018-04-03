@@ -24,7 +24,7 @@ app.directive('contenteditable', ['$timeout', function($timeout) { return {
       opts.stripBr = true;
 
       // view -> model
-      element.bind('input', function(e) {
+      element.bind('paste', function(e) {
         scope.$apply(function() {
           var html, html2, rerender
           html = element.html()
