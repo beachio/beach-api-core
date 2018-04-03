@@ -22,7 +22,7 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', functio
         if (res)
           $state.go('screen_path', {id: res.id})
       })
-      
+
     },
     GO_TO_SCREEN_BY_ID: function (payload) {
       Action.animation_class = 'slide-fade'
@@ -44,7 +44,9 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', functio
     SUBMIT_ON_SERVER: function (payload) {
       $http.post('/v1/endpoints', _.extend({data: Model.data}, payload))
         .then(function (res) {
-          Action.call(payload.after_submit_action);
+          if (payload.after_submit_action){
+            Action.call(payload.after_submit_action);
+          }
           if (res.data.action) {
             Action.call(res.data.action)
           }
