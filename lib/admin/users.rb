@@ -170,7 +170,6 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
   collection_action :delete_task, method: [:post] do
     if request.post? && params[:task_id] && params[:user_id]
       score_log = MixfitCore::ScoreLog.find_by(user_id: params[:user_id], resource_id: params[:task_id], resource_type: "MixfitCore::Task")
-      ap score_log
       score_log&.handlers_user&.destroy
       score_log&.destroy
       redirect_to admin_user_path(params[:user_id])
