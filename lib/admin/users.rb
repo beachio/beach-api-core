@@ -16,7 +16,9 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
     id_column
     column :email
     column :scores
-    column :position
+    column :position do |u|
+      MixfitCore::User.find(u.id).position
+    end if defined?(MixfitCore)
     actions
   end
 
@@ -139,7 +141,9 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
         end, ', ')
       end
       row :scores
-      row :position
+      row :position do
+        MixfitCore::User.find(user.id).position
+      end if defined?(MixfitCore)
     end
   end
 
