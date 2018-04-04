@@ -84,6 +84,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
   end
 
   show do |user|
+    mixfit_core_user = MixfitCore::User.find(user.id)
     attributes_table do
       row :id
       row :email
@@ -142,12 +143,42 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       end
       row :scores
       row :position do
-        MixfitCore::User.find(user.id).position
+        mixfit_core_user.position
       end if defined?(MixfitCore)
+    end
+    panel "Completed Tasks" do
+      table_for mixfit_core_user.tasks do
+        column :id
+        column :title
+        column :date do |task|
+          MixfitCore::ScoreLog.find_by(user_id: user.id, resource_id: task.id, resource_type: "MixfitCore::Task")&.created_at
+        end
+        column :actions do |task|
+          template = <<-HTML
+                          <form method="POST" action="/admin/users/delete_task">
+                            <input type="hidden" name="task_id" value="#{task.id}">
+                            <input type="hidden" name="user_id" value="#{user.id}">
+                            <button>Delete</button>
+                          </form>
+                        HTML
+          render html: template.html_safe
+        end
+      end
+    end
+  end
+
+  collection_action :delete_task, method: [:post] do
+    if request.post? && params[:task_id] && params[:user_id]
+      score_log = MixfitCore::ScoreLog.find_by(user_id: params[:user_id], resource_id: params[:task_id], resource_type: "MixfitCore::Task")
+      ap score_log
+      score_log&.handlers_user&.destroy
+      score_log&.destroy
+      redirect_to admin_user_path(params[:user_id])
     end
   end
 
   controller do
+    skip_before_action :verify_authenticity_token
     helper_method :profile_custom_fields
     before_action :set_keepers, only: %i(create update)
 

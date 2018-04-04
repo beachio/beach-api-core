@@ -27,8 +27,10 @@ app.directive('contenteditable', ['$timeout', function($timeout) { return {
       // view -> model
       element.bind('paste', function(e) {
         $timeout(function() {
-          var html = element.html().replace(/<\S[^><]*>/g, '').replace(/<br>$/, '')
+          var html = element.html().replace(/<\S[^><]*>/g, '').replace(/<br>$/, '').replace(/&nbsp;/, " ")
           element.html(html)
+          ngModel.$setViewValue(html)
+          ngModel.$render()
         })
       })
 
