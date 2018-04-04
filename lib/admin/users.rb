@@ -15,6 +15,8 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
   index do
     id_column
     column :email
+    column :scores
+    column :position
     actions
   end
 
@@ -136,6 +138,8 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
           link_to org.name, admin_organisation_path(org)
         end, ', ')
       end
+      row :scores
+      row :position
     end
   end
 
