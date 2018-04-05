@@ -9,11 +9,6 @@ module BeachApiCore
       name I18n.t('activerecord.models.beach_api_core/endpoints.other')
     end
 
-
-    def index
-      render json: {}
-    end
-
     def create
       handler = MixfitCore::Handler.find(params[:handler])
       json = handler.process(current_user.id, data: params.permit!.to_h[:data])

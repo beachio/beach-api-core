@@ -167,7 +167,7 @@ en:
           create: "Assign user an access level"
           remove: "Remove access level from user"
         endpoints:
-          index: "Endpoints"
+          create: "Endpoints"
   interactors:
     errors:
       email_must_be_present: "Email must be present"
