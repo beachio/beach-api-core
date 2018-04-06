@@ -146,35 +146,73 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
         mixfit_core_user.position
       end if defined?(MixfitCore)
     end
-    panel "Completed Tasks" do
-      table_for mixfit_core_user.tasks do
-        column :id
-        column :title
-        column :date do |task|
-          MixfitCore::ScoreLog.find_by(user_id: user.id, resource_id: task.id, resource_type: "MixfitCore::Task")&.created_at
+
+    if defined?(MixfitCore)
+      columns do
+        column do
+          panel "Completed Tasks" do
+            table_for mixfit_core_user.tasks do
+              column :id
+              column :title
+              column :date do |task|
+                MixfitCore::ScoreLog.find_by(user_id: user.id, resource_id: task.id, resource_type: "MixfitCore::Task")&.created_at
+              end
+              column :actions do |task|
+                template = <<-HTML
+                                <form method="POST" action="/admin/users/delete_task">
+                                  <input type="hidden" name="task_id" value="#{task.id}">
+                                  <input type="hidden" name="user_id" value="#{user.id}">
+                                  <button>Delete</button>
+                                </form>
+                              HTML
+                render html: template.html_safe
+              end
+            end
+          end
         end
-        column :actions do |task|
-          template = <<-HTML
-                          <form method="POST" action="/admin/users/delete_task">
-                            <input type="hidden" name="task_id" value="#{task.id}">
-                            <input type="hidden" name="user_id" value="#{user.id}">
-                            <button>Delete</button>
-                          </form>
-                        HTML
-          render html: template.html_safe
+        column do
+          panel "Completed Challenges" do
+            table_for mixfit_core_user.challenges do
+              column :id
+              column :title
+              column :date do |challenge|
+                MixfitCore::ScoreLog.find_by(user_id: user.id, resource_id: challenge.id, resource_type: "MixfitCore::Challenge")&.created_at
+              end
+              column :actions do |challenge|
+                template = <<-HTML
+                                <form method="POST" action="/admin/users/delete_challenge">
+                                  <input type="hidden" name="challenge_id" value="#{challenge.id}">
+                                  <input type="hidden" name="user_id" value="#{user.id}">
+                                  <button>Delete</button>
+                                </form>
+                              HTML
+                render html: template.html_safe
+              end
+            end
+          end
         end
+      end
+    end
+
+    collection_action :delete_task, method: [:post] do
+      if request.post? && params[:task_id] && params[:user_id]
+        score_log = MixfitCore::ScoreLog.find_by(user_id: params[:user_id], resource_id: params[:task_id], resource_type: "MixfitCore::Task")
+        score_log&.handlers_user&.destroy
+        score_log&.destroy
+        redirect_to admin_user_path(params[:user_id])
+      end
+    end
+
+    collection_action :delete_challenge, method: [:post] do
+      if request.post? && params[:challenge_id] && params[:user_id]
+        score_log = MixfitCore::ScoreLog.find_by(user_id: params[:user_id], resource_id: params[:challenge_id], resource_type: "MixfitCore::Task")
+        score_log&.handlers_user&.destroy
+        score_log&.destroy
+        redirect_to admin_user_path(params[:user_id])
       end
     end
   end
 
-  collection_action :delete_task, method: [:post] do
-    if request.post? && params[:task_id] && params[:user_id]
-      score_log = MixfitCore::ScoreLog.find_by(user_id: params[:user_id], resource_id: params[:task_id], resource_type: "MixfitCore::Task")
-      score_log&.handlers_user&.destroy
-      score_log&.destroy
-      redirect_to admin_user_path(params[:user_id])
-    end
-  end
 
   controller do
     skip_before_action :verify_authenticity_token
