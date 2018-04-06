@@ -193,7 +193,9 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
         end
       end
     end
+  end
 
+  if defined?(MixfitCore)
     collection_action :delete_task, method: [:post] do
       if request.post? && params[:task_id] && params[:user_id]
         score_log = MixfitCore::ScoreLog.find_by(user_id: params[:user_id], resource_id: params[:task_id], resource_type: "MixfitCore::Task")
@@ -212,7 +214,6 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       end
     end
   end
-
 
   controller do
     skip_before_action :verify_authenticity_token
