@@ -33,14 +33,14 @@ script type="text/ng-template" id="action-selector.html"
               | {{flow.path}}
 
     div layout-padding="" layout="row"
-      div ng-if="ngModel.type == 'OPEN_MODAL'"
+      div ng-if="ngModel.type == 'OPEN_MODAL'" flex="100"
         mobile-modal
-      div ng-if="ngModel.type == 'OPEN_IFRAME'"
+      div ng-if="ngModel.type == 'OPEN_IFRAME'" flex="100"
         md-input-container.md-block
           label Url
           input type="text" ng-model="ngModel.payload.url"
 
-      div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'"
+      div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'" flex="100"
         div layout="row" layout-padding=""
           div flex="100"
             autocomplete-select filter-field="title" ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"

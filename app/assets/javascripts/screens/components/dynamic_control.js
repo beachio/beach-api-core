@@ -21,12 +21,12 @@ app.directive('dynamicControl', ['ComponentState', 'Template', function(Componen
       var type = $scope.control.type;
       $scope.$watch('control.settings.states', function (states) {
         $scope.componentState = ComponentState.activeState(states);
+        try {
+          iElm.css({width: ($scope.componentState.width || 100) + '%'})
+        } catch(e){}
       }, true)
       $scope.content = "<div><control-actions screen='$parent.screen' controls='$parent.controls' control='$parent.control' controls='controls'></control-actions><mobile-"+type+" state='$parent.componentState' ng-show='$parent.componentState'></mobile-"+type+"></div>"
 
-      try {
-        iElm.css({width: ($scope.control.settings.width || 100) + '%'})
-      } catch(e){}
     }
   };
 }]);
