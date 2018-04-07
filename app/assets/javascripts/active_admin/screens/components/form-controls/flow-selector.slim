@@ -1,0 +1,8 @@
+script type="text/ng-template" id="form-controls/flow-selector.html"
+  md-input-container
+    label Flow
+    md-select ng-model="ngModel"
+      md-option
+        em None
+      md-option ng-value="flow.id" ng-repeat="flow in #{BeachApiCore::Flow.full_path.to_json}"
+        | {{flow.path}}

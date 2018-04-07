@@ -1,0 +1,10 @@
+script type="text/ng-template" id="mobile-menu.html"
+  .mobile-menu
+    .mobile-menu-close ng-click="closeThisDialog()"
+      i.material-icons close
+    .mobile-menu-title Main Menu
+    
+    .mobile-menu-list
+      .mobile-menu-item ng-repeat="item in settings.menu_items" ng-click="openFlow(item.flow_id)"
+        .mobile-menu-item-icon ng-style="{backgroundImage: 'url('+item.icon.url+')'}"
+        .mobile-menu-item-text ng-bind="item.name"

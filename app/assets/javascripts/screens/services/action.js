@@ -73,16 +73,36 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', functio
         controller: ['$scope', '$interval', '$timeout', function (scope, $interval, $timeout) {
           $timeout(function () {
             $("#open_iframe").load(function () {
+              if ($('#open_iframe')[0].contentWindow.$('iframe').length) scope.withIframe = true;
+
               scope.interval = $interval(function () {
-                if ($('#open_iframe')[0].contentWindow.$('iframe').length === 0) {
+                if (scope.withIframe && $('#open_iframe')[0].contentWindow.$('iframe').length === 0) {
                   scope.closeThisDialog();
-                  scope.interval.cancel()
+                  scope.interval.cancel();
                 }
               },300)
               scope.$apply();
             })
           }, 100)
         }],
+      })
+    },
+    OPEN_MENU: function (payload) {
+      ngDialog.open({
+        template: 'mobile-menu.html',
+        className: 'ngdialog-mobile-menu',
+        controller: ['$scope', function (scope) {
+          $('.app-layout').css({filter: "blur(10px)"})
+          scope.settings = payload
+
+          scope.openFlow = function (flow_id) {
+            Action.list["OPEN_FLOW"]({flow_id: flow_id})
+            scope.closeThisDialog()
+          }
+        }],
+        preCloseCallback: function (value) {
+          $('.app-layout').css({filter: "none"})
+        }
       })
     }
   }
