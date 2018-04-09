@@ -1,4 +1,4 @@
-app.directive('mobileCombinationControl', [function(){
+app.directive('mobileCombinationControl', ['ComponentState', function(ComponentState){
   // Runs during compile
   return {
     // name: '',
@@ -18,7 +18,7 @@ app.directive('mobileCombinationControl', [function(){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
-      
+      $scope.ComponentState = ComponentState;
 
       $scope.gridsterOpts = {
           margins: [20, 20], // the pixel distance between each widget

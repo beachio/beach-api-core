@@ -17,7 +17,7 @@ app.directive('screenWrapper', ['$rootScope', function($rootScope){
       $scope.availableBodyControls = <%= EngineStore.screen.body_controls.to_json %>
       $scope.availableFooterControls = <%= EngineStore.screen.footer_controls.to_json %>
 
-      $rootScope.allControls = _.union($scope.availableBodyControls, $scope.availableFooterControls)
+      $rootScope.allControls = _.flatten(_.values($scope.availableBodyControls))
     }
   };
 }]);

@@ -11,4 +11,4 @@ script type="text/ng-template" id="combination-control.html"
             .combination-control__delete ng-click="ngModel.splice($index, 1)"
               i.material-icons close
 
-          dynamic-element ng-if="control.type" content="'<mobile-'+$parent.control.type+' settings=\'$parent.control.settings\'></mobile'+$parent.control.type+'>'"
+          dynamic-element ng-if="control.type" content="'<mobile-'+$parent.control.type+' state=\'$parent.ComponentState.activeState($parent.control.settings.states)\'></mobile'+$parent.control.type+'>'"

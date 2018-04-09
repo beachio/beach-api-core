@@ -1,4 +1,4 @@
-app.directive('combinationControl', ['ngDialog', '$rootScope', function(ngDialog, $rootScope){
+app.directive('combinationControl', ['ngDialog', '$rootScope', 'ComponentState', function(ngDialog, $rootScope, ComponentState){
   // Runs during compile
   return {
     // name: '',
@@ -17,6 +17,7 @@ app.directive('combinationControl', ['ngDialog', '$rootScope', function(ngDialog
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.ngModel = $scope.ngModel || []
+      $scope.ComponentState = ComponentState
 
       $scope.gridsterOpts = {
           margins: [20, 20],

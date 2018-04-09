@@ -46,6 +46,12 @@ script type="text/ng-template" id="action-selector.html"
       
 
       div ng-if="ngModel.type == 'OPEN_MENU'" flex="100" ng-init="ngModel.payload.menu_items = ngModel.payload.menu_items || [{}]"
+        div layout="row" layout-padding=""
+          div flex="100"
+            md-input-container.md-block
+              label Title
+              input type="text" ng-model="ngModel.payload.title"
+          Main Menu
         div ng-repeat="menu_item in ngModel.payload.menu_items" layout="row" layout-padding=""
           div flex="50" layout="row" layout-padding=""
             div flex="25"

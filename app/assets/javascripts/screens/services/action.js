@@ -8,20 +8,24 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', functio
 
   Action.list = {
     NEXT_SCREEN: function () {
-      Action.animation_class = 'slide-left'
+      if ($state.params) {
+        Action.animation_class = 'slide-left'
 
-      Screen.next({id: $state.params.id}, function (res) {
-        if (res)
-          $state.go('screen_path', {id: res.id})
-      })
+        Screen.next({id: $state.params.id}, function (res) {
+          if (res)
+            $state.go('screen_path', {id: res.id})
+        })
+      }
     },
     PREV_SCREEN: function () {
-      Action.animation_class = 'slide-right'
+      if ($state.params) {
+        Action.animation_class = 'slide-right'
 
-      Screen.prev({id: $state.params.id}, function (res) {
-        if (res)
-          $state.go('screen_path', {id: res.id})
-      })
+        Screen.prev({id: $state.params.id}, function (res) {
+          if (res)
+            $state.go('screen_path', {id: res.id})
+        })
+      }
 
     },
     GO_TO_SCREEN_BY_ID: function (payload) {
