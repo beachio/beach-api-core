@@ -15,7 +15,7 @@ module BeachApiCore
 
     def full_path
       path = if directory
-        ids = directory.ancestry.split("/").map &:to_i
+        ids = (directory.ancestry || "").split("/").map &:to_i
         dirs = BeachApiCore::Directory.where(id: ids).index_by &:id
         dir_path = ids.map do |id|
           dirs[id].name
