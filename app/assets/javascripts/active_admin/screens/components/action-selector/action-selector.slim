@@ -37,7 +37,8 @@ script type="text/ng-template" id="action-selector.html"
       div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'" flex="100"
         div layout="row" layout-padding=""
           div flex="100"
-            autocomplete-select filter-field="title" ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
+            pick-handler ng-model="ngModel.payload.handler"
+            / autocomplete-select filter-field="title" ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
 
 
         div layout="column" layout-padding=""

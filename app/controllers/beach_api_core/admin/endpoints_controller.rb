@@ -5,7 +5,7 @@ module BeachApiCore
     before_action :authenticate_admin_user!
 
     def handlers
-      render json: MixfitCore::Handler.all.map{|h| {id: h.id, title: h.title}}
+      render json: MixfitCore::Handler.all.map{|h| h.params}
     end
   end
 end
