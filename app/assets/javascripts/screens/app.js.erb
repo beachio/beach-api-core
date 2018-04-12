@@ -4,8 +4,9 @@
 
 var app = angular.module("app", ['slick', 'ngDialog', 'gridster', 'checklist-model', 'ngResource', 'ngMaterial', 'ui.router'])
 
-app.run(['Action', '$rootScope', '$http', function(Action, $rootScope, $http){
+app.run(['Action', '$rootScope', '$http', 'Template', function(Action, $rootScope, $http, Template){
   $rootScope.Action = Action;
+  $rootScope.Template = Template;
   var token = "<%= Rails.env.production? ? '6552bb812ffff1a3e13d858b4065be49aee48f8013245003339567400c1510bd' : '6552bb812ffff1a3e13d858b4065be49aee48f8013245003339567400c1510bd'%>";
   $http.defaults.headers.common.Authorization = 'Bearer ' + token;
 }])
