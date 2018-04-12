@@ -8,6 +8,7 @@ Rails.application.config.assets.precompile += %w( beach_api_core/mailer/team-bac
                                                   beach_api_core/mobile_header.png
                                                   beach_api_core/folder-closed.png
                                                   beach_api_core/file.png
+                                                  beach_api_core/item-background.png
                                                   normalize.min
                                                   screens/vendor.js
                                                   screens/vendor.scss
