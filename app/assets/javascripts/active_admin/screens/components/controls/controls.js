@@ -27,6 +27,7 @@ app.directive('controls', ['ngDialog', function(ngDialog){
             scope.availableControls = $scope.availableControls
 
             scope.addControl = function (type) {
+              $scope.controls = $scope.controls || []
               $scope.controls.push({
                 type: type,
                 settings: {
