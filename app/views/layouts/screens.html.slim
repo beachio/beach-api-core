@@ -3,6 +3,7 @@ html ng-app="app"
     = stylesheet_link_tag 'normalize.min'
     script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"
     link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
+    
     = stylesheet_link_tag 'screens/vendor'
     - EngineStore.screen.app_css_pathes.each do |path|
       = stylesheet_link_tag path
