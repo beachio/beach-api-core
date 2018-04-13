@@ -5,6 +5,12 @@ script type="text/ng-template" id="screens/settings.html"
   h2 Screen settings
   md-content
     div layout-padding="" layout="column"
+      md-input-container.md-block
+        label Page Layout
+        md-select ng-model="screen.settings.pageLayout"
+          md-option Default Page Layout
+          md-option ng-value="'leaderboard'" Leaderboard
+
       md-tabs md-dynamic-height="" md-border-bottom=""
         md-tab label="General"
           md-content layout-padding="" layout="column"

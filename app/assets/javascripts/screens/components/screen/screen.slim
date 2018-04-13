@@ -1,7 +1,7 @@
 script type="text/ng-template" id="screen.html"
   div ng-if="!Template.loaded"
     .spinner
-  div ng-if="Template.loaded"
+  div ng-if="Template.loaded && !screen.settings.pageLayout"
     screen-wrapper
       .app-header
         mobile-header header="screen.content.header"
@@ -14,3 +14,14 @@ script type="text/ng-template" id="screen.html"
           controls controls="screen.content.footer" available-controls="availableFooterControls" screen="screen"
             .app-controls ui-sortable="{handle: '.control-title'}" ng-model="screen.content.footer"
               dynamic-control.dynamic-control ng-repeat="control in screen.content.footer" control="control" controls="$parent.$parent.controls" screen="$parent.$parent.screen"
+  div ng-if="Template.loaded && screen.settings.pageLayout == 'leaderboard'"
+    screen-wrapper
+      .leaderboard-top
+        mobile-header-bg.mobile-header-bg
+        controls controls="screen.content.leaderboardTop" available-controls="availableBodyControls" screen="screen"
+          .app-controls ui-sortable="{handle: '.control-title'}" ng-model="screen.content.leaderboardTop"
+            dynamic-control.dynamic-control ng-repeat="control in screen.content.leaderboardTop" control="control" controls="$parent.$parent.controls" screen="$parent.$parent.screen"
+      .leaderboard-bottom
+        controls controls="screen.content.leaderboard_bottom" available-controls="availableBodyControls" screen="screen"
+          .app-controls ui-sortable="{handle: '.control-title'}" ng-model="screen.content.leaderboard_bottom"
+            dynamic-control.dynamic-control ng-repeat="control in screen.content.leaderboard_bottom" control="control" controls="$parent.$parent.controls" screen="$parent.$parent.screen"

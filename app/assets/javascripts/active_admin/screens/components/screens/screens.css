@@ -41,6 +41,7 @@
   background: #f7f2f7;
   position: relative;
   margin-bottom: 20px;
+  overflow: hidden;
 }
 .add-screen {
   width: 375px;

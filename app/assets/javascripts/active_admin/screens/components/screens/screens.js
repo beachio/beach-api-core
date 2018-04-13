@@ -48,7 +48,9 @@ app.directive('screens', ['ngDialog', function(ngDialog){
         var defaultScreen = {
           header: {},
           body: [],
-          footer: []
+          footer: [],
+          leaderboardTop: [],
+          leaderboardBottom: []
         }
         $scope.list.push({content: defaultScreen})
       }
