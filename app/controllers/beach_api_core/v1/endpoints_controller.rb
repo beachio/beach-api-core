@@ -11,7 +11,7 @@ module BeachApiCore
 
     def create
       handler = MixfitCore::Handler.find(params[:handler])
-      json = handler.process(current_user.id, params.permit!.to_h[:data])
+      json = handler.process(current_user.id, params.permit!.to_h[:data].with_indifferent_access)
       render json: json
     end
 
