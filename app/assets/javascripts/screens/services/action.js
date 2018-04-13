@@ -1,4 +1,4 @@
-app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', function($state, Screen, Model, ngDialog, $http){
+app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', function($state, Screen, Model, ngDialog, $http, SocialNetwork){
   var Action = this;
 
 
@@ -108,6 +108,9 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', functio
           $('.app-layout').css({filter: "none"})
         }
       })
+    },
+    SOCIAL_NETWORKS_ACTION: function (payload) {
+      SocialNetwork[payload.socialNetwork.name][payload.socialNetwork.action](payload.socialNetwork.params)
     }
   }
 }])

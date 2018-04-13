@@ -27,6 +27,29 @@ script type="text/ng-template" id="action-selector.html"
               | {{flow.path}}
 
     div layout-padding="" layout="row"
+      div ng-if="ngModel.type == 'SOCIAL_NETWORKS_ACTION'" flex="100"
+        md-input-container
+          label Social Network
+          md-select ng-model="ngModel.payload.socialNetwork.name" ng-change="ngModel.payload.socialNetwork.action = undefined"
+            md-option
+              em None
+            md-option ng-value="sn" ng-repeat="sn in ['facebook', 'twitter', 'instagram']"
+              | {{sn}}
+
+        md-input-container
+          md-select ng-model="ngModel.payload.socialNetwork.action"
+            md-option
+              em None
+            md-option ng-value="facebookAction" ng-repeat="facebookAction in ['share', 'follow']" ng-if="ngModel.payload.socialNetwork.name == 'facebook'"
+              | {{facebookAction}}
+            md-option ng-value="twitterAction" ng-repeat="twitterAction in ['share', 'retweet', 'follow']" ng-if="ngModel.payload.socialNetwork.name == 'twitter'"
+              | {{twitterAction}}
+            md-option ng-value="instagramAction" ng-repeat="instagramAction in ['like', 'follow']" ng-if="ngModel.payload.socialNetwork.name == 'instagram'"
+              | {{instagramAction}}
+        md-input-container ng-if="ngModel.payload.socialNetwork.action == 'share'"
+          label Url
+          input type="text" ng-model="ngModel.payload.socialNetwork.params.url"
+
       div ng-if="ngModel.type == 'OPEN_MODAL'" flex="100"
         mobile-modal
       div ng-if="ngModel.type == 'OPEN_IFRAME'" flex="100"
