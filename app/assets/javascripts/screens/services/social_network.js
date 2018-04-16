@@ -3,22 +3,22 @@ app.service('SocialNetwork', [function(){
 
   SocialNetwork.facebook = {
     follow: function () {
-      window.open("https://m.facebook.com/groups/acdc.brotherhood/", "myWindow", "width=375,height=680")
+      window.open("https://m.facebook.com/groups/247692329108499", "myWindow", "width=600,height=400")
     },
     share: function (params) {
       FB.ui({
-        method: 'share',
-        display: 'popup',
-        href: params.url,
-      }, function(response){
-        console.log(response)
-      });
+            method: 'share',
+            display: 'popup',
+            href: params.url,
+          }, function(response){
+            console.log(response)
+          });
     }
   }
 
   SocialNetwork.twitter = {
     follow: function () {
-      alert("Follow Twitter Mock")
+      window.open("https://twitter.com/mixfit_dev", "myWindow", "width=600,height=400")
     },
     share: function () {
       alert("Share Twitter Mock")
