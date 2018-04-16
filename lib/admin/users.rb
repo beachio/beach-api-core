@@ -192,6 +192,79 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
           end
         end
       end
+
+      columns do
+        column do
+          panel "Conditions" do
+            table_for mixfit_core_user.conditions do
+              column :id
+              column :name
+              column :condition_category
+            end
+          end
+        end
+      end
+
+
+      columns do
+        column do
+          panel "Allergies" do
+            table_for mixfit_core_user.profile.allergies do
+              column :id do |allergy|
+                "#{allergy["id"]}"
+              end
+              column :label do |allergy|
+                "#{allergy["label"]}"
+              end
+            end
+          end
+        end
+
+        column do
+          panel "Diet" do
+            table_for mixfit_core_user.profile.diet do
+              column :id do |diet|
+                "#{diet["id"]}"
+              end
+
+              column :label do |diet|
+                "#{diet["label"]}"
+              end
+            end
+          end
+        end
+      end
+
+      columns do
+        column do
+          panel "I sleep well" do
+            table_for mixfit_core_user.profile.i_sleep_well do
+              column :id do |i_sleep_well|
+                "#{i_sleep_well["id"]}"
+              end
+              column :label do |i_sleep_well|
+                "#{i_sleep_well["label"]}"
+              end
+            end
+          end
+        end
+
+        column do
+          panel "I live a stressful life" do
+            table_for mixfit_core_user.profile.i_live_a_stressful_life do
+              column :id do |i_live_a_stressful_life|
+                "#{i_live_a_stressful_life["id"]}"
+              end
+
+              column :label do |i_live_a_stressful_life|
+                "#{i_live_a_stressful_life["label"]}"
+              end
+            end
+          end
+        end
+
+      end
+
     end
   end
 
