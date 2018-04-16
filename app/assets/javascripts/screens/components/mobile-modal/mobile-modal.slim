@@ -7,6 +7,6 @@ script type="text/ng-template" id="mobile-modal.html"
         img ng-src="{{settings.modal.icon.url}}" width="100" height="100"
       .mobile-modal__content ng-bind-html-compile="settings.modal.content"
     
-    .mobile-modal__button ng-bind-html-compile="settings.modal.button.text" ng-style="{backgroundColor: settings.modal.button.backgroundColor, color: settings.modal.button.color}"
+    .mobile-modal__button ng-bind-html-compile="settings.modal.button.text" ng-style="{backgroundColor: settings.modal.button.backgroundColor, color: settings.modal.button.color}" ng-click="Action.call(settings.modal.button.action)"
 
     .mobile-modal__description ng-bind-html-compile="settings.modal.description"

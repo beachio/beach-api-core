@@ -62,7 +62,8 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
         className: 'ngdialog-mobile-modal',
         controller: ['$scope', function (scope) {
           $('.app-layout').css({filter: "blur(10px)"})
-          scope.settings = payload
+          scope.settings = payload;
+          scope.Action = Action;
         }],
         preCloseCallback: function (value) {
           $('.app-layout').css({filter: "none"})
