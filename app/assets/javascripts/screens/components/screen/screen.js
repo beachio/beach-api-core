@@ -27,7 +27,7 @@ app.directive('screen', ['Action', '$timeout', 'Template', function(Action, $tim
 
       if (settings && settings.rotator) {
         $timeout(function () {
-          Action.call({type: "NEXT_SCREEN"})
+          Action.call($scope.screen.settings.rotation_action || {type: "NEXT_SCREEN"})
         }, settings.rotation_delay)
       }
     }

@@ -29,10 +29,12 @@ script type="text/ng-template" id="screens/settings.html"
               div flex="20"
                 md-checkbox style="margin: 10px 0;" ng-model="screen.settings.rotator" Rotator
 
-              div flex="80" ng-show="screen.settings.rotator"
+              div flex="20" ng-show="screen.settings.rotator"
                 md-input-container.md-block
                   label Rotation Delay, ms
                   input type="number" ng-model="screen.settings.rotation_delay"
+              div flex="60" ng-show="screen.settings.rotator"
+                action-selector style="margin-top: -15px" ng-model="screen.settings.rotation_action"
         md-tab label="Header"
           md-content layout-padding="" layout="column" ng-init="screen.content.header.descriptions = screen.content.header.descriptions || []"
             .relative flex="100" ng-repeat="description in screen.content.header.descriptions"
