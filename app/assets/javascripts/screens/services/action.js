@@ -112,6 +112,18 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
     },
     SOCIAL_NETWORKS_ACTION: function (payload) {
       SocialNetwork[payload.socialNetwork.name][payload.socialNetwork.action](payload.socialNetwork.params)
-    }
+    },
+    OPEN_CAMERA: function (payload) {
+      alert("Camera opened")
+      if (payload.after_action){
+        Action.call(payload.after_action);
+      }
+    },
+    OPEN_GALLERY: function (payload) {
+      alert("Gallery opened")
+      if (payload.after_action){
+        Action.call(payload.after_action);
+      }
+    },
   }
 }])
