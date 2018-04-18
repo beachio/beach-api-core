@@ -1,4 +1,4 @@
-app.directive('mobileHeader', [function(){
+app.directive('mobileHeader', ['Action', function(Action){
   // Runs during compile
   return {
     // name: '',
@@ -16,6 +16,7 @@ app.directive('mobileHeader', [function(){
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
+      $scope.Action = Action;
       $scope.screen = controller.screen;
       $scope.$watch('header.descriptions', function () {
         if ($scope.header.descriptions)
