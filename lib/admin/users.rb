@@ -151,7 +151,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       columns do
         column do
           panel "Completed Tasks" do
-            table_for mixfit_core_user.tasks do
+            table_for mixfit_core_user.completed_tasks do
               column :id
               column :title
               column :date do |task|
@@ -170,9 +170,53 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
             end
           end
         end
+      end
+      columns do
+        column do
+          panel "Assigned Challenges" do
+            table_for mixfit_core_user.assigned_challenges do
+              column :id
+              column :title
+              column :date do |challenge|
+                MixfitCore::ScoreLog.find_by(user_id: user.id, resource_id: challenge.id, resource_type: "MixfitCore::Challenge")&.created_at
+              end
+              column :actions do |challenge|
+                template = <<-HTML
+                                <form method="POST" action="/admin/users/delete_challenge">
+                                  <input type="hidden" name="challenge_id" value="#{challenge.id}">
+                                  <input type="hidden" name="user_id" value="#{user.id}">
+                                  <button>Delete</button>
+                                </form>
+                              HTML
+                render html: template.html_safe
+              end
+            end
+          end
+        end
+        column do
+          panel "Accepted Challenges" do
+            table_for mixfit_core_user.accepted_challenges do
+              column :id
+              column :title
+              column :date do |challenge|
+                MixfitCore::ScoreLog.find_by(user_id: user.id, resource_id: challenge.id, resource_type: "MixfitCore::Challenge")&.created_at
+              end
+              column :actions do |challenge|
+                template = <<-HTML
+                                <form method="POST" action="/admin/users/delete_challenge">
+                                  <input type="hidden" name="challenge_id" value="#{challenge.id}">
+                                  <input type="hidden" name="user_id" value="#{user.id}">
+                                  <button>Delete</button>
+                                </form>
+                              HTML
+                render html: template.html_safe
+              end
+            end
+          end
+        end
         column do
           panel "Completed Challenges" do
-            table_for mixfit_core_user.challenges do
+            table_for mixfit_core_user.completed_challenges do
               column :id
               column :title
               column :date do |challenge|
