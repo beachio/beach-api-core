@@ -4,6 +4,7 @@
 //= require angular-material.min
 //= require angular-messages.min
 //= require angular-aria.min
+//= require angular-touch
 //= require angular-gridster.min
 //= require angular-animate.min
 //= require checklist-model.min

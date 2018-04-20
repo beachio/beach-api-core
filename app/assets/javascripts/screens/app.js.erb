@@ -2,7 +2,7 @@
 //= require_tree ./config
 //= require_tree ./controllers
 
-var app = angular.module("app", ['slick', 'ngDialog', 'gridster', 'checklist-model', 'ngResource', 'ngMaterial', 'ui.router'])
+var app = angular.module("app", ['slick', 'ngTouch', 'ngDialog', 'gridster', 'checklist-model', 'ngResource', 'ngMaterial', 'ui.router'])
 
 app.run(['Action', '$rootScope', '$http', 'Template', 'DataSource', function(Action, $rootScope, $http, Template, DataSource){
   $rootScope.Action = Action;
