@@ -1,4 +1,4 @@
-app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', function($state, Screen, Model, ngDialog, $http, SocialNetwork){
+app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 'DataSource', function($state, Screen, Model, ngDialog, $http, SocialNetwork, DataSource){
   var Action = this;
 
 
@@ -50,6 +50,9 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
         .then(function (res) {
           if (payload.after_submit_action){
             Action.call(payload.after_submit_action);
+            if (payload.saveDataSource) {
+              DataSource[payload.dataSourceName] = payload.server;
+            }
           }
           if (res.data.action) {
             Action.call(res.data.action)
@@ -70,27 +73,8 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
         }
       })
     },
-    OPEN_IFRAME: function (payload) {
-      ngDialog.open({
-        template: "<iframe id='open_iframe' src='"+payload.url+"'></iframe>",
-        plain: true,
-        className: 'ngdialog-mobile-modal',
-        controller: ['$scope', '$interval', '$timeout', function (scope, $interval, $timeout) {
-          $timeout(function () {
-            $("#open_iframe").load(function () {
-              if ($('#open_iframe')[0].contentWindow.$('iframe').length) scope.withIframe = true;
-
-              scope.interval = $interval(function () {
-                if (scope.withIframe && $('#open_iframe')[0].contentWindow.$('iframe').length === 0) {
-                  scope.closeThisDialog();
-                  scope.interval.cancel();
-                }
-              },300)
-              scope.$apply();
-            })
-          }, 100)
-        }],
-      })
+    OPEN_WEBVIEW: function (payload) {
+      window.open(payload.url, "myWindow", "width=375,height=680")
     },
     OPEN_MENU: function (payload) {
       ngDialog.open({
@@ -114,16 +98,53 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
       SocialNetwork[payload.socialNetwork.name][payload.socialNetwork.action](payload.socialNetwork.params)
     },
     OPEN_CAMERA: function (payload) {
-      alert("Camera opened")
-      if (payload.after_action){
-        Action.call(payload.after_action);
-      }
+      openFileDialog(function (file) {
+        if (payload.after_action){
+          payload.after_action.payload = payload.after_action.payload || {}
+          _.extend(payload.after_action.payload, {file: file})
+          Action.call(payload.after_action);
+        }
+      })
     },
     OPEN_GALLERY: function (payload) {
-      alert("Gallery opened")
-      if (payload.after_action){
-        Action.call(payload.after_action);
+      openFileDialog(function (file) {
+        if (payload.after_action){
+          payload.after_action.payload = payload.after_action.payload || {}
+          _.extend(payload.after_action.payload, {data: {file: file}})
+          Action.call(payload.after_action);
+        }
+      })
+    }
+  }
+
+  function openFileDialog(callback) {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.click();
+
+    input.onchange = function (e) {
+      var fd = new FormData();
+      fd.append("attachment", input.files[0]);
+      
+      var xhr = new XMLHttpRequest,
+          percentCompleted = 0;
+
+      xhr.upload.onprogress = function(e) {
+          percentCompleted = Math.round(e.loaded / e.total * 100);
       }
-    },
+
+      xhr.onload = function() {
+        var res = JSON.parse(this.responseText)
+        
+        if (this.status == 200) {
+          callback(res)
+        } else {
+          alert("Uploading error")
+        }
+      }
+      xhr.open('POST', '/v1/uploads');
+      xhr.setRequestHeader("Authorization", 'Bearer ' + window.token)
+      xhr.send(fd);
+    }
   }
 }])

@@ -168,6 +168,8 @@ en:
           remove: "Remove access level from user"
         endpoints:
           create: "Endpoints"
+        uploads:
+          upload: "Upload file"
   interactors:
     errors:
       email_must_be_present: "Email must be present"

@@ -23,6 +23,7 @@ BeachApiCore::Engine.routes.draw do
   end
 
   api_version(module: 'V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
+    resources :uploads
     resources :endpoints
     resources :applications, except: %i(new edit)
     resources :sessions, only: :create, path: :auth
