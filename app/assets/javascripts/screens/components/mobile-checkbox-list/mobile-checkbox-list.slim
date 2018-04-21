@@ -11,9 +11,9 @@ script type="text/ng-template" id="mobile-checkbox-list.html"
             slick.mobile-checkbox-list__slick slides-to-show="1"
               div
                 .mobile-checkbox-list__actions-options
-                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 75" ng-class="{active: option.portion_weight <= 75}" S
-                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 150" ng-class="{active: option.portion_weight > 75 && option.portion_weight <= 150}" M
-                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 250" ng-class="{active: option.portion_weight > 150}" L
+                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 75" ng-class="{active: option.portion_weight == 75}" S
+                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 150" ng-class="{active: option.portion_weight == 150}" M
+                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 250" ng-class="{active: option.portion_weight == 250}" L
               div
                 .mobile-checkbox-list__actions-input ng-model="option.portion_weight" ng-init="option.portion_weight = option.portion_weight || 75"
                   input type="number" ng-model="option.portion_weight"
