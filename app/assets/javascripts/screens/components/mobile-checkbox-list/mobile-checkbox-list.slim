@@ -10,7 +10,7 @@ script type="text/ng-template" id="mobile-checkbox-list.html"
           .mobile-checkbox-list__actions ng-show="state.type == 'With Portions' && (Model.data[state.model] || []).indexOf(option.id) != -1"
             slick.mobile-checkbox-list__slick slides-to-show="1"
               div
-                .mobile-checkbox-list__actions-options
+                .mobile-checkbox-list__actions-options ng-init="option.portion_weight = 75"
                   .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 75" ng-class="{active: option.portion_weight == 75}" S
                   .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 150" ng-class="{active: option.portion_weight == 150}" M
                   .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 250" ng-class="{active: option.portion_weight == 250}" L
