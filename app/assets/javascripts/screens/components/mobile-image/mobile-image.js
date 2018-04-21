@@ -1,4 +1,4 @@
-app.directive('mobileImage', [function(){
+app.directive('mobileImage', ["DataSource", "$compile", function(DataSource, $compile){
   // Runs during compile
   return {
     // name: '',
@@ -18,6 +18,19 @@ app.directive('mobileImage', [function(){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
+      $scope.DataSource = DataSource;
+      $scope.$watch('DataSource', function () {
+        var url = $scope.state.url
+        if (url) {
+          if (url.match(/\{\{.+\}\}/)) {
+            $scope.url = _.template($scope.state.url)($scope)
+          } else {
+            $scope.url = url
+          }
+        } else {
+          $scope.url = $scope.state.image.url;
+        }
+      }, true)
     }
   };
 }]);

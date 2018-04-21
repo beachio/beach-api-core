@@ -101,26 +101,22 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
     SOCIAL_NETWORKS_ACTION: function (payload) {
       SocialNetwork[payload.socialNetwork.name][payload.socialNetwork.action](payload.socialNetwork.params)
     },
-    OPEN_CAMERA: function (payload) {
-      openFileDialog(function (file) {
-        if (payload.after_action){
-          payload.after_action.payload = payload.after_action.payload || {}
-          payload.after_action.payload.data = payload.after_action.payload.data || {}
-          payload.after_action.payload.data.url = file.url
-          Action.call(payload.after_action);
+    OPEN_CAMERA: uploadImage,
+    OPEN_GALLERY: uploadImage,
+  }
+
+  function uploadImage(payload) {
+    openFileDialog(function (file) {
+      if (payload.after_action){
+        if (payload.dataSource) {
+          DataSource[payload.dataSource] = file.url;
         }
-      })
-    },
-    OPEN_GALLERY: function (payload) {
-      openFileDialog(function (file) {
-        if (payload.after_action){
-          payload.after_action.payload = payload.after_action.payload || {}
-          payload.after_action.payload.data = payload.after_action.payload.data || {}
-          payload.after_action.payload.data.url = file.url
-          Action.call(payload.after_action);
-        }
-      })
-    }
+        payload.after_action.payload = payload.after_action.payload || {}
+        payload.after_action.payload.data = payload.after_action.payload.data || {}
+        payload.after_action.payload.data.url = file.url
+        Action.call(payload.after_action);
+      }
+    })
   }
 
   function openFileDialog(callback) {

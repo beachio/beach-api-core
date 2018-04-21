@@ -51,10 +51,20 @@ script type="text/ng-template" id="action-selector.html"
           input type="text" ng-model="ngModel.payload.socialNetwork.params.url"
 
       div ng-if="ngModel.type == 'OPEN_CAMERA'" flex="100"
+        md-input-container.md-block
+          label Save To DataSource
+          input type="text" ng-model="ngModel.payload.dataSource"
+        br
+        br
         label.md-label flex="100" After Action
         action-selector.no-padding flex="100" ng-model="ngModel.payload.after_action"
 
       div ng-if="ngModel.type == 'OPEN_GALLERY'" flex="100"
+        md-input-container.md-block
+          label Save To DataSource
+          input type="text" ng-model="ngModel.payload.dataSource"
+        br
+        br
         label.md-label flex="100" After Action
         action-selector.no-padding flex="100" ng-model="ngModel.payload.after_action"
       div ng-if="ngModel.type == 'OPEN_MODAL'" flex="100"

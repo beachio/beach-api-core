@@ -11,3 +11,7 @@ app.run(['Action', '$rootScope', '$http', 'Template', 'DataSource', function(Act
   window.token = "<%= Rails.env.production? ? '6552bb812ffff1a3e13d858b4065be49aee48f8013245003339567400c1510bd' : '6552bb812ffff1a3e13d858b4065be49aee48f8013245003339567400c1510bd'%>";
   $http.defaults.headers.common.Authorization = 'Bearer ' + window.token;
 }])
+
+_.templateSettings = {
+  interpolate: /\{\{(.+?)\}\}/g
+};
