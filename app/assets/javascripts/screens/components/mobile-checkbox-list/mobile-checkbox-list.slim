@@ -7,7 +7,7 @@ script type="text/ng-template" id="mobile-checkbox-list.html"
           md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option.id"
             span ng-bind-html-compile="option.label"
 
-          .mobile-checkbox-list__actions ng-show="state.type == 'With Portions' && (Model.data[state.model] || []).indexOf(option.id) != -1"
+          .mobile-checkbox-list__actions ng-if="state.type == 'With Portions' && (Model.data[state.model] || []).indexOf(option.id) != -1"
             slick.mobile-checkbox-list__slick slides-to-show="1"
               div
                 .mobile-checkbox-list__actions-options ng-init="option.portion_weight = 75"
