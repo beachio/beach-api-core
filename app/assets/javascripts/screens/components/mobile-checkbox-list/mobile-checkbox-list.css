@@ -21,3 +21,69 @@
   margin: 0;
   font-size: 13px;
 }
+
+
+.mobile-checkbox-list__actions {
+  position: absolute;
+  right: -20px;
+  top: 0;
+}
+.mobile-checkbox-list__actions-input {
+  width: 100px;
+  position: relative;
+  background: white;
+}
+.mobile-checkbox-list__actions-input small {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.mobile-checkbox-list__actions-input input[type="text"],
+.mobile-checkbox-list__actions-input input[type="number"] {
+  border: 2px solid #48eccd;
+  border-radius: 3px;
+  padding: 5px 10px;
+  width: 100% !important;
+  height: 29px;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.mobile-checkbox-list__actions-options {
+  white-space: nowrap;
+  width: 101px;
+  background: white;
+}
+
+.mobile-checkbox-list__actions-option {
+  width: 29px;
+  height: 29px;
+  border: 2px solid #00e7c1;
+  border-radius: 3px;
+  color: #00e7c1;
+  text-align: center;
+  line-height: 27px;
+  font-weight: bold;
+  font-size: 16px;
+  display: inline-block;
+  margin-left: 6px;
+  cursor: pointer;
+  outline: none !important;
+}
+.mobile-checkbox-list__actions-options .mobile-checkbox-list__actions-option:first-child {
+  margin-left: 0;
+}
+
+.mobile-checkbox-list__actions-option.active {
+  background: #00e7c1;
+  color: white;
+}
+
+.mobile-checkbox-list__slick {
+  height: 30px;
+  width: 100px;
+}
+.mobile-checkbox-list__slick .slick-arrow {
+  display: none !important;
+}

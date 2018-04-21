@@ -20,6 +20,13 @@ script type="text/ng-template" id="checkbox-list/settings.html"
           div layout-padding="" layout="row"
             div flex="50"
               md-input-container.md-block
+                label Type
+                md-select ng-model="state.type"
+                  md-option ng-value="undefined"
+                    em Default
+                  md-option ng-value="'With Portions'" With Portions
+            div flex="50"
+              md-input-container.md-block
                 label Title
                 input type="text" ng-model="state.title"
             div flex="50"
@@ -32,7 +39,11 @@ script type="text/ng-template" id="checkbox-list/settings.html"
 
           div layout-padding="" layout="column"
             div flex="100"
-              label.md-label Items
+              md-input-container.md-block
+                label DataSource
+                input type="text" ng-model="state.dataSource"
+            div flex="100"
+              label.md-label Items {{state.dataSource ? 'After DataSource' : ''}}
               div ui-sortable="{handle: '.item-handler'}" ng-model="state.list"
                 .relative layout="row" layout-padding="" ng-repeat="item in state.list"
                   div flex="10"

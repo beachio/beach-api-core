@@ -3,6 +3,18 @@ script type="text/ng-template" id="mobile-checkbox-list.html"
     .mobile-checkbox-list__title ng-bind-html-compile="state.title"
     .mobile-checkbox-list__content
       ul
-        li ng-repeat="option in state.list"
-          md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option"
+        li.relative ng-repeat="option in state.list"
+          md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option.id"
             span ng-bind-html-compile="option.label"
+
+          .mobile-checkbox-list__actions ng-show="state.type == 'With Portions' && (Model.data[state.model] || []).indexOf(option.id) != -1"
+            slick.mobile-checkbox-list__slick slides-to-show="1"
+              div
+                .mobile-checkbox-list__actions-options
+                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 75" ng-class="{active: option.portion_weight <= 75}" S
+                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 100" ng-class="{active: option.portion_weight > 75 && option.portion_weight < 125}" M
+                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 125" ng-class="{active: option.portion_weight >= 125}" L
+              div
+                .mobile-checkbox-list__actions-input ng-model="option.portion_weight" ng-init="option.portion_weight = option.portion_weight || 75"
+                  input type="number" ng-model="option.portion_weight"
+                  small g

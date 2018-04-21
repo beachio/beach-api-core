@@ -46,13 +46,17 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
       })
     },
     SUBMIT_ON_SERVER: function (payload) {
-      $http.post('/v1/endpoints', _.extend({data: Model.data}, payload))
+      console.log(payload)
+      payload.data = payload.data || {}
+      _.extend(payload.data, Model.data);
+      $http.post('/v1/endpoints', payload)
         .then(function (res) {
+          if (payload.dataSource) {
+            DataSource[payload.dataSource] = res.data;
+          }
+
           if (payload.after_submit_action){
             Action.call(payload.after_submit_action);
-            if (payload.saveDataSource) {
-              DataSource[payload.dataSourceName] = payload.server;
-            }
           }
           if (res.data.action) {
             Action.call(res.data.action)
@@ -101,7 +105,8 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
       openFileDialog(function (file) {
         if (payload.after_action){
           payload.after_action.payload = payload.after_action.payload || {}
-          _.extend(payload.after_action.payload, {file: file})
+          payload.after_action.payload.data = payload.after_action.payload.data || {}
+          payload.after_action.payload.data.url = file.url
           Action.call(payload.after_action);
         }
       })
@@ -110,7 +115,8 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
       openFileDialog(function (file) {
         if (payload.after_action){
           payload.after_action.payload = payload.after_action.payload || {}
-          _.extend(payload.after_action.payload, {data: {file: file}})
+          payload.after_action.payload.data = payload.after_action.payload.data || {}
+          payload.after_action.payload.data.url = file.url
           Action.call(payload.after_action);
         }
       })

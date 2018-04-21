@@ -71,8 +71,8 @@ script type="text/ng-template" id="action-selector.html"
             / autocomplete-select filter-field="title" ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
           div flex="50"
             md-input-container.md-block
-              label Save Response To Variable
-              input type="text" ng-model="ngModel.payload.model"
+              label Save To DataSource
+              input type="text" ng-model="ngModel.payload.dataSource"
 
 
         div layout="column" layout-padding=""
@@ -86,7 +86,6 @@ script type="text/ng-template" id="action-selector.html"
             md-input-container.md-block
               label Title
               input type="text" ng-model="ngModel.payload.title"
-          Main Menu
         div ng-repeat="menu_item in ngModel.payload.menu_items" layout="row" layout-padding=""
           div flex="50" layout="row" layout-padding=""
             div flex="25"

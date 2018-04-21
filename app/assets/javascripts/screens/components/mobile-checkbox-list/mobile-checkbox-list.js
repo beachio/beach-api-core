@@ -1,4 +1,4 @@
-app.directive('mobileCheckboxList', ['Model', function(Model){
+app.directive('mobileCheckboxList', ['Model', 'DataSource', function(Model, DataSource){
   // Runs during compile
   return {
     // name: '',
@@ -19,6 +19,13 @@ app.directive('mobileCheckboxList', ['Model', function(Model){
     link: function($scope, iElm, iAttrs, controller) {
       $scope.Model = Model;
       $scope.screen = controller.screen;
+      var list = $scope.state.list;
+
+      $scope.$watch(function () {
+        return DataSource[$scope.state.dataSource]
+      }, function (dataSource) {
+        $scope.state.list = _.union(dataSource || [], list)
+      }, true)
     }
   };
 }]);
