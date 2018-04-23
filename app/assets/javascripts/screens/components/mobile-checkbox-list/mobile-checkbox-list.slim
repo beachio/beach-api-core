@@ -4,17 +4,17 @@ script type="text/ng-template" id="mobile-checkbox-list.html"
     .mobile-checkbox-list__content
       ul
         li.relative ng-repeat="option in state.list"
-          md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option.id"
+          md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option"
             span ng-bind-html-compile="option.label"
 
-          .mobile-checkbox-list__actions ng-if="state.type == 'With Portions' && (Model.data[state.model] || []).indexOf(option.id) != -1"
+          .mobile-checkbox-list__actions ng-if="state.type == 'With Portions' && _.indexBy(Model.data[state.model] || [], 'id')[option.id]"
             slick.mobile-checkbox-list__slick slides-to-show="1"
               div
-                .mobile-checkbox-list__actions-options ng-init="option.portion_weight = 75"
-                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 75" ng-class="{active: option.portion_weight == 75}" S
-                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 150" ng-class="{active: option.portion_weight == 150}" M
-                  .mobile-checkbox-list__actions-option ng-click="option.portion_weight = 250" ng-class="{active: option.portion_weight == 250}" L
+                .mobile-checkbox-list__actions-options ng-init="option.amount = 75"
+                  .mobile-checkbox-list__actions-option ng-click="option.amount = 75" ng-class="{active: option.amount == 75}" S
+                  .mobile-checkbox-list__actions-option ng-click="option.amount = 150" ng-class="{active: option.amount == 150}" M
+                  .mobile-checkbox-list__actions-option ng-click="option.amount = 250" ng-class="{active: option.amount == 250}" L
               div
-                .mobile-checkbox-list__actions-input ng-model="option.portion_weight" ng-init="option.portion_weight = option.portion_weight || 75"
-                  input type="number" ng-model="option.portion_weight"
+                .mobile-checkbox-list__actions-input ng-model="option.amount" ng-init="option.amount = option.amount || 75"
+                  input type="number" ng-model="option.amount"
                   small g

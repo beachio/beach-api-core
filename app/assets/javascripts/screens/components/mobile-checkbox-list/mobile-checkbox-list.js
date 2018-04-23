@@ -19,6 +19,7 @@ app.directive('mobileCheckboxList', ['Model', 'DataSource', function(Model, Data
     link: function($scope, iElm, iAttrs, controller) {
       $scope.Model = Model;
       $scope.screen = controller.screen;
+      $scope._ = _;
       var list = $scope.state.list;
 
       $scope.$watch(function () {
