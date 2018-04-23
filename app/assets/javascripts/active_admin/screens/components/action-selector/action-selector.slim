@@ -23,8 +23,8 @@ script type="text/ng-template" id="action-selector.html"
           md-select ng-model="ngModel.payload.app"
             md-option
               em None
-            md-option ng-value="app" ng-repeat="app in ['email', 'sms']"
-              | {{flow.path}}
+            md-option ng-value="app" ng-repeat="app in ['email', 'sms', 'healthkit']"
+              | {{app}}
 
     div layout-padding="" layout="row"
       div ng-if="ngModel.type == 'SOCIAL_NETWORKS_ACTION'" flex="100"
