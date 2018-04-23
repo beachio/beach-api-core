@@ -6,7 +6,7 @@ script type="text/ng-template" id="mobile-items-in-a-row.html"
       
     .mobile-items-in-a-row__items ng-style="{height: state.height+'px'}"
       slick slides-to-show="1" ng-if="state.list.length" variable-width="true" infinite="false"
-        div ng-repeat="item in state.list" ng-init="itemState = ComponentState.activeState(item.states)"
+        div ng-repeat="item in state.list" ng-if="itemState" ng-init="itemState = ComponentState.activeState(item.states)"
           .mobile-items-in-a-row__item ng-click="fireAction(itemState.action)" style="width: {{state.width}}px; height: {{state.height}}px; background-image: url({{itemState.image.url || '#{asset_url('beach_api_core/item-background.png')}'}}), linear-gradient({{itemState.backgroundColor || 'transparent'}}, {{itemState.secondaryBackgroundColor || itemState.backgroundColor || 'transparent'}})"
 
             .mobile-items-in-a-row__item-icon ng-style="{backgroundImage: 'url('+itemState.icon.url+')'}" ng-show="itemState.icon.url"
