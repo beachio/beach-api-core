@@ -324,7 +324,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
 
     collection_action :delete_challenge, method: [:post] do
       if request.post? && params[:challenge_id] && params[:user_id]
-        score_log = MixfitCore::ScoreLog.find_by(user_id: params[:user_id], resource_id: params[:challenge_id], resource_type: "MixfitCore::Task")
+        score_log = MixfitCore::ScoreLog.find_by(user_id: params[:user_id], resource_id: params[:challenge_id], resource_type: "MixfitCore::Challenge")
         score_log&.handlers_user&.destroy
         score_log&.destroy
         redirect_to admin_user_path(params[:user_id])
