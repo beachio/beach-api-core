@@ -11,6 +11,8 @@
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  left: 50%;
+  margin-left: -140px;
 }
 
 .mobile-video__preview-play {
