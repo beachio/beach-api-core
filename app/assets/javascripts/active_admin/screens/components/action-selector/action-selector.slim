@@ -17,20 +17,6 @@ script type="text/ng-template" id="action-selector.html"
       div flex="25" ng-if="ngModel.type == 'OPEN_FLOW'"
         flow-selector ng-model="ngModel.payload.flow_id"
 
-      div flex="25" ng-if="ngModel.type == 'OPEN_APP'"
-        md-input-container
-          label APP
-          md-select ng-model="ngModel.payload.app"
-            md-option
-              em None
-            md-option ng-value="app" ng-repeat="app in ['email', 'sms', 'healthkit']"
-              | {{app}}
-
-        br
-        br
-        label.md-label flex="100" After Action
-        action-selector.no-padding flex="100" ng-model="ngModel.payload.after_action"
-
     div layout-padding="" layout="row"
       div ng-if="ngModel.type == 'SOCIAL_NETWORKS_ACTION'" flex="100"
         md-input-container
@@ -78,6 +64,20 @@ script type="text/ng-template" id="action-selector.html"
         md-input-container.md-block
           label Url
           input type="text" ng-model="ngModel.payload.url"
+
+      div flex="100" ng-if="ngModel.type == 'OPEN_APP'"
+        md-input-container
+          label APP
+          md-select ng-model="ngModel.payload.app"
+            md-option
+              em None
+            md-option ng-value="app" ng-repeat="app in ['email', 'sms', 'healthkit']"
+              | {{app}}
+
+        br
+        br
+        label.md-label flex="100" After Action
+        action-selector.no-padding flex="100" ng-model="ngModel.payload.after_action"
 
       div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'" flex="100"
         div layout="row" layout-padding=""
