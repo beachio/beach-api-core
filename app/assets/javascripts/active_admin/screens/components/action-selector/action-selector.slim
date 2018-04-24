@@ -26,6 +26,11 @@ script type="text/ng-template" id="action-selector.html"
             md-option ng-value="app" ng-repeat="app in ['email', 'sms', 'healthkit']"
               | {{app}}
 
+        br
+        br
+        label.md-label flex="100" After Action
+        action-selector.no-padding flex="100" ng-model="ngModel.payload.after_action"
+
     div layout-padding="" layout="row"
       div ng-if="ngModel.type == 'SOCIAL_NETWORKS_ACTION'" flex="100"
         md-input-container
