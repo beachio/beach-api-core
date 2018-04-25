@@ -199,6 +199,8 @@ en:
         one: "Assignment"
         other: "Assignments"
         downcase: "assignment"
+      beach_api_core/uploads:
+        other: "Uploads"
       assignment:
         <<: *assignment
       beach_api_core/atom: &atom
