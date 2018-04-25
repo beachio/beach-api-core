@@ -10,13 +10,13 @@ module BeachApiCore
 
     def create
       entity = BeachApiCore::Entity.create(user: current_user, uid: SecureRandom.uuid, kind: "UploadedImage")
+      asset = BeachApiCore::Asset.new(entity: entity)
       if params[:attachment_base64]
-        image = Paperclip.io_adapters.for(params[:attachment_base64])
-        image.original_filename = "image.png"
+        asset.base64 = params.permit![:attachment_base64]
       else
-        image = params.permit![:attachment]
+        asset.file = params.permit![:attachment]
       end
-      asset = BeachApiCore::Asset.create(file: image, entity: entity)
+      asset.save
 
       render json: {url: asset.file_url, id: asset.id}
     end
