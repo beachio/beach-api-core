@@ -19,7 +19,11 @@ app.directive('dynamicControl', ['ComponentState', 'Template', function(Componen
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       var type = $scope.control.type;
-      $scope.$watch('control.settings.states', function (states) {
+      $scope.$watch(function () {
+        return [$scope.control.settings.states, Template]
+      }, function () {
+        var states = $scope.control.settings.states
+        console.log(states)
         $scope.componentState = ComponentState.activeState(states);
         try {
           iElm.css({width: ($scope.componentState.width || 100) + '%'})

@@ -1,4 +1,4 @@
-app.service('Template', ['User', function(User){
+app.service('Template', ['User', 'DataSource', function(User, DataSource){
   var Template = this;
 
   Template.reloadTemplate = function (callback) {
@@ -6,5 +6,6 @@ app.service('Template', ['User', function(User){
       Template.User = res;
       Template.loaded = true;
     })
+    Template.DataSource = DataSource;
   }
 }])

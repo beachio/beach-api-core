@@ -1,4 +1,4 @@
-app.service('ComponentState', ['Template', '$parse', function(Template, $parse){
+app.service('ComponentState', ['Template', '$parse', '$rootScope', function(Template, $parse, $rootScope){
   var ComponentState = this;
 
   ComponentState.activeState = function (states) {
@@ -14,4 +14,5 @@ app.service('ComponentState', ['Template', '$parse', function(Template, $parse){
       return !state.condition || $parse(state.condition)(template)
     })
   }
+
 }])
