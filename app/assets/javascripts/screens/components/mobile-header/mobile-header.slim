@@ -8,4 +8,4 @@ script type="text/ng-template" id="mobile-header.html"
       i.material-icons equalizer
       span ng-bind="$root.Template.User.scores"
 
-  .mobile-header__description ng-bind-html-compile="screen.content.header.descriptions[descriptionNum].text" ng-show="screen.content.header.descriptions.length"
+  .mobile-header__description ng-bind-html-compile="description" ng-show="description"

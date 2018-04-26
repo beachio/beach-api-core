@@ -1,4 +1,4 @@
-app.directive('mobileHeader', ['Action', function(Action){
+app.directive('mobileHeader', ['Action', 'Template', 'ComponentState', function(Action, Template, ComponentState){
   // Runs during compile
   return {
     // name: '',
@@ -19,8 +19,19 @@ app.directive('mobileHeader', ['Action', function(Action){
       $scope.Action = Action;
       $scope.screen = controller.screen;
       $scope.$watch('header.descriptions', function () {
-        if ($scope.header.descriptions)
-          $scope.descriptionNum = randomInteger(0, $scope.header.descriptions.length-1)
+        if (!$scope.header.description_type && $scope.header.descriptions && $scope.header.descriptions.length) {
+            $scope.description = $scope.header.descriptions[randomInteger(0, $scope.header.descriptions.length-1)].text
+        }
+      }, true)
+
+      $scope.$watch(function () {
+        return [$scope.header.states, Template]
+      }, function () {
+        if ($scope.header.descriptionsType == "states") {
+          var states = $scope.header.states;
+          $scope.activeState = ComponentState.activeState(states);
+          $scope.description = $scope.activeState.description
+        }
       }, true)
     }
   };
