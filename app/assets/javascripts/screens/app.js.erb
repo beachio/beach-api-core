@@ -8,7 +8,7 @@ app.run(['Action', '$rootScope', '$http', 'Template', 'DataSource', function(Act
   $rootScope.Action = Action;
   $rootScope.DataSource = DataSource;
   $rootScope.Template = Template;
-  window.token = "<%= Rails.env.production? ? '6552bb812ffff1a3e13d858b4065be49aee48f8013245003339567400c1510bd' : '6552bb812ffff1a3e13d858b4065be49aee48f8013245003339567400c1510bd'%>";
+  window.token = '4f626a6d50777a1e05b5e6763cd244b25bcc3b37ab47cd4265e9cbe950379b3e';
   $http.defaults.headers.common.Authorization = 'Bearer ' + window.token;
 }])
 
