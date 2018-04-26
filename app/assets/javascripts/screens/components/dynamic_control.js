@@ -23,7 +23,6 @@ app.directive('dynamicControl', ['ComponentState', 'Template', function(Componen
         return [$scope.control.settings.states, Template]
       }, function () {
         var states = $scope.control.settings.states
-        console.log(states)
         $scope.componentState = ComponentState.activeState(states);
         try {
           iElm.css({width: ($scope.componentState.width || 100) + '%'})

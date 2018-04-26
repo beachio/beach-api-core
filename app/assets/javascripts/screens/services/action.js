@@ -46,7 +46,6 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
       })
     },
     SUBMIT_ON_SERVER: function (payload) {
-      console.log(payload)
       payload.data = payload.data || {}
       _.extend(payload.data, Model.data);
       $http.post('/v1/endpoints', payload)
