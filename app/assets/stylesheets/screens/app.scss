@@ -113,3 +113,31 @@
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
 /* close commented backslash hack */
+
+.slick-dots li {
+  height: 8px;
+  width: 8px;
+  margin: 5px 5px 0 0;
+  padding: 0px;
+  cursor: pointer;
+}
+
+.slick-dots li button {
+  display: none;
+}
+
+.slick-dots li:after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 10px;
+  background: #D8D8D8;
+}
+.slick-dots li.slick-active:after {
+  background: #292929;
+}
+.slick-dots li:hover:after {
+  background: #2929299e;
+}
