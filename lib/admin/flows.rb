@@ -65,7 +65,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
   member_action :screens, method: [:get] do
     if request.get? && params[:id]
       @flow = BeachApiCore::Flow.find(params[:id])
-      render json: @flow.screens
+      render json: @flow.screens, adapter: :attributes
     end
   end
 
