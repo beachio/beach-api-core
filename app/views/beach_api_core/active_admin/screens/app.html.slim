@@ -10,7 +10,6 @@ link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesh
 hr
 div ng-app="app"
   div ng-controller="ScreensCtrl as ctrl"
-    div ng-init="ctrl.screens = #{screens.to_json};"
     screens list="ctrl.screens"
 
     textarea.ng-hide name="#{name}" ng-model="ctrl.textScreens" rows="5" columns="5"

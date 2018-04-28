@@ -1,5 +1,12 @@
-app.controller('ScreensCtrl', ['ngDialog', '$scope', function(ngDialog, $scope){
+app.controller('ScreensCtrl', ['ngDialog', '$scope', '$timeout', '$http', function(ngDialog, $scope, $timeout, $http){
   var ctrl = this;
+
+  var flow_id = window.location.pathname.match(/flows\/(.+)\/edit/)[1]
+  $http.get("/admin/flows/"+flow_id+"/screens")
+       .then(function (res) {
+          ctrl.screens = res.data;
+       })
+
 
   $scope.$watch('ctrl.screens', function (screens) {
     ctrl.textScreens = JSON.stringify(screens)

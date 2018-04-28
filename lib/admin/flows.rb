@@ -62,6 +62,13 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
     end
   end
 
+  member_action :screens, method: [:get] do
+    if request.get? && params[:id]
+      @flow = BeachApiCore::Flow.find(params[:id])
+      render json: @flow.screens
+    end
+  end
+
   collection_action :images, method: [:post, :delete] do
     if request.post?
       entity = BeachApiCore::Entity.create(user: current_user, uid: SecureRandom.uuid, kind: "FlowImage")
