@@ -27,13 +27,13 @@ app.directive('ngBindHtmlCompile', ['$compile', '$filter', 'Template', function 
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
-      _.extend(scope, Template);
       scope.$watch(function () {
-        return scope.$eval(attrs.ngBindHtmlCompile);
+        return [scope.$eval(attrs.ngBindHtmlCompile), Template];
       }, function (value) {
-        element.html(value);
+        _.extend(scope, Template);
+        element.html(value[0]);
         $compile(element.contents())(scope);
-      });
+      }, true);
     }
   };
 }]);
