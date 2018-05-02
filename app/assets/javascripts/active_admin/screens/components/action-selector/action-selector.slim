@@ -71,7 +71,7 @@ script type="text/ng-template" id="action-selector.html"
           md-select ng-model="ngModel.payload.app"
             md-option
               em None
-            md-option ng-value="app" ng-repeat="app in ['email', 'sms', 'healthkit']"
+            md-option ng-value="app" ng-repeat="app in ['email', 'sms', 'healthkit', 'bluetooth', 'qr_reader']"
               | {{app}}
 
         br
