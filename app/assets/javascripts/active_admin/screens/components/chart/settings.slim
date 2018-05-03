@@ -19,10 +19,21 @@ script type="text/ng-template" id="chart/settings.html"
                   label State Condition
                   input type="text" ng-model="state.condition"
             div layout-padding="" layout="column"
-              div flex="80"
+              div flex="100"
                 md-input-container.md-block
-                  label Endpoint data source:
-                  input type="text" ng-model="state.dataSource"
+                  label Period
+                  md-select ng-model="state.period"
+                    md-option ng-value="'W1'" Current week
+                    md-option ng-value="'LW1'" Previous week
+                    md-option ng-value="'M1'" Current Month
+                    md-option ng-value="'LM1'" Previous Month
+              div flex="100"
+                label.md-label Chart data source
+                md-select ng-model="state.source"
+                  md-option ng-value="undefined" None
+                  md-optgroup ng-repeat="(k,v) in #{MixfitCore::AggregationData.sources.to_json}" label="{{k}}"
+                    md-option ng-repeat="option in v" ng-value="option" ng-bind="option"
+                  
       md-tab ng-click="control.settings.states.push({})" + Add state
     .form-actions
       md-button.md-raised.md-primary ng-click="save()" Save
