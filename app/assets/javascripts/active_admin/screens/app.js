@@ -1,9 +1,10 @@
 //= require_self
+//= require json-print
 //= require_tree ./components
 //= require_tree ./services
 //= require_tree ./controllers
 
-var app = angular.module("app", ['slick', 'ngResource', 'gridster', "ui.sortable", "checklist-model", "ngDialog", "ngMaterial"])
+var app = angular.module("app", ['slick', 'json-print', 'ngResource', 'gridster', "ui.sortable", "checklist-model", "ngDialog", "ngMaterial"])
 
 app.run(['$http', 'Template', function($http, Template){
   Template.loaded = true;

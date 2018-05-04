@@ -1,4 +1,4 @@
-app.directive('screens', ['ngDialog', function(ngDialog){
+app.directive('screens', ['ngDialog', 'Template', function(ngDialog, Template){
   // Runs during compile
   return {
     // name: '',
@@ -28,11 +28,13 @@ app.directive('screens', ['ngDialog', function(ngDialog){
             template: "screens/settings.html",
             controller: ['$scope', function (scope) {
               scope.screen = angular.copy(screen);
-
               scope.openHelp = function () {
                 ngDialog.open({
                   className: "ngdialog-settings",
                   template: "screens/help.html",
+                  controller: ["$scope", function (_scope) {
+                    _scope.Template = Template;
+                  }]
                 })
               }
 
