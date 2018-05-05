@@ -67,6 +67,7 @@ module BeachApiCore
     after_initialize :generate_profile
     before_validation :generate_username
     after_initialize :set_defaults
+    after_create :set_sex_and_birth_date
 
     delegate :first_name, :last_name, :name, to: :profile
 
@@ -102,6 +103,10 @@ module BeachApiCore
 
     def generate_profile
       self.profile ||= build_profile(user: self)
+    end
+
+    def set_sex_and_birth_date
+      self.profile.update_columns(sex: 'male', birth_date: (Date.today - 25.year))
     end
 
     def generate_username
