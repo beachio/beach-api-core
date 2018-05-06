@@ -26,6 +26,6 @@ class BeachApiCore::Authorization::AuthorizeUser
   private
 
   def user
-    @_user ||= BeachApiCore::User.find_by(email: context.email)
+    @_user ||= BeachApiCore::User.find_by(email: context.email.downcase)
   end
 end
