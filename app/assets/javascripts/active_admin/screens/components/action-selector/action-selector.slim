@@ -69,7 +69,7 @@ script type="text/ng-template" id="action-selector.html"
         md-input-container
           label APP
           md-select ng-model="ngModel.payload.app"
-            md-option
+            md-option ng-value="undefined"
               em None
             md-option ng-value="app" ng-repeat="app in ['email', 'sms', 'healthkit', 'bluetooth', 'qr_reader']"
               | {{app}}
@@ -82,8 +82,14 @@ script type="text/ng-template" id="action-selector.html"
       div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'" flex="100"
         div layout="row" layout-padding=""
           div flex="50"
-            pick-handler ng-model="ngModel.payload.handler"
-            / autocomplete-select filter-field="title" ng-model="ngModel.payload.handler" placeholder="Handler" url="/admin/endpoints/handlers"
+            pick-handler ng-model="ngModel.payload.handler" handler-params="handler_params"
+          div flex="50" ng-show="handler_params.abstract"
+            md-input-container.md-block
+              label Task
+              md-select ng-model="ngModel.payload.task_id"
+                md-option ng-value="undefined" None
+                - MixfitCore::Task.all.each do |task|
+                  md-option ng-value="#{task.id}" = task.title
           div flex="50"
             md-input-container.md-block
               label Save To DataSource
