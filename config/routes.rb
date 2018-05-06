@@ -6,6 +6,7 @@ BeachApiCore::Engine.routes.draw do
     get "endpoints/actions"
     get "endpoints/entities"
     get "endpoints/handlers"
+    get "redirect" => "redirect#index"
   end
 
   resources :screens do

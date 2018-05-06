@@ -13,9 +13,5 @@ module BeachApiCore
       render template: "layouts/screens"
     end
 
-    private
-    def current_user
-      @current_user ||= NuweHealth::User.find(session["user_id"]) rescue nil
-    end
   end
 end

@@ -90,6 +90,18 @@ module BeachApiCore
       first_name.present? ? first_name : username
     end
 
+    def admin?
+      role?(BeachApiCore::Role.admin)
+    end
+
+    def editor?
+      role?(BeachApiCore::Role.editor)
+    end
+
+    def scientist?
+      role?(BeachApiCore::Role.scientist)
+    end
+
     private
 
     def correct_current_password
