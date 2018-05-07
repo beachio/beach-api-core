@@ -14,7 +14,7 @@ module BeachApiCore
       data = params.permit!.to_h[:data].with_indifferent_access
       data[:task_id] = params[:task_id] if params[:task_id]
       json = handler.process(current_user.id, data)
-      render json: json
+      render json: json.to_json
     end
 
   end
