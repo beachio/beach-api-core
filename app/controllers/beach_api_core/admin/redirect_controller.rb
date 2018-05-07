@@ -1,7 +1,6 @@
 require_dependency "beach_api_core/application_controller"
 module BeachApiCore
   class Admin::RedirectController < BeachApiCore::ApplicationController
-    before_action :authenticate_admin_user!
 
     def index
       if current_user
