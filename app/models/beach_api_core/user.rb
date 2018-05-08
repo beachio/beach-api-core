@@ -91,14 +91,6 @@ module BeachApiCore
     end
     
     
-    def admin?
-      admin = BeachApiCore::Assignment.find_by(user_id: self.id)
-      if admin
-        admin.role_id == 1 #role_id == 1 equal role == admin
-      else
-        false
-      end
-    end
 
     def current_user
       @current_user ||= BeachApiCore::User.find(doorkeeper_token[:resource_owner_id])
