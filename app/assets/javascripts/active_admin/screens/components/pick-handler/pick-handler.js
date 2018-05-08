@@ -22,6 +22,7 @@ app.directive('pickHandler', ['ngDialog', '$http', function(ngDialog, $http){
            .then(function (res) {
               $scope.handlersByIds = _.indexBy(res.data, 'id')
               _.extend($scope.handlers, _.groupBy(res.data, 'type'));
+              $scope.handlerParams = $scope.handlersByIds[$scope.ngModel];
            })
 
       $scope.openModal = function () {
