@@ -25,6 +25,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
         f.input :directory_id, :label => 'Directory', :as => :select, :collection => BeachApiCore::Directory.dirs
       end
       f.input :name
+      f.input :locked
     end
     f.screens :screens
     f.actions
@@ -86,7 +87,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
 
     def resource_params
       return [] if request.get?
-      res = params.require(:flow).permit(:name)
+      res = params.require(:flow).permit(:name, :locked)
 
       screens_attributes = JSON.parse(params[:flow][:screens])
       screens_attributes.each{|t| t.delete("$$hashKey")} rescue []

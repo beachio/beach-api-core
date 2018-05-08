@@ -2,7 +2,6 @@ require_dependency "beach_api_core/application_controller"
 
 module BeachApiCore
   class Admin::PreviewAuthController < ApplicationController
-    before_action :current_user
     before_action :user_admin?
 
     def get_auth_token
@@ -19,14 +18,10 @@ module BeachApiCore
 
 
     private 
-
-    def current_user
-      @current_user ||= BeachApiCore::User.find(session["user_id"]) rescue nil
-    end
     
     def user_admin?
-      if @current_user
-        @current_user.admin?
+      if current_user
+        current_user.admin?
       else
         render json: {message: "Must be logged by admin"}
       end

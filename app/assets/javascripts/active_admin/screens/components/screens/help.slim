@@ -4,31 +4,7 @@ script type="text/ng-template" id="screens/help.html"
     md-content
       .help-wrapper
         .help-section
-          .help-section-title ng-click="open[1] = !open[1]"
-            | User
-          .help-section-body ng-show="open[1]"
-            ul
-              li id
-              li email
-              li username
-              li
-                | profile
-                ul
-                  li first_name
-                  li last_name
-                  li birth_date
-                  li sex
-                  li time_zone
-              li
-                | tasks (ordered list)
-                ul
-                  li id
-                  li status
-              li
-                | challenges (ordered list)
-                ul
-                  li id
-                  li status
+          pre json-print="Template"
 
     .form-actions
       md-button.md-raised.md-primary ng-click="closeThisDialog()" Close

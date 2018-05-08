@@ -1,4 +1,4 @@
-app.directive('mobileChart', [function(){
+app.directive('mobileChart', ['$http', function($http){
   // Runs during compile
   return {
     // name: '',
@@ -18,6 +18,7 @@ app.directive('mobileChart', [function(){
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.screen = controller.screen;
+      $http.get("/mixfit_core/v1/aggregation_data", {params: $scope.state})
     }
   };
 }]);

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180426112721) do
+ActiveRecord::Schema.define(version: 20180506133440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 20180426112721) do
     t.datetime "updated_at", null: false
     t.integer "directory_id"
     t.boolean "main"
+    t.boolean "locked"
   end
 
   create_table "beach_api_core_instances", force: :cascade do |t|

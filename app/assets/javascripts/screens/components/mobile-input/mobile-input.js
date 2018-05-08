@@ -1,4 +1,4 @@
-app.directive('mobileInput', ["Model", function(Model){
+app.directive('mobileInput', ["Model", "Action", function(Model, Action){
   // Runs during compile
   return {
     // name: '',
@@ -19,6 +19,16 @@ app.directive('mobileInput', ["Model", function(Model){
     link: function($scope, iElm, iAttrs, controller) {
       $scope.Model = Model;
       $scope.screen = controller.screen;
+
+
+      var fireAction = function () {
+        var action = $scope.state.action
+        if (action) {
+          if (action) Action.call(action)
+        }
+      }
+
+      $scope.fireAction = _.debounce(fireAction, 300)
     }
   };
 }]);

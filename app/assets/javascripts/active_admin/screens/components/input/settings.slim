@@ -42,6 +42,10 @@ script type="text/ng-template" id="input/settings.html"
               div layout-padding="" layout="row" flex="100"
                 div flex="100"
                   md-checkbox ng-model="state.required" Required
+              div layout-padding="" layout="row" flex="100"
+                div flex="100"
+                  label.md-label Onchange Action
+                  action-selector ng-model="state.action"
       md-tab ng-click="control.settings.states.push({})" + Add state
     .form-actions
       md-button.md-raised.md-primary ng-click="save()" Save

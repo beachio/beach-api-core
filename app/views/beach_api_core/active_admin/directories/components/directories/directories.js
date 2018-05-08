@@ -60,9 +60,9 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
             scope.save = function () {
               var promise;
               if (type == 'directory')
-                promise = $http.post(window.location.pathname+'/directories', {directory: scope.model || {}})
+                promise = $http.post('/admin/flows/directories', {directory: scope.model || {}})
               if (type == 'flow')
-                promise = $http.post(window.location.pathname+'/flows', {flow: scope.model || {}})
+                promise = $http.post('/admin/flows/flows', {flow: scope.model || {}})
                 
 
               promise.then(function () {
@@ -89,9 +89,9 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
             scope.save = function () {
               var promise;
               if (type == 'directory')
-                promise = $http.put(window.location.pathname+'/directories', {id: entity.id, directory: scope.model || {}})
+                promise = $http.put('/admin/flows/directories', {id: entity.id, directory: scope.model || {}})
               if (type == 'flow')
-                promise = $http.put(window.location.pathname+'/flows', {id: entity.id, flow: scope.model || {}})
+                promise = $http.put('/admin/flows/flows', {id: entity.id, flow: scope.model || {}})
 
 
               promise.then(function () {
@@ -104,11 +104,11 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
       }
 
       $scope.updateList = function () {
-        $http.get(window.location.pathname+'/directories')
+        $http.get('/admin/flows/directories')
           .then(function (res) {
             $scope.directories = res.data;
           })
-        $http.get(window.location.pathname+'/flows', {params: {main: true}})
+        $http.get('/admin/flows/flows', {params: {main: true}})
           .then(function (res) {
             $scope.main_flow = res.data;
           })
@@ -125,10 +125,10 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
         }
 
         if (type == 'directory' && ask)
-          promise = $http.delete(window.location.pathname+'/directories', {params: {id: entity.id}})
+          promise = $http.delete('/admin/flows/directories', {params: {id: entity.id}})
 
         if (type == 'flow' && ask)
-          promise = $http.delete(window.location.pathname+'/flows', {params: {id: entity.id}})
+          promise = $http.delete('/admin/flows/flows', {params: {id: entity.id}})
 
         if (promise) {
           promise.then(function () {
