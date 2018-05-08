@@ -88,6 +88,20 @@ module BeachApiCore
     def display_name
       first_name.present? ? first_name : username
     end
+    
+    
+    def admin?
+      admin = BeachApiCore::Assignment.find_by(user_id: self.id)
+      if admin
+        admin.role_id == 1 #role_id == 1 equal role == admin
+      else
+        false
+      end
+    end
+
+    def current_user
+      @current_user ||= BeachApiCore::User.find(doorkeeper_token[:resource_owner_id])
+    end
 
     private
 
@@ -109,5 +123,7 @@ module BeachApiCore
       uniq_number = BeachApiCore::User.maximum(:id).to_i + 1
       self.username = "#{Regexp.last_match[1]}-#{uniq_number}" if email =~ /\A(.*)@/
     end
+
+    
   end
 end

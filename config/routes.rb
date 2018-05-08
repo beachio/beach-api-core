@@ -6,6 +6,7 @@ BeachApiCore::Engine.routes.draw do
     get "endpoints/actions"
     get "endpoints/entities"
     get "endpoints/handlers"
+    get 'preview_auth/get_auth_token/:user_id' => "preview_auth#get_auth_token"
   end
 
   resources :screens do
