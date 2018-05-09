@@ -13,8 +13,8 @@ module BeachApiCore
       handler = MixfitCore::Handler.find(params[:handler])
       data = params.permit!.to_h[:data].with_indifferent_access
       data[:task_id] = params[:task_id] if params[:task_id]
-      json = handler.process(current_user.id, data)
-      render json: json.to_json
+      result = handler.process(current_user.id, data)
+      render json: result.to_json, status: (result[:errors] rescue nil) ? 406 : 200
     end
 
   end

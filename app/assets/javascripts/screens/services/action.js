@@ -41,13 +41,13 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
     EXIT: function () {
       Action.animation_class = 'slide-down'
       Screen.main_flow(function (res) {
-        Model.data = {}
+        Model = {}
         $state.go('screen_path', {id: res.id})
       })
     },
     SUBMIT_ON_SERVER: function (payload) {
       payload.data = payload.data || {}
-      _.extend(payload.data, Model.data);
+      _.extend(payload.data, Model);
       $http.post('/v1/endpoints', payload)
         .then(function (res) {
           if (payload.dataSource) {

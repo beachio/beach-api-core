@@ -12,10 +12,10 @@ script type="text/ng-template" id="mobile-checkbox-list.html"
 
 
 script type="text/ng-template" id="mobile-checkbox-list-item.html"
-  md-checkbox aria-label="option" checklist-model="Model.data[state.model]" checklist-value="option"
+  md-checkbox aria-label="option" checklist-model="Model[state.model]" checklist-value="option"
     span ng-bind-html-compile="option.label"
 
-  .mobile-checkbox-list__actions ng-if="state.type == 'With Portions' && _.indexBy(Model.data[state.model] || [], 'id')[option.id]"
+  .mobile-checkbox-list__actions ng-if="state.type == 'With Portions' && _.indexBy(Model[state.model] || [], 'id')[option.id]"
     slick.mobile-checkbox-list__slick slides-to-show="1"
       div
         .mobile-checkbox-list__actions-options ng-init="option.amount = 75"
