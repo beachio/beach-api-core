@@ -32,11 +32,13 @@ module UsersDoc
       param :password, String
       param :password_confirmation, String
       param :sex, %w(male female)
+      param :birth_date, Date, desc: I18n.t('api.resource_description.descriptions.params.birth_date')
       param :'***', String, desc: I18n.t('api.resource_description.descriptions.params.any_custom_field')
       param :avatar_attributes, Hash do
         param :file, File, desc: I18n.t('api.resource_description.descriptions.params.postfield_file')
         param :base64, String, desc: I18n.t('api.resource_description.descriptions.params.encoded_string')
       end
+      param :current_age, Integer, desc: I18n.t('api.resource_description.descriptions.params.current_age')
     end
     param :user_preferences_attributes, Array do
       param :id, Integer, required: true

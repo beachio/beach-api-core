@@ -147,6 +147,7 @@ GEM
       activesupport (>= 3.0.0)
     arel (8.0.0)
     ast (2.3.0)
+    awesome_print (1.8.0)
     baby_squeel (1.2.0)
       activerecord (>= 4.2.0)
       polyamorous (~> 1.3)
@@ -439,6 +440,7 @@ DEPENDENCIES
   activeadmin!
   ancestry
   apipie-rails!
+  awesome_print
   beach_api_core!
   byebug
   database_cleaner

@@ -131,6 +131,7 @@ module BeachApiCore
         before { patch beach_api_core.v1_user_path, headers: invalid_bearer_auth }
       end
 
+
       context 'when valid' do
         context 'when success' do
           let(:new_email) { Faker::Internet.email }
@@ -157,6 +158,34 @@ module BeachApiCore
               expect(oauth_user.user_preferences).to be_present
             end
           end
+
+          it "when profile attribute id is not present" do
+            patch beach_api_core.v1_user_path,
+                  params: {
+                    user: {
+                      profile_attributes: { sex: :female, birth_date: "2000-01-01" }
+                    }
+                  },
+                  headers: bearer_auth
+
+            expect(json_body[:user][:profile][:first_name]).to_not be_nil
+            expect(json_body[:user][:profile][:last_name]).to_not be_nil
+            expect(json_body[:user][:profile][:birth_date]).to eq("2000-01-01")
+            expect(json_body[:user][:profile][:sex]).to eq("female")
+          end
+
+          it "when current_age" do
+            patch beach_api_core.v1_user_path,
+                  params: {
+                    user: {
+                      profile_attributes: { current_age: 27 }
+                    }
+                  },
+                  headers: bearer_auth
+
+            expect(json_body[:user][:profile][:birth_date]).to eq((( Date.today - 27.year) - 1.day).to_s)
+          end
+
         end
 
         context 'when success with custom fields' do

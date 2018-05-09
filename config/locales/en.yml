@@ -28,6 +28,8 @@ en:
         could_not_authorize_user: "Can not authorize user"
       descriptions:
         params:
+          current_age: "Age of user that will be converted to Date [Date.today - current_age.year - 1.day]"
+          birth_date: "Birthday of user"
           postfield_file: "Postfield file"
           encoded_string: "Encoded Base64 string"
           any_custom_field: "Any custom field"

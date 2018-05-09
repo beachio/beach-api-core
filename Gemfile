@@ -21,6 +21,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-git'
+  gem 'awesome_print'
 end
 
 group :test do
