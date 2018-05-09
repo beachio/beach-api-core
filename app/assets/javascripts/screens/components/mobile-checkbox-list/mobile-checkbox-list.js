@@ -27,7 +27,7 @@ app.directive('mobileCheckboxList', ['Model', 'DataSource', function(Model, Data
       }, function (dataSource) {
         $scope.state.list = _.union(dataSource || [], list)
         var ids = _.pluck($scope.state.list, "id")
-        $scope.afterSearch = _.select(Model.data[$scope.state.model], function (el) {
+        $scope.afterSearch = _.select(Model[$scope.state.model], function (el) {
           return ids.indexOf(el.id) == -1
         }) || []
       }, true)

@@ -6,7 +6,7 @@ app.service('Template', ['User', 'DataSource', '$interval', 'Model', function(Us
       Template.User = res
       Template.loaded = true
     })
-    Template.Model = Model.data
+    Template.Model = Model
     Template.DataSource = DataSource
   }
 

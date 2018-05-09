@@ -18,7 +18,7 @@ html ng-app="app"
       screen screen="ctrl.screen" ng-if="ctrl.screen"
 
     script type="text/ng-template" id="results.html"
-      pre ng-bind="ctrl.Model.data | json"
+      pre ng-bind="ctrl.Model | json"
 
     css:
       body, html {
