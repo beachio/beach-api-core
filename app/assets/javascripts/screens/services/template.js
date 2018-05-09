@@ -1,12 +1,13 @@
-app.service('Template', ['User', 'DataSource', '$interval', function(User, DataSource, $interval){
+app.service('Template', ['User', 'DataSource', '$interval', 'Model', function(User, DataSource, $interval, Model){
   var Template = this;
 
   Template.reloadTemplate = function (callback) {
     User.get(function (res) {
-      Template.User = res;
-      Template.loaded = true;
+      Template.User = res
+      Template.loaded = true
     })
-    Template.DataSource = DataSource;
+    Template.Model = Model.data
+    Template.DataSource = DataSource
   }
 
   Template.updateDate = function () {
