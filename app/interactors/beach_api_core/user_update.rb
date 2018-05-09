@@ -5,6 +5,11 @@ class BeachApiCore::UserUpdate
     if context.params.include?('password')
       context.user.assign_attributes(require_confirmation: true, require_current_password: true)
     end
+
+    if context.params.include?("profile_attributes") and context.params["profile_attributes"]["id"] != context.user.profile.id
+      context.params["profile_attributes"]["id"] = context.user.profile.id
+    end
+
     context.user.profile.keepers = context.keepers
   end
 
