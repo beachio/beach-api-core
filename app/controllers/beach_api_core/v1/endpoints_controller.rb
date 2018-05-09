@@ -14,7 +14,7 @@ module BeachApiCore
       data = params.permit!.to_h[:data].with_indifferent_access
       data[:task_id] = params[:task_id] if params[:task_id]
       result = handler.process(current_user.id, data)
-      render json: result.to_json, status: result[:errors] ? 406 : 200
+      render json: result.to_json, status: (result[:errors] rescue nil) ? 406 : 200
     end
 
   end

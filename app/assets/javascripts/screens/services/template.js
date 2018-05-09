@@ -1,5 +1,5 @@
 app.service('Template', ['User', 'DataSource', '$interval', 'Model', function(User, DataSource, $interval, Model){
-  var Template = this;
+  var Template = this
 
   Template.reloadTemplate = function (callback) {
     User.get(function (res) {
