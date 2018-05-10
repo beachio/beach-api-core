@@ -3,6 +3,12 @@ shared_context 'signed up developer' do
   let!(:oauth_application) { create :oauth_application, owner: developer }
 end
 
+
+shared_context 'signed up admin' do
+  let!(:admin) {create :admin}
+  let!(:oauth_application) { create :oauth_application, owner: admin }
+end
+
 shared_context 'authenticated user' do
   let(:oauth_user) { create :oauth_user }
 end
