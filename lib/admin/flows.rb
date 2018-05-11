@@ -63,6 +63,23 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
     end
   end
 
+  member_action :versions, method: [:get] do
+    if request.get?
+      @flow = BeachApiCore::Flow.find(params[:id])
+      versions = @flow.versions.map do |version|
+        reify = version.reify(has_many: true)
+        {
+          id: version.id,
+          created_at: version.created_at,
+          user: BeachApiCore::User.find_by(id: version.whodunnit),
+          flow: reify,
+          screens: reify.screens
+        }
+      end
+      render json: versions
+    end
+  end
+
   member_action :screens, method: [:get] do
     if request.get? && params[:id]
       @flow = BeachApiCore::Flow.find(params[:id])
@@ -84,6 +101,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
 
   controller do
     skip_before_action :verify_authenticity_token
+    before_action :set_paper_trail_whodunnit
 
     def resource_params
       return [] if request.get?
@@ -91,7 +109,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
 
       screens_attributes = JSON.parse(params[:flow][:screens])
       screens_attributes.each{|t| t.delete("$$hashKey")} rescue []
-
+      res[:updated_at] = DateTime.now
       res[:screens_attributes] = screens_attributes
       res[:directory_id] = params[:flow][:directory_id]
       return res

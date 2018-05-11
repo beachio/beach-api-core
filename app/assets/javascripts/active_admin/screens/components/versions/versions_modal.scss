@@ -1,0 +1,35 @@
+.versions-list {
+  padding: 10px;
+}
+.version-item {
+  border: 1px solid #e7e7e7;
+  padding: 5px;
+  margin: 10px 0;
+  overflow: hidden;
+  font-size: 14px;
+}
+.version-item:hover {
+  background: #f7f7f7;
+}
+.version-item__date {
+  font-size: 12px;
+  color: #a7a5a5;
+  float: right;
+}
+.version-item__user {
+  float: left;
+}
+.version-item__name {
+  margin-bottom: 5px;
+}
+
+.version-item-main {
+  background: #90CAF9;
+}
+
+.version-item-main:hover,
+.version-item.active,
+.version-item-main.active {
+  background: #1E88E5;
+  color: white;
+}

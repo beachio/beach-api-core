@@ -5,6 +5,7 @@ app.controller('ScreensCtrl', ['ngDialog', '$scope', '$timeout', '$http', functi
   $http.get("/admin/flows/"+flow_id+"/screens")
        .then(function (res) {
           ctrl.screens = res.data;
+          ctrl.mainScreens = _.clone(res.data);
        })
 
 
@@ -22,4 +23,30 @@ app.controller('ScreensCtrl', ['ngDialog', '$scope', '$timeout', '$http', functi
                   }, 0, false);   
                 }
               })
+
+
+  ctrl.openVersions = function () {
+    ngDialog.open({
+        template: 'versions/versions_modal.html',
+        className: 'ngdialog-settings',
+        controller: ['$scope', '$http', function (scope, $http) {
+          $http.get("/admin/flows/10/versions")
+               .then(function (res) {
+                 scope.versions = res.data;
+               })
+
+          scope.setVersion = function (version) {
+            scope.activeVersion = version;
+            ctrl.screens = version.screens;
+            scope.closeThisDialog()
+          }
+
+          scope.setMainVersion = function () {
+            ctrl.screens = ctrl.mainScreens;
+            scope.activeVersion = undefined;
+            scope.closeThisDialog()
+          }
+        }]
+      })
+  }
 }])

@@ -1,0 +1,9 @@
+script type="text/ng-template" id="versions/versions_modal.html"
+  h2 Versions
+  .versions-list
+    .version-item.version-item-main ng-class="{active: !activeVersion.id}" ng-click="setMainVersion()"
+      .version-item__name Current Release
+    .version-item ng-class="{active: version.id == $parent.activeVersion.id}" ng-repeat="version in versions" ng-click="setVersion(version)"
+      .version-item__name ng-bind="version.flow.name"
+      a.version-item__user ng-bind="version.user.email" ng-href="/admin/users/{{version.user.id}}"
+      .version-item__date ng-bind="version.created_at | date:medium"

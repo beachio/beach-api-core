@@ -1,6 +1,7 @@
 module BeachApiCore
   class Flow < ApplicationRecord
     include BeachApiCore::Concerns::Screenable
+    has_paper_trail
     validates :name, presence: true
 
     belongs_to :directory

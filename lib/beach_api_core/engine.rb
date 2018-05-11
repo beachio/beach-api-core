@@ -13,6 +13,7 @@ require 'acts_as_downcasable_on'
 require 'acts_as_strippable_on'
 require 'rails-jquery-autocomplete'
 require 'engine_store'
+require 'paper_trail'
 
 module BeachApiCore
   # Mailer actions that could be used to send emails

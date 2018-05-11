@@ -49,6 +49,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'draper'
 
   s.add_dependency 'activeadmin'
+  s.add_dependency 'paper_trail'
   s.add_dependency 'ancestry'
   s.add_dependency 'rails-jquery-autocomplete'
 

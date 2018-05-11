@@ -10,6 +10,8 @@ link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesh
 hr
 div ng-app="app"
   div ng-controller="ScreensCtrl as ctrl"
+    .version-btn ng-click="ctrl.openVersions()"
+      md-button.md-raised.md-primary Versions
     screens list="ctrl.screens"
 
     textarea.ng-hide name="#{name}" ng-model="ctrl.textScreens" rows="5" columns="5"
