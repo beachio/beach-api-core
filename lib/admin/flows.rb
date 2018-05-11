@@ -63,20 +63,36 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
     end
   end
 
+  member_action :get, method: [:get] do
+    if request.get?
+      render json: BeachApiCore::Flow.find(params[:id]), adapter: :attributes
+    end
+  end
+
   member_action :versions, method: [:get] do
     if request.get?
       @flow = BeachApiCore::Flow.find(params[:id])
-      versions = @flow.versions.map do |version|
+      @flow_versions = @flow.versions
+      versions = @flow_versions.each_with_index.map do |version, index|
         reify = version.reify(has_many: true)
         {
           id: version.id,
           created_at: version.created_at,
-          user: BeachApiCore::User.find_by(id: version.whodunnit),
+          user: BeachApiCore::User.find_by(id: index > 0 ? @flow_versions[index - 1].whodunnit : version.whodunnit),
           flow: reify,
-          screens: reify.screens
+          screens: (reify ? reify.screens : [])
         }
-      end
-      render json: versions
+      end.select{|t| t[:flow]}
+      versions.push(
+        {
+          id: -1,
+          created_at: @flow.updated_at,
+          user: BeachApiCore::User.find_by(id: @flow.versions.last.whodunnit),
+          flow: @flow,
+          screens: @flow.screens
+        }
+      )
+      render json: versions.to_json
     end
   end
 

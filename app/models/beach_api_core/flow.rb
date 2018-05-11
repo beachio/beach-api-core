@@ -6,6 +6,8 @@ module BeachApiCore
 
     belongs_to :directory
 
+    before_create :set_commit
+
     def self.main
       find_by(main: true)
     end
@@ -28,5 +30,10 @@ module BeachApiCore
 
       {path: path, id: id}
     end
+
+    private
+      def set_commit
+        self.commit ||= "Create Flow"
+      end
   end
 end
