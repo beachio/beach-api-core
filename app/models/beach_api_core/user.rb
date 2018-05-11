@@ -90,10 +90,8 @@ module BeachApiCore
       first_name.present? ? first_name : username
     end
     
-    
-
-    def current_user
-      @current_user ||= BeachApiCore::User.find(doorkeeper_token[:resource_owner_id])
+    def token
+      Doorkeeper::AccessToken.order("created_at DESC").find_by(resource_owner_id: id).token
     end
 
     def admin?
