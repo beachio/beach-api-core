@@ -122,7 +122,14 @@ module BeachApiCore
     end
 
     def set_sex_and_birth_date
-      self.profile.update_columns(sex: 'male', birth_date: (Date.today - 25.year))
+      if self.profile.new_record?
+        self.profile.user_id = self.id
+        self.profile.sex = 'male'
+        self.profile.birth_date = (Date.today - 25.year)
+        self.profile.save!
+      else
+        self.profile.update_columns(sex: 'male', birth_date: (Date.today - 25.year))
+      end
     end
 
     def generate_username

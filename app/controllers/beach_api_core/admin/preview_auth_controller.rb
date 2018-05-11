@@ -7,7 +7,7 @@ module BeachApiCore
     
     #if you admin, u can see users tokens by owner_id
     def show
-      @token = Doorkeeper::AccessToken.find_by(resource_owner_id: params[:id], application_id: 1)
+      @token = Doorkeeper::AccessToken.order("created_at DESC").find_by(resource_owner_id: params[:id])
       if @token
         render json:
         {
@@ -20,6 +20,7 @@ module BeachApiCore
 
 
     private 
+
     
     def user_admin?
       if current_user
