@@ -1,4 +1,4 @@
-app.controller('ScreensCtrl', ['ngDialog', '$scope', '$timeout', '$http', function(ngDialog, $scope, $timeout, $http){
+app.controller('ScreensCtrl', ['ngDialog', '$scope', '$timeout', '$http', '$timeout', function(ngDialog, $scope, $timeout, $http, $timeout){
   var ctrl = this;
 
   var flow_id = window.location.pathname.match(/flows\/(.+)\/edit/)[1]
@@ -23,27 +23,30 @@ app.controller('ScreensCtrl', ['ngDialog', '$scope', '$timeout', '$http', functi
                   }, 0, false);   
                 }
               })
+  $scope.versions = []
+  $http.get("/admin/flows/10/versions")
+       .then(function (res) {
+         $scope.versions = res.data;
+       })
 
-
+  ctrl.openCommit = function () {
+    ctrl.commit = prompt("What did you do?");
+    if (!ctrl.commit) return ctrl.openCommit();
+    $timeout(function () {
+      document.getElementById("edit_flow").submit();
+    })
+  }
   ctrl.openVersions = function () {
     ngDialog.open({
         template: 'versions/versions_modal.html',
         className: 'ngdialog-settings',
         controller: ['$scope', '$http', function (scope, $http) {
-          $http.get("/admin/flows/10/versions")
-               .then(function (res) {
-                 scope.versions = res.data;
-               })
-
+          scope.versions = $scope.versions
+          scope.activeVersion = $scope.activeVersion
           scope.setVersion = function (version) {
-            scope.activeVersion = version;
+            $scope.activeVersion = version;
             ctrl.screens = version.screens;
-            scope.closeThisDialog()
-          }
-
-          scope.setMainVersion = function () {
-            ctrl.screens = ctrl.mainScreens;
-            scope.activeVersion = undefined;
+            console.log(scope.activeVersion)
             scope.closeThisDialog()
           }
         }]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180506133440) do
+ActiveRecord::Schema.define(version: 20180511174852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 20180506133440) do
     t.integer "directory_id"
     t.boolean "main"
     t.boolean "locked"
+    t.string "commit"
   end
 
   create_table "beach_api_core_instances", force: :cascade do |t|
@@ -504,6 +505,26 @@ ActiveRecord::Schema.define(version: 20180506133440) do
     t.integer "owner_id"
     t.index ["owner_type", "owner_id"], name: "index_oauth_applications_on_owner_type_and_owner_id"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "version_associations", force: :cascade do |t|
+    t.integer "version_id"
+    t.string "foreign_key_name", null: false
+    t.integer "foreign_key_id"
+    t.index ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key"
+    t.index ["version_id"], name: "index_version_associations_on_version_id"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.integer "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.integer "transaction_id"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+    t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
   add_foreign_key "beach_api_core_atoms", "beach_api_core_atoms", column: "atom_parent_id"

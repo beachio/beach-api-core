@@ -15,8 +15,9 @@ div ng-app="app"
     screens list="ctrl.screens"
 
     textarea.ng-hide name="#{name}" ng-model="ctrl.textScreens" rows="5" columns="5"
+    textarea.ng-hide name="commit" ng-model="ctrl.commit"
 
-    button.save-screens type="submit" Save
+    button.save-screens ng-click="ctrl.openCommit()" Save
 
     - EngineStore.screen.app_components.each do |path|
       = render path

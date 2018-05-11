@@ -110,6 +110,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
       screens_attributes = JSON.parse(params[:flow][:screens])
       screens_attributes.each{|t| t.delete("$$hashKey")} rescue []
       res[:updated_at] = DateTime.now
+      res[:commit] = params[:commit]
       res[:screens_attributes] = screens_attributes
       res[:directory_id] = params[:flow][:directory_id]
       return res
