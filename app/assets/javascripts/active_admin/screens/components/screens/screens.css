@@ -19,9 +19,12 @@
   background: #90079c;
   font-size: 18px;
   height: auto;
-  padding: 10px 20px;
+  padding: 4px 20px;
   border: none;
   z-index: 999;
+  color: white;
+  border-radius: 40px;
+  cursor: pointer;
 }
 
 .save-screens:hover {
