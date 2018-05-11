@@ -78,7 +78,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
         {
           id: version.id,
           created_at: version.created_at,
-          user: BeachApiCore::User.find_by(id: index > 0 ? @flow_versions[index - 1].whodunnit : version.whodunnit),
+          user: BeachApiCore::User.find_by(id: index > 0 ? @flow_versions[index - 1]&.whodunnit : version.whodunnit),
           flow: reify,
           screens: (reify ? reify.screens : [])
         }
@@ -87,7 +87,7 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
         {
           id: -1,
           created_at: @flow.updated_at,
-          user: BeachApiCore::User.find_by(id: @flow.versions.last.whodunnit),
+          user: BeachApiCore::User.find_by(id: @flow.versions.last&.whodunnit),
           flow: @flow,
           screens: @flow.screens
         }
