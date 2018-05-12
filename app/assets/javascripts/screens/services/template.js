@@ -2,12 +2,16 @@ app.service('Template', ['User', 'DataSource', '$interval', 'Model', function(Us
   var Template = this
 
   Template.reloadTemplate = function (callback) {
-    User.get(function (res) {
-      Template.User = res
-      Template.loaded = true
-    })
-    Template.Model = Model
-    Template.DataSource = DataSource
+    if (!Template.loading) {
+      Template.loading = true;
+      User.get(function (res) {
+        Template.User = res
+        Template.loaded = true
+        Template.loading = false
+      })
+      Template.Model = Model
+      Template.DataSource = DataSource
+    }
   }
 
   Template.updateDate = function () {
