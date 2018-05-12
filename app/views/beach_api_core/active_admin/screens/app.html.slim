@@ -18,6 +18,7 @@ div ng-app="app"
     textarea.ng-hide name="commit" ng-model="ctrl.commit"
 
     .save-screens ng-click="ctrl.openCommit()" Save
+    .cancel-flow ng-click="ctrl.cancel()" Cancel
 
     - EngineStore.screen.app_components.each do |path|
       = render path

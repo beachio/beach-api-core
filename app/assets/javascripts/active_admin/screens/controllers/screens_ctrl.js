@@ -27,6 +27,14 @@ app.controller('ScreensCtrl', ['ngDialog', '$scope', '$timeout', '$http', '$time
     }
   })
 
+  ctrl.cancel = function () {
+    var current = JSON.stringify(angular.copy(ctrl.screens)),
+        initial = JSON.stringify(angular.copy(ctrl.mainScreens));
+    if (current == initial || current != initial && confirm("You have unsaved changes. Are you sure?")) {
+        window.location = "/admin/flows/"+flow_id
+    }
+  }
+
 
   ctrl.openCommit = function () {
     ctrl.commit = prompt("What did you do?");

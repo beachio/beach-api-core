@@ -31,6 +31,25 @@
   background: #c610d6 !important;
 }
 
+.cancel-flow {
+  position: fixed;
+  right: 105px;
+  bottom: 15px;
+  background: #656565;
+  font-size: 18px;
+  height: auto;
+  padding: 4px 20px;
+  border: none;
+  z-index: 999;
+  color: white;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.cancel-flow:hover {
+  background: #8a8a8a;
+}
+
 .screens {
   display: flex;
   justify-content: space-around;
