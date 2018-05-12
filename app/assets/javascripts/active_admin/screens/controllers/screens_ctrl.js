@@ -31,7 +31,7 @@ app.controller('ScreensCtrl', ['ngDialog', '$scope', '$timeout', '$http', '$time
   ctrl.openCommit = function () {
     ctrl.commit = prompt("What did you do?");
     if (ctrl.commit === "") return ctrl.openCommit();
-    if (ctrl.commit === false) return;
+    if (ctrl.commit === null) return;
     $timeout(function () {
       document.getElementById("edit_flow").submit();
     })
