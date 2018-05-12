@@ -7,6 +7,8 @@ EngineStore.screen.active_admin_css_pathes += ["active_admin/screens/app"]
 EngineStore.screen.body_controls(Hash.new).merge!({ content: ["html", "metrics", "card", "items-in-a-row", 'combination-control'],
                                                     forms:   ["checkbox-list", "radio-list", "input", "button", "select"],
                                                     "graphical-elements": ["video", "image"],
-                                                    "data-visualization": ["chart"] })
+                                                    "data-visualization": ["chart"],
+                                                    "user-info": ["profile"]
+                                                  })
 EngineStore.screen.footer_controls(Hash.new).merge!({ forms: ['button', 'input', 'select'] })
 

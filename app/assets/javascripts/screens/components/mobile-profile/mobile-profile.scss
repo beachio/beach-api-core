@@ -1,0 +1,39 @@
+.mobile-profile {
+  background: rgba(255,255,255,.8);
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,.13);
+}
+.mobile-profile__header {
+  margin-bottom: 20px;
+}
+.mobile-profile__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  border: 3px solid #650d64;
+  display: inline-block;
+  vertical-align: middle;
+}
+.mobile-profile__name {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 24px;
+}
+.mobile-profile table {
+  width: 100%;
+}
+.mobile-profile td {
+  width: 50%;
+}
+
+.mobile-profile__label {
+  font-size: 11px;
+  color: #861084;
+  margin-bottom: 2px;
+}
+
+.mobile-profile__value {
+  font-size: 13px;
+  margin-bottom: 12px;
+}
