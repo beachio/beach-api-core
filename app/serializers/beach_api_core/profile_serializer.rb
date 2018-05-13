@@ -18,7 +18,7 @@ module BeachApiCore
     end
 
     def avatar_url
-      BeachApiCore::User.find(object.user_id).avatar.file_url rescue nil
+      BeachApiCore::User.find(object.user_id).profile.avatar.file_url rescue nil
     end
   end
 end
