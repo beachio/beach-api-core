@@ -29,7 +29,7 @@ app.directive('actionSelector', ['$compile', 'ngDialog', function($compile, ngDi
       };
     },
     controller: ['$scope', function($scope) {
-      $scope.availableActions = ['GO_TO_SCREEN_BY_ID', 'OPEN_FLOW', 'OPEN_ONBOARDING', 'NEXT_SCREEN', 'PREV_SCREEN', 'SUBMIT_ON_SERVER', 'SOCIAL_NETWORKS_ACTION', 'OPEN_MENU', 'OPEN_MODAL', 'OPEN_WEBVIEW', 'OPEN_CAMERA', 'OPEN_GALLERY', 'OPEN_APP', 'SIGN_OUT']
+      $scope.availableActions = ['GO_TO_SCREEN_BY_ID', 'OPEN_FLOW', 'NEXT_SCREEN', 'PREV_SCREEN', 'SUBMIT_ON_SERVER', 'SOCIAL_NETWORKS_ACTION', 'OPEN_MENU', 'OPEN_MODAL', 'OPEN_WEBVIEW', 'OPEN_CAMERA', 'OPEN_GALLERY', 'OPEN_APP', 'SIGN_OUT']
 
       $scope.$watch('ngModel.type', function (type, old) {
         if (type && old && type != old)
