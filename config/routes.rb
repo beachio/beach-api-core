@@ -28,7 +28,7 @@ BeachApiCore::Engine.routes.draw do
     resources :uploads
     resources :endpoints
     resources :applications, except: %i(new edit)
-    resources :sessions, only: :create, path: :auth
+    resources :sessions, only: [:create, :destroy], path: :auth
     resources :favourites, only: %i(index create destroy)
     resources :entities, only: %i(show create destroy) do
       resources :messages, only: %i(index create update destroy), controller: 'entity_messages'

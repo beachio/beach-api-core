@@ -22,6 +22,11 @@ module BeachApiCore
       end
     end
 
+    def destroy
+      Doorkeeper::AccessToken.find_by(token: params[:id]).revoke
+      render_json_success({success: true})
+    end
+
     private
 
     def session_params

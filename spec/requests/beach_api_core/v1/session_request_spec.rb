@@ -35,6 +35,17 @@ module BeachApiCore
       end
     end
 
+    context 'revoke' do
+      include_context 'authenticated user'
+      include_context 'bearer token authentication'
+
+      it "revoke token" do
+        delete beach_api_core.v1_session_path(access_token.token)
+        expect(response.status).to eq 200
+        expect(json_body[:success]).to be_truthy
+      end
+    end
+
     it 'when invalid' do
       user = create :user
       [{ params: { email: Faker::Internet.email, password: Faker::Internet.password }, status: 401 },
