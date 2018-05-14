@@ -18,7 +18,7 @@ module BeachApiCore
     end
 
     def avatar_url
-      object.profile.avatar.file_url rescue nil
+      object.avatar.file_url rescue nil
     end
   end
 end
