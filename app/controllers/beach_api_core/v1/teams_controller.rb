@@ -3,7 +3,8 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::ResourceConcern
     include TeamsDoc
 
-    before_action :doorkeeper_authorize!
+    prepend_before_action :doorkeeper_authorize!
+    prepend_before_action :authenticate_service_for_application
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/team.other')

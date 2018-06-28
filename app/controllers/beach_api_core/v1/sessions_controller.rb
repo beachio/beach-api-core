@@ -1,7 +1,7 @@
 module BeachApiCore
   class V1::SessionsController < BeachApiCore::V1::BaseController
     include SessionsDoc
-
+    before_action :explicit_application_with_user_authorize!
     resource_description do
       name I18n.t('api.resource_description.resources.authorization')
     end

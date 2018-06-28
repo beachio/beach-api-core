@@ -84,7 +84,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
   end
 
   show do |user|
-    mixfit_core_user = MixfitCore::User.find(user.id)
+    mixfit_core_user = MixfitCore::User.find(user.id) if defined?(MixfitCore)
     attributes_table do
       row :id
       row :email

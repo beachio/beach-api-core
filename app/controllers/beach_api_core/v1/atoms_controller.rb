@@ -4,6 +4,7 @@ module BeachApiCore
     include AtomsDoc
 
     before_action :application_with_user_authorize!
+    before_action :authenticate_service_for_doorkeeper_application
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/atom.other')

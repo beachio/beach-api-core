@@ -3,6 +3,7 @@ module BeachApiCore
     include MessagesDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :doorkeeper_authorize!
+    before_action :authenticate_service_for_application
     before_action :load_chat
 
     resource_description do

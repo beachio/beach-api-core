@@ -2,6 +2,7 @@ module BeachApiCore
   class V1::UserAccessesController < BeachApiCore::V1::BaseController
     include UserAccessesDoc
     before_action :doorkeeper_authorize!
+    before_action :authenticate_service_for_application
     before_action :check_user_membership!, only: :create
 
     resource_description do

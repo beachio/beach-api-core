@@ -2,6 +2,7 @@ module BeachApiCore
   class V1::ApplicationsController < BeachApiCore::V1::BaseController
     include ApplicationsDoc
     before_action :doorkeeper_authorize!
+    before_action :authenticate_service_for_application
     before_action :get_resource, only: %i(show update destroy)
 
     resource_description do
