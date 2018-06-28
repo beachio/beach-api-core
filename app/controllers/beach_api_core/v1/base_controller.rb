@@ -69,11 +69,19 @@ module BeachApiCore
           service = BeachApiCore::Service.where("lower(name) = ?", service_name.downcase).first
           if service.nil?
             service = BeachApiCore::Service.where("lower(name) = ?",'users_pro').first
-            !BeachApiCore::Capability.where(:application_id => application_id, :service_id => service.id).empty?
+            if service.nil?
+              true
+            else
+              !BeachApiCore::Capability.where(:application_id => application_id, :service_id => service.id).empty?
+            end
           else
             if BeachApiCore::Capability.where(:application_id => application_id, :service_id => service.id).empty?
               service = BeachApiCore::Service.where("lower(name) = ?",'users_pro').first
-              !BeachApiCore::Capability.where(:application_id => application_id, :service_id => service.id).empty?
+              if service.nil?
+                true
+              else
+                !BeachApiCore::Capability.where(:application_id => application_id, :service_id => service.id).empty?
+              end
             else
               true
             end
