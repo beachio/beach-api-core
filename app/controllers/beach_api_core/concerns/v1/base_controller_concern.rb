@@ -68,7 +68,7 @@ module BeachApiCore::Concerns::V1::BaseControllerConcern
       elsif service_name == 'Channels' || service_name == 'EntityMessages'
         service_name = 'notifications'
       elsif service_name == 'Memberships' || service_name == 'Roles' || service_name == 'Users'
-        service_name == 'users_pro'
+        service_name = 'users_pro'
       end
       service_name
     end
