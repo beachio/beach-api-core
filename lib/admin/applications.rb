@@ -7,6 +7,15 @@ ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
     actions
   end
 
+  action_item only: :index do
+    link_to 'Run task to add services and capabilities', add_services_and_applications_admin_applications_path
+  end
+
+  collection_action :add_services_and_applications, method: :get do
+    BeachApiCore::ApplicationServiceHelper.add_capabilities_to_applications
+    redirect_to admin_applications_path
+  end
+
   filter :name
 
   form do |f|
