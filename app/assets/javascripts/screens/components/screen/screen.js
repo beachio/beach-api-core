@@ -21,16 +21,18 @@ app.directive('screen', ['Action', '$timeout', 'Template', function(Action, $tim
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
-      var settings = $scope.screen.settings;
+      $scope.$watch('screen', function () {
+        var settings = $scope.screen.settings;
 
-      Template.reloadTemplate();
-      $scope.Template = Template;
+        Template.reloadTemplate();
+        $scope.Template = Template;
 
-      if (settings && settings.rotator) {
-        $timeout(function () {
-          Action.call($scope.screen.settings.rotation_action || {type: "NEXT_SCREEN"})
-        }, settings.rotation_delay)
-      }
+        if (settings && settings.rotator) {
+          $timeout(function () {
+            Action.call($scope.screen.settings.rotation_action || {type: "NEXT_SCREEN"})
+          }, settings.rotation_delay)
+        }
+      }, true)
     }
   };
 }]);
