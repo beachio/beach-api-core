@@ -10,6 +10,12 @@ app.controller('ScreensCtrl', ['$scope', 'Config', 'Screen', '$timeout', 'Messag
   $scope.$watch('[Screen.active, Message.list]', function (active, old) {
     $timeout(function () {
       document.body.scrollTop = document.body.scrollHeight
+
+      if (window.sourceEvent) {
+        window.sourceEvent.postMessage({
+          height: $('.app-layout').height()
+        }, window.originEvent);
+      }
     })
   }, true)
 }])
