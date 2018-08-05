@@ -14,13 +14,11 @@ message {
 .message.user {
   background: #3965e8;
   color: white;
-  float: right;
   border-radius: 10px 10px 0 10px;
 }
 
 .message.bot {
   background: #c7c6c6;
-  float: left;
   border-radius: 10px 10px 10px 0;
 }
 
