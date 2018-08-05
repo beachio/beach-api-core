@@ -1,2 +1,5 @@
 script type="text/ng-template" id="message.html"
-  .message ng-class="message.from || 'bot'" ng-bind-html-compile="template"
+  div
+    .message ng-class="message.from || 'bot'" ng-bind-html-compile="template"
+    .message-control ng-repeat="component in message.components"
+      mobile-component component="component"

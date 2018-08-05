@@ -43,3 +43,7 @@ message {
   border-width: 0 0 10px 10px;
   border-color: transparent transparent #c7c6c6 transparent;
 }
+
+.message-control {
+  margin: 10px;
+}

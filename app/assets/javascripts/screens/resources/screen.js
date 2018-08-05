@@ -28,9 +28,9 @@ app.factory('Screen', ['$resource', 'Config', 'Message', 'ComponentState', funct
     if (screen.content.header.descriptionsType == "states") {
       var states = screen.content.header.states;
       var activeState = ComponentState.activeState(states);
-      Message.push({template: activeState.description, from: 'bot'})
+      Message.push({template: activeState.description, from: 'bot', components: screen.content.body})
     } else {
-      Message.push({template: _.sample(screen.content.header.descriptions).text, from: 'bot'})
+      Message.push({template: _.sample(screen.content.header.descriptions).text, from: 'bot', components: screen.content.body})
     }
   }
 
