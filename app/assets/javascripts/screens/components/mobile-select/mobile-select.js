@@ -11,13 +11,14 @@ app.directive('mobileSelect', ['Model', function(Model){
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
-    require: '^screen',
+    require: '^?screen',
     templateUrl: 'mobile-select.html',
     // replace: true,
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
-      $scope.screen = controller.screen;
+      if (controller)
+        $scope.screen = controller.screen;
       $scope.$watch('state', function (state) {
         $scope.setActiveItem()
       }, true)

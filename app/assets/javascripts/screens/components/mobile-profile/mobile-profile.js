@@ -12,7 +12,7 @@ app.directive('mobileProfile', ['Template', function(Template){
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
     // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
-    require: '^screen',
+    require: '^?screen',
     templateUrl: 'mobile-profile.html',
     // replace: true,
     // transclude: true,
