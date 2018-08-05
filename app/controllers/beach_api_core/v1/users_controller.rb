@@ -2,7 +2,9 @@ module BeachApiCore
   class V1::UsersController < BeachApiCore::V1::BaseController
     include ::UsersDoc
     before_action :doorkeeper_authorize!, only: %i(update show)
-
+    before_action :application_authorize!, only: %i(create)
+    before_action :authenticate_service_for_doorkeeper_application, only: [:create]
+    before_action :authenticate_service_for_application, only: %i(update show)
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/user.other')
     end

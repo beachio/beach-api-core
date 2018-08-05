@@ -2,6 +2,7 @@ module BeachApiCore
   class V1::ChannelsController < BeachApiCore::V1::BaseController
     include ChannelsDoc
     before_action :doorkeeper_authorize!
+    before_action :authenticate_service_for_application
     before_action :ensure_entity_params
 
     resource_description do

@@ -2,8 +2,9 @@ module BeachApiCore
   class V1::EntitiesController < BeachApiCore::V1::BaseController
     include EntitiesDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
-    before_action :doorkeeper_authorize!
-    before_action :ensure_entity_params, only: [:lookup]
+    prepend_before_action :doorkeeper_authorize!
+    prepend_before_action :authenticate_service_for_application
+    prepend_before_action :ensure_entity_params, only: [:lookup]
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/entity.other')

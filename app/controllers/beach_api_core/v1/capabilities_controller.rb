@@ -1,7 +1,9 @@
 module BeachApiCore
   class V1::CapabilitiesController < BeachApiCore::V1::BaseController
     include CapabilitiesDoc
-    before_action :doorkeeper_authorize!, :find_service
+    before_action :doorkeeper_authorize!
+    before_action :authenticate_service_for_application
+    before_action :find_service
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/capability.other')

@@ -3,6 +3,7 @@ module BeachApiCore
     include UploadsDoc
 
     before_action :doorkeeper_authorize!
+    before_action :authenticate_service_for_application
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/uploads.other')

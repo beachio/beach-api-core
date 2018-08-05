@@ -3,7 +3,9 @@ module BeachApiCore
     include ChatsDoc
     include BeachApiCore::Concerns::V1::ResourceConcern
     before_action :application_authorize!, only: %i(create add_recipient)
+    before_action :authenticate_service_for_doorkeeper_application, only: [:create, :add_recipient]
     before_action :doorkeeper_authorize!, except: %i(create add_recipient)
+    before_action :authenticate_service_for_application, except: [:create, :add_recipient]
     before_action :get_resource, only: %i(read add_recipient)
 
     resource_description do

@@ -27,7 +27,7 @@ module JobsDoc
   example "\"job\": #{apipie_job_response}"
   def create; end
 
-  api :GET, '/job/:id', I18n.t('api.resource_description.descriptions.jobs.show')
+  api :GET, '/jobs/:id', I18n.t('api.resource_description.descriptions.jobs.show')
   header 'AUTHORIZATION', 'application_id application_uid, client_secret application_secret', required: true
   example "\"job\": #{apipie_job_response}"
   def show; end

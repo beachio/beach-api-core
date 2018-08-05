@@ -19,5 +19,9 @@ module BeachApiCore
       def current_user
         @current_user ||= BeachApiCore::User.find(doorkeeper_token&.user&.id || session["user_id"]) rescue nil
       end
+
+      def doorkeeper_unauthorized_render_options(error: nil)
+        { json: { error: { message: I18n.t('api.resource_description.errors.unauthorized') } } }
+      end
   end
 end

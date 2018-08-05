@@ -3,6 +3,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::V1::GroupResourceConcern
     include SettingsDoc
     before_action :doorkeeper_authorize!
+    before_action :authenticate_service_for_application
     before_action :find_group, only: [:update]
 
     resource_description do

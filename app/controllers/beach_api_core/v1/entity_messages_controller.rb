@@ -3,6 +3,7 @@ module BeachApiCore
     include EntityMessagesDoc
 
     before_action :doorkeeper_authorize!
+    before_action :authenticate_service_for_application
     before_action :load_entity
     before_action :load_interaction, only: %i(update destroy)
 
