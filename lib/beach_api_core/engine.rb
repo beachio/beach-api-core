@@ -43,7 +43,9 @@ module BeachApiCore
     end
 
     initializer "static assets" do |app|
-      app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{config.root}/public")
+      if Rails.application.config.serve_static_files 
+        app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{config.root}/public")
+      end
     end
 
     config.generators do |g|
