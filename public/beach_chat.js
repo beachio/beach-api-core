@@ -1,6 +1,7 @@
 class BeachChat {
   constructor (params) {
     this.flow_id = params.flow_id
+    this.url = new URL("/screens/view", params.url || "http://localhost:3000").href
     this.application_uid = params.application_uid
     this.id = "beach_chat_"+this.__guid__()
     this.class = 'beach-chat'
@@ -12,7 +13,7 @@ class BeachChat {
   build () {
     var markup = ['<div id="'+this.id+'" style="'+this.containerStyle+'" class="'+this.class+'">',
       '<div style="'+this.headerStyle+'">Beach Chat</div>',
-      "<iframe style='"+this.iframeStyle+"' src='http://localhost:3000/screens/view?flow_id="+this.flow_id+"&application_uid="+this.application_uid+"'></iframe>",
+      "<iframe style='"+this.iframeStyle+"' src='"+this.url+"?flow_id="+this.flow_id+"&application_uid="+this.application_uid+"'></iframe>",
     '</div>']
     return markup.join("")
   }
