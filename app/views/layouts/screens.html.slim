@@ -11,7 +11,7 @@ html ng-app="app"
     .app-layout
       div ng-controller="ScreensCtrl as ctrl" ng-class="Action.animation_class"
         message ng-repeat="message in Message.list" message="message"
-        screen screen="Screen.active" ng-if="Screen.active"
+        screen ng-repeat="screen in Screen.list" screen="screen" ng-if="$last"
         
 
     - EngineStore.screen.app_components.each do |path|
@@ -23,6 +23,10 @@ html ng-app="app"
     css:
       body, html {
         background: white;
+      }
+
+      mobile-header {
+        display: none;
       }
 
 

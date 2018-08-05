@@ -3,7 +3,14 @@ script type="text/ng-template" id="screen.html"
     .spinner
   div ng-if="Template.loaded"
     screen-wrapper
-      .chat-body ng-style="{backgroundImage: 'url('+screen.settings.backgroundImage.url+')'}"
+      .app-header
+        mobile-header header="screen.content.header"
+      .app-body ng-style="{backgroundImage: 'url('+screen.settings.backgroundImage.url+')'}"
         controls controls="screen.content.body" available-controls="availableBodyControls" screen="screen"
-          .chat-controls ui-sortable="{handle: '.control-title'}" ng-model="screen.content.body"
+          .app-controls ui-sortable="{handle: '.control-title'}" ng-model="screen.content.body"
             dynamic-control.dynamic-control ng-repeat="control in screen.content.body" control="control" controls="$parent.$parent.controls" screen="$parent.$parent.screen"
+      .app-footer ng-hide="screen.settings.hideFooter"
+        .app-footer__actions
+          controls controls="screen.content.footer" available-controls="availableFooterControls" screen="screen"
+            .app-controls ui-sortable="{handle: '.control-title'}" ng-model="screen.content.footer"
+              dynamic-control.dynamic-control ng-repeat="control in screen.content.footer" control="control" controls="$parent.$parent.controls" screen="$parent.$parent.screen"

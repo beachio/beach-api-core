@@ -4,8 +4,4 @@ script type="text/ng-template" id="mobile-header.html"
     .mobile-header__progress ng-if="header.with_progress"
       .mobile-header__progress--filled ng-style="{width: header.progress+'%'}"
 
-    .mobile-header__rating ng-click="Action.list['OPEN_FLOW']({flow_id: 63})"
-      i.material-icons equalizer
-      span ng-bind="$root.Template.User.scores"
-
   .mobile-header__description ng-bind-html-compile="description" ng-show="description"

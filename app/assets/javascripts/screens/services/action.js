@@ -1,7 +1,6 @@
 app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 'DataSource', 'Message', function(Screen, Model, ngDialog, $http, SocialNetwork, DataSource, Message){
   var Action = this;
 
-
   Action.call = function (action) {
     Action.list[action.type](action.payload)
   }
@@ -9,26 +8,26 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
   Action.list = {
     NEXT_SCREEN: function () {
       Screen.next({id: Screen.active.id}, function (res) {
-        Screen.active = res
+        Screen.push(res)
       })
     },
     PREV_SCREEN: function () {
       Screen.prev({id: Screen.active.id}, function (res) {
-        Screen.active = res
+        Screen.push(res)
       })
     },
     GO_TO_SCREEN_BY_ID: function (payload) {
       Screen.prev({id: payload.screen_id}, function (res) {
-        Screen.active = res
+        Screen.push(res)
       })
     },
     OPEN_FLOW: function (payload) {
       Screen.flow(payload, function (res) {
-        Screen.active = res
+        Screen.push(res)
       })
     },
     PUSH_MESSAGE: function (payload) {
-      Message.list.push(angular.copy(payload.data))
+      Message.push(angular.copy(payload.data))
 
       if (payload.after_push_message_action) Action.call(payload.after_push_message_action)
     },
@@ -36,7 +35,7 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
       Action.animation_class = 'slide-down'
       Screen.main_flow(function (res) {
         Model = {}
-        Screen.active = res
+        Screen.push(res)
       })
     },
     SUBMIT_ON_SERVER: function (payload) {

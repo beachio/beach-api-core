@@ -23,30 +23,6 @@
   height: 100%;
   background: #f7f2f7;
 }
-.app-header {
-  height: 200px;
-  background-size: cover;
-  position: relative;
-  z-index: 4;
-}
-
-.app-body {
-  height: 480px;
-  padding: 50px 15px 60px 15px;
-  overflow: auto;
-  position: relative;
-  background-position: 50%;
-  background-repeat: no-repeat;
-}
-.app-footer {
-  height: 70px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  opacity: .85;
-}
 
 .app-footer__actions .app-controls {
   display: flex;

@@ -1,4 +1,4 @@
-app.factory('Screen', ['$resource', 'Config', function($resource, Config){
+app.factory('Screen', ['$resource', 'Config', 'Message', 'ComponentState', function($resource, Config, Message, ComponentState){
 
   var Screen = $resource('/v1/screens/:id', {"id":"@id", application_uid: Config.application_uid}, {
     "next": {
@@ -19,8 +19,20 @@ app.factory('Screen', ['$resource', 'Config', function($resource, Config){
     },
   })
 
+  Screen.list = []
   Screen.active = null
-  Screen.messages = []
+
+  Screen.push = (screen) => {
+    Screen.list.push(screen)
+    Screen.active = screen
+    if (screen.content.header.descriptionsType == "states") {
+      var states = screen.content.header.states;
+      var activeState = ComponentState.activeState(states);
+      Message.push({template: activeState.description, from: 'bot'})
+    } else {
+      Message.push({template: _.sample(screen.content.header.descriptions).text, from: 'bot'})
+    }
+  }
 
   return Screen
 }])

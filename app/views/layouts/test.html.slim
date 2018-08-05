@@ -1,8 +1,10 @@
 html
   head
     = stylesheet_link_tag 'normalize.min'
-    script src="http://otter.beach-kaupang-platform.c66.me/beach_chat.js"
+    / script src="http://otter.beach-kaupang-platform.c66.me/beach_chat.js"
+    script src="http://localhost:3000/beach_chat.js"
   body
     javascript:
-      var beachChat = new BeachChat({flow_id: 1, application_uid: "20cf6a4ef843b485f445cfe314822dced27104f0c7ae52be15fe17c7e9b5cc2e", url: "http://otter.beach-kaupang-platform.c66.me"})
+      // var beachChat = new BeachChat({flow_id: 1, application_uid: "20cf6a4ef843b485f445cfe314822dced27104f0c7ae52be15fe17c7e9b5cc2e", url: "http://otter.beach-kaupang-platform.c66.me"})
+      var beachChat = new BeachChat({flow_id: 1, application_uid: "8a75e50ada6df0072d1e46d67de754ad23caa7d52b8c0aeb476489e634037315", url: "http://localhost:3000"})
       beachChat.init()
