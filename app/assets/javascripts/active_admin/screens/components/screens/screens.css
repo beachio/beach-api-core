@@ -16,7 +16,7 @@
   position: fixed;
   right: 15px;
   bottom: 15px;
-  background: #90079c;
+  background: #3e70ff;
   font-size: 18px;
   height: auto;
   padding: 4px 20px;
@@ -28,7 +28,7 @@
 }
 
 .save-screens:hover {
-  background: #c610d6 !important;
+  filter: brightness(110%);
 }
 
 .cancel-flow {
@@ -60,7 +60,7 @@
   box-shadow: 0 0 5px rgba(0,0,0,0.15);
   width: 375px;
   height: 680px;
-  background: #f7f2f7;
+  background: #f5f5f5;
   position: relative;
   margin-bottom: 20px;
   overflow: hidden;
@@ -86,7 +86,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 130px;
+  height: 50px;
   z-index: 5;
   cursor: move;
 }
@@ -107,21 +107,21 @@
 }
 .screen-delete {
   color: white;
-  background: #ff40ff;
+  background: #3e70ff;
 }
 
 .screen-settings {
   right: 30px;
   background: white;
-  color: #620b65;
+  color: #3e70ff;
 }
 
 .screen-delete:hover {
-  background: #c614fc;
+  filter: brightness(105%);
 }
 
 .screen-settings:hover {
-  background: #f7f7f7;
+  filter: brightness(95%);
 }
 
 .screen-footer .control-handler {
@@ -182,4 +182,8 @@
 .help-section-body ul {
   list-style: disc;
   padding-left: 20px;
+}
+
+.chat-body {
+  padding-top: 50px;
 }

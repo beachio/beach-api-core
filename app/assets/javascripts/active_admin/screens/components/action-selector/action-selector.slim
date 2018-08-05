@@ -79,17 +79,27 @@ script type="text/ng-template" id="action-selector.html"
         label.md-label flex="100" After Action
         action-selector.no-padding flex="100" ng-model="ngModel.payload.after_action"
 
+      div ng-if="ngModel.type == 'PUSH_MESSAGE'" flex="100"
+        div layout="row" layout-padding=""
+          div flex="100"
+            md-input-container.md-block
+              label Template
+              textarea ng-model="ngModel.payload.data.template"
+          div flex="100"
+            md-select ng-model="ngModel.payload.data.from"
+              md-option ng-value="undefined"
+                em Bot
+              md-option ng-value="'user'"
+                | User
+        div layout="column" layout-padding=""
+          label.md-label flex="100" After Action
+          action-selector.no-padding flex="100" ng-model="ngModel.payload.after_push_message_action"
+
+
       div ng-if="ngModel.type == 'SUBMIT_ON_SERVER'" flex="100"
         div layout="row" layout-padding=""
           div flex="50"
             pick-handler ng-model="ngModel.payload.handler" handler-params="handler_params"
-          div flex="50" ng-show="handler_params.abstract"
-            md-input-container.md-block
-              label Task
-              md-select ng-model="ngModel.payload.task_id"
-                md-option ng-value="undefined" None
-                - MixfitCore::Task.all.each do |task|
-                  md-option ng-value="#{task.id}" = task.title
           div flex="50"
             md-input-container.md-block
               label Save To DataSource

@@ -8,21 +8,21 @@ html ng-app="app"
     - EngineStore.screen.app_css_pathes.each do |path|
       = stylesheet_link_tag path
   body
-    .app-layout ng-init="user = #{BeachApiCore::UserSerializer.new(current_user).to_json}"
-      div ui-view="" ng-class="Action.animation_class"
+    .app-layout
+      div ng-controller="ScreensCtrl as ctrl" ng-class="Action.animation_class"
+        message ng-repeat="message in Message.list" message="message"
+        screen screen="Screen.active" ng-if="Screen.active"
+        
 
     - EngineStore.screen.app_components.each do |path|
       = render path
-
-    script type="text/ng-template" id="app.html"
-      screen screen="ctrl.screen" ng-if="ctrl.screen"
 
     script type="text/ng-template" id="results.html"
       pre ng-bind="ctrl.Model | json"
 
     css:
       body, html {
-        background: #ccc;
+        background: white;
       }
 
 

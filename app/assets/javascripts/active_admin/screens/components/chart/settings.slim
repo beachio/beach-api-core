@@ -31,8 +31,6 @@ script type="text/ng-template" id="chart/settings.html"
                 label.md-label Chart data source
                 md-select ng-model="state.source"
                   md-option ng-value="undefined" None
-                  md-optgroup ng-repeat="(k,v) in #{MixfitCore::AggregationData.sources.to_json}" label="{{k}}"
-                    md-option ng-repeat="option in v" ng-value="option" ng-bind="option"
                   
       md-tab ng-click="control.settings.states.push({})" + Add state
     .form-actions

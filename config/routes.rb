@@ -1,6 +1,8 @@
 BeachApiCore::Engine.routes.draw do
   use_doorkeeper
 
+  get "/test" => "application#test"
+
   namespace :admin do
     get "endpoints/models"
     get "endpoints/actions"

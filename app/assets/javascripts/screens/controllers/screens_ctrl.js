@@ -1,20 +1,15 @@
-app.controller('ScreensCtrl', ['$scope', '$state', 'Screen', function($scope, $state, Screen){
-  var ctrl = this;
+app.controller('ScreensCtrl', ['$scope', 'Config', 'Screen', '$timeout', 'Message', function($scope, Config, Screen, $timeout, Message){
+  var ctrl = this
+  $scope.Screen = Screen
+  $scope.Message = Message
 
-  var id = parseInt($state.params.id);
+  Screen.get({id: Config.flow_id}, function (res) {
+    Screen.active = res
+  })
 
-  if (id) {
-    Screen.get({id: id}, function (res) {
-      ctrl.screen = res;
+  $scope.$watch('[Screen.active, Message.list]', function (active, old) {
+    $timeout(function () {
+      document.body.scrollTop = document.body.scrollHeight
     })
-  } else {
-    ctrl.screen = {
-      content: {
-        header: {
-          description: "Home"
-        }
-      }
-    }
-  }
-
+  }, true)
 }])

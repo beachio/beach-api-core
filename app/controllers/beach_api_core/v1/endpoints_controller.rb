@@ -10,11 +10,12 @@ module BeachApiCore
     end
 
     def create
-      handler = MixfitCore::Handler.find(params[:handler])
-      data = params.permit!.to_h[:data].with_indifferent_access
-      data[:task_id] = params[:task_id] if params[:task_id]
-      result = handler.process(current_user.id, data)
-      render json: result.to_json, status: (result[:errors] rescue nil) ? 406 : 200
+      # handler = MixfitCore::Handler.find(params[:handler])
+      # data = params.permit!.to_h[:data].with_indifferent_access
+      # data[:task_id] = params[:task_id] if params[:task_id]
+      # result = handler.process(current_user.id, data)
+      # render json: result.to_json, status: (result[:errors] rescue nil) ? 406 : 200
+      render json: {}
     end
 
   end

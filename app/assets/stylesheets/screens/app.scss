@@ -11,12 +11,11 @@
 
 .app-layout {
   width: 375px;
-  height: 680px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.15);
   margin: auto;
   overflow: hidden;
   position: relative;
   transition: .3s;
+  background: white;
 }
 [ui-view] {
   position: absolute;

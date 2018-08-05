@@ -1,0 +1,40 @@
+.message {
+  padding: 15px;
+  margin: 15px 19px;
+  position: relative;
+  width: calc(100% - 50px);
+  z-index: 2;
+}
+
+.message.user {
+  background: #3965e8;
+  color: white;
+  float: right;
+  border-radius: 10px 10px 0 10px;
+}
+
+.message.bot {
+  background: #c7c6c6;
+  float: left;
+  border-radius: 10px 10px 10px 0;
+}
+
+.message:after {
+  content: "";
+  position: absolute;
+  display: block;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+.message.user:after {
+  right: -10px;
+  border-width: 10px 0 0 10px;
+  border-color: transparent transparent transparent #3965e8;
+}
+.message.bot:after {
+  left: -10px;
+  border-width: 0 0 10px 10px;
+  border-color: transparent transparent #c7c6c6 transparent;
+}

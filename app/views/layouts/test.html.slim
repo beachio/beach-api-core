@@ -1,0 +1,8 @@
+html
+  head
+    = stylesheet_link_tag 'normalize.min'
+    script src="http://localhost:3000/beach_chat.js"
+  body
+    javascript:
+      var beachChat = new BeachChat({flow_id: 1, application_uid: "8a75e50ada6df0072d1e46d67de754ad23caa7d52b8c0aeb476489e634037315"})
+      beachChat.init()

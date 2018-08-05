@@ -5,6 +5,10 @@ module BeachApiCore
 
     helper_method :current_user
 
+    def test
+      render template: "layouts/test"
+    end
+
     private
       def authenticate_admin_user!
         return current_user && (

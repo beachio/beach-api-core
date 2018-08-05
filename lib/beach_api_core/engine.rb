@@ -14,6 +14,7 @@ require 'acts_as_strippable_on'
 require 'rails-jquery-autocomplete'
 require 'engine_store'
 require 'paper_trail'
+require 'rack/cors'
 
 module BeachApiCore
   # Mailer actions that could be used to send emails
@@ -39,6 +40,10 @@ module BeachApiCore
         ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'admin'))
         ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'active_admin', 'views'))
       end
+    end
+
+    initializer "static assets" do |app|
+      app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{config.root}/public")
     end
 
     config.generators do |g|

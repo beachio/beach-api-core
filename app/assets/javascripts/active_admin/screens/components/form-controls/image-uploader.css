@@ -56,3 +56,9 @@
 .icon-uploader .image-uploader label span {
   font-size: 8px;
 }
+
+.image-uploader.circle {
+  height: 110px;
+  border-radius: 55px;
+  overflow: hidden;
+}

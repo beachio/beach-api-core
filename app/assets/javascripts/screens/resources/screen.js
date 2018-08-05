@@ -1,20 +1,26 @@
-app.factory('Screen', ['$resource', function($resource){
-  return $resource('/screens/:id', {"id":"@id"}, {
+app.factory('Screen', ['$resource', 'Config', function($resource, Config){
+
+  var Screen = $resource('/v1/screens/:id', {"id":"@id", application_uid: Config.application_uid}, {
     "next": {
       "method": "GET",
-      "url": "/screens/:id/next"
+      "url": "/v1/screens/:id/next",
     },
     "prev": {
       "method": "GET",
-      "url": "/screens/:id/prev"
+      "url": "/v1/screens/:id/prev",
     },
     "flow": {
       "method": "GET",
-      "url": "/screens/flow"
+      "url": "/v1/screens/flow",
     },
     "main_flow": {
       "method": "GET",
-      "url": "/screens/main_flow"
+      "url": "/v1/screens/main_flow",
     },
   })
+
+  Screen.active = null
+  Screen.messages = []
+
+  return Screen
 }])

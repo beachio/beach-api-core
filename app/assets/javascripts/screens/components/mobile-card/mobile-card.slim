@@ -1,5 +1,5 @@
 script type="text/ng-template" id="mobile-card.html"
-  .mobile-card ng-style="{backgroundColor: state.backgroundColor || screen.state.mainColor || '#650C65', backgroundImage: 'url('+state.image.url+')', cursor: state.action.type && state.action.type == 'NONE' ? 'default' : 'pointer' }"
+  .mobile-card ng-style="{backgroundColor: state.backgroundColor || screen.state.mainColor || '#3e70ff', backgroundImage: 'url('+state.image.url+')', cursor: state.action.type && state.action.type == 'NONE' ? 'default' : 'pointer' }"
     .mobile-card__body
       .mobile-card__title ng-bind-html-compile="state.title"
       .mobile-card__content ng-bind-html-compile="state.content"

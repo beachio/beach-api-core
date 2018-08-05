@@ -4,12 +4,16 @@
 
 var app = angular.module("app", ['slick', 'ngTouch', 'ngDialog', 'gridster', 'checklist-model', 'ngResource', 'ngMaterial', 'ui.router'])
 
-app.run(['Action', '$rootScope', '$http', 'Template', 'DataSource', function(Action, $rootScope, $http, Template, DataSource){
+app.run(['Config', function(Config){
+  params = location.search.slice(1).split('&').map(p => p.split('=')).reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+  Config.flow_id = params.flow_id;
+  Config.application_uid = params.application_uid;
+}])
+
+app.run(['Action', '$rootScope', '$http', 'Template', 'DataSource', 'Config', function(Action, $rootScope, $http, Template, DataSource, Config){
   $rootScope.Action = Action;
   $rootScope.DataSource = DataSource;
   $rootScope.Template = Template;
-  window.token = '4f626a6d50777a1e05b5e6763cd244b25bcc3b37ab47cd4265e9cbe950379b3e';
-  $http.defaults.headers.common.Authorization = 'Bearer ' + window.token;
 }])
 
 _.templateSettings = {

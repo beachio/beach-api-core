@@ -13,12 +13,12 @@ module BeachApiCore::Concerns::ScreensConcern
     end
 
     def next
-      @next = @screen.resource.screens.where("position > ?", @screen.position).first
+      @next = @screen.resource.screens.where("position > ?", @screen.position).order(:position).first
       render json: @next
     end
 
     def prev
-      @prev = @screen.resource.screens.where("position < ?", @screen.position).last
+      @prev = @screen.resource.screens.where("position < ?", @screen.position).order(:position).last
       render json: @prev
     end
 

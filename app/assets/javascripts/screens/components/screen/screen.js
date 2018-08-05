@@ -5,7 +5,8 @@ app.directive('screen', ['Action', '$timeout', 'Template', function(Action, $tim
     // priority: 1,
     // terminal: true,
     scope: {
-      screen: "="
+      screen: "=",
+      disabled: "="
     }, // {} = isolate, true = child, false/undefined = no change
     controller: ['$scope', function($scope) {
       var ctrl = this;

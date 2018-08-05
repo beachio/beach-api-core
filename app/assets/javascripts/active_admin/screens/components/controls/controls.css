@@ -10,7 +10,7 @@
   cursor: pointer;
   margin: auto;
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b441bf+0,4c0860+83,390461+100 */
-  background: #6C0A75; /* Old browsers */
+  background: #3e70ff; /* Old browsers */
   z-index: 2;
   width: 30px;
   height: 30px;
@@ -25,7 +25,7 @@
 
 .add-control:hover,
 .add-control.active {
-  background: #B441BF;
+  filter: brightness(110%);
 }
 
 .add-control:before {
@@ -85,12 +85,12 @@
 
 .control-remove {
   color: white;
-  background: #ff3fff;
+  background: #3e70ff;
 }
 .control-settings {
   background: white;
-  color: #620b65;
-  border: 1px solid #620b65;
+  color: #3e70ff;
+  border: 1px solid #3e70ff;
 }
 
 .control-settings i {

@@ -1,4 +1,4 @@
-app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 'DataSource', function($state, Screen, Model, ngDialog, $http, SocialNetwork, DataSource){
+app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 'DataSource', 'Message', function(Screen, Model, ngDialog, $http, SocialNetwork, DataSource, Message){
   var Action = this;
 
 
@@ -8,41 +8,35 @@ app.service('Action', ['$state', 'Screen', 'Model', 'ngDialog', '$http', 'Social
 
   Action.list = {
     NEXT_SCREEN: function () {
-      if ($state.params) {
-        Action.animation_class = 'slide-left'
-
-        Screen.next({id: $state.params.id}, function (res) {
-          if (res)
-            $state.go('screen_path', {id: res.id})
-        })
-      }
+      Screen.next({id: Screen.active.id}, function (res) {
+        Screen.active = res
+      })
     },
     PREV_SCREEN: function () {
-      if ($state.params) {
-        Action.animation_class = 'slide-right'
-
-        Screen.prev({id: $state.params.id}, function (res) {
-          if (res)
-            $state.go('screen_path', {id: res.id})
-        })
-      }
-
+      Screen.prev({id: Screen.active.id}, function (res) {
+        Screen.active = res
+      })
     },
     GO_TO_SCREEN_BY_ID: function (payload) {
-      Action.animation_class = 'slide-fade'
-      $state.go('screen_path', {id: payload.screen_id})
+      Screen.prev({id: payload.screen_id}, function (res) {
+        Screen.active = res
+      })
     },
     OPEN_FLOW: function (payload) {
-      Action.animation_class = 'slide-fade'
       Screen.flow(payload, function (res) {
-        $state.go('screen_path', {id: res.id})
+        Screen.active = res
       })
+    },
+    PUSH_MESSAGE: function (payload) {
+      Message.list.push(angular.copy(payload.data))
+
+      if (payload.after_push_message_action) Action.call(payload.after_push_message_action)
     },
     EXIT: function () {
       Action.animation_class = 'slide-down'
       Screen.main_flow(function (res) {
         Model = {}
-        $state.go('screen_path', {id: res.id})
+        Screen.active = res
       })
     },
     SUBMIT_ON_SERVER: function (payload) {
