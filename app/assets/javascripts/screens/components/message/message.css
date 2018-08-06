@@ -1,47 +1,102 @@
 message {
   overflow: hidden;
   display: block;
+  position: relative;
 }
 
 .message {
   padding: 15px;
-  margin: 15px 0 15px 19px;
   position: relative;
-  width: calc(100% - 28px);
+  min-width: 100px;
+  display: inline-block;
   z-index: 2;
+  border-radius: 5px;
+  margin: 10px;
+  font-size: 14px;
 }
 
 .message.user {
-  background: #3965e8;
+  background: #2f86a7;
   color: white;
-  border-radius: 10px 10px 0 10px;
+  text-align: right;
+  float: right;
 }
 
 .message.bot {
-  background: #c7c6c6;
-  border-radius: 10px 10px 10px 0;
-}
-
-.message:after {
-  content: "";
-  position: absolute;
-  display: block;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-}
-.message.user:after {
-  right: -10px;
-  border-width: 10px 0 0 10px;
-  border-color: transparent transparent transparent #3965e8;
-}
-.message.bot:after {
-  left: -10px;
-  border-width: 0 0 10px 10px;
-  border-color: transparent transparent #c7c6c6 transparent;
+  background: #f0f3f6;
+  margin-left: 70px;
+  text-align: left;
+  float: left;
 }
 
 .message-control {
   margin: 10px;
+}
+
+.message-avatar {
+  height: 28px;
+  width: 28px;
+  background: #e7e7e7;
+  border-radius: 50px;
+  position: absolute;
+  left: -40px;
+  top: 0;
+}
+
+
+.message-loader {
+  float: right;
+  width: 64px;
+  height: 27px;
+  position: relative;
+  margin: 15px 0;
+}
+.message-loader div {
+  position: absolute;
+  top: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #2984a3;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.message-loader div:nth-child(1) {
+  left: 6px;
+  animation: message-loader1 0.6s infinite;
+}
+.message-loader div:nth-child(2) {
+  left: 6px;
+  animation: message-loader2 0.6s infinite;
+}
+.message-loader div:nth-child(3) {
+  left: 26px;
+  animation: message-loader2 0.6s infinite;
+}
+.message-loader div:nth-child(4) {
+  left: 45px;
+  animation: message-loader3 0.6s infinite;
+}
+@keyframes message-loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes message-loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes message-loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
 }

@@ -18,11 +18,4 @@ app.run(['Action', '$rootScope', '$http', 'Template', 'DataSource', 'Config', fu
 
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
-};
-
-window.onmessage = function(evt) {
-  var evt = evt || window.event
-  console.log("children", evt.data)
-  window.originEvent = evt.origin
-  window.sourceEvent = evt.source
 }
