@@ -15,7 +15,7 @@ app.controller('ScreensCtrl', ['$scope', 'Config', 'Screen', '$timeout', 'Messag
   $scope.$watch('[Screen.list, Message.list]', function (active, old) {
     $timeout(() => {
       let el = $(".app-layout-body")
-      el.animate({ scrollTop: el.height() }, "slow");
+      el.animate({ scrollTop: el[0].scrollHeight }, "slow");
     })
   }, true)
 }])
