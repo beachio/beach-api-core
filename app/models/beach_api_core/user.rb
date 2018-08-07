@@ -8,6 +8,9 @@ module BeachApiCore
 
     has_one :profile, inverse_of: :user, dependent: :destroy, class_name: 'BeachApiCore::Profile'
     has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'
+    has_many :bots, through: :applications
+    has_many :flows, class_name: "BeachApiCore::Flow"
+
     has_many :favourites, inverse_of: :user, dependent: :destroy
     has_many :received_invitations,
              dependent: :destroy,

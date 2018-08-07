@@ -16,7 +16,7 @@
   position: fixed;
   right: 15px;
   bottom: 15px;
-  background: #3e70ff;
+  background: #2984a3;
   font-size: 18px;
   height: auto;
   padding: 4px 20px;
@@ -107,13 +107,13 @@
 }
 .screen-delete {
   color: white;
-  background: #3e70ff;
+  background: #2984a3;
 }
 
 .screen-settings {
   right: 30px;
   background: white;
-  color: #3e70ff;
+  color: #2984a3;
 }
 
 .screen-delete:hover {

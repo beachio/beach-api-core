@@ -10,7 +10,7 @@
   cursor: pointer;
   margin: auto;
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b441bf+0,4c0860+83,390461+100 */
-  background: #3e70ff; /* Old browsers */
+  background: #2984a3; /* Old browsers */
   z-index: 2;
   width: 30px;
   height: 30px;
@@ -85,12 +85,12 @@
 
 .control-remove {
   color: white;
-  background: #3e70ff;
+  background: #2984a3;
 }
 .control-settings {
   background: white;
-  color: #3e70ff;
-  border: 1px solid #3e70ff;
+  color: #2984a3;
+  border: 1px solid #2984a3;
 }
 
 .control-settings i {

@@ -2,6 +2,7 @@ BeachApiCore::Engine.routes.draw do
   use_doorkeeper
 
   get "/test" => "application#test"
+  get "/beach_chat.js" => "screens#beach_chat"
 
   namespace :admin do
     get "endpoints/models"
@@ -23,6 +24,7 @@ BeachApiCore::Engine.routes.draw do
       get "view"
       get "flow"
       get "main_flow"
+      get "bot"
     end
   end
 
@@ -76,6 +78,7 @@ BeachApiCore::Engine.routes.draw do
       collection do
         get "flow"
         get "main_flow"
+        get "bot"
       end
     end
 

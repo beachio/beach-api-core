@@ -1,6 +1,6 @@
 app.factory('Screen', ['$resource', 'Config', 'Message', 'ComponentState', function($resource, Config, Message, ComponentState){
 
-  var Screen = $resource('/v1/screens/:id', {"id":"@id", application_uid: Config.application_uid}, {
+  var Screen = $resource('/v1/screens/:id', {"id":"@id", bot_uuid: Config.bot_uuid}, {
     "next": {
       "method": "GET",
       "url": "/v1/screens/:id/next",
@@ -12,6 +12,10 @@ app.factory('Screen', ['$resource', 'Config', 'Message', 'ComponentState', funct
     "flow": {
       "method": "GET",
       "url": "/v1/screens/flow",
+    },
+    "bot": {
+      "method": "GET",
+      "url": "/v1/screens/bot",
     },
     "main_flow": {
       "method": "GET",

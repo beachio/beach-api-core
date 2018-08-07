@@ -11,8 +11,8 @@ html ng-app="app"
 
     .app-layout ng-controller="ScreensCtrl as ctrl"
       .app-layout-header
-        .app-layout-header-icon
-        .app-layout-header-name Beach Chat
+        .app-layout-header-icon ng-style="{background: 'url('+ctrl.bot.avatar+')', backgroundSize: 'cover'}"
+        .app-layout-header-name ng-bind="ctrl.bot.name"
       .app-layout-body
         div
           message ng-repeat="message in Message.list" message="message"

@@ -8,6 +8,14 @@ module BeachApiCore
     layout false
     skip_before_action :verify_authenticity_token
 
+    def beach_chat
+      respond_to do |format|
+        format.js {
+          render template: "beach_api_core/screens/beach_chat.js"
+        }
+      end
+    end
+
     def view
       render template: "layouts/screens"
     end

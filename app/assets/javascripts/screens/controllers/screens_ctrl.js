@@ -3,12 +3,14 @@ app.controller('ScreensCtrl', ['$scope', 'Config', 'Screen', '$timeout', 'Messag
   $scope.Screen = Screen
   $scope.Message = Message
 
+  ctrl.bot = Screen.bot({uuid: Config.bot_uuid})
+
   ctrl.sendMessage = (message) => {
     Message.push({from: "user", template: message})
     ctrl.message = ""
   }
 
-  Screen.flow({flow_id: Config.flow_id}, function (res) {
+  Screen.flow({bot_uuid: Config.bot_uuid}, function (res) {
     Screen.push(res)
   })
 

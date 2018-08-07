@@ -6,5 +6,5 @@ html
   body
     javascript:
       // var beachChat = new BeachChat({flow_id: 1, application_uid: "20cf6a4ef843b485f445cfe314822dced27104f0c7ae52be15fe17c7e9b5cc2e", url: "http://developers.beach.io"})
-      var beachChat = new BeachChat({flow_id: 1, application_uid: "#{Doorkeeper::Application.last.uid}", url: window.location.origin})
+      var beachChat = new BeachChat({bot_uuid: "#{BeachApiCore::Bot.last.uuid}", url: window.location.origin})
       beachChat.init()

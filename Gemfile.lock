@@ -74,6 +74,7 @@ PATH
       paper_trail
       pg
       pundit
+      rack-cors
       rails
       rails-jquery-autocomplete
       redis (< 4)
@@ -301,6 +302,7 @@ GEM
     pundit (2.0.0)
       activesupport (>= 3.0.0)
     rack (2.0.5)
+    rack-cors (1.0.2)
     rack-protection (2.0.3)
       rack
     rack-test (1.1.0)
@@ -462,6 +464,7 @@ DEPENDENCIES
   paper_trail
   pg (~> 0.18)
   poltergeist
+  rack-cors
   refile!
   rspec-rails
   rubocop
@@ -474,4 +477,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

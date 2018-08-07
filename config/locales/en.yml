@@ -223,6 +223,12 @@ en:
         downcase: "channel"
       channel:
         <<: *channel
+      beach_api_core/bot: &bot
+        one: "Bot"
+        other: "Bots"
+        downcase: "bots"
+      bot:
+        <<: *bot
       beach_api_core/chat: &chat
         one: "Chat"
         other: "Chats"

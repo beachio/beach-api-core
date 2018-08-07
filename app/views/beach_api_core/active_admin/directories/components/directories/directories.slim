@@ -1,7 +1,7 @@
 script type="text/ng-template" id="directories.html"
   .directories
     ul
-      li.directories__file
+      li.directories__file ng-show="main_flow"
         a.directories__file-name ng-href="/admin/flows/{{main_flow.id}}" ng-bind="main_flow.name+'.flow'"
       li.directories__directory ng-repeat="directory in directories" ng-include="'nodes_renderer.html'"
 

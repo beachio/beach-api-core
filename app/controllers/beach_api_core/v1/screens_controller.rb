@@ -4,16 +4,16 @@ module BeachApiCore
     include BeachApiCore::Concerns::ScreensConcern
 
     # before_action :doorkeeper_authorize!
-    before_action :check_app_uuid
+    before_action :check_bot_uuid
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/screens.other')
     end
 
 
-    def check_app_uuid
-      unless application = Doorkeeper::Application.find_by(uid: params[:application_uid])
-        render json: {msg: "Application not found"}, status: 404
+    def check_bot_uuid
+      unless @bot = BeachApiCore::Bot.find_by(uuid: params[:bot_uuid])
+        render json: {msg: "Bot not found"}, status: 404
       end
     end
 

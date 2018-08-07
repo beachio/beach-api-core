@@ -29,9 +29,21 @@ module BeachApiCore::Concerns::ScreensConcern
     end
 
     def flow
-      @flow = BeachApiCore::Flow.find(params[:flow_id])
-      @screen = @flow.screens.first
-      render json: @screen
+      @flow = BeachApiCore::Flow.find_by(id: params[:flow_id]) || @bot.flow
+      if @flow
+        @screen = @flow.screens.first
+        if @screen
+          render json: @screen
+        else
+          render json: {msg: "Screen not found fot the flow"}, status: 404
+        end
+      else
+        render json: {msg: "Flow not assigned to the bot"}, status: 404
+      end
+    end
+
+    def bot
+      render json: @bot
     end
 
     private

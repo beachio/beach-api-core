@@ -1,14 +1,14 @@
 .spinner,
 .spinner:before,
 .spinner:after {
-  background: #3e70ff;
+  background: #2984a3;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
   height: 4em;
 }
 .spinner {
-  color: #3e70ff;
+  color: #2984a3;
   text-indent: -9999em;
   margin: 0;
   position: relative;

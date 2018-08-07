@@ -6,8 +6,7 @@ var app = angular.module("app", ['slick', 'ngTouch', 'ngDialog', 'gridster', 'ch
 
 app.run(['Config', function(Config){
   params = location.search.slice(1).split('&').map(p => p.split('=')).reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-  Config.flow_id = params.flow_id;
-  Config.application_uid = params.application_uid;
+  Config.bot_uuid = params.bot_uuid;
 }])
 
 app.run(['Action', '$rootScope', '$http', 'Template', 'DataSource', 'Config', function(Action, $rootScope, $http, Template, DataSource, Config){
