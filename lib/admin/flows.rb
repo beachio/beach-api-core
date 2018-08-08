@@ -12,8 +12,20 @@ ActiveAdmin.register BeachApiCore::Flow, as: 'Flows' do
   end
 
   show do |flow|
+    bot = flow.directory&.bot
     attributes_table do
       row :name
+      div do
+        span do
+          link_to "Back To #{bot&.name}", "/admin/bots/#{bot&.id}"
+        end
+        span do
+          "&nbsp;|&nbsp;".html_safe
+        end
+        span do
+          link_to "Back To #{bot&.name} Flows", "/admin/flows?bot_uuid=#{bot&.uuid}"
+        end
+      end
     end
   end
 
