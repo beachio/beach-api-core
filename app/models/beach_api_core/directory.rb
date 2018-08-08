@@ -4,10 +4,10 @@ module BeachApiCore
 
     alias_method :directories, :children
     
+    belongs_to :bot
     has_many :flows
 
-    validates_uniqueness_of :name, :scope => :ancestry
-
+    # validates_uniqueness_of :name, :scope => :ancestry
     validates_presence_of :name
 
     def self.dirs

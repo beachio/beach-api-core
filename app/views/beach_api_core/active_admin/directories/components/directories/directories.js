@@ -14,6 +14,9 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
     // transclude: true,
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
+      $scope.bot_uuid = new URL(window.location.href).searchParams.get("bot_uuid")
+
+
       $scope.toggleDirectory = function (directory) {
         if ($scope.isOpenDirectory(directory)) {
           $scope.closeDirectory(directory)
@@ -60,9 +63,9 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
             scope.save = function () {
               var promise;
               if (type == 'directory')
-                promise = $http.post('/admin/flows/directories', {directory: scope.model || {}})
+                promise = $http.post('/admin/flows/directories', {bot_uuid: $scope.bot_uuid, directory: scope.model || {}})
               if (type == 'flow')
-                promise = $http.post('/admin/flows/flows', {flow: scope.model || {}})
+                promise = $http.post('/admin/flows/flows', {bot_uuid: $scope.bot_uuid, flow: scope.model || {}})
                 
 
               promise.then(function () {
@@ -89,9 +92,9 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
             scope.save = function () {
               var promise;
               if (type == 'directory')
-                promise = $http.put('/admin/flows/directories', {id: entity.id, directory: scope.model || {}})
+                promise = $http.put('/admin/flows/directories', {bot_uuid: $scope.bot_uuid, id: entity.id, directory: scope.model || {}})
               if (type == 'flow')
-                promise = $http.put('/admin/flows/flows', {id: entity.id, flow: scope.model || {}})
+                promise = $http.put('/admin/flows/flows', {bot_uuid: $scope.bot_uuid, id: entity.id, flow: scope.model || {}})
 
 
               promise.then(function () {
@@ -104,13 +107,9 @@ app.directive('directories', ['$http', 'ngDialog', function($http, ngDialog){
       }
 
       $scope.updateList = function () {
-        $http.get('/admin/flows/directories')
+        $http.get('/admin/flows/directories', {params: {bot_uuid: $scope.bot_uuid}})
           .then(function (res) {
             $scope.directories = res.data;
-          })
-        $http.get('/admin/flows/flows', {params: {main: true}})
-          .then(function (res) {
-            $scope.main_flow = res.data;
           })
       }
 

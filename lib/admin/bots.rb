@@ -22,7 +22,9 @@ ActiveAdmin.register BeachApiCore::Bot, as: 'Bots' do
     f.inputs t('active_admin.details', model: t('activerecord.models.bot.one')) do
       f.input :application_id, as: :select, collection: current_user.applications.all
       f.input :name
-      f.input :flow_id, as: :select, collection: BeachApiCore::Flow.all
+      if f.object&.available_flows&.any?
+        f.input :flow_id, as: :select, collection: f.object.available_flows
+      end
 
       li do
         f.label :avatar
@@ -50,8 +52,18 @@ ActiveAdmin.register BeachApiCore::Bot, as: 'Bots' do
       row :application_name do
         bot.application&.name
       end
-      row :flow do
-        bot.flow&.name
+      if bot.flow
+        row :active_flow do
+          link_to bot.flow&.name, "/admin/flows/#{bot.flow.id}/edit"
+        end
+      end
+      row :flows do
+        div do
+          link_to "Edit flows", "/admin/flows?bot_uuid=#{bot.uuid}", style: "padding: 8px 15px; background: #2984a3; color: white; text-decoration: none; margin: 5px 0; display: inline-block;"
+        end
+      end
+      div do
+        open_in_mobile(bot)
       end
     end
   end

@@ -1,6 +1,6 @@
 script type="text/ng-template" id="message.html"
   div
-    .clearfix
+    .clearfix ng-show="template"
       .message ng-class="message.from || 'bot'"
         span ng-bind-html-compile="template"
         .message-avatar

@@ -6,8 +6,10 @@ app.controller('ScreensCtrl', ['$scope', 'Config', 'Screen', '$timeout', 'Messag
   ctrl.bot = Screen.bot({uuid: Config.bot_uuid})
 
   ctrl.sendMessage = (message) => {
-    Message.push({from: "user", template: message})
-    ctrl.message = ""
+    if (message) {
+      Message.push({from: "user", template: message})
+      ctrl.message = ""
+    }
   }
 
   Screen.flow({bot_uuid: Config.bot_uuid}, function (res) {

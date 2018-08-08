@@ -3,7 +3,7 @@ module BeachApiCore
     attributes :id, :name, :avatar
 
     def avatar
-      object.avatar.file_url
+      object.avatar&.file_url
     end
   end
 end
