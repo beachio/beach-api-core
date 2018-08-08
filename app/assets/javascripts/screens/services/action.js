@@ -22,9 +22,11 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
       })
     },
     OPEN_FLOW: function (payload) {
-      Screen.flow(payload, function (res) {
-        Screen.push(res)
-      })
+      if (payload.flow_id) {
+        Screen.flow(payload, function (res) {
+          Screen.push(res)
+        })
+      }
     },
     PUSH_MESSAGE: function (payload) {
       Message.push(angular.copy(payload.data))
