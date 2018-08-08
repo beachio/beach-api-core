@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180511174852) do
+ActiveRecord::Schema.define(version: 20180808100337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,16 @@ ActiveRecord::Schema.define(version: 20180511174852) do
     t.datetime "updated_at", null: false
     t.index ["atom_parent_id"], name: "index_beach_api_core_atoms_on_atom_parent_id"
     t.index ["name"], name: "index_beach_api_core_atoms_on_name", unique: true
+  end
+
+  create_table "beach_api_core_bots", force: :cascade do |t|
+    t.uuid "uuid"
+    t.integer "application_id"
+    t.string "name"
+    t.integer "flow_id"
+    t.string "dialog_flow_client_access_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "beach_api_core_capabilities", id: :serial, force: :cascade do |t|
@@ -114,6 +124,7 @@ ActiveRecord::Schema.define(version: 20180511174852) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "ancestry"
+    t.integer "bot_id"
     t.index ["ancestry"], name: "index_beach_api_core_directories_on_ancestry"
   end
 
