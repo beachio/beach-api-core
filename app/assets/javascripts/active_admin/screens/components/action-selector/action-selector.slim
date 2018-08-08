@@ -5,7 +5,7 @@ script type="text/ng-template" id="action-selector.html"
         md-input-container.md-block
           label Action Type
           md-select ng-model="ngModel.type"
-            md-option
+            md-option ng-value="undefined"
               em None
             md-option ng-value="action" ng-repeat="action in availableActions"
               | {{action}}
@@ -22,14 +22,14 @@ script type="text/ng-template" id="action-selector.html"
         md-input-container
           label Social Network
           md-select ng-model="ngModel.payload.socialNetwork.name" ng-change="ngModel.payload.socialNetwork.action = undefined"
-            md-option
+            md-option ng-value="undefined"
               em None
             md-option ng-value="sn" ng-repeat="sn in ['facebook', 'twitter', 'instagram']"
               | {{sn}}
 
         md-input-container
           md-select ng-model="ngModel.payload.socialNetwork.action"
-            md-option
+            md-option ng-value="undefined"
               em None
             md-option ng-value="facebookAction" ng-repeat="facebookAction in ['share', 'follow']" ng-if="ngModel.payload.socialNetwork.name == 'facebook'"
               | {{facebookAction}}

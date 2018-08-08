@@ -1,8 +1,23 @@
 app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 'DataSource', 'Message', function(Screen, Model, ngDialog, $http, SocialNetwork, DataSource, Message){
   var Action = this;
 
+  Action.currentModel = {}
+
   Action.call = function (action) {
     Action.list[action.type](action.payload)
+    _.each(Action.diffModel(), (modelValue) => {
+      template = _.isObject(modelValue) ? modelValue.label : modelValue
+      Message.push({from: "user", template})
+    })
+
+    Action.currentModel = _.clone(Model)
+  }
+
+  Action.diffModel = () => {
+    var diff = _.difference(_.keys(Model), _.keys(Action.currentModel))
+    return _.map(diff, (key) => {
+      return Model[key]
+    })
   }
 
   Action.list = {
@@ -17,9 +32,11 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
       })
     },
     GO_TO_SCREEN_BY_ID: function (payload) {
-      Screen.prev({id: payload.screen_id}, function (res) {
-        Screen.push(res)
-      })
+      if (payload.screen_id) {
+        Screen.prev({id: payload.screen_id}, function (res) {
+          Screen.push(res)
+        })
+      }
     },
     OPEN_FLOW: function (payload) {
       if (payload.flow_id) {
