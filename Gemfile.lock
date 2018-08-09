@@ -61,6 +61,7 @@ PATH
       acts_as_downcasable_on
       acts_as_strippable_on
       ancestry
+      api-ai-ruby
       apipie-rails
       baby_squeel
       bcrypt
@@ -145,6 +146,8 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     ancestry (3.0.2)
       activerecord (>= 3.2.0)
+    api-ai-ruby (2.1.0)
+      http (~> 2.0)
     arbre (1.1.1)
       activesupport (>= 3.0.0)
     arel (8.0.0)
@@ -225,8 +228,15 @@ GEM
       activesupport (>= 4.1)
     hashdiff (0.3.7)
     hashie (3.5.7)
+    http (2.2.2)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
+    http-form_data (1.0.3)
+    http_parser.rb (0.6.0)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     inherited_resources (1.8.0)
@@ -451,6 +461,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin!
   ancestry
+  api-ai-ruby
   apipie-rails!
   awesome_print
   beach_api_core!
