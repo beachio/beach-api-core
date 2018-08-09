@@ -15,7 +15,6 @@ require 'rails-jquery-autocomplete'
 require 'engine_store'
 require 'paper_trail'
 require 'rack/cors'
-# require 'api-ai-ruby'
 
 module BeachApiCore
   # Mailer actions that could be used to send emails
