@@ -5,7 +5,6 @@ module BeachApiCore
 
     def dialog_flow
       if @bot.dialog_flow_client_access_token
-        require 'api-ai-ruby'
         client = ApiAiRuby::Client.new(:client_access_token => @bot.dialog_flow_client_access_token)
         response = client.text_request params[:message]
         render json: {message: response[:result][:fulfillment][:messages][0][:speech]}

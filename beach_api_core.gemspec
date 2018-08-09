@@ -55,5 +55,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails-jquery-autocomplete'
 
   s.add_dependency 'redis', '< 4'
-  s.add_dependency 'api-ai-ruby'
 end
