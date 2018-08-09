@@ -47,7 +47,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rmagick'
 
   s.add_dependency 'draper'
-  s.add_dependency 'api-ai-ruby'
 
   s.add_dependency 'activeadmin'
   s.add_dependency 'paper_trail'
@@ -56,4 +55,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails-jquery-autocomplete'
 
   s.add_dependency 'redis', '< 4'
+  s.add_dependency 'api-ai-ruby'
 end
