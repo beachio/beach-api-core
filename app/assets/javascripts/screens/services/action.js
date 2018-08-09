@@ -27,12 +27,12 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
   Action.list = {
     NEXT_SCREEN: function () {
       Screen.next({id: Screen.active.id}, function (res) {
-        Screen.push(res)
+          Screen.push(res)
       })
     },
     PREV_SCREEN: function () {
       Screen.prev({id: Screen.active.id}, function (res) {
-        Screen.push(res)
+          Screen.push(res)
       })
     },
     GO_TO_SCREEN_BY_ID: function (payload) {
