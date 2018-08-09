@@ -3,18 +3,15 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
 
   Action.currentModel = {}
 
-  Action.call = function (action, params) {
+  Action.call = function (action) {
     Action.list[action.type](action.payload)
-    var skip = (params && params.skipPush)
 
-    if (!skip) {
       _.each(Action.diffModel(), (modelValue) => {
         template = _.isObject(modelValue) ? modelValue.label : modelValue
         Message.push({from: "user", template})
       })
 
       Action.currentModel = _.clone(Model)
-    }
   }
 
   Action.diffModel = () => {

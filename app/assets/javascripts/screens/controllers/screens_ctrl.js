@@ -10,7 +10,7 @@ app.controller('ScreensCtrl', ['$scope', 'Config', 'Screen', '$timeout', 'Messag
 
   ctrl.sendMessage = (message) => {
     if (message) {
-      Action.call({type: "DIALOG_FLOW", payload: {bot_uuid: Config.bot_uuid, message}}, {skipPush: true})
+      Action.list["DIALOG_FLOW"]({bot_uuid: Config.bot_uuid, message})
       ctrl.message = ""
     }
   }
