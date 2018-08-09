@@ -21,7 +21,7 @@ app.service('Message', ['$timeout', function($timeout){
     if (Message.tempList.length && !Message.inProgress) {
       Message.inProgress = true
       $timeout(() => {
-          Message.list.push(Message.tempList.pop())
+          Message.list.push(Message.tempList.shift())
           if (!Message.tempList.length) Message.inProgress = false
           Message.extractFromTempList()
       }, 1000)
