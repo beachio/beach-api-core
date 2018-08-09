@@ -1,4 +1,3 @@
-require 'api-ai-ruby'
 module BeachApiCore
   class V1::BotsController < BeachApiCore::V1::BaseController
     # before_action :doorkeeper_authorize!
