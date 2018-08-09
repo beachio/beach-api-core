@@ -4,9 +4,13 @@ module BeachApiCore
     before_action :set_bot
 
     def dialog_flow
-      client = ApiAiRuby::Client.new(:client_access_token => @bot.dialog_flow_client_access_token)
-      response = client.text_request params[:message]
-      render json: {message: response[:result][:fulfillment][:messages][0][:speech]}
+      if @bot.dialog_flow_client_access_token
+        client = ApiAiRuby::Client.new(:client_access_token => @bot.dialog_flow_client_access_token)
+        response = client.text_request params[:message]
+        render json: {message: response[:result][:fulfillment][:messages][0][:speech]}
+      else
+        render json: {}
+      end
     end
 
     private

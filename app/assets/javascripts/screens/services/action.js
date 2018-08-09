@@ -56,7 +56,11 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
     },
     DIALOG_FLOW: function (payload) {
       Message.push({from: "user", template: payload.message})
-      Bot.dialog_flow(payload, (res) => Message.push({from: "bot", template: res.message}))
+      Bot.dialog_flow(payload, (res) => {
+        if (res.message) {
+          Message.push({from: "bot", template: res.message})
+        }
+      })
     },
     EXIT: function () {
       Action.animation_class = 'slide-down'
