@@ -38,3 +38,5 @@ gem 'ancestry'
 gem 'apipie-rails', git: 'https://github.com/vitalinfo/apipie-rails.git'
 gem 'paper_trail'
 gem 'rack-cors', require: 'rack/cors'
+
+gem 'api-ai-ruby'

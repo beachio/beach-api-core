@@ -1,4 +1,4 @@
-app.directive('message', ['Model', '$interpolate', function(Model, $interpolate){
+app.directive('message', ['Model', '$interpolate', 'Config', function(Model, $interpolate, Config){
   // Runs during compile
   return {
     // name: '',
@@ -18,7 +18,7 @@ app.directive('message', ['Model', '$interpolate', function(Model, $interpolate)
     // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
     link: function($scope, iElm, iAttrs, controller) {
       $scope.template = $interpolate($scope.message.template)({Model: Model})
-
+      $scope.Config = Config
       $scope.Model = Model
     }
   };

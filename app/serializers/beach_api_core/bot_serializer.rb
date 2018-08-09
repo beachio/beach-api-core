@@ -3,7 +3,7 @@ module BeachApiCore
     attributes :id, :name, :avatar
 
     def avatar
-      object.avatar&.file_url
+      Refile.attachment_url(object.avatar, :file, :fill, 150, 150)
     end
   end
 end

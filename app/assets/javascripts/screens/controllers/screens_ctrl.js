@@ -1,13 +1,16 @@
-app.controller('ScreensCtrl', ['$scope', 'Config', 'Screen', '$timeout', 'Message', function($scope, Config, Screen, $timeout, Message){
+app.controller('ScreensCtrl', ['$scope', 'Config', 'Screen', '$timeout', 'Message', 'Action', function($scope, Config, Screen, $timeout, Message, Action){
   var ctrl = this
   $scope.Screen = Screen
   $scope.Message = Message
 
-  ctrl.bot = Screen.bot({uuid: Config.bot_uuid})
+  Screen.bot({uuid: Config.bot_uuid}, (res) => {
+    ctrl.bot = res
+    Config.bot = res
+  })
 
   ctrl.sendMessage = (message) => {
     if (message) {
-      Message.push({from: "user", template: message})
+      Action.call({type: "DIALOG_FLOW", payload: {bot_uuid: Config.bot_uuid, message}}, {skipPush: true})
       ctrl.message = ""
     }
   }

@@ -69,6 +69,11 @@ BeachApiCore::Engine.routes.draw do
       end
     end
 
+    resources :bots do
+      collection do
+        post "dialog_flow"
+      end
+    end
     resources :screens do
       member do
         get "next"

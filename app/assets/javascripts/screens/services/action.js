@@ -1,16 +1,20 @@
-app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 'DataSource', 'Message', function(Screen, Model, ngDialog, $http, SocialNetwork, DataSource, Message){
+app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 'DataSource', 'Message', 'Bot', function(Screen, Model, ngDialog, $http, SocialNetwork, DataSource, Message, Bot){
   var Action = this;
 
   Action.currentModel = {}
 
-  Action.call = function (action) {
+  Action.call = function (action, params) {
     Action.list[action.type](action.payload)
-    _.each(Action.diffModel(), (modelValue) => {
-      template = _.isObject(modelValue) ? modelValue.label : modelValue
-      Message.push({from: "user", template})
-    })
+    var skip = (params && params.skipPush)
 
-    Action.currentModel = _.clone(Model)
+    if (!skip) {
+      _.each(Action.diffModel(), (modelValue) => {
+        template = _.isObject(modelValue) ? modelValue.label : modelValue
+        Message.push({from: "user", template})
+      })
+
+      Action.currentModel = _.clone(Model)
+    }
   }
 
   Action.diffModel = () => {
@@ -49,6 +53,10 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
       Message.push(angular.copy(payload.data))
 
       if (payload.after_push_message_action) Action.call(payload.after_push_message_action)
+    },
+    DIALOG_FLOW: function (payload) {
+      Message.push({from: "user", template: payload.message})
+      Bot.dialog_flow(payload, (res) => Message.push({from: "bot", template: res.message}))
     },
     EXIT: function () {
       Action.animation_class = 'slide-down'
