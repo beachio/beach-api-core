@@ -20,5 +20,9 @@ module BeachApiCore
       render template: "layouts/screens"
     end
 
+    def single
+      render template: "layouts/single_screen"
+    end
+
   end
 end

@@ -21,6 +21,7 @@ BeachApiCore::Engine.routes.draw do
     end
 
     collection do
+      get "single"
       get "view"
       get "flow"
       get "main_flow"
