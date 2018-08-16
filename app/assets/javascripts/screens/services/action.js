@@ -2,16 +2,29 @@ app.service('Action', ['Screen', 'Model', 'ngDialog', '$http', 'SocialNetwork', 
   var Action = this;
 
   Action.currentModel = {}
+  Action.progressList = []
 
   Action.call = function (action) {
-    Action.list[action.type](action.payload)
+    Action.progressList.push(action)
+    Action.shiftAction()
+  }
 
+  Action.shiftAction = () => {
+    if (Action.progressList.length && !Action.inProgress) {
+      Action.inProgress = true
+      var action = Action.progressList.shift()
+      Action.list[action.type](action.payload)
       _.each(Action.diffModel(), (modelValue) => {
         template = _.isObject(modelValue) ? modelValue.label : modelValue
         Message.push({from: "user", template})
       })
 
       Action.currentModel = _.clone(Model)
+
+      Action.shiftAction()
+    } else {
+      Action.inProgress = false
+    }
   }
 
   Action.diffModel = () => {

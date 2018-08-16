@@ -27,9 +27,10 @@ app.factory('Screen', ['$resource', 'Config', 'Message', 'ComponentState', funct
   Screen.active = null
 
   Screen.push = (screen) => {
-    if (screen) {
+    if (screen && screen.id) {
       Screen.list.push(screen)
       Screen.active = screen
+
       if (screen.content.header.descriptionsType == "states") {
         var states = screen.content.header.states;
         var activeState = ComponentState.activeState(states);
