@@ -42,12 +42,6 @@ module BeachApiCore
       end
     end
 
-    initializer "static assets" do |app|
-      if (Rails.application.config.serve_static_files rescue true)
-        app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{config.root}/public")
-      end
-    end
-
     config.generators do |g|
       g.test_framework :rspec, fixture: false
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
