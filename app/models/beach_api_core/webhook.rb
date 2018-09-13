@@ -14,7 +14,7 @@ module BeachApiCore
 
     def validate_params
       if kind == 'scores_achieved'
-        self.errors.add :scores, "wrong. Scores should be more then 0"  if scores.nil? || !(scores.is_a? Integer)
+        self.errors.add :scores, "wrong. Scores should be more then 0"  if scores.nil? || scores.match(/\A\d*\z/).nil?
         self.parametrs = "{\"scores\": #{scores}}"
       else
         self.parametrs = "{}"

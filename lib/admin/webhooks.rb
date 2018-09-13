@@ -34,7 +34,12 @@ ActiveAdmin.register BeachApiCore::Webhook, as: 'Webhook' do
       f.input :keeper, as: :select,
               collection: options_for_select(webhooks_keeper, "#{f.object.keeper_type}##{f.object.keeper_id}"),
               input_html: { class: 'js-keeper_select', name: :keeper }
-      f.input :scores, as: :number
+      if f.object.new_record?
+        f.input :scores, as: :number
+      else
+        val = f.object.parametrs.gsub(/{\S*\s*/, "").gsub("}", "") if f.object.kind == 'scores_achieved'
+        f.input :scores, as: :number, :input_html => { :value => val }
+      end
       f.input :uri
     end
     f.actions
