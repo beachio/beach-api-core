@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails'
 
   s.add_dependency 'omniauth'
-  s.add_dependency 'doorkeeper'
+  s.add_dependency 'doorkeeper', '4.3.2'
 
   s.add_dependency 'pg'
   s.add_dependency 'baby_squeel'
