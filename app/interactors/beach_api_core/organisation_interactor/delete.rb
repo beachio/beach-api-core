@@ -5,6 +5,7 @@ module BeachApiCore::OrganisationInteractor
     before do
       context.model = context.organisation
       context.event = 'deleted'
+      context.parametrs = context.organisation.to_json
     end
 
     def call

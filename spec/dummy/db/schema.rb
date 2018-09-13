@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180808100337) do
+ActiveRecord::Schema.define(version: 20180907134359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -461,6 +461,7 @@ ActiveRecord::Schema.define(version: 20180808100337) do
     t.datetime "updated_at", null: false
     t.integer "status"
     t.string "reset_password_token"
+    t.integer "scores", default: 0
     t.index ["email"], name: "index_beach_api_core_users_on_email"
     t.index ["username"], name: "index_beach_api_core_users_on_username"
   end
@@ -471,7 +472,11 @@ ActiveRecord::Schema.define(version: 20180808100337) do
     t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "keeper_type"
+    t.bigint "keeper_id"
+    t.text "parametrs", default: "{}"
     t.index ["application_id"], name: "index_beach_api_core_webhooks_on_application_id"
+    t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_webhooks_on_keeper_type_and_keeper_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|

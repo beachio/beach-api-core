@@ -6,7 +6,7 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    WEBHOOK_KEYS = %i(id uri kind application_id).freeze
+    WEBHOOK_KEYS = %i(id uri kind keeper_id).freeze
 
     describe 'when create' do
       context 'when invalid' do
@@ -37,7 +37,7 @@ module BeachApiCore
           end.to change(Webhook, :count).by(1)
           webhook = Webhook.last
           %i(uri kind).each { |key| expect(webhook.send(key)).to eq webhook_params[key] }
-          expect(webhook.application_id).to eq oauth_application.id
+          expect(webhook.keeper_id).to eq oauth_application.id
         end
 
         it 'should return webhook' do
@@ -67,7 +67,7 @@ module BeachApiCore
 
       context 'when valid' do
         it 'should remove webhook' do
-          webhook = create(:webhook, application: oauth_application)
+          webhook = create(:webhook, keeper: oauth_application)
           delete beach_api_core.v1_webhook_path(webhook), headers: application_auth
           expect(response.status).to eq 204
           expect(Webhook.find_by(id: webhook.id)).to be_blank
@@ -87,7 +87,7 @@ module BeachApiCore
 
       context 'when valid' do
         before do
-          create(:webhook, application: oauth_application)
+          create(:webhook, keeper: oauth_application)
           create(:webhook)
         end
         it 'without filter' do

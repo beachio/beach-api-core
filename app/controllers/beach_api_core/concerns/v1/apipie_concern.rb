@@ -159,7 +159,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
   def apipie_webhook
     @_apipie_webhook ||= BeachApiCore::Webhook.new(id: fake_id,
-                                                   application: apipie_oauth_application,
+                                                   keeper: apipie_oauth_application,
                                                    uri: Faker::Internet.url,
                                                    kind: BeachApiCore::Webhook.kinds.keys.first)
   end
@@ -208,7 +208,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   private
 
   def fake_id
-    rand(1..100) * -1
+    rand(1..100)
   end
 
   def build_apipie_user_profile

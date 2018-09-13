@@ -4,9 +4,16 @@ module BeachApiCore
     sidekiq_options queue: 'webhooks'
     sidekiq_options retry: 10
 
-    def perform(kind, model_class_name, model_id, doorkeeper_token_id)
-      Webhook.where(kind: Webhook.kinds[kind]).find_each do |webhook|
-        model = model_class_name.constantize.find(model_id)
+    def perform(kind, model_class_name, model_id, doorkeeper_token_id = nil, parametrs = nil)
+      if kind == 'scores_achieved'
+        user = BeachApiCore::User.find(model_id)
+        webhooks = Webhook.where(kind: Webhook.kinds[kind], :parametrs => "{\"scores\": #{parametrs.nil? ? user.scores : parametrs}}")
+      else
+        webhooks = Webhook.where(kind: Webhook.kinds[kind])
+      end
+      webhooks.find_each do |webhook|
+        next if webhook.keeper_type != 'BeachApiCore::Instance' && webhook.keeper_id != doorkeeper_token(doorkeeper_token_id).application_id
+        model = kind == 'organisation_deleted' ? BeachApiCore::Organisation.new(JSON.parse(parametrs)) : model_class_name.constantize.find(model_id)
         serialized_model = "BeachApiCore::#{model_class_name.demodulize}Serializer".constantize.new(model)
         send_notification(webhook.uri, kind, serialized_model, doorkeeper_token(doorkeeper_token_id))
       end
@@ -20,7 +27,6 @@ module BeachApiCore
 
     def headers(doorkeeper_token)
       { 'X-USER-ID'         => doorkeeper_token.user.id,
-        'X-ORGANIZATION-ID' => doorkeeper_token.organisation.id,
         'Authorization'     => "Bearer #{doorkeeper_token.token}",
         'Content-type'      => 'application/json' }
     end
@@ -28,5 +34,6 @@ module BeachApiCore
     def doorkeeper_token(doorkeeper_token_id)
       Doorkeeper::AccessToken.find(doorkeeper_token_id)
     end
+
   end
 end

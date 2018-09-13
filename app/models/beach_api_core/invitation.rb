@@ -19,7 +19,11 @@ module BeachApiCore
       return unless [BeachApiCore::Team, BeachApiCore::Organisation].include?(group.class)
       transaction do
         group.memberships.create(member: invitee)
-        role_ids.each { |role_id| invitee.assignments.create(role_id: role_id, keeper: group) }
+        role_ids.each { |role_id| invitee.assignments.create(role_id: role_id, keeper: group) if invitee.assignments.where(:role_id => role_id, keeper: group).empty? }
+        scores = user.scores + 500
+        token = find_or_create_doorkeeper_token(user.id, group.application)
+        user.update_attribute(:scores, user.scores + 500) if invitee.invitee?
+        BeachApiCore::Webhook.notify('scores_achieved', 'BeachApiCore::User', user.id, token.id, scores) if invitee.invitee?
         invitee.active!
         destroy!
       end
@@ -43,6 +47,14 @@ module BeachApiCore
         token = SecureRandom.urlsafe_base64
         break token unless self.class.where(token: token).exists?
       end
+    end
+
+    def find_or_create_doorkeeper_token(user_id, application)
+      Doorkeeper::AccessToken.find_or_create_for(application,
+                                                 user_id,
+                                                 Doorkeeper::OAuth::Scopes.from_string('password'),
+                                                 Doorkeeper.configuration.access_token_expires_in,
+                                                 Doorkeeper.configuration.refresh_token_enabled?)
     end
 
     def destroy_invitee

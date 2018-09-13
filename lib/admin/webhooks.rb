@@ -1,20 +1,42 @@
 ActiveAdmin.register BeachApiCore::Webhook, as: 'Webhook' do
-  permit_params :kind, :application_id, :uri
+  permit_params :kind, :uri, :keeper_id, :keeper_type, :scores
 
   index do
     id_column
     column :kind
     column :uri
+    column :keeper do |field|
+      keeper_name(field.keeper)
+    end
     actions
   end
 
   filter :kind
 
-  show do
+  show do |webhook|
     attributes_table do
       row :kind
-      row :application
       row :uri
+      row :keeper do
+        keeper_name(webhook.keeper)
+      end
+      row :scores do
+        webhook.parametrs.gsub(/{\S*\s*/, "").gsub("}", "")
+      end if webhook.kind == 'scores_achieved'
     end
+  end
+
+  form do |f|
+    f.inputs "Details", class: 'inputs js-keepers js-keeper_wrapper' do
+      f.input :kind
+      f.input :keeper_type, as: :hidden, input_html: { class: 'js-keeper_type' }
+      f.input :keeper_id, as: :hidden, input_html: { class: 'js-keeper_id' }
+      f.input :keeper, as: :select,
+              collection: options_for_select(webhooks_keeper, "#{f.object.keeper_type}##{f.object.keeper_id}"),
+              input_html: { class: 'js-keeper_select', name: :keeper }
+      f.input :scores, as: :number
+      f.input :uri
+    end
+    f.actions
   end
 end

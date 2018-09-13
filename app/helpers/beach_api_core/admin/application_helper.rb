@@ -5,6 +5,12 @@ module BeachApiCore::Admin::ApplicationHelper
     keepers.map { |keeper| [keeper_name(keeper), "#{keeper.class}##{keeper.id}"] }
   end
 
+  def webhooks_keeper
+    keepers = Doorkeeper::Application.all.to_a
+    keepers.push(BeachApiCore::Instance.current)
+    keepers.map { |keeper| [keeper_name(keeper), "#{keeper.class}##{keeper.id}"] }
+  end
+
   def keeper_name(keeper)
     case keeper.class.to_s
     when 'BeachApiCore::Instance' then 'Current Instance'

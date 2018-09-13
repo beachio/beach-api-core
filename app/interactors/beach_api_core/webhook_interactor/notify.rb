@@ -5,7 +5,7 @@ module BeachApiCore::WebhookInteractor
     def call
       kind = BeachApiCore::Webhook.class_to_kind(context.model.class, context.event)
       return unless kind
-      BeachApiCore::Webhook.notify(kind, context.model.class.name, context.model.id, context.access_token.id)
+      BeachApiCore::Webhook.notify(kind, context.model.class.name, context.model.id, context.access_token.id, context.parametrs)
     end
   end
 end

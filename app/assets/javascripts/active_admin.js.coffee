@@ -9,3 +9,14 @@ $ ->
     keeper = $(e.target).val().split('#')
     $(e.target).parents('.js-keeper_wrapper').find('.js-keeper_type').val(keeper[0])
     $(e.target).parents('.js-keeper_wrapper').find('.js-keeper_id').val(keeper[1])
+
+  if ($('#webhook_kind').val() != "scores_achieved")
+    $('#webhook_scores_input').hide()
+  else
+    $('#webhook_scores_input').show()
+
+  $('#webhook_kind').on 'change', (e) ->
+    if ($('#webhook_kind').val() != "scores_achieved")
+      $('#webhook_scores_input').hide()
+    else
+      $('#webhook_scores_input').show()

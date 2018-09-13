@@ -6,16 +6,20 @@ module BeachApiCore
     include_context 'authenticated user'
     include_context 'bearer token authentication'
 
-    before { access_token.update(organisation: (create :organisation)) }
+    before do
+      access_token.update(organisation: (create :organisation))
+    end
     describe '#send_notification' do
+
       Webhook.kinds.keys.each do |webhook_kind|
-        let!(:"#{webhook_kind}_webhook") { create(:webhook, kind: webhook_kind) }
+        let!(:"#{webhook_kind}_webhook") { webhook_kind == 'scores_achieved' ? create(:webhook, kind: webhook_kind, scores: 500, keeper: access_token.application) : create(:webhook, kind: webhook_kind, :keeper => access_token.application) }
       end
 
       context 'user_created' do
         before do
           stub_request(:post, user_created_webhook.uri).to_return(status: 200)
           @user = create(:user)
+          access_token.application.update(owner_id: @user.id)
         end
 
         it 'should send user_created notification' do

@@ -48,7 +48,7 @@ en:
           template_params: "Template params to use for parsing"
           email_timestamp: "Timestamp for sending out an email"
           reset_password_token: "Reset password token"
-          event_type: 'Event type ("organisation_created", "team_created" or "user_created")'
+          event_type: 'Event type ("organisation_created", "team_created", "user_created", "organisation_deleted" or "scores_achieved")'
           platform_params: "Using as a part of authorization token in request headers instead of actual token"
           channel_name: 'Channel name ("UserChannel" or "EntityChannel")'
           roles: "Array of roles' ids"

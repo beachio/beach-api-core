@@ -12,6 +12,7 @@ module WebhooksDoc
   param :webhook, Hash, required: true do
     param :uri, String, required: true
     param :kind, String, required: true, desc: I18n.t('api.resource_description.descriptions.params.event_type')
+    param :scores, Integer, required: false, desc: "Available only for kind = scores_achieved"
   end
   example "\"webhook\": #{apipie_webhook_response}
           \n#{I18n.t('api.resource_description.fail',

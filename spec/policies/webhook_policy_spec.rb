@@ -5,7 +5,7 @@ describe BeachApiCore::WebhookPolicy do
   let(:user) { create :user }
   let(:application) { create :oauth_application, owner: user }
   let(:another_application) { create :oauth_application, owner: user }
-  let!(:webhook) { create :webhook, application: application }
+  let!(:webhook) { create :webhook, keeper: application }
 
   permissions :destroy? do
     it { is_expected.to permit(UserContext.new(user, application), webhook) }

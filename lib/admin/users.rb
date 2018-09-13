@@ -7,7 +7,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
                                                       :sex, :birth_date, :time_zone,
                                                       avatar_attributes: %i(id file)]),
      team_memberships_attributes: %i(id group_id owner _destroy),
-     organisation_memberships_attributes: %i(id group_id owner),
+     organisation_memberships_attributes: %i(id group_id owner _destroy),
      assignments_attributes: %i(id role_id keeper_id keeper_type _destroy),
      organisation_accesses_attributes: %i(id access_level_id keeper_id keeper_type _destroy)]
   end
@@ -121,7 +121,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       end
       if user.assignments.any?
         row :roles do
-          user.assignments.map { |assignment| "#{assignment.role.name}: #{keeper_name(assignment.keeper)}" }
+          user.assignments.map { |assignment| "#{assignment.role.name}: #{keeper_name(assignment.keeper)}" unless assignment.keeper.nil? }
         end
       end
       if user.teams.any?
@@ -133,7 +133,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       end
       if user.user_accesses.any?
         row :access_levels do
-          user.user_accesses.map { |user_access| "#{user_access.access_level.title}: #{keeper_name(user_access.keeper)}" }
+          user.user_accesses.map { |user_access| "#{user_access.access_level.title}: #{keeper_name(user_access.keeper)}" unless user_access.keeper.nil? }
         end
       end
       row :organisations do

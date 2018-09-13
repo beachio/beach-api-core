@@ -58,7 +58,7 @@ BeachApiCore::Engine.routes.draw do
     resources :user_accesses, only: %i(create destroy)
     resources :memberships, only: %i(create destroy)
     resources :invitations, only: %i(index create destroy) do
-      post :accept, on: :member
+      match :accept, on: :member, via: [:get, :post]
     end
     resources :atoms, only: %i(create index show) do
       collection do

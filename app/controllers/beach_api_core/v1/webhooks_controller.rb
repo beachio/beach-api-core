@@ -12,11 +12,12 @@ module BeachApiCore
     end
 
     def index
-      render_json_success(current_application.webhooks, :ok, root: :webhooks)
+      webhooks = BeachApiCore::Webhook.where("keeper_id =  #{current_application.id} OR keeper_type = 'BeachApiCore::Instance'")
+      render_json_success(webhooks, :ok, root: :webhooks)
     end
 
     def create
-      result = BeachApiCore::WebhookCreate.call(params: webhook_params, application: current_application)
+      result = BeachApiCore::WebhookCreate.call(params: webhook_params, uri: webhook_params[:uri], kind: webhook_params[:kind], keeper: current_application, :scores => webhook_params[:scores])
 
       if result.success?
         render_json_success(result.webhook, result.status, root: :webhook)
@@ -38,7 +39,7 @@ module BeachApiCore
     private
 
     def webhook_params
-      params.require(:webhook).permit(:uri, :kind)
+      params.require(:webhook).permit(:uri, :kind, :scores)
     end
   end
 end

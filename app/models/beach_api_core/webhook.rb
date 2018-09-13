@@ -1,17 +1,29 @@
 module BeachApiCore
   class Webhook < ApplicationRecord
-    belongs_to :application, class_name: 'Doorkeeper::Application'
-
+    belongs_to :keeper, polymorphic: true
     enum kind: { organisation_created: 0,
                  team_created: 1,
                  user_created: 2,
-                 organisation_deleted: 3 }
+                 organisation_deleted: 3,
+                 scores_achieved: 4
+               }
 
-    validates :uri, :kind, :application, presence: true
+    validates :uri, :kind, :keeper, presence: true
+    attr_accessor :scores
+    validate :validate_params
+
+    def validate_params
+      if kind == 'scores_achieved'
+        self.errors.add :scores, "wrong. Scores should be more then 0"  if scores.nil? || !(scores.is_a? Integer)
+        self.parametrs = "{\"scores\": #{scores}}"
+      else
+        self.parametrs = "{}"
+      end
+    end
 
     class << self
-      def notify(kind, entity_class, entity_id, doorkeeper_token_id)
-        BeachApiCore::WebhooksNotifier.perform_async(kind, entity_class, entity_id, doorkeeper_token_id)
+      def notify(kind, entity_class, entity_id, doorkeeper_token_id = nil, parametrs = nil)
+        BeachApiCore::WebhooksNotifier.perform_async(kind, entity_class, entity_id, doorkeeper_token_id, parametrs)
       end
 
       def class_to_kind(klass, event)
