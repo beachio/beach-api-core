@@ -1,8 +1,0 @@
-html
-  head
-    = stylesheet_link_tag 'normalize.min'
-    script src="/beach_chat.js"
-  body
-    javascript:
-      var beachChat = new BeachChat({bot_uuid: "#{BeachApiCore::Bot.last.uuid}", url: window.location.origin})
-      beachChat.init()

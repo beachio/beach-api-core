@@ -1,5 +1,0 @@
-script type="text/ng-template" id="autocomplete-select.html"
-  md-autocomplete md-selected-item-change="setModel(selectedItem)" md-selected-item="selectedItem" md-items="item in querySearch(searchText)" md-search-text="searchText" placeholder="{{placeholder}}" md-min-length="0" md-item-text="filterField ? item[filterField] : item" md-no-cache="true" ng-show="items.length"
-    md-item-template
-      span md-highlight-text="searchText" md-highlight-flags="^i"
-        | {{$parent.filterField ? item[$parent.filterField] : item}}

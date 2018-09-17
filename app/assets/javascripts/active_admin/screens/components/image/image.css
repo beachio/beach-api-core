@@ -1,9 +1,0 @@
-.mobile-image.fullscreen {
-  position: static !important;
-  background: none !important;
-  display: block !important;
-}
-
-.mobile-image.fullscreen img {
-  width: auto !important;
-}

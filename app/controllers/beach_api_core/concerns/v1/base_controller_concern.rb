@@ -51,9 +51,7 @@ module BeachApiCore::Concerns::V1::BaseControllerConcern
 
     def get_service_name
       service_name = self.class.to_s.match(/::(\w*)Controller/)[1]
-      if service_name == 'Screens'
-        service_name = 'Flows'
-      elsif service_name == 'Uploads'
+      if service_name == 'Uploads'
         service_name = 'images_and_assets'
       elsif service_name == 'Messages'
         service_name = 'chat'

@@ -1,7 +1,0 @@
-script type="text/ng-template" id="mobile-header.html"
-  .mobile-header ng-style="{backgroundColor: screen.settings.mainColor || '#2984a3'}"
-    mobile-header-bg.mobile-header-bg
-    .mobile-header__progress ng-if="header.with_progress"
-      .mobile-header__progress--filled ng-style="{width: header.progress+'%'}"
-
-  .mobile-header__description ng-bind-html-compile="description" ng-show="description"

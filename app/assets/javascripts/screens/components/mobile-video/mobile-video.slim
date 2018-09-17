@@ -1,7 +1,0 @@
-script type="text/ng-template" id="mobile-video.html"
-  .mobile-video
-    .mobile-video__preview ng-click="play=true" ng-style="{backgroundImage: 'url('+preview+')'}" ng-hide="play"
-      .mobile-video__preview-play
-        i.material-icons play_circle_outline
-    .mobile-video__wrapper ng-if="play"
-      iframe ng-src="{{url}}" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" ng-class="{'mobile-video__vimeo-iframe': $parent.type == 'vimeo'}""

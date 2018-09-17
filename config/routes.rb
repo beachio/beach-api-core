@@ -1,9 +1,6 @@
 BeachApiCore::Engine.routes.draw do
   use_doorkeeper
 
-  get "/test" => "application#test"
-  get "/beach_chat.js" => "screens#beach_chat"
-
   namespace :admin do
     get "endpoints/models"
     get "endpoints/actions"
@@ -13,25 +10,8 @@ BeachApiCore::Engine.routes.draw do
     get "redirect" => "redirect#index"
   end
 
-  resources :screens do
-    member do
-      get "next"
-      get "prev"
-      get "view"
-    end
-
-    collection do
-      get "single"
-      get "view"
-      get "flow"
-      get "main_flow"
-      get "bot"
-    end
-  end
-
   api_version(module: 'V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
     resources :uploads
-    resources :endpoints
     resources :applications, except: %i(new edit)
     resources :sessions, only: [:create, :destroy], path: :auth
     resources :favourites, only: %i(index create destroy)
@@ -67,24 +47,6 @@ BeachApiCore::Engine.routes.draw do
       end
       resource :permission, only: %i(show) do
         post :set
-      end
-    end
-
-    resources :bots do
-      collection do
-        post "dialog_flow"
-      end
-    end
-    resources :screens do
-      member do
-        get "next"
-        get "prev"
-      end
-
-      collection do
-        get "flow"
-        get "main_flow"
-        get "bot"
       end
     end
 

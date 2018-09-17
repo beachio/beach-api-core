@@ -1,7 +1,0 @@
-script type="text/ng-template" id="image-uploader.html"
-  .image-uploader ng-style="{backgroundImage: 'url('+ngModel.url+')', border: ngModel.url ? 'none' : '1px dashed'}"
-    .delete-action ng-click="remove()" ng-show="ngModel.id"
-    label
-      span
-        | Click To Upload
-      input type="file" ng-model="ngModel" file-upload="'/admin/flows/images'"

@@ -1,9 +1,0 @@
-script type="text/ng-template" id="mobile-radio-list.html"
-  .mobile-radio-list
-    .mobile-radio-list__title ng-bind-html-compile="state.title"
-    md-radio-group ng-model="Model[state.model]"
-      .mobile-radio-list__content
-        ul
-          li ng-repeat="option in state.list"
-            md-radio-button ng-value="option" aria-label="option"
-              span ng-bind-html-compile="option.label"

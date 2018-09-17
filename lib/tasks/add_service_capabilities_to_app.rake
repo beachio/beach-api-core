@@ -9,7 +9,6 @@ task :add_service_applications => :environment do
                                                                 {:title => "Chats", :description => 'Realtime message service'},
                                                                 {:title => "Data Models", :description => 'Flexible Data model abstractions and persistence'},
                                                                 {:title => "Services and Capabilities", :description => 'Managing Service and Capability permissions for Doorkeeper Applications'},
-                                                                {:title => "Flows", :description => 'Access to screens and flows services'},
                                                                 {:title => "Images and Assets", :description => 'Uploading Images and Assets to Coinstash CDN'},
                                                                 {:title => "Security Pro", :description => 'Permissions Management and Access Levels for Users'},
                                                                 {:title => "Webhooks", :description => 'Managing Webhooks via the Coinstash Platform'},

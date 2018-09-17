@@ -1,8 +1,0 @@
-script type="text/ng-template" id="pick-handler-modal.html"
-  h2 Select A Handler
-  .handler-list
-    .handler-row ng-repeat="(k, v) in handlers"
-      .handler-row-title ng-bind="k + ' ('+v.length+')'"
-      .handler-cell ng-repeat="handler in v" ng-click="pickHandler(handler)"
-        .handler-cell-icon ng-style="{backgroundImage: 'url(/handlers/'+handler.name.toLowerCase().split(' ').join('-')+'.png)'}"
-        .handler-cell-title ng-bind="handler.name"
