@@ -48,7 +48,7 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
   end
 
   def apipie_team_response
-    pretty BeachApiCore::TeamSerializer.new(apipie_team)
+    pretty BeachApiCore::TeamSerializer.new(apipie_team, current_user: apipie_user)
   end
 
   def apipie_service_response

@@ -9,6 +9,7 @@ module BeachApiCore
     attributes :id, :email, :username, :user_preferences, :is_me, :roles, :scores
     has_one :profile, serializer: BeachApiCore::ProfileSerializer
     has_many :organisations
+    has_many :teams
 
     def user_preferences
       return [] unless current_application

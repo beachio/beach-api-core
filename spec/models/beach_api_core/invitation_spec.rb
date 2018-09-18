@@ -2,7 +2,16 @@ require 'rails_helper'
 
 module BeachApiCore
   describe Invitation, type: :model do
-    subject { create :invitation }
+    subject  do
+      invitation = build :invitation
+      create(:setting, keeper: invitation.group.application, name: "noreply_from", value: "test1@test.com")
+      create(:setting, keeper: invitation.group.application, name: "client_domain", value: "https://test1.com")
+      invitation.user = invitation.group.application.owner
+      create :membership, member: invitation.user, group: invitation.group
+      invitation.application = invitation.group.application
+      invitation.save
+      invitation
+    end
 
     it 'should be valid with basic factory attributes' do
       expect(subject).to be_valid
@@ -31,12 +40,20 @@ module BeachApiCore
 
     it 'should initialize an invitee on create' do
       invitation = build :invitation, user: (create :user), group: (create :team)
+      create(:setting, keeper: invitation.group.application, name: "noreply_from", value: "test1@test.com")
+      create(:setting, keeper: invitation.group.application, name: "client_domain", value: "https://test1.com")
+      invitation.user = invitation.group.application.owner
+      create :membership, member: invitation.user, group: invitation.group
+      invitation.application = invitation.group.application
       expect { invitation.save }.to change(User, :count).by(1)
       expect(User.last.email).to eq(invitation.email)
     end
 
     it 'should generate random url safe token on save' do
-      invitation = create :invitation, token: nil
+      invitation = build :invitation, token: nil
+      create(:setting, keeper: invitation.group, name: "reply_from", value: "test1@test.com")
+      create(:setting, keeper: invitation.group, name: "client_domain", value: "https://test1.com")
+      invitation.save
       expect(invitation.token).to be_present
     end
 

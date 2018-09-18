@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180907134359) do
+ActiveRecord::Schema.define(version: 20180917202239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,16 +61,6 @@ ActiveRecord::Schema.define(version: 20180907134359) do
     t.datetime "updated_at", null: false
     t.index ["atom_parent_id"], name: "index_beach_api_core_atoms_on_atom_parent_id"
     t.index ["name"], name: "index_beach_api_core_atoms_on_name", unique: true
-  end
-
-  create_table "beach_api_core_bots", force: :cascade do |t|
-    t.uuid "uuid"
-    t.integer "application_id"
-    t.string "name"
-    t.integer "flow_id"
-    t.string "dialog_flow_client_access_token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "beach_api_core_capabilities", id: :serial, force: :cascade do |t|
@@ -157,16 +147,6 @@ ActiveRecord::Schema.define(version: 20180907134359) do
     t.index ["favouritable_type", "favouritable_id"], name: "indexfavourites_on_favouritable_type_and_favouritable_id"
     t.index ["user_id", "favouritable_id", "favouritable_type"], name: "index_favourites_on_user_id_and_f_id_and_f_type", unique: true
     t.index ["user_id"], name: "index_beach_api_core_favourites_on_user_id"
-  end
-
-  create_table "beach_api_core_flows", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "directory_id"
-    t.boolean "main"
-    t.boolean "locked"
-    t.string "commit"
   end
 
   create_table "beach_api_core_instances", force: :cascade do |t|
@@ -376,16 +356,6 @@ ActiveRecord::Schema.define(version: 20180907134359) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_beach_api_core_roles_on_name"
-  end
-
-  create_table "beach_api_core_screens", force: :cascade do |t|
-    t.json "content"
-    t.integer "resource_id"
-    t.string "resource_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.json "settings", default: {}
-    t.integer "position"
   end
 
   create_table "beach_api_core_service_categories", force: :cascade do |t|

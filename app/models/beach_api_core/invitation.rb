@@ -9,7 +9,7 @@ module BeachApiCore
     has_many :invitation_roles, dependent: :destroy
     has_many :roles, through: :invitation_roles, class_name: 'BeachApiCore::Role'
 
-    attr_accessor :first_name, :last_name
+    attr_accessor :first_name, :last_name, :application
 
     before_validation :set_invitee, on: :create
     before_validation :set_token, on: :create, unless: -> { token.present? }
@@ -33,13 +33,33 @@ module BeachApiCore
 
     def set_invitee
       self.invitee = BeachApiCore::User.create_with(
-        status: BeachApiCore::User.statuses[:invitee],
-        password: SecureRandom.hex,
-        profile_attributes: {
-          first_name: first_name,
-          last_name: last_name
-        }
+          status: BeachApiCore::User.statuses[:invitee],
+          password: SecureRandom.hex,
+          profile_attributes: {
+              first_name: first_name,
+              last_name: last_name
+          }
       ).find_or_initialize_by(email: email)
+      check_mail_config
+      self.errors.add :wrong, 'group_type', '. Group type should be one of: Team, Organisation' unless [BeachApiCore::Team, BeachApiCore::Organisation].include?(group.class)
+      self.errors.add :wrong, 'group' if group.nil?
+      return unless errors.blank?
+      if no_membership
+        role_ids = self.user.assignments.where(:keeper_type => "Doorkeeper::Application", :keeper_id => group.application_id).pluck(:role_id)
+        roles = BeachApiCore::Role.where(id: role_ids).pluck(:name)
+        self.errors.add :wrong, 'permissions for indicated team' if roles.empty?
+        self.errors.add :wrong, 'permissions for indicated team' unless (roles - ["admin", "developer"]).empty?
+      end
+      self.errors.add :wrong, 'application.' if application.id != group.application.id
+    end
+
+    def no_membership
+      user.memberships.where(:group_type => group.class.to_s, :group_id => group.id).empty?
+    end
+
+    def check_mail_config
+      self.errors.add :wrong, 'application. There are no client_domain setting for current application' if BeachApiCore::Setting.client_domain(keeper: application).nil?
+      self.errors.add :wrong, 'application. There are no noreply_from setting for current application' if BeachApiCore::Setting.noreply_from(keeper: application).nil?
     end
 
     def set_token

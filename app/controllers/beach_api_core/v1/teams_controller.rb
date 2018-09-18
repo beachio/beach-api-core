@@ -13,6 +13,10 @@ module BeachApiCore
       error code: 400, desc: I18n.t('api.resource_description.errors.bad_request')
     end
 
+    def index
+      render_json_success(current_user.teams, :ok, current_user: current_user, root: :teams)
+    end
+
     def create
       result = BeachApiCore::TeamCreate.call(params: team_params, user: current_user,
                                              application: current_application, access_token: doorkeeper_token)

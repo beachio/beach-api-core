@@ -6,7 +6,9 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     @_apipie_user = BeachApiCore::User.new(id: fake_id, email: Faker::Internet.email)
     build_apipie_user_profile
     @_apipie_user.organisations = [apipie_organisation]
+    @_apipie_user.teams = [apipie_team]
     @_apipie_user.assignments.build(keeper: @_apipie_user.organisations.first, role: BeachApiCore::Role.developer)
+    @_apipie_user.assignments.build(keeper: @_apipie_user.teams.first, role: BeachApiCore::Role.developer)
     @_apipie_user.valid?
     @_apipie_user
   end
@@ -71,7 +73,8 @@ module BeachApiCore::Concerns::V1::ApipieConcern
   end
 
   def apipie_team
-    @_apipie_team ||= BeachApiCore::Team.new(name: Faker::Company.name,
+    @_apipie_team ||= BeachApiCore::Team.new( id: fake_id,
+                                             name: Faker::Company.name,
                                              application: apipie_oauth_application)
   end
 

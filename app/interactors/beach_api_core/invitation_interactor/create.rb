@@ -4,7 +4,7 @@ module BeachApiCore::InvitationInteractor
 
     def call
       context.invitation = context.group.invitations.build context.params
-      context.invitation.assign_attributes(user: context.user)
+      context.invitation.assign_attributes(user: context.user, application: context.application)
 
       if context.invitation.save
         context.status = :created

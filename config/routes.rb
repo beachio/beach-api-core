@@ -29,7 +29,7 @@ BeachApiCore::Engine.routes.draw do
       resource :capabilities, only: %i(create destroy)
     end
     resources :service_categories, only: %i(create update index)
-    resources :teams, except: %i(new edit index)
+    resources :teams, except: %i(new edit)
     resources :organisations, except: %i(new edit) do
       get :users, on: :collection
       put :current, on: :member

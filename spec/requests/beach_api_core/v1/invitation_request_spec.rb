@@ -19,8 +19,9 @@ module BeachApiCore
 
       describe 'should list all group invitations' do
         before do
-          create :invitation
-          @invitation = create :invitation, group: organisation
+          BeachApiCore::Setting.create(keeper: organisation.application, name: :noreply_from, value: Faker::Internet.email)
+          BeachApiCore::Setting.create(keeper: organisation.application, name: :client_domain, value: Faker::Internet.redirect_uri)
+          @invitation = create :invitation, group: organisation, application: organisation.application, user: oauth_user
         end
         it do
           get beach_api_core.v1_invitations_path,
@@ -39,7 +40,8 @@ module BeachApiCore
     end
 
     describe 'when create' do
-      let(:team) { create :team, :with_organisation }
+      let(:team) { create :team, :with_organisation, application: oauth_application }
+      let!(:assignment) {create :assignment, keeper: oauth_application, user: oauth_user, role: (create :admin_role) }
       before do
         create :setting, keeper: oauth_application, name: :noreply_from, value: Faker::Internet.email
         create :setting, keeper: oauth_application, name: :client_domain, value: Faker::Internet.redirect_uri
@@ -95,10 +97,17 @@ module BeachApiCore
       let!(:organisation) do
         (create :membership, member: oauth_user, group: (create :organisation), owner: true).group
       end
+      let!(:team) do
+        (create :membership, member: oauth_user, group: (create :team), owner: true).group
+      end
       before do
-        @invitation = create :invitation, group: organisation, user: oauth_user
-        @other_invitation = create :invitation, group: organisation, user: oauth_user
-        create :invitation, invitee: @invitation.invitee, email: @invitation.invitee.email
+        create(:setting, keeper: organisation.application, name: "noreply_from", value: "test1@test.com")
+        create(:setting, keeper: organisation.application, name: "client_domain", value: "https://test1.com")
+        @invitation = create :invitation, group: organisation, user: oauth_user, application: organisation.application
+        @other_invitation = create :invitation, group: organisation, user: oauth_user, application: organisation.application
+        create(:setting, keeper: team.application, name: "noreply_from", value: "test1@test.com")
+        create(:setting, keeper: team.application, name: "client_domain", value: "https://test1.com")
+        create :invitation, invitee: @invitation.invitee, user: oauth_user, email: @invitation.invitee.email, group: team, application: team.application
       end
 
       it_behaves_like 'an authenticated resource' do
@@ -123,12 +132,20 @@ module BeachApiCore
     describe 'when accept' do
       let(:invitee) { create :user, status: :invitee }
       let(:user) { create :user, confirmed_at: Time.now.utc }
-      let!(:invitation) { create :invitation, email: user.email, group: (create :organisation) }
-      let!(:other_invitation) { create :invitation, email: invitee.email }
+      let!(:organisation) do
+        (create :membership, member: user, group: (create :organisation), owner: true).group
+      end
+
+      before do
+        create(:setting, keeper: organisation.application, name: "noreply_from", value: "test1@test.com")
+        create(:setting, keeper: organisation.application, name: "client_domain", value: "https://test1.com")
+        @invitation = create :invitation, group: organisation, user: user, application: organisation.application
+        @other_invitation = create :invitation, group: organisation, user: user, application: organisation.application, invitee: invitee, email: invitee.email
+      end
 
       it 'should join user to the group' do
         expect do
-          post beach_api_core.accept_v1_invitation_path(other_invitation, token: other_invitation.token)
+          post beach_api_core.accept_v1_invitation_path(@other_invitation, token: @other_invitation.token)
           invitee.reload
         end.to change(Invitation, :count)
           .by(-1)
@@ -139,17 +156,17 @@ module BeachApiCore
           .and change(invitee, :status).to 'active'
         expect(json_body[:access_token]).to be_present
         expect(response.status).to eq 200
-        expect(other_invitation.group.members).to include(invitee)
+        expect(@other_invitation.group.users).to include(invitee)
         expect do
-          post beach_api_core.accept_v1_invitation_path(invitation, token: invitation.token)
+          post beach_api_core.accept_v1_invitation_path(@invitation, token: @invitation.token)
         end.to change(Invitation, :count).by(-1)
                                          .and change(ActionMailer::Base.deliveries, :count).by(0)
         expect(response.status).to eq 200
-        expect(invitation.group.users).to include(user)
+        expect(@invitation.group.users).to include(user)
       end
 
       it 'should return an error' do
-        post beach_api_core.accept_v1_invitation_path(invitation, token: 'invalid_token')
+        post beach_api_core.accept_v1_invitation_path(@invitation, token: 'invalid_token')
         expect(response.status).to eq 400
       end
     end

@@ -15,6 +15,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
   index do
     id_column
     column :email
+    column :scores
     actions
   end
 
@@ -55,7 +56,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
         t.input :keeper_id, as: :hidden, input_html: { class: 'js-keeper_id' }
         t.input :role, collection: BeachApiCore::Role.all, include_blank: false
         t.input :keeper, as: :select,
-                         collection: options_for_select(keepers, "#{t.object.keeper_type}##{t.object.keeper_id}"),
+                         collection: options_for_select(keepers_and_team_keepers, "#{t.object.keeper_type}##{t.object.keeper_id}"),
                          input_html: { class: 'js-keeper_select', name: :keeper }
       end
       f.has_many :team_memberships, allow_destroy: true, heading: t('activerecord.models.team.other') do |t|
@@ -85,6 +86,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       row :email
       row :username
       tag_row :status
+      row :scores
       attributes_table_for user.profile do
         row :first_name
         row :last_name

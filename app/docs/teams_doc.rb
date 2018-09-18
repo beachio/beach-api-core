@@ -8,6 +8,11 @@ module TeamsDoc
     end
   end
 
+  api :GET, '/teams', "Get teams list for current user"
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example "\"teams\": [#{apipie_team_response} , ...]"
+  def index; end
+
   api :POST, '/teams', I18n.t('api.resource_description.descriptions.teams.create')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :team
