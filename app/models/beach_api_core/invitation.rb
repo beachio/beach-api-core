@@ -45,12 +45,21 @@ module BeachApiCore
       self.errors.add :wrong, 'group' if group.nil?
       return unless errors.blank?
       if no_membership
-        role_ids = self.user.assignments.where(:keeper_type => "Doorkeeper::Application", :keeper_id => group.application_id).pluck(:role_id)
+        role_ids = get_roles
         roles = BeachApiCore::Role.where(id: role_ids).pluck(:name)
         self.errors.add :wrong, 'permissions for indicated team' if roles.empty?
         self.errors.add :wrong, 'permissions for indicated team' unless (roles - ["admin", "developer"]).empty?
       end
       self.errors.add :wrong, 'application.' if application.id != group.application.id
+    end
+
+    def get_roles
+      app_roles = self.user.assignments.where(keeper: group.application).pluck(:role_id)
+      if app_roles.any?
+        app_roles
+      else
+        self.user.assignments.where(keeper: BeachApiCore::Instance.current).pluck(:role_id)
+      end
     end
 
     def no_membership
