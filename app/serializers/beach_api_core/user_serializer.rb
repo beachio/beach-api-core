@@ -6,7 +6,7 @@ module BeachApiCore
     acts_as_abs_doc_id
     acts_with_options(:current_user, :current_application)
 
-    attributes :id, :email, :username, :user_preferences, :is_me, :roles, :scores
+    attributes :id, :email, :username, :user_preferences, :is_me, :roles
     has_one :profile, serializer: BeachApiCore::ProfileSerializer
     has_many :organisations
     has_many :teams
