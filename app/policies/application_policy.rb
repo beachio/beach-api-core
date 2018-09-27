@@ -35,6 +35,10 @@ class ApplicationPolicy
     false
   end
 
+  def upload_logo_image?
+    false
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end

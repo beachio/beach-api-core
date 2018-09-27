@@ -71,6 +71,10 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     pretty BeachApiCore::SettingSerializer.new(apipie_setting)
   end
 
+  def apipie_mail_body_response
+    pretty BeachApiCore::MailBodySerializer.new(apipie_mail_body)
+  end
+
   def apipie_job_response
     pretty BeachApiCore::JobSerializer.new(apipie_job)
   end

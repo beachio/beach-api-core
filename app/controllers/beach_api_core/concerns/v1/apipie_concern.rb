@@ -139,6 +139,14 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                    name: Faker::Name.title, value: Faker::Lorem.word)
   end
 
+  def apipie_mail_body
+    @_apipie_mail_body ||= BeachApiCore::MailBody.new(id: fake_id, application_id: apipie_oauth_application.id,
+                                                      mail_type: 0, body_text: body_text,
+                                                      greetings_text: "DEAR [INVITEE_NAME],",
+                                                      signature_text: "With Best Wishes \n [APPLICATION_NAME] Team",
+                                                      footer_text: "©#{Time.now.year}, [APPLICATION_NAME] • All Rights Reserved")
+  end
+
   def apipie_job
     @_apipie_job ||= BeachApiCore::Job.new(id: fake_id,
                                            start_at: 2.days.since,
@@ -212,6 +220,12 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
   def fake_id
     rand(1..100)
+  end
+
+  def body_text
+    "You have been invited to join [GROUP_NAME] \n
+If you do not currently have an [APPLICATION_NAME] account, you will be given the opportunity to sign up,
+ otherwise you can login and link your existing account to this organisation."
   end
 
   def build_apipie_user_profile

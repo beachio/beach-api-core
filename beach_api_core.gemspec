@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rmagick'
 
   s.add_dependency 'draper'
-
+  s.add_dependency 'aws-sdk'
   s.add_dependency 'activeadmin'
   s.add_dependency 'paper_trail'
   s.add_dependency 'ancestry'

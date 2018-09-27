@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180917202239) do
+ActiveRecord::Schema.define(version: 20180924062151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,6 +233,20 @@ ActiveRecord::Schema.define(version: 20180917202239) do
     t.datetime "last_run"
     t.bigint "application_id"
     t.index ["application_id"], name: "index_beach_api_core_jobs_on_application_id"
+  end
+
+  create_table "beach_api_core_mail_bodies", force: :cascade do |t|
+    t.integer "mail_type"
+    t.bigint "application_id"
+    t.string "text_color", default: "#000000"
+    t.string "button_color", default: "#3FD485"
+    t.string "button_text_color", default: "#376E50"
+    t.string "button_text", default: ""
+    t.text "body_text", default: ""
+    t.string "greetings_text", default: ""
+    t.text "signature_text", default: ""
+    t.string "footer_text", default: ""
+    t.index ["application_id"], name: "index_beach_api_core_mail_bodies_on_application_id"
   end
 
   create_table "beach_api_core_memberships", force: :cascade do |t|
@@ -489,6 +503,10 @@ ActiveRecord::Schema.define(version: 20180917202239) do
     t.datetime "updated_at", null: false
     t.string "owner_type"
     t.integer "owner_id"
+    t.string "mail_type_band_color", default: "#ff8000"
+    t.string "mail_type_band_text_color", default: "#FFFFFF"
+    t.string "logo_url", default: ""
+    t.string "s3_file_path", default: ""
     t.index ["owner_type", "owner_id"], name: "index_oauth_applications_on_owner_type_and_owner_id"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end

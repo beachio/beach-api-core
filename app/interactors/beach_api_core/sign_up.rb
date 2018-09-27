@@ -3,7 +3,7 @@ class BeachApiCore::SignUp
 
   organize [BeachApiCore::UserInteractor::AuthenticateApplication,
             BeachApiCore::UserInteractor::Create,
-            # BeachApiCore::UserInteractor::Email,
+            BeachApiCore::UserInteractor::Email,
             BeachApiCore::Authorization::CreateAccessToken,
             BeachApiCore::WebhookInteractor::Notify]
 end

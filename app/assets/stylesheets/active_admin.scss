@@ -61,3 +61,25 @@ form fieldset > ol > li.boolean label {
     width: calc(80% - 85px);
   }
 }
+
+.beach_api_core_mail_body .row-body_text td
+{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.beach_api_core_note
+{
+  color: orange;
+  width: 80%;
+  float: right;
+}
+
+.mail_config_text
+{
+  letter-spacing: 0.5px;
+  line-height: 20px;
+  padding-top: 20px;
+  width: 600px !important;
+
+}

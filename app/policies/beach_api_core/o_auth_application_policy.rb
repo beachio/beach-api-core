@@ -9,6 +9,7 @@ module BeachApiCore
     end
 
     alias update? show?
+    alias upload_logo_image? show?
     alias destroy? show?
   end
 end

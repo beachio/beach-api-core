@@ -3,7 +3,7 @@ module BeachApiCore
     include ApplicationsDoc
     before_action :doorkeeper_authorize!
     before_action :authenticate_service_for_application
-    before_action :get_resource, only: %i(show update destroy)
+    before_action :get_resource, only: %i(show update destroy upload_logo_image)
 
     resource_description do
       name I18n.t('activerecord.models.doorkeeper/application.other')
@@ -55,6 +55,21 @@ module BeachApiCore
       end
     end
 
+    def upload_logo_image
+      authorize Instance.current, :developer_or_admin?
+      authorize @application
+      result = BeachApiCore::DoorkeeperInteractor::ApplicationUpdate.call(
+          application: @application, params: application_logo_params
+      )
+
+      if result.success?
+        render_json_success(result.application, result.status,
+                            serializer: AppSerializer, root: :application)
+      else
+        render_json_error({ message: result.message }, result.status)
+      end
+    end
+
     def destroy
       authorize Instance.current, :developer_or_admin?
       authorize @application
@@ -75,11 +90,15 @@ module BeachApiCore
     end
 
     def application_create_params
-      params.require(:application).permit(:name, :redirect_uri)
+      params.require(:application).permit(:name, :redirect_uri, :mail_type_band_color, :mail_type_band_text_color)
     end
 
     def application_update_params
-      params.require(:application).permit(:name)
+      params.require(:application).permit(:name, :mail_type_band_color, :mail_type_band_text_color)
+    end
+
+    def application_logo_params
+      params.permit(:file)
     end
   end
 end

@@ -58,6 +58,13 @@ en:
           get: "GET an application"
           update: "Update an application"
           delete: "Delete an application"
+        mail_bodies:
+          list: "Get list of mail bodies"
+          create: "Create a mail body"
+          get: "GET a mail body"
+          update: "Update a mail body"
+          delete: "Delete a mail body"
+
         assignments:
           assign: "Assign a role to user in current organisation"
           remove: "Remove user's role"
@@ -323,6 +330,12 @@ en:
         downcase: "service"
       service:
         <<: *service
+      beach_api_core/mail_body: &mail_body
+        one: "Mail Body"
+        downcase: "mail body"
+        other: "Mail Bodies"
+      mail_body:
+        <<: *mail_body
       beach_api_core/setting: &setting
         one: "Setting"
         other: "Settings"

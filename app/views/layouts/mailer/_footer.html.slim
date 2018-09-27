@@ -1,12 +1,17 @@
 tr
   td
     table(width="600px" border="0" cellspacing="0" cellpadding="0" style="padding: 15px 20px; background: #fff; border: 1px solid rgba(0,0,0,0.1); border-top: none")
-      tr
-        td(style="font-family: sans-serif; font-size: 14px; color: #30292F; letter-spacing: 0.5px; line-height: 20px;")
-          |With regards,
-      tr
-        td(style="font-family: sans-serif; font-size: 14px; color: #30292F; letter-spacing: 0.5px; line-height: 20px; padding-top: 10px;")
-          |The #{BeachApiCore.company_names[:short]} Team
+      -if @mail_config.nil? || @mail_config.signature_text.nil? || @mail_config.signature_text.empty?
+        tr
+          td(style="font-family: sans-serif; font-size: 14px; color: #{@mail_config.nil? || @mail_config.text_color.empty? ? "#30292F" : @mail_config.text_color}; letter-spacing: 0.5px; line-height: 20px;")
+            |With regards,
+        tr
+          td(style="font-family: sans-serif; font-size: 14px; color: #{@mail_config.nil? || @mail_config.text_color.empty? ? "#30292F" : @mail_config.text_color}; letter-spacing: 0.5px; line-height: 20px; padding-top: 10px;")
+            |The #{@application.name} Team
+      -else
+        tr
+          td(style="font-family: sans-serif; font-size: 14px; color: #{@mail_config.nil? || @mail_config.text_color.empty? ? "#30292F" : @mail_config.text_color}; letter-spacing: 0.5px; line-height: 20px;")
+            | #{@signature_text.gsub("\r\n", "<br>").gsub("\n","<br>").html_safe}
 tr
   td(align="center" style="padding-top: 20px;")
     table(border="0" cellspacing="0" cellpadding="0")
@@ -17,4 +22,4 @@ tr
           a(href="#" style="vertical-align: middle; font-size: 14px; color: #B9C0C7; letter-spacing: 0; text-decoration: none;" width="50%") Contact Support
 tr
   td(style="font-size: 11px; color: #B9C0C7; letter-spacing: 0; padding-top: 15px;" align="center")
-    |©2013 - #{Time.now.year}, #{BeachApiCore.company_names[:long]} • All Rights Reserved
+    | #{@mail_config.nil? || @mail_config.footer_text.nil? || @mail_config.footer_text.empty? ? "©#{Time.now.year}, #{@application.name} • All Rights Reserved" : @footer_text.gsub("\r\n", "<br>").html_safe}
