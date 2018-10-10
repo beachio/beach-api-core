@@ -4,7 +4,7 @@ module BeachApiCore
     include Concerns::UserRoles
     include Concerns::UserPermissions
 
-    attr_accessor :require_confirmation, :require_current_password, :current_password
+    attr_accessor :require_confirmation, :require_current_password, :current_password, :confirmed
 
     has_one :profile, inverse_of: :user, dependent: :destroy, class_name: 'BeachApiCore::Profile'
     has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'
@@ -49,7 +49,9 @@ module BeachApiCore
               if: proc { errors[:email].empty? }
     validates :username, presence: true, uniqueness: true
     validates :profile, :status, presence: true
-    validates :password_confirmation, presence: true, if: :require_confirmation
+    validates :password_confirmation, :password, presence: true, if: :require_confirmation
+    before_save :confirm_account, if: :confirmed
+    after_save :send_broadcast_message, if: :scores_changed?
     validates :current_password, presence: true, if: :require_current_password
     validate :correct_current_password, if: :require_current_password
 
@@ -130,6 +132,17 @@ module BeachApiCore
         self.profile.save!
       else
         self.profile.update_columns(sex: 'male', birth_date: (Date.today - 25.year))
+      end
+    end
+
+    def confirm_account
+      self.confirmed_at = Time.now
+    end
+
+    def send_broadcast_message
+      tokens = Doorkeeper::AccessToken.where(:resource_owner_id => self.id)
+      tokens.each do |token|
+        BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "userPointsChanged", value: self.scores, message: "Your scores was changed."}, "user" => BeachApiCore::UserSerializer.new(self, root: :user))
       end
     end
 

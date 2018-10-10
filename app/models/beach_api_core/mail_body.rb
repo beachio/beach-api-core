@@ -6,7 +6,7 @@ module BeachApiCore
                       forgot_password:  2
     }
 
-    validates  :application, presence: true
+    validates  :application, :mail_type, presence: true
     validate   :css_hex_color
     validates  :mail_type, uniqueness: { scope: :application }
 

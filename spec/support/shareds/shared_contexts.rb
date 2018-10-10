@@ -38,11 +38,19 @@ shared_context 'bearer token authentication' do
   end
 
   def application_auth
-    { 'HTTP_AUTHORIZATION' => "application_id #{oauth_application.uid}, client_secret #{oauth_application.secret}" }
+    { 'HTTP_AUTHORIZATION' => "application_id #{oauth_application.uid}, client_secret #{oauth_application.secret}"}
+  end
+
+  def application_auth_json
+    { 'HTTP_AUTHORIZATION' => "application_id #{oauth_application.uid}, client_secret #{oauth_application.secret}", 'ACCEPT' =>  'application/json', 'HTTP_ACCEPT' => 'application/json',  'CONTENT_TYPE' => 'application/json' }
   end
 
   def invalid_app_auth
     { 'HTTP_AUTHORIZATION' => "application_id #{SecureRandom.hex(8)}, application_secret #{SecureRandom.hex(10)}" }
+  end
+
+  def invalid_app_auth_json
+    { 'HTTP_AUTHORIZATION' => "application_id #{SecureRandom.hex(8)}, application_secret #{SecureRandom.hex(10)}", 'ACCEPT' =>  'application/json', 'HTTP_ACCEPT' => 'application/json',  'CONTENT_TYPE' => 'application/json' }
   end
 
   def invalid_bearer_auth

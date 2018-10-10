@@ -57,33 +57,13 @@ $ ->
     "We recently received a request for a forgotten password. \n\n" +
       "You can use this token [RESET_TOKEN] to restore the password"
 
-  show_elements = (index) ->
-    if index == ""
-      $("#mail_body_button_text_color_input").show();
-      $("#mail_body_button_color_input").show();
-      $("#mail_body_button_text_input").show();
-    else
-      $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_text_color_input").show();
-      $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_color_input").show();
-      $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_text_input").show();
-
   add_placeholder_text = (body= $('#mail_body_body_text'), type = $('#mail_body_mail_type'), index = "") ->
     body.removeAttr("placeholder")
     if type.val() == 'invitation'
-      show_elements(index)
       body.attr('placeholder', text_for_invitation())
     else if type.val() == 'forgot_password'
-      if index == ""
-        $("#mail_body_button_text_color_input").hide();
-        $("#mail_body_button_color_input").hide();
-        $("#mail_body_button_text_input").hide();
-      else
-        $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_text_color_input").hide();
-        $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_color_input").hide();
-        $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_text_input").hide();
       body.attr('placeholder', text_for_restore())
     else if type.val() == 'confirm_account'
-      show_elements(index)
       body.attr('placeholder', text_for_accept())
 
 

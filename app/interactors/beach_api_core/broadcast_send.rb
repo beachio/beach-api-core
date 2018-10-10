@@ -6,8 +6,16 @@ module BeachApiCore
       klass = context.params[:name].gsub(/Channel/, '')
       channel = "BeachApiCore::#{context.params[:name]}".constantize
       object = "BeachApiCore::#{klass}".constantize.find(context.params[:id])
-
-      channel.broadcast_to(object, payload: context.params[:payload], klass.underscore => object)
+      if "BeachApiCore::#{klass}" == "BeachApiCore::User"
+        token = Doorkeeper::AccessToken.find_or_create_for(context.application,
+                                                           object.id,
+                                                           Doorkeeper::OAuth::Scopes.from_string('password'),
+                                                           Doorkeeper.configuration.access_token_expires_in,
+                                                           Doorkeeper.configuration.refresh_token_enabled?)
+        channel.broadcast_to(token, payload: context.params[:payload], :user => BeachApiCore::UserSerializer.new(object, root: :user))
+      else
+        channel.broadcast_to(object, payload: context.params[:payload], klass.underscore => object)
+      end
       context.status = :created
     end
   end

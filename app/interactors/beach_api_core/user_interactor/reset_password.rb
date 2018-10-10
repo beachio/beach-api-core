@@ -12,6 +12,7 @@ module BeachApiCore::UserInteractor
         context.fail! message: I18n.t('interactors.errors.invalid_token')
       end
       context.user.require_confirmation = true
+      context.user.confirmed = true
       if context.user.update context.params.slice(:password, :password_confirmation)
         context.user.update(reset_password_token: nil)
         context.status = :ok

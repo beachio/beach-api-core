@@ -8,10 +8,11 @@ ActiveAdmin.register_page 'Sessions' do
   page_action :create, method: :post do
     result = BeachApiCore::SignIn.call(session_params.merge(skip_headers: true))
     if result.success?
+      flash.delete(:error)
       session[:user_id] = result.user.id
       redirect_to admin_root_path
     else
-      flash[:error] = t('admin.errors.invalid_email_or_password')
+      flash[:error] = result.message == ["Your account is not verified"] ? "Your account is not verified" : t('admin.errors.invalid_email_or_password')
       render :new
     end
   end

@@ -145,7 +145,7 @@ module BeachApiCore
 
       it 'should join user to the group' do
         expect do
-          post beach_api_core.accept_v1_invitation_path(@other_invitation, token: @other_invitation.token)
+          post beach_api_core.accept_v1_invitation_path(@other_invitation, token: @other_invitation.token), headers: {"ACCEPT" => "application/json", "HTTP_ACCEPT" => "application/json", "CONTENT_TYPE" => "application/json"}
           invitee.reload
         end.to change(Invitation, :count)
           .by(-1)
@@ -158,7 +158,7 @@ module BeachApiCore
         expect(response.status).to eq 200
         expect(@other_invitation.group.users).to include(invitee)
         expect do
-          post beach_api_core.accept_v1_invitation_path(@invitation, token: @invitation.token)
+          post beach_api_core.accept_v1_invitation_path(@invitation, token: @invitation.token), headers: {"ACCEPT" => "application/json", "HTTP_ACCEPT" => "application/json", "CONTENT_TYPE" => "application/json"}
         end.to change(Invitation, :count).by(-1)
                                          .and change(ActionMailer::Base.deliveries, :count).by(0)
         expect(response.status).to eq 200
@@ -166,7 +166,7 @@ module BeachApiCore
       end
 
       it 'should return an error' do
-        post beach_api_core.accept_v1_invitation_path(@invitation, token: 'invalid_token')
+        post beach_api_core.accept_v1_invitation_path(@invitation, token: 'invalid_token'), headers: {"ACCEPT" => "application/json", "HTTP_ACCEPT" => "application/json", "CONTENT_TYPE" => "application/json"}
         expect(response.status).to eq 400
       end
     end

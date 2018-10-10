@@ -44,15 +44,62 @@ module BeachApiCore
     end
 
     def confirm
-      user = BeachApiCore::User.find(params[:id])
-      result = BeachApiCore::UserInteractor::Confirm.call(user: user, token: params[:confirmation_token])
-      if result.success?
-        render_json_success(result.user, :ok,
-                            serializer: BeachApiCore::UserSimpleSerializer,
-                            root: :user)
+      user = BeachApiCore::User.where(id: params[:id]).first
+      if user.nil?
+        if request.format.symbol == :html
+          @user = BeachApiCore::User.new
+          @result = {:status => 'fail', message: ["There are no such user."]}
+          render :activate_account
+        else
+          render_json_error({ message: "There are no such user" })
+        end
       else
-        render_json_error({ message: result.message }, result.status)
+        check = request.format.symbol == :html ? params[:password] == params[:password_confirmation] : true
+        if check
+          result = BeachApiCore::UserInteractor::Confirm.call(user: user, token: params[:confirmation_token])
+          user.update_attribute(:password, params[:password])
+          if result.success?
+            if request.format.symbol == :html
+              render :success
+            else
+              render_json_success(result.user, :ok,
+                                  serializer: BeachApiCore::UserSimpleSerializer,
+                                  root: :user)
+            end
+          else
+            if request.format.symbol == :html
+              result.message  = result.message.is_a?(String) ? [result.message] : result.message
+              @user = user
+              @result = {:status => 'confirm_request', message: result.message}
+              render :activate_account
+            else
+              render_json_error({ message: result.message }, result.status)
+            end
+          end
+        else
+          @user = user
+          @result = {:status => 'confirm_request', message: ["Password confirmation doesn't match Password"]}
+          render :activate_account
+        end
       end
+    end
+
+    def activate_account
+      if params[:confirmation_token].nil? || params[:id].nil?
+        @user = BeachApiCore::User.new
+        @result = {:status => 'confirm_request', message: ["Wrong confirmation token"]}
+      else
+        @user = BeachApiCore::User.where(:id => params[:id]).first
+        if @user.nil? || @user.confirm_email_token != params[:confirmation_token]
+            @user = BeachApiCore::User.new
+            @result = {:status => 'confirm_request', message: ["Wrong confirmation token"]}
+        else
+          @result = {:status => 'confirm_request', message: []}
+        end
+      end
+    end
+
+    def success
     end
 
     private

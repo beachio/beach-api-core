@@ -11,7 +11,7 @@ module BeachApiCore
     end
 
     def create
-      result = BroadcastSend.call(params: channel_params)
+      result = BroadcastSend.call(params: channel_params, :application => current_application)
       if result.success?
         head :no_content
       else

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+  <title>Success</title>
+  <%= stylesheet_link_tag   "beach_api_core/application", :media => "all" %>
+
+  <%= csrf_meta_tag %>
+
+</head>
+<body class="active_admin logged_out restore_password">
+  <div id="container">
+    <div class="header">
+      <div class="image-header">
+        <div class="img">
+          <%= image_tag('beach_api_core/beach-logo.png', class:'img')%>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+
+      <div class="success_message">
+        <p style="font-size: 25px">Success! Your password has been changed.</p>
+        <p style="font-size: 20px">You can now log in with your Mineful ID.</p>
+      </div>
+
+    </div>
+    <div class="footer">
+      <div class="image-header">
+        <div>
+          <%= image_tag('beach_api_core/beach-logo.png', class:'img-footer')%>
+        </div>
+        <label class="header-text">Identity Provided by Mineful</label>
+      </div>
+
+
+    </div>
+  </div>
+
+</body>
+
+</html>

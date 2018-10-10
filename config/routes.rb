@@ -22,10 +22,14 @@ BeachApiCore::Engine.routes.draw do
       get :lookup, on: :collection
     end
     resources :webhooks, only: %i(index create destroy)
+    get "/users/success", :to => "users#success", defaults: { format: false }
+    get "/users/:id/activate_account/:confirmation_token", :to => "users#activate_account", defaults: { format: false }
     resources :users, only: %i(create index) do
-      post :confirm, on: :member
+      post :confirm, on: :member, defaults: { format: false }
     end
-    resource :password, only: %i(create update)
+    resource :password, only: %i(create update), defaults: { format: false }
+    get "/password/restore_password/:token", to: "passwords#restore_password",  defaults: { format: false }
+    get "/password/success", to: "passwords#success_restore",  defaults: { format: false }
     resource :user, only: %i(show update)
     resources :services, only: %i(index update) do
       resource :capabilities, only: %i(create destroy)
@@ -40,7 +44,9 @@ BeachApiCore::Engine.routes.draw do
     resources :user_accesses, only: %i(create destroy)
     resources :memberships, only: %i(create destroy)
     resources :invitations, only: %i(index create destroy) do
-      match :accept, on: :member, via: [:get, :post]
+      match :accept, on: :member, via: [:get, :post],  defaults: { format: false }
+      match :accept_invitation, on: :member, via: [:get],  defaults: { format: false }
+      get :success, on: :member, defaults: {format: false}
     end
     resources :atoms, only: %i(create index show) do
       collection do

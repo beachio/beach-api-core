@@ -14,12 +14,12 @@ class BeachApiCore::Authorization::AuthorizeUser
   end
 
   def call
-    if user&.authenticate context.password
+    if (user&.authenticate context.password) && user&.confirmed?
       context.user = user
       context.status = :ok
     else
       context.status = :unauthorized
-      context.fail! message: [I18n.t('interactors.errors.not_valid_email_or_password')]
+      context.fail! message: (user&.authenticate context.password) ? ["Your account is not verified"] :  [I18n.t('interactors.errors.not_valid_email_or_password')]
     end
   end
 

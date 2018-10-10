@@ -40,10 +40,10 @@ module BeachApiCore
       it "should reset user's password" do
         expect do
           put beach_api_core.v1_password_path,
-              headers: application_auth,
+              headers: application_auth_json,
               params: { token: token,
                         password: new_password,
-                        password_confirmation: new_password }
+                        password_confirmation: new_password }.to_json
         end.to(change { user.reload.password_digest })
         expect(response.status).to eq 200
         expect(json_body[:user].keys).to contain_exactly(*BeachApiCore::USER_SIMPLE_KEYS)
@@ -51,10 +51,10 @@ module BeachApiCore
 
       it 'should should return error' do
         put beach_api_core.v1_password_path,
-            headers: application_auth,
+            headers: application_auth_json,
             params: { token: 'invalid',
                       password: new_password,
-                      password_confirmation: new_password }
+                      password_confirmation: new_password }.to_json
         expect(response.status).to eq 400
         expect(json_body[:error][:message]).to eq('Invalid token')
       end
@@ -62,10 +62,10 @@ module BeachApiCore
       it_behaves_like 'an authenticated resource' do
         before do
           put beach_api_core.v1_password_path,
-              headers: invalid_app_auth,
+              headers: invalid_app_auth_json,
               params: { token: token,
                         password: new_password,
-                        password_confirmation: new_password }
+                        password_confirmation: new_password }.to_json
         end
       end
     end

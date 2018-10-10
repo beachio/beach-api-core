@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :user, class: 'BeachApiCore::User' do
     sequence(:email) { |n| Faker::Internet.email("#{Faker::Internet.user_name}_#{n}") }
     password { Faker::Internet.password(6) }
+    confirmed_at Time.now
 
     after(:build) do |user|
       user.profile ||= build(:profile, user: user)
