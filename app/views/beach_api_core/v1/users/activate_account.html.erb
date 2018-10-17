@@ -3,53 +3,52 @@
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 
-  <title>Restore Password</title>
+  <title>Activate Account</title>
   <%= stylesheet_link_tag   "beach_api_core/application", :media => "all" %>
 
   <%= csrf_meta_tag %>
 
 </head>
 <body >
-    <div id="container">
+    <div id="container" style="<%= @config[:body_style] %>">
       <div class="header">
-        <div class="image-header">
-          <div class="img">
-            <%= image_tag('beach_api_core/beach-logo.png', class:'img')%>
-          </div>
-        </div>
-        <div class="header-text">Please set your password to complete your account setup</div>
+        <% if @config[:show_application_logo] %>
+            <div class="image-header">
+              <div class="img">
+                <%= image_tag(@config[:application_logo], class:'img')%>
+              </div>
+            </div>
+        <% end %>
       </div>
       <div class="body">
-        <%= form_for @user, url: confirm_v1_user_path, class: "formtastic session", method: :post do |f| %>
+        <%= form_for @user, url: confirm_v1_user_path, :html => {:style => "width:26.4%; background: #{@config[:form_background_color]}; border-radius: #{@config[:form_radius]};" }, method: :post do |f| %>
             <% if @result[:status] != 'updated' && @result[:message].any?%>
                 <ul>
                   <% @result[:message].each do |msg| %>
-                      <li class="error_text"><%= msg %></li>
+                      <li class="error_text" style="color: <%= @config[:error_text_color] %>"><%= msg %></li>
                   <% end %>
                 </ul>
             <% end %>
-
-
-
-
+            <div class="header-text" style="color: <%= @config[:text_color] %>"><%= @config[:header_text].html_safe %></div>
             <fieldset class="inputs-form">
               <ul>
                 <li class="string input required stringish" id="new_password_input">
-                  <label for="password" class="label_text">Password<abbr title="required">*</abbr>
+                  <label for="password" class="label_text" style="color: <%= @config[:text_color] %>">Password
                   </label>
-                  <input id="password" type="password" name="password">
+                  <input id="password" style="<%= @config[:input_style] %>" type="password" name="password">
                 </li>
                 <li class="string input required stringish" id="confirm_password_input">
-                  <label for="confirm_password" class="label_text"  >Confirm Password<abbr title="required">*</abbr>
+                  <label for="confirm_password" class="label_text" style="color: <%= @config[:text_color] %>"  >Confirm Password
                   </label>
-                  <input id="password_confirmation" type="password" name="password_confirmation">
+                  <input id="password_confirmation" style="<%= @config[:input_style] %>" type="password" name="password_confirmation">
                 </li>
                 <%= hidden_field_tag "confirmation_token", params[:confirmation_token] %>
+                <%= hidden_field_tag "application_id", params[:application_id] %>
 
                 <fieldset class="actions">
                   <ul>
                     <li class="action input_action" id="password_submit_action">
-                      <input class="submit-button" type="submit" name="commit" value="Set Password" data-disable-with="Set Password">
+                      <input class="submit-button" type="submit" name="commit" style="<%= @config[:button_style] %> ;" value="<%= @config[:button_text] %>" data-disable-with="Set Password">
                     </li>
                   </ul>
                 </fieldset>
@@ -61,12 +60,14 @@
         <% end %>
       </div>
       <div class="footer">
-        <div class="image-header">
-          <div>
-            <%= image_tag('beach_api_core/beach-logo.png', class:'img-footer')%>
-          </div>
-          <label class="header-text">Identity Provided by Mineful</label>
-        </div>
+        <% if @config[:show_instance_logo] %>
+            <div class="image-header">
+              <div>
+                <%= image_tag(BeachApiCore::Instance.instance_logo, class:'img-footer')%>
+              </div>
+              <label class="header-text" style="color: <%= @config[:provided_text_color] %>">Identity Provided by Mineful</label>
+            </div>
+        <% end %>
 
 
       </div>

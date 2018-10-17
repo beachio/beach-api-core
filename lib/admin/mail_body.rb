@@ -1,5 +1,5 @@
 ActiveAdmin.register BeachApiCore::MailBody, as: 'MailBody' do
-  menu priority: 66, parent: 'Mails'
+  menu priority: 66, parent: 'Custom Configs'
 
   permit_params :mail_type, :application_id,  :text_color, :button_color, :button_text, :body_text,
                 :button_text_colour, :greetings_text, :signature_text, :footer_text

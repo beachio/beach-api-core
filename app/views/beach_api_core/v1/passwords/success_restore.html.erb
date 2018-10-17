@@ -10,29 +10,33 @@
 
 </head>
 <body class="active_admin logged_out restore_password">
-  <div id="container">
+  <div id="container" style="<%= @config[:body_style]%>">
     <div class="header">
-      <div class="image-header">
-        <div class="img">
-          <%= image_tag('beach_api_core/beach-logo.png', class:'img')%>
-        </div>
-      </div>
+      <% if @config[:show_application_logo] %>
+          <div class="image-header">
+            <div class="img">
+              <%= image_tag(@config[:application_logo], class:'img')%>
+            </div>
+          </div>
+      <% end %>
     </div>
     <div class="body">
 
-      <div class="success_message">
-        <p style="font-size: 25px">Success! Your password has been changed.</p>
-        <p style="font-size: 20px">You can now log in with your Mineful ID.</p>
+      <div class="success_message" style="border-radius: <%= @config[:success_form_radius] %>; background: <%= @config[:success_background_color] %>; width: 30.4%;">
+        <p style="font-size: 19px; letter-spacing: 2px; color: <%= @config[:success_text_color] %>"><%= @config[:success_text].html_safe %></p>
       </div>
 
     </div>
     <div class="footer">
-      <div class="image-header">
-        <div>
-          <%= image_tag('beach_api_core/beach-logo.png', class:'img-footer')%>
-        </div>
-        <label class="header-text">Identity Provided by Mineful</label>
-      </div>
+      <% if @config[:show_instance_logo] %>
+          <div class="image-header">
+            <div>
+              <%= image_tag(BeachApiCore::Instance.instance_logo, class:'img-footer')%>
+            </div>
+            <label class="header-text" style="color: <%= @config[:provided_text_color] %>">Identity Provided by Mineful</label>
+          </div>
+      <% end %>
+
 
 
     </div>

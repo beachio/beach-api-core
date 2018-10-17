@@ -10,15 +10,14 @@
 
 </head>
 <body >
-<div id="container">
+<div id="container" style="<%= @config[:body_style]%>">
   <div class="header">
-    <div class="image-header">
-      <div class="img">
-        <%= image_tag('beach_api_core/beach-logo.png', class:'img')%>
-      </div>
-    </div>
-    <% if @result[:status] != 'wrong_token' %>
-        <div class="header-text">Please complete registration to accept the invitaton to <%= @group %></div>
+    <% if @config[:show_application_logo] %>
+        <div class="image-header">
+          <div class="img">
+            <%= image_tag(@config[:application_logo], class:'img')%>
+          </div>
+        </div>
     <% end %>
   </div>
   <div class="body">
@@ -27,37 +26,40 @@
           <p style='font-size: 25px'> Your Invitation token is wrong</p>
         </div>
     <% else %>
-        <%= form_for @user, url: accept_v1_invitation_path, class: "formtastic session", method: :post do |f| %>
+        <%= form_for @user, url: accept_v1_invitation_path, :html => {:style => "width:26.4%; background: #{@config[:form_background_color]};border-radius: #{@config[:form_radius]}" }, method: :post do |f| %>
             <% if @result[:status] != 'updated' && @result[:message].any?%>
                 <ul>
                   <% @result[:message].each do |msg| %>
-                      <li class="error_text"><%= msg %></li>
+                      <li class="error_text" style="color: <%= @config[:error_text_color] %>"><%= msg %></li>
                   <% end %>
                 </ul>
+            <% end %>
+            <% if @result[:status] != 'wrong_token' %>
+                <div class="header-text" style="color: <%= @config[:text_color]%>;"><%= @config[:header_text].gsub("[GROUP_NAME]", @group[:name]).gsub("[GROUP_TYPE]", @group[:type]).html_safe %></div>
             <% end %>
             <fieldset class="inputs-form">
               <ul>
                 <li class="string input required stringish" id="new_password_input">
-                  <label for="email" class="label_text">Email Address:
+                  <label for="email" class="label_text" style="color: <%= @config[:text_color] %>;">Email Address:
                   </label>
-                  <input id="email" disabled type="email" name="invitation[email]" value="<%= @user.email %>">
+                  <input id="email" disabled type="email" style="color: <%= @config[:text_color]  %>;<%= @config[:input_style] %>" name="invitation[email]" value="<%= @user.email %>">
                 </li>
                 <li class="string input required stringish" id="new_password_input">
-                  <label for="password" class="label_text">New Password:
+                  <label for="password" class="label_text" style="color: <%= @config[:text_color]  %>;">New Password:
                   </label>
-                  <input id="password" required type="password" name="invitation[password]">
+                  <input id="password" required type="password"  style="color: <%= @config[:text_color]%>;<%= @config[:input_style]  %>" name="invitation[password]">
                 </li>
                 <li class="string input required stringish" id="confirm_password_input">
-                  <label for="confirm_password" class="label_text"  >Confirm Password:
+                  <label for="confirm_password" class="label_text" style="color: <%= @config[:text_color]  %>;" >Confirm Password:
                   </label>
-                  <input id="password_confirmation" required type="password" name="invitation[[password_confirmation]">
+                  <input id="password_confirmation" style="color: <%= @config[:text_color]%>;<%= @config[:input_style] %>" required type="password" name="invitation[password_confirmation]">
                 </li>
                 <%= hidden_field_tag "token", params[:token]%>
 
                 <fieldset class="actions">
                   <ul>
                     <li class="action input_action" id="password_submit_action">
-                      <input class="submit-button" type="submit" name="commit" value="Set New Password" data-disable-with="Restore Password">
+                      <input class="submit-button" type="submit" name="commit" value="<%= @config[:button_text].html_safe %>" data-disable-with="Restore Password" style="<%= @config[:button_style]  %> ;">
                     </li>
                   </ul>
                 </fieldset>
@@ -67,12 +69,14 @@
     <% end %>
   </div>
   <div class="footer">
-    <div class="image-header">
-      <div>
-        <%= image_tag('beach_api_core/beach-logo.png', class:'img-footer')%>
+    <% if @config[:show_instance_logo] %>
+      <div class="image-header">
+        <div>
+          <%= image_tag(BeachApiCore::Instance.instance_logo, class:'img-footer')%>
+        </div>
+        <label class="header-text" style="color: <%= @config[:provided_text_color] %>">Identity Provided by Mineful</label>
       </div>
-      <label class="header-text">Identity Provided by Mineful</label>
-    </div>
+    <% end %>
 
 
   </div>
