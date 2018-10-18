@@ -143,7 +143,8 @@ module BeachApiCore
     def send_broadcast_message
       tokens = Doorkeeper::AccessToken.where(:resource_owner_id => self.id)
       tokens.each do |token|
-        BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "userPointsChanged", value: self.scores, message: BeachApiCore::Setting.scores_changed_message(keeper: BeachApiCore::Instance.current).nil? ? SCORES_MESSAGE : BeachApiCore::Setting.scores_changed_message(keeper: BeachApiCore::Instance.current)}, "user" => BeachApiCore::UserSerializer.new(self, root: :user))
+        application_message = BeachApiCore::Setting.scores_changed_message(keeper: token.application).nil? ? BeachApiCore::Setting.scores_changed_message(keeper: BeachApiCore::Instance.current) : BeachApiCore::Setting.scores_changed_message(keeper: token.application)
+        BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "userPointsChanged", value: self.scores, message: application_message.nil? ? SCORES_MESSAGE : application_message}, "user" => BeachApiCore::UserSerializer.new(self, root: :user))
       end
     end
 

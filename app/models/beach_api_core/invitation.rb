@@ -26,7 +26,8 @@ module BeachApiCore
         token = find_or_create_doorkeeper_token(user.id, group.application)
         user.update_attribute(:scores, user.scores + 500) if invitee.invitee?
         BeachApiCore::Webhook.notify('scores_achieved', 'BeachApiCore::User', user.id, token.id, scores) if invitee.invitee?
-        message = BeachApiCore::Setting.invite_accepted_message(keeper: BeachApiCore::Instance.current).nil? ? INVITE_ACCEPTED_MESSAGE : BeachApiCore::Setting.invite_accepted_message(keeper: BeachApiCore::Instance.current)
+        application_message = BeachApiCore::Setting.invite_accepted_message(keeper: group.application).nil? ?  BeachApiCore::Setting.invite_accepted_message(keeper: BeachApiCore::Instance.current) : BeachApiCore::Setting.invite_accepted_message(keeper: group.application)
+        message = application_message.nil? ? INVITE_ACCEPTED_MESSAGE : application_message
         BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "inviteAccepted", message: message.gsub("[INVITEE_EMAIL]", invitee.email).gsub("[GROUP_NAME]", group.name)}, "user" => BeachApiCore::UserSerializer.new(user, root: :user) )
         invitee.confirmed = true
         invitee.active!
