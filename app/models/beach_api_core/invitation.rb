@@ -15,6 +15,8 @@ module BeachApiCore
     before_validation :set_token, on: :create, unless: -> { token.present? }
     after_destroy :destroy_invitee, if: -> { invitee&.invitee? }
 
+    INVITE_ACCEPTED_MESSAGE = "[INVITEE_EMAIL] accepted your invite"
+
     def accept!
       return unless [BeachApiCore::Team, BeachApiCore::Organisation].include?(group.class)
       transaction do
@@ -24,7 +26,8 @@ module BeachApiCore
         token = find_or_create_doorkeeper_token(user.id, group.application)
         user.update_attribute(:scores, user.scores + 500) if invitee.invitee?
         BeachApiCore::Webhook.notify('scores_achieved', 'BeachApiCore::User', user.id, token.id, scores) if invitee.invitee?
-        BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "inviteAccepted", message: "User with email #{invitee.email} accept your invite to #{group.name}"}, "user" => BeachApiCore::UserSerializer.new(user, root: :user) )
+        message = BeachApiCore::Setting.invite_accepted_message(keeper: BeachApiCore::Instance.current).nil? ? INVITE_ACCEPTED_MESSAGE : BeachApiCore::Setting.invite_accepted_message(keeper: BeachApiCore::Instance.current)
+        BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "inviteAccepted", message: message.gsub("[INVITEE_EMAIL]", invitee.email).gsub("[GROUP_NAME]", group.name)}, "user" => BeachApiCore::UserSerializer.new(user, root: :user) )
         invitee.confirmed = true
         invitee.active!
         destroy!

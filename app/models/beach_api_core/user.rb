@@ -75,6 +75,7 @@ module BeachApiCore
     delegate :first_name, :last_name, :name, to: :profile
 
     enum status: %i(active invitee)
+    SCORES_MESSAGE = "Your scores was changed."
 
     class << self
       def search(term)
@@ -142,7 +143,7 @@ module BeachApiCore
     def send_broadcast_message
       tokens = Doorkeeper::AccessToken.where(:resource_owner_id => self.id)
       tokens.each do |token|
-        BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "userPointsChanged", value: self.scores, message: "Your scores was changed."}, "user" => BeachApiCore::UserSerializer.new(self, root: :user))
+        BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "userPointsChanged", value: self.scores, message: BeachApiCore::Setting.scores_changed_message(keeper: BeachApiCore::Instance.current).nil? ? SCORES_MESSAGE : BeachApiCore::Setting.scores_changed_message(keeper: BeachApiCore::Instance.current)}, "user" => BeachApiCore::UserSerializer.new(self, root: :user))
       end
     end
 
