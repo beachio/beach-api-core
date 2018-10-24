@@ -26,7 +26,7 @@
           <p style='font-size: 25px'> Your Invitation token is wrong</p>
         </div>
     <% else %>
-        <%= form_for @user, url: accept_v1_invitation_path, :html => {:style => "width:26.4%; background: #{@config[:form_background_color]};border-radius: #{@config[:form_radius]}" }, method: :post do |f| %>
+        <%= form_for @user, url: accept_v1_invitation_path, :html => {:style => "width: 501px; background: #{@config[:form_background_color]};border-radius: #{@config[:form_radius]}" }, method: :post do |f| %>
             <% if @result[:status] != 'updated' && @result[:message].any?%>
                 <ul>
                   <% @result[:message].each do |msg| %>

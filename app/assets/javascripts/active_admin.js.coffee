@@ -196,8 +196,8 @@ $ ->
   $('.application_view_type').each (index) ->
     COUNT += 1;
     type = $("#doorkeeper_application_custom_views_attributes_#{index}_view_type")
-    success = $("#doorkeeper_application_custom_views_attributes_#{index}_header_text")
-    header = $("#doorkeeper_application_custom_views_attributes_#{index}_success_text")
+    success = $("#doorkeeper_application_custom_views_attributes_#{index}_success_text")
+    header = $("#doorkeeper_application_custom_views_attributes_#{index}_header_text")
     add_view_placeholder_text(type, index, header, success)
     show_hide_element(type, index)
     add_view_note_for_invitations(type, $("#doorkeeper_application_custom_views_attributes_#{index}_header_text_input"), index)
@@ -218,8 +218,8 @@ $ ->
   $('#new_doorkeeper_application, #edit_doorkeeper_application').on 'change', '.application_view_type', (e) ->
     index = this.id.split('_')[5]
     type = $("#doorkeeper_application_custom_views_attributes_#{index}_view_type")
-    success = $("#doorkeeper_application_custom_views_attributes_#{index}_header_text")
-    header = $("#doorkeeper_application_custom_views_attributes_#{index}_success_text")
+    success = $("#doorkeeper_application_custom_views_attributes_#{index}_success_text")
+    header = $("#doorkeeper_application_custom_views_attributes_#{index}_header_text")
     add_view_placeholder_text(type, index, header, success)
     show_hide_element(type, index)
     add_view_note_for_success(type, $("#doorkeeper_application_custom_views_attributes_#{index}_success_button_first_available_input"), index);

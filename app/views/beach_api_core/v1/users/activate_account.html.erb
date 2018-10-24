@@ -21,7 +21,7 @@
         <% end %>
       </div>
       <div class="body">
-        <%= form_for @user, url: confirm_v1_user_path, :html => {:style => "width:26.4%; background: #{@config[:form_background_color]}; border-radius: #{@config[:form_radius]};" }, method: :post do |f| %>
+        <%= form_for @user, url: confirm_v1_user_path, :html => {:style => "width: 501px; background: #{@config[:form_background_color]}; border-radius: #{@config[:form_radius]};" }, method: :post do |f| %>
             <% if @result[:status] != 'updated' && @result[:message].any?%>
                 <ul>
                   <% @result[:message].each do |msg| %>
