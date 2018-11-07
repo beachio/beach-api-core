@@ -2,7 +2,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
   menu priority: 51, parent: 'Users'
 
   permit_params do
-    [:email, :username, :password,
+    [:email, :username, :password, :scores,
      profile_attributes: custom_fields_params.concat([:id, :first_name, :last_name,
                                                       :sex, :birth_date, :time_zone,
                                                       avatar_attributes: %i(id file)]),
@@ -38,6 +38,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       f.input :email
       f.input :username, required: false
       f.input :password, required: true
+      f.input :scores
       f.fields_for :profile do |p|
         p.object.build_avatar if p.object.avatar.blank?
         p.input :first_name, required: false
