@@ -12,6 +12,17 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
      organisation_accesses_attributes: %i(id access_level_id keeper_id keeper_type _destroy)]
   end
 
+  action_item only: :show, priority: 0 do
+    link_to('Confirm User', confirm_user_admin_user_path, method: :put) if user.confirmed_at.nil?
+  end
+
+  member_action :confirm_user, method: :put do
+    user = BeachApiCore::User.find(params[:id])
+    user.update_attribute(:confirmed_at, Time.now)
+    redirect_to admin_user_path(user)
+  end
+
+
   index do
     id_column
     column :email

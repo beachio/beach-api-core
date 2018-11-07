@@ -19,6 +19,13 @@ module UsersDoc
   example "\"user\": #{apipie_user_response}"
   def show; end
 
+  api :PUT, '/users/confirm_user/:id', "Confirm user with indicated id"
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example '{
+  "message": "User with id: 48 was successfully confirmed"
+}'
+  def force_confirm_user; end
+
   api :PUT, '/user', I18n.t('api.resource_description.descriptions.users.update')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :user, Hash, required: true do

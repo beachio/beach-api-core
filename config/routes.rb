@@ -24,6 +24,7 @@ BeachApiCore::Engine.routes.draw do
     resources :webhooks, only: %i(index create destroy)
     get "/users/success", :to => "users#success", defaults: { format: false }
     get "/users/:id/activate_account/:confirmation_token", :to => "users#activate_account", defaults: { format: false }
+    put '/users/confirm_user/:id', :to => 'users#force_confirm_user'
     resources :users, only: %i(create index) do
       post :confirm, on: :member, defaults: { format: false }
     end

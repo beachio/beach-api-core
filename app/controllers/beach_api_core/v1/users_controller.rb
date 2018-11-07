@@ -1,7 +1,7 @@
 module BeachApiCore
   class V1::UsersController < BeachApiCore::V1::BaseController
     include ::UsersDoc
-    before_action :doorkeeper_authorize!, only: %i(update show)
+    before_action :doorkeeper_authorize!, only: %i(update show, force_confirm_user)
     before_action :application_authorize!, only: %i(create)
     before_action :authenticate_service_for_doorkeeper_application, only: [:create]
     before_action :authenticate_service_for_application, only: %i(update show)
@@ -28,6 +28,19 @@ module BeachApiCore
                           current_user: current_user,
                           current_application: current_application,
                           root: :user)
+    end
+
+    def force_confirm_user
+      if admin_or_application_admin(current_application.id)
+        user = BeachApiCore::User.find_by(:id => params[:id])
+        if user.nil?
+          render_json_error({message: "Wrong user"})
+        else
+          render_json_success({message: "User with id: #{user.id} was successfully confirmed"})
+        end
+      else
+        render_json_error({message: "Access Denied"})
+      end
     end
 
     def update
@@ -151,6 +164,14 @@ module BeachApiCore
       params.require(:user).permit(:email, :username, :current_password, :password, :password_confirmation,
                                    profile_attributes: profile_attributes,
                                    user_preferences_attributes: [:id, preferences: preferences_params])
+    end
+
+    def admin_or_application_admin(application_id)
+      Doorkeeper::Application.find(application_id).admins.where(:id => current_user.id).empty? ? admin : true
+    end
+
+    def admin
+      !BeachApiCore::Instance.current.admins.find_by(id: current_user.id).nil?
     end
 
     def preferences_params
