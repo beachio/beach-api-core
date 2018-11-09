@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180924062151) do
+ActiveRecord::Schema.define(version: 20181109101456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,45 @@ ActiveRecord::Schema.define(version: 20180924062151) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["keeper_type", "keeper_id"], name: "index_beach_api_core_chats_on_keeper_type_and_keeper_id"
+  end
+
+  create_table "beach_api_core_custom_views", force: :cascade do |t|
+    t.text "input_style", default: ""
+    t.text "header_text", default: ""
+    t.string "text_color", default: ""
+    t.string "success_text_color", default: ""
+    t.string "form_background_color", default: ""
+    t.string "error_text_color", default: ""
+    t.text "success_text"
+    t.string "success_background_color", default: ""
+    t.string "button_text", default: ""
+    t.text "button_style", default: ""
+    t.string "form_radius", default: ""
+    t.string "success_form_radius", default: ""
+    t.integer "view_type"
+    t.bigint "application_id"
+    t.string "success_button_first_link", default: ""
+    t.string "success_button_first_icon_type", default: ""
+    t.string "success_button_second_link", default: ""
+    t.string "success_button_second_icon_type", default: ""
+    t.string "success_button_third_link", default: ""
+    t.string "success_button_third_icon_type", default: ""
+    t.string "success_button_first_text", default: ""
+    t.string "success_button_second_text", default: ""
+    t.string "success_button_third_text", default: ""
+    t.text "success_button_style", default: ""
+    t.boolean "success_button_first_available", default: false
+    t.boolean "success_button_second_available", default: false
+    t.boolean "success_button_third_available", default: false
+    t.index ["application_id"], name: "index_beach_api_core_custom_views_on_application_id"
+  end
+
+  create_table "beach_api_core_devices", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "token"
+    t.json "data"
   end
 
   create_table "beach_api_core_directories", force: :cascade do |t|
@@ -507,6 +546,15 @@ ActiveRecord::Schema.define(version: 20180924062151) do
     t.string "mail_type_band_text_color", default: "#FFFFFF"
     t.string "logo_url", default: ""
     t.string "s3_file_path", default: ""
+    t.boolean "show_application_logo"
+    t.string "application_logo_url", default: ""
+    t.string "application_logo_path", default: ""
+    t.boolean "show_instance_logo"
+    t.string "provided_text_color", default: ""
+    t.string "background_color", default: ""
+    t.string "background_image", default: ""
+    t.string "background_image_path", default: ""
+    t.boolean "use_default_background_config", default: true
     t.index ["owner_type", "owner_id"], name: "index_oauth_applications_on_owner_type_and_owner_id"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
