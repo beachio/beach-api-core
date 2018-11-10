@@ -9,7 +9,7 @@ class BeachApiCore::ChatCreate
     end
 
     if context.chat.save
-      context.status = :ok
+      context.status = 201
     else
       context.status = :bad_request
       context.fail! message: context.chat.errors.full_messages

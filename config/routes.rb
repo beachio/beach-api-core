@@ -12,6 +12,7 @@ BeachApiCore::Engine.routes.draw do
 
   api_version(module: 'V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
     resources :uploads
+    resources :devices
     resources :applications, except: %i(new edit)
     resources :mail_bodies
     post "/applications/:id/upload_logo_image", :to => "applications#upload_logo_image"

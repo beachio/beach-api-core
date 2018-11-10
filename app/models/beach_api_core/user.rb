@@ -18,6 +18,8 @@ module BeachApiCore
 
     has_many :memberships, as: :member, inverse_of: :member, dependent: :destroy
 
+    has_many :devices
+
     has_many :organisation_memberships, -> { where(group_type: 'BeachApiCore::Organisation') },
              as: :member, inverse_of: :member, class_name: 'BeachApiCore::Membership'
     has_many :organisations,

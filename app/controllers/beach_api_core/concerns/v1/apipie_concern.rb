@@ -203,6 +203,10 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                                         keeper: apipie_entity)
   end
 
+  def apipie_device
+    @_apipie_device ||= BeachApiCore::Device.new(id: fake_id, name: ["Macbook Pro", "Windows PC", "Linux Server"].sample)
+  end
+
   def apipie_message_interaction
     @_apipie_message_interaction ||= BeachApiCore::
             Interaction.new(id: fake_id,
