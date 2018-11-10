@@ -23,7 +23,6 @@ module BeachApiCore
     end
 
     def create
-      puts request.headers
       result = BeachApiCore::DeviceCreate.call(user: current_user, params: device_params)
 
       if result.success?
