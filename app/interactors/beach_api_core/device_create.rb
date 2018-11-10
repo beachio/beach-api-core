@@ -3,8 +3,6 @@ class BeachApiCore::DeviceCreate
 
   def call
     context.device = BeachApiCore::Device.new(context.params)
-    puts "Context User:"
-    puts context
 
     if context.user
       context.device.user = context.user
