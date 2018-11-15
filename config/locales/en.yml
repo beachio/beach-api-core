@@ -131,7 +131,7 @@ en:
           remove: "Remove organisation"
           get_users: "Get organisation users for organisation owner"
           set_context: "Set organisation context"
-          get_current: "Get organisation context"
+          get_context: "Get organisation context"
         passwords:
           send: "Send forgot password email"
           reset: "Reset user's password"
