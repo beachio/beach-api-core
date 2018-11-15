@@ -67,6 +67,10 @@ module BeachApiCore
       render_json_success
     end
 
+    def get_current
+      render json: doorkeeper_token.organisation
+    end
+
     private
 
     def organisation_params

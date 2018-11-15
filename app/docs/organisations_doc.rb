@@ -56,4 +56,9 @@ module OrganisationsDoc
   api :PUT, '/organisations/:id/current', I18n.t('api.resource_description.descriptions.organisations.set_context')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   def current; end
+
+  api :GET, '/organisations/get_current', I18n.t('api.resource_description.descriptions.organisations.get_context')
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example "\"organisation\": #{apipie_organisation_response}"
+  def get_current; end
 end
