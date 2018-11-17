@@ -1,6 +1,7 @@
 module BeachApiCore
   class Device < ApplicationRecord
     belongs_to :user
+    belongs_to :application, class_name: "Doorkeeper::Application"
 
     before_create :set_token
 

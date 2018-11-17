@@ -168,12 +168,6 @@ en:
           confirm: "Confirm user"
         broadcasts:
           create: "Notify channel"
-        devices:
-          index: "List of devices"
-          show: "Get device info"
-          create: "Create new device"
-          update: "Update existing device"
-          destroy: "Delete existing device"
         webhooks:
           list: "List of webhooks"
           create: "Create a webhook"
@@ -388,10 +382,6 @@ en:
         one: "Webhook"
         other: "Webhooks"
         downcase: "webhook"
-      beach_api_core/device: &device
-        one: "Device"
-        other: "Devices"
-        downcase: "device"
       webhook:
         <<: *webhook
       beach_api_core/access_level: &access_level
