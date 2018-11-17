@@ -18,9 +18,10 @@ gem 'doorkeeper', '4.3.2'
 
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'factory_girl_rails'
+  gem 'factory_bot'
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rubocop-rspec'
   gem 'rubocop-git'
   gem 'awesome_print'
 end

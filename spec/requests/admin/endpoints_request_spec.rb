@@ -4,7 +4,7 @@ require 'rails_helper'
 module BeachApiCore
   describe 'Admin::Endpoints', type: :request do
 
-    # let!(:admin){FactoryGirl.create(:admin)}
+    # let!(:admin){FactoryBot.create(:admin)}
 
 
     # it "index" do

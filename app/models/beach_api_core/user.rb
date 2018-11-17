@@ -53,7 +53,7 @@ module BeachApiCore
     validates :profile, :status, presence: true
     validates :password_confirmation, :password, presence: true, if: :require_confirmation
     before_save :confirm_account, if: :confirmed
-    after_save :send_broadcast_message, if: :scores_changed?
+    after_save :send_broadcast_message, if: :saved_change_to_scores?
     validates :current_password, presence: true, if: :require_current_password
     validate :correct_current_password, if: :require_current_password
 

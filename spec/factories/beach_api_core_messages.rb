@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :message, class: 'BeachApiCore::Chat::Message' do
     sender { build :user }
     message { Faker::Lorem.sentence }

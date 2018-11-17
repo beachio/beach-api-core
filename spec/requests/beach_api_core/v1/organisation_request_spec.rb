@@ -35,7 +35,7 @@ module BeachApiCore
       context 'when valid' do
         before do
           @organisation_params = {
-            organisation: { name: Faker::Name.title,
+            organisation: { name: Faker::Job.title,
                             logo_image_attributes: { file: logo_image },
                             logo_properties: { color: Faker::Lorem.word } }
           }
@@ -60,13 +60,13 @@ module BeachApiCore
       it_behaves_like 'an authenticated resource' do
         before do
           post beach_api_core.v1_organisations_path,
-               params: { organisation: { name: Faker::Name.title } }
+               params: { organisation: { name: Faker::Job.title } }
         end
       end
 
       it 'should create an ownership record' do
         post beach_api_core.v1_organisations_path,
-             params: { organisation: { name: Faker::Name.title } },
+             params: { organisation: { name: Faker::Job.title } },
              headers: bearer_auth
         expect(oauth_user.organisations.first).to eq Organisation.last
         expect(Organisation.last.owners).to include(oauth_user)
@@ -80,7 +80,7 @@ module BeachApiCore
       let(:organisation) do
         (create :membership, member: oauth_user, group: (create :organisation)).group
       end
-      let(:new_name) { Faker::Name.title }
+      let(:new_name) { Faker::Job.title }
 
       context 'when valid' do
         before do

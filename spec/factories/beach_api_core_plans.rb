@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :plan, class: 'BeachApiCore::Plan' do
-    name { Faker::Name.title }
+    name { Faker::Job.title }
   end
 end

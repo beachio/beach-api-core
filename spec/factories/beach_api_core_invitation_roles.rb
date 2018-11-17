@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :invitation_role, class: 'BeachApiCore::InvitationRole' do
     invitation
     role

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :project_keeper, class: 'BeachApiCore::ProjectKeeper' do
     keeper { BeachApiCore::Instance.current }
 

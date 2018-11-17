@@ -28,7 +28,7 @@ module BeachApiCore
     end
 
     def generate_image?
-      logo_image.blank? || ((name_changed? || logo_properties_changed?) && logo_image.generated?)
+      logo_image.blank? || ((saved_change_to_name? || saved_change_to_logo_properties?) && logo_image.generated?)
     end
   end
 end

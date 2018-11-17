@@ -32,7 +32,7 @@ module BeachApiCore
       end
 
       it 'should generate new logo image if organisation name was changed' do
-        expect { organisation.update(name: Faker::Name.title) }.to change(organisation, :logo_image)
+        expect { organisation.update(name: Faker::Job.title) }.to change(organisation, :logo_image)
       end
 
       it 'should generate new logo image if organisation logo properties were changed' do
@@ -44,8 +44,8 @@ module BeachApiCore
       it "shouldn't generate new logo image if it was set manually" do
         organisation.update(logo_image: build(:asset, entity: organisation))
         expect(organisation.logo_image).not_to be_generated
-        expect { organisation.update(name: Faker::Name.title) }.not_to change(organisation, :logo_image)
-        expect { organisation.update(name: Faker::Name.title) }.not_to change(organisation, :logo_image)
+        expect { organisation.update(name: Faker::Job.title) }.not_to change(organisation, :logo_image)
+        expect { organisation.update(name: Faker::Job.title) }.not_to change(organisation, :logo_image)
       end
     end
   end

@@ -20,7 +20,7 @@ module BeachApiCore
         @keeper = BeachApiCore::Instance.current
         @project_params = {
           project: {
-            name: Faker::Name.title,
+            name: Faker::Job.title,
             project_keepers_attributes: [{ keeper_id: @keeper.id,
                                            keeper_type: @keeper.class.name }]
           }
@@ -89,7 +89,7 @@ module BeachApiCore
 
     describe 'when update' do
       before do
-        @project_params = { project: { name: Faker::Name.title } }
+        @project_params = { project: { name: Faker::Job.title } }
       end
 
       context 'when owned project' do

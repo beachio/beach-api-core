@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :interaction, class: 'BeachApiCore::Interaction' do
     user
     kind { Faker::Lorem.word }

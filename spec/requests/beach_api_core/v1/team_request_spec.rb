@@ -10,14 +10,14 @@ module BeachApiCore
       it_behaves_like 'an authenticated resource' do
         before do
           post beach_api_core.v1_teams_path,
-               params: { team: { name: Faker::Name.title } }
+               params: { team: { name: Faker::Job.title } }
         end
       end
 
       context 'when valid' do
         before do
           post beach_api_core.v1_teams_path,
-               params: { team: { name: Faker::Name.title } },
+               params: { team: { name: Faker::Job.title } },
                headers: bearer_auth
         end
         it { expect(response.status).to eq 201 }
@@ -27,7 +27,7 @@ module BeachApiCore
       it 'should create an ownership record' do
         expect do
           post beach_api_core.v1_teams_path,
-               params: { team: { name: Faker::Name.title } },
+               params: { team: { name: Faker::Job.title } },
                headers: bearer_auth
         end.to change(oauth_user.memberships, :count).by(1)
         expect(Team.last.owners).to include(oauth_user)
@@ -36,7 +36,7 @@ module BeachApiCore
       it 'should create webhooks notifier job' do
         expect do
           post beach_api_core.v1_teams_path,
-               params: { team: { name: Faker::Name.title } },
+               params: { team: { name: Faker::Job.title } },
                headers: bearer_auth
         end.to change(WebhooksNotifier.jobs, :count).by(1)
       end
@@ -45,7 +45,7 @@ module BeachApiCore
     describe 'when update' do
       let(:team) { (create :membership, member: oauth_user).group }
       let(:owned_team) { (create :membership, member: oauth_user, owner: true).group }
-      let(:new_name) { Faker::Name.title }
+      let(:new_name) { Faker::Job.title }
 
       context 'when valid' do
         before do

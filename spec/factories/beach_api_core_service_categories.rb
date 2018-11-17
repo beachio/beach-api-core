@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :service_category, class: 'BeachApiCore::ServiceCategory' do
-    name { Faker::Name.title }
+    name { Faker::Job.title }
 
     trait :with_services do
       after(:build) do |service_category|

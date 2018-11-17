@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :chat, class: 'BeachApiCore::Chat' do
     keeper { build(:user) }
 
@@ -10,7 +10,7 @@ FactoryGirl.define do
 
     trait :with_oauth_user do
       transient do
-        oauth_user nil
+        oauth_user { nil }
       end
 
       after(:build) do |chat, evaluator|

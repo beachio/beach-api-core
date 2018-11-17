@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :service, class: 'BeachApiCore::Service' do
-    title { Faker::Name.title }
+    title { Faker::Job.title }
     description { Faker::Lorem.sentence }
 
     after(:build) do |service|

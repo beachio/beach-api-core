@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :permission, class: 'BeachApiCore::Permission' do
     atom
     keeper { build(:user) }

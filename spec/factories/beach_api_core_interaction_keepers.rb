@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :interaction_keeper, class: 'BeachApiCore::InteractionKeeper' do
     keeper { BeachApiCore::Instance.current }
 

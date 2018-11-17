@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-UPDATE_SERVICE_PARAMS = { title: Faker::Name.title,
-                          name: Faker::Name.title.parameterize(separator: '_'),
+UPDATE_SERVICE_PARAMS = { title: Faker::Job.title,
+                          name: Faker::Job.title.parameterize(separator: '_'),
                           description: Faker::Lorem.sentence }.freeze
 
 module BeachApiCore

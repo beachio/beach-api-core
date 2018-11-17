@@ -27,7 +27,7 @@ module BeachApiCore
         [application_auth, bearer_auth].each do |auth|
           expect do
             post beach_api_core.v1_atoms_path,
-                 params: { atom: { title: Faker::Name.title, kind: 'item' } },
+                 params: { atom: { title: Faker::Job.title, kind: 'item' } },
                  headers: auth
           end.to change(Atom, :count).by(1)
           expect(response.status).to eq 201
@@ -44,7 +44,7 @@ module BeachApiCore
             expect do
               post beach_api_core.v1_atoms_path,
                    params: {
-                     atom: { title: Faker::Name.title,
+                     atom: { title: Faker::Job.title,
                              kind: 'item',
                              atom_parent_id: value }
                    },
@@ -62,7 +62,7 @@ module BeachApiCore
 
     describe 'when update' do
       let(:atom) { create :atom }
-      let(:new_title) { Faker::Name.title }
+      let(:new_title) { Faker::Job.title }
 
       it_behaves_like 'an authenticated resource' do
         before { put beach_api_core.v1_atoms_path, params: { id: atom.id }, headers: invalid_app_auth }

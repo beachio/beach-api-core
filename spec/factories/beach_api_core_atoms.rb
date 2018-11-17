@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :atom, class: 'BeachApiCore::Atom' do
-    title { Faker::Name.title }
+    title { Faker::Job.title }
     kind { Faker::Lorem.word }
 
     trait :with_parent do

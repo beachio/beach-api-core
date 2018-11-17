@@ -2,7 +2,7 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../dummy/config/environment.rb', __FILE__)
 require 'rspec/rails'
-require 'factory_girl_rails'
+require 'factory_bot'
 require 'refile/file_double'
 require 'pundit/rspec'
 require 'sidekiq/testing'
@@ -13,9 +13,9 @@ Rails.backtrace_cleaner.remove_silencers!
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
-FactoryGirl.definition_file_paths << "#{File.dirname(__FILE__)}/factories"
-FactoryGirl.definition_file_paths.uniq!
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths << "#{File.dirname(__FILE__)}/factories"
+FactoryBot.definition_file_paths.uniq!
+FactoryBot.find_definitions
 
 RSpec.configure do |config|
   config.mock_with :rspec
@@ -29,7 +29,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 end
 
 Shoulda::Matchers.configure do |config|

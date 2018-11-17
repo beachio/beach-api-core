@@ -20,7 +20,7 @@ module BeachApiCore
       it 'should successfully create service category' do
         expect do
           post beach_api_core.v1_service_categories_path,
-               params: { service_category: { name: Faker::Name.title } },
+               params: { service_category: { name: Faker::Job.title } },
                headers: developer_bearer_auth
         end.to change(ServiceCategory, :count).by(1)
         expect(response.status).to eq 201
@@ -64,7 +64,7 @@ module BeachApiCore
       end
 
       it 'should update service category' do
-        new_name = Faker::Name.title
+        new_name = Faker::Job.title
         patch beach_api_core.v1_service_category_path(service_category),
               params: { service_category: { name: new_name } },
               headers: developer_bearer_auth

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :job, class: 'BeachApiCore::Job' do
     start_at { Faker::Date.forward(5) }
     done { false }

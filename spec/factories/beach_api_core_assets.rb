@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :asset, class: 'BeachApiCore::Asset' do
     entity { build :profile }
     after(:build) do |asset|

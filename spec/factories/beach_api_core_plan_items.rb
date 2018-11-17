@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :plan_item, class: 'BeachApiCore::PlanItem' do
     plan
     access_level

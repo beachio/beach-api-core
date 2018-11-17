@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :membership, class: 'BeachApiCore::Membership' do
     member { build :user }
     group { build :team }

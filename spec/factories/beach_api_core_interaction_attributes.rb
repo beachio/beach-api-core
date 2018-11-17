@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :interaction_attribute, class: 'BeachApiCore::InteractionAttribute' do
     interaction
     sequence(:key) { |n| "#{Faker::Lorem.word}-#{n}" }

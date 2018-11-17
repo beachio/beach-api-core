@@ -95,8 +95,8 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
   def apipie_service
     return @_apipie_service if @_apipie_service
-    service_category = BeachApiCore::ServiceCategory.new(name: Faker::Name.title)
-    @_apipie_service = service_category.services.build(title: Faker::Name.title,
+    service_category = BeachApiCore::ServiceCategory.new(name: Faker::Job.title)
+    @_apipie_service = service_category.services.build(title: Faker::Job.title,
                                                        description: Faker::Lorem.sentence,
                                                        icon: apipie_asset)
     @_apipie_service
@@ -114,7 +114,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     return @_apipie_atom if @_apipie_atom
 
     @_apipie_atom ||= BeachApiCore::Atom.new(id: fake_id,
-                                             title: Faker::Name.title,
+                                             title: Faker::Job.title,
                                              kind: Faker::Lorem.word)
     @_apipie_atom
       .instance_variable_get(:@attributes)['atom_parent_id'] = ActiveRecord::Attribute
@@ -136,7 +136,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
   def apipie_setting
     @_apipie_setting ||= BeachApiCore::Setting.new(id: fake_id, keeper: apipie_organisation,
-                                                   name: Faker::Name.title, value: Faker::Lorem.word)
+                                                   name: Faker::Job.title, value: Faker::Lorem.word)
   end
 
   def apipie_mail_body
@@ -159,7 +159,7 @@ module BeachApiCore::Concerns::V1::ApipieConcern
 
   def apipie_project
     @_apipie_project ||= BeachApiCore::Project.new(id: fake_id,
-                                                   name: Faker::Name.title,
+                                                   name: Faker::Job.title,
                                                    project_keepers: [apipie_project_keeper])
   end
 
