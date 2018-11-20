@@ -26,8 +26,8 @@ module BeachApiCore
     end
 
     def validate_channel_name
-      return if %w(UserChannel EntityChannel).include?(channel_params[:name])
+      return if %w(UserChannel EntityChannel ApplicationChannel).include?(channel_params[:name])
       render_json_error({ message: I18n.t('api.errors.should_be_valid_channel_name') }, :bad_request)
     end
   end
-end
+  end
