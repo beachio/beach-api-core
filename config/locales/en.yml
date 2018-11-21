@@ -10,7 +10,7 @@ en:
       email_has_been_created: "Email has been created"
       favourite_item_could_not_be_deleted: "This favourite item could not be deleted"
       could_not_revoke_invitation: "Could not revoke an invitation"
-      should_be_valid_channel_name: "Name should be UserChannel or EntityChannel"
+      should_be_valid_channel_name: "Name should be UserChannel, EntityChannel or ApplicationChannel"
     resource_description:
       resources:
         authorization: "Authorization"
@@ -50,7 +50,8 @@ en:
           reset_password_token: "Reset password token"
           event_type: 'Event type ("organisation_created", "team_created", "user_created", "organisation_deleted" or "scores_achieved")'
           platform_params: "Using as a part of authorization token in request headers instead of actual token"
-          channel_name: 'Channel name ("UserChannel" or "EntityChannel")'
+          channel_name: 'Channel name ("UserChannel", "EntityChannel" or "ApplicationChannel")'
+          channel_id: "Id of user/entity. It's not needed for ApplicationChannel"
           roles: "Array of roles' ids"
         applications:
           list: "Get list of applications"

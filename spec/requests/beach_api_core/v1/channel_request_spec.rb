@@ -44,7 +44,7 @@ module BeachApiCore
             get beach_api_core.v1_channels_path, headers: bearer_auth
             expect(response.status).to eq 200
             expect(json_body[:channels]).to be_present
-            expect(json_body[:channels].size).to eq 1
+            expect(json_body[:channels].size).to eq 2
             expect(json_body[:channels].first.keys).to contain_exactly(*CHANNEL_KEYS)
             expect(json_body[:channels].first[:channel]).to eq 'UserChannel'
             expect(json_body[:channels].first[:id]).to eq oauth_user.id
@@ -59,13 +59,13 @@ module BeachApiCore
               get beach_api_core.v1_channels_path(entity: { uid: entity.uid, kind: entity.kind }), headers: bearer_auth
               expect(response.status).to eq 200
               expect(json_body[:channels]).to be_present
-              expect(json_body[:channels].size).to eq 2
+              expect(json_body[:channels].size).to eq 3
               json_body[:channels].each { |channel| expect(channel.keys).to contain_exactly(*CHANNEL_KEYS) }
               channels_response = json_body[:channels].sort_by { |channel| channel[:channel] }
-              expect(channels_response.first[:channel]).to eq 'EntityChannel'
-              expect(channels_response.first[:id]).to eq entity.id
-              expect(channels_response.second[:channel]).to eq 'UserChannel'
-              expect(channels_response.second[:id]).to eq oauth_user.id
+              expect(channels_response.second[:channel]).to eq 'EntityChannel'
+              expect(channels_response.second[:id]).to eq entity.id
+              expect(channels_response.third[:channel]).to eq 'UserChannel'
+              expect(channels_response.third[:id]).to eq oauth_user.id
             end
           end
 
@@ -74,7 +74,7 @@ module BeachApiCore
               get beach_api_core.v1_channels_path(entity: { uid: entity.uid, kind: entity.kind }), headers: bearer_auth
               expect(response.status).to eq 200
               expect(json_body[:channels]).to be_present
-              expect(json_body[:channels].size).to eq 1
+              expect(json_body[:channels].size).to eq 2
               expect(json_body[:channels].first.keys).to contain_exactly(*CHANNEL_KEYS)
               expect(json_body[:channels].first[:channel]).to eq 'UserChannel'
               expect(json_body[:channels].first[:id]).to eq oauth_user.id

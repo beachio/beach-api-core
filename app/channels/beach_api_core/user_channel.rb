@@ -1,4 +1,4 @@
-class BeachApiCore::UserChannel < ApplicationCable::Channel
+  class BeachApiCore::UserChannel < ApplicationCable::Channel
   def subscribed
     user =  Doorkeeper::AccessToken.find_by_token(params[:token])
     # @todo: implement current user for ApplicationCable::Connection

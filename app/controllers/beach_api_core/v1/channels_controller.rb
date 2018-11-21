@@ -18,11 +18,15 @@ module BeachApiCore
     private
 
     def channels
-      [user_channel, entity_channel].compact
+      [user_channel, entity_channel, application_channel].compact
     end
 
     def user_channel
       { channel: 'UserChannel', id: current_user.id }
+    end
+
+    def application_channel
+      {channel: 'ApplicationChannel', id: current_application.id}
     end
 
     # TODO: add policy
