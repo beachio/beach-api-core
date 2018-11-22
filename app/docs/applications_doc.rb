@@ -14,6 +14,8 @@ module ApplicationsDoc
     param :redirect_uri, String, required: true
     param :mail_type_band_color, String, required: false, desc: "valid CSS hex color code"
     param :mail_type_band_text_color, String, required: false, desc: "valid CSS hex color code"
+    param :scores_for_invite, Integer, required: false
+    param :scores_for_invite, Integer, required: false
   end
   example "\"application\": #{apipie_application_response}
           \n#{I18n.t('api.resource_description.fail',
@@ -31,6 +33,8 @@ module ApplicationsDoc
     param :name, String
     param :mail_type_band_color, String, required: false, desc: "valid CSS hex color code"
     param :mail_type_band_text_color, String, required: false, desc: "valid CSS hex color code"
+    param :scores_for_invite, Integer, required: false
+    param :scores_for_invite, Integer, required: false
   end
   example "\"application\": #{apipie_application_response}
           \n#{I18n.t('api.resource_description.fail',

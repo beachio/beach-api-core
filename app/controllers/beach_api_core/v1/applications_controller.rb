@@ -90,11 +90,11 @@ module BeachApiCore
     end
 
     def application_create_params
-      params.require(:application).permit(:name, :redirect_uri, :mail_type_band_color, :mail_type_band_text_color)
+      params.require(:application).permit(:name, :redirect_uri, :mail_type_band_color, :mail_type_band_text_color, :scores_for_invite, :scores_for_sign_up)
     end
 
     def application_update_params
-      params.require(:application).permit(:name, :mail_type_band_color, :mail_type_band_text_color)
+      params.require(:application).permit(:name, :mail_type_band_color, :mail_type_band_text_color, :scores_for_invite, :scores_for_sign_up)
     end
 
     def application_logo_params

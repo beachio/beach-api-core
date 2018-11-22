@@ -15,7 +15,7 @@ module BeachApiCore
                                                                      root: :user,
                                                                      keepers: [BeachApiCore::Instance.current,
                                                                                current_organisation].compact,
-                                                                     current_user: result.user),
+                                                                     current_user: result.user,  current_application: current_application),
                               access_token: result.access_token&.token }, result.status)
       else
         render_json_error({ message: result.message }, result.status)

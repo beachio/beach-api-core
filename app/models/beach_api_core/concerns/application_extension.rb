@@ -12,6 +12,7 @@ module BeachApiCore::Concerns::ApplicationExtension
     has_many :owned_chats, class_name: 'BeachApiCore::Chat', as: :keeper, inverse_of: :keeper, dependent: :destroy
     has_many :mail_bodies, class_name: "BeachApiCore::MailBody", dependent: :destroy
     has_many :custom_views, class_name: "BeachApiCore::CustomView", dependent: :destroy
+    has_many :scores, class_name: "BeachApiCore::Score", dependent: :destroy
     has_many :bots, class_name: "BeachApiCore::Bot"
     accepts_nested_attributes_for :services, allow_destroy: true
     accepts_nested_attributes_for :capabilities, allow_destroy: true

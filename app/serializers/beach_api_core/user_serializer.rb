@@ -23,5 +23,11 @@ module BeachApiCore
     def roles
       Hash[object.roles.map{|r| [r.name, true]}]
     end
+
+    def scores
+      return 0 unless current_application
+      scores = BeachApiCore::Score.find_by(:application_id => current_application.id, :user_id => object.id)
+      scores.nil? ? 0 : scores.scores
+    end
   end
 end

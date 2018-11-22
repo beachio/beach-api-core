@@ -7,7 +7,9 @@ module BeachApiCore
     def perform(kind, model_class_name, model_id, doorkeeper_token_id = nil, parametrs = nil)
       if kind == 'scores_achieved'
         user = BeachApiCore::User.find(model_id)
-        webhooks = Webhook.where(kind: Webhook.kinds[kind], :parametrs => "{\"scores\": #{parametrs.nil? ? user.scores : parametrs}}")
+        token = doorkeeper_token(doorkeeper_token_id)
+        scores = user.scores.find_by(:applicaiton_id => token.application_id).nil? ? 0 : user.scores.find_by(:applicaiton_id => token.application_id).scores
+        webhooks = Webhook.where(kind: Webhook.kinds[kind], :parametrs => "{\"scores\": #{parametrs.nil? ? scores : parametrs}}")
       else
         webhooks = Webhook.where(kind: Webhook.kinds[kind])
       end

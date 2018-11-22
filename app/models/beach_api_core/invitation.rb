@@ -22,16 +22,29 @@ module BeachApiCore
       transaction do
         group.memberships.create(member: invitee)
         role_ids.each { |role_id| invitee.assignments.create(role_id: role_id, keeper: group) if invitee.assignments.where(:role_id => role_id, keeper: group).empty? }
-        scores = user.scores + 500
+        scores = add_scores_to_user if invitee.invitee?
         token = find_or_create_doorkeeper_token(user.id, group.application)
-        user.update_attribute(:scores, user.scores + 500) if invitee.invitee?
         BeachApiCore::Webhook.notify('scores_achieved', 'BeachApiCore::User', user.id, token.id, scores) if invitee.invitee?
         application_message = BeachApiCore::Setting.invite_accepted_message(keeper: group.application).nil? ?  BeachApiCore::Setting.invite_accepted_message(keeper: BeachApiCore::Instance.current) : BeachApiCore::Setting.invite_accepted_message(keeper: group.application)
         message = application_message.nil? ? INVITE_ACCEPTED_MESSAGE : application_message
         BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "inviteAccepted", message: message.gsub("[INVITEE_EMAIL]", invitee.email).gsub("[GROUP_NAME]", group.name)}, "user" => BeachApiCore::UserSerializer.new(user, root: :user) )
         invitee.confirmed = true
+        add_scores_to_user(true) if invitee.invitee?
         invitee.active!
         destroy!
+      end
+    end
+
+    def add_scores_to_user(is_invitee = false)
+      scores = user.scores.find_by(application: group.application)
+      if scores.nil? || is_invitee
+        is_invitee ? BeachApiCore::Score.create(:user => invitee, :application => group.application, scores: group.application.scores_for_sign_up)  :
+            BeachApiCore::Score.create(:user => user, :application => group.application, scores: group.application.scores_for_invite)
+        is_invitee ? group.application.scores_for_sign_up : group.application.scores_for_invite
+      else
+        scores_count = scores.scores + group.application.scores_for_invite
+        scores.update_attribute(:scores, scores_count)
+        scores_count
       end
     end
 

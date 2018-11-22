@@ -72,7 +72,9 @@ module BeachApiCore
         check = request.format.symbol == :html ? params[:password] == params[:password_confirmation] : true
         if check
           result = BeachApiCore::UserInteractor::Confirm.call(user: user, token: params[:confirmation_token])
-          user.update_attribute(:password, params[:password])
+          application = Doorkeeper::Application.find_by(id: params[:application_id])
+          user.update_attribute(:password, params[:password]) if request.format.symbol == :html
+          BeachApiCore::Score.create(:application => application, :user => user, :scores => application.scores_for_sign_up) if request.format.symbol == :html
           if result.success?
             if request.format.symbol == :html
               redirect_to v1_users_success_path(application_id: params[:application_id])

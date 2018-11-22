@@ -37,6 +37,7 @@ module BeachApiCore
     has_many :interactions, inverse_of: :user, dependent: :destroy
     has_many :chats_users, class_name: 'BeachApiCore::Chat::ChatsUser', inverse_of: :user
     has_many :chats, through: :chats_users
+    has_many :scores, class_name: "BeachApiCore::Score", dependent: :destroy
     has_many :messages_users, class_name: 'BeachApiCore::Chat::MessagesUser'
     has_many :owned_chats, class_name: 'BeachApiCore::Chat', as: :keeper, inverse_of: :keeper, dependent: :destroy
     has_many :user_accesses, inverse_of: :user, dependent: :destroy
@@ -53,7 +54,6 @@ module BeachApiCore
     validates :profile, :status, presence: true
     validates :password_confirmation, :password, presence: true, if: :require_confirmation
     before_save :confirm_account, if: :confirmed
-    after_save :send_broadcast_message, if: :saved_change_to_scores?
     validates :current_password, presence: true, if: :require_current_password
     validate :correct_current_password, if: :require_current_password
 
@@ -140,14 +140,6 @@ module BeachApiCore
 
     def confirm_account
       self.confirmed_at = Time.now
-    end
-
-    def send_broadcast_message
-      tokens = Doorkeeper::AccessToken.where(:resource_owner_id => self.id)
-      tokens.each do |token|
-        application_message = BeachApiCore::Setting.scores_changed_message(keeper: token.application).nil? ? BeachApiCore::Setting.scores_changed_message(keeper: BeachApiCore::Instance.current) : BeachApiCore::Setting.scores_changed_message(keeper: token.application)
-        BeachApiCore::UserChannel.broadcast_to(token, payload: {event: "userPointsChanged", value: self.scores, message: application_message.nil? ? SCORES_MESSAGE : application_message}, "user" => BeachApiCore::UserSerializer.new(self, root: :user))
-      end
     end
 
     def generate_username
