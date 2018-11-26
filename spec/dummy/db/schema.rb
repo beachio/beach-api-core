@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181120081537) do
+ActiveRecord::Schema.define(version: 20181123122614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -414,6 +414,14 @@ ActiveRecord::Schema.define(version: 20181120081537) do
     t.index ["name"], name: "index_beach_api_core_roles_on_name"
   end
 
+  create_table "beach_api_core_scores", force: :cascade do |t|
+    t.bigint "application_id"
+    t.bigint "user_id"
+    t.integer "scores", default: 0
+    t.index ["application_id"], name: "index_beach_api_core_scores_on_application_id"
+    t.index ["user_id"], name: "index_beach_api_core_scores_on_user_id"
+  end
+
   create_table "beach_api_core_service_categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -487,7 +495,6 @@ ActiveRecord::Schema.define(version: 20181120081537) do
     t.datetime "updated_at", null: false
     t.integer "status"
     t.string "reset_password_token"
-    t.integer "scores", default: 0
     t.index ["email"], name: "index_beach_api_core_users_on_email"
     t.index ["username"], name: "index_beach_api_core_users_on_username"
   end
@@ -558,7 +565,12 @@ ActiveRecord::Schema.define(version: 20181120081537) do
     t.string "background_image", default: ""
     t.string "background_image_path", default: ""
     t.boolean "use_default_background_config", default: true
+    t.integer "scores_for_invite", default: 0
+    t.integer "scores_for_sign_up", default: 0
+    t.string "publisher_type"
+    t.bigint "publisher_id"
     t.index ["owner_type", "owner_id"], name: "index_oauth_applications_on_owner_type_and_owner_id"
+    t.index ["publisher_type", "publisher_id"], name: "index_oauth_applications_on_publisher_type_and_publisher_id"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 

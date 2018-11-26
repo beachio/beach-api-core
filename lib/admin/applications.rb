@@ -1,5 +1,5 @@
 ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
-  permit_params :name, :redirect_uri, :owner_id, :owner_type, :mail_type_band_color, :file,
+  permit_params :name, :redirect_uri, :owner_id, :owner_type, :publisher_id, :publisher_type, :mail_type_band_color, :file,
                 :application_file, :use_default_application_logo, :background_image_file, :use_default_background_image,
                 :use_default_logo_image, :mail_type_band_text_color, :scores_for_invite, :scores_for_sign_up,
                 :show_application_logo, :show_instance_logo, :provided_text_color, :background_color, :use_default_background_config,
@@ -39,6 +39,9 @@ ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
       f.input :owner, as: :select,
                       collection: BeachApiCore::Instance.current.developers + BeachApiCore::Instance.current.admins
       f.input :owner_type, as: :hidden, input_html: { value: 'BeachApiCore::User' }
+      f.input :publisher, as: :select,
+              collection: BeachApiCore::Organisation.all , allow_blank: true, include_blank: true
+      f.input :publisher_type, as: :hidden, input_html: { value: 'BeachApiCore::Organisation' }
       f.input :scores_for_sign_up
       f.input :scores_for_invite
       if f.object.new_record?

@@ -18,6 +18,22 @@ module OrganisationsDoc
   example "\"organisations\": [#{apipie_organisation_response}, ...]"
   def index; end
 
+  api :GET, '/organisations/:id/published_applications', 'List of all published applications'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example '
+  {
+    "applications": [
+      {
+        "id": 17,
+        "name": "Test  App",
+        "mail_type_band_color": "#0000ff",
+        "mail_type_band_text_color": "#ffffff",
+        "logo_url": "https://coinstash-platform-development.s3.amazonaws.com/Test%20%20App/2018-09-27%2013%3A49%3A07%20%2B0300%20logo.png"
+      }, ...
+    ]
+  }'
+  def published_applications; end
+
   api :POST, '/organisations', I18n.t('api.resource_description.descriptions.organisations.create')
   param_group :organisation
   example "\"organisation\": #{apipie_organisation_response}

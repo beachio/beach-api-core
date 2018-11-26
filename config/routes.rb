@@ -43,6 +43,7 @@ BeachApiCore::Engine.routes.draw do
         get :get_current
       end
       put :current, on: :member
+      get :published_applications, on: :member
     end
     resources :assignments, only: %i(create destroy)
     resources :user_accesses, only: %i(create destroy)

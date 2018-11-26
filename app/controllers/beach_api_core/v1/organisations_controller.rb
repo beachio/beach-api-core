@@ -16,6 +16,20 @@ module BeachApiCore
       render_json_success(current_user.organisations, :ok, current_user: current_user, root: :organisations)
     end
 
+    def published_applications
+      if current_user.organisations.include?(BeachApiCore::Organisation.find_by(id: params[:id])) || BeachApiCore::Instance.current.admins.include?(current_user)
+        if BeachApiCore::Organisation.find_by(id: params[:id]).nil?
+          render_json_error({message: "Wrong Organisation"})
+        else
+          applications = BeachApiCore::Organisation.find_by(id: params[:id]).applications
+          render_json_success(applications, :ok,
+                              each_serializer: AppSerializer, root: :applications)
+        end
+      else
+        render_json_error({message: "Wrong Organisation"})
+      end
+    end
+
     def create
       result = BeachApiCore::OrganisationCreate.call(params: organisation_params, user: current_user,
                                                      application: current_application, access_token: doorkeeper_token)

@@ -4,6 +4,7 @@ module BeachApiCore::Concerns::ApplicationExtension
 
   included do
     belongs_to :owner, polymorphic: true
+    belongs_to :publisher, polymorphic: true
     has_many :capabilities, class_name: 'BeachApiCore::Capability', dependent: :destroy
     has_many :services, through: :capabilities, class_name: 'BeachApiCore::Service'
     has_many :organisations, class_name: 'BeachApiCore::Organisation', dependent: :destroy
