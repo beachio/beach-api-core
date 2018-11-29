@@ -6,7 +6,7 @@ ActiveAdmin.register BeachApiCore::Score, as: 'Scores' do
     f.inputs t('active_admin.details', model: t('activerecord.models.mail_body.one')) do
       if f.object.new_record?
         f.input :application
-        f.input :user
+        f.input :user, collection: BeachApiCore::User.all.map {|user| ["#{user.username} - #{user.email}", user.id]}
       else
         f.input :application, :input_html => { :disabled => true }
         f.input :user, :input_html => { :disabled => true }
