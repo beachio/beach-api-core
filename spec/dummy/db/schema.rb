@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181123122614) do
+ActiveRecord::Schema.define(version: 20181205063212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,6 +262,14 @@ ActiveRecord::Schema.define(version: 20181123122614) do
     t.index ["group_type", "group_id"], name: "index_beach_api_core_invitations_on_group_type_and_group_id"
     t.index ["invitee_id"], name: "index_beach_api_core_invitations_on_invitee_id"
     t.index ["user_id"], name: "index_beach_api_core_invitations_on_user_id"
+  end
+
+  create_table "beach_api_core_invites", force: :cascade do |t|
+    t.bigint "application_id"
+    t.bigint "user_id"
+    t.integer "quantity"
+    t.index ["application_id"], name: "index_beach_api_core_invites_on_application_id"
+    t.index ["user_id"], name: "index_beach_api_core_invites_on_user_id"
   end
 
   create_table "beach_api_core_jobs", force: :cascade do |t|
@@ -569,6 +577,7 @@ ActiveRecord::Schema.define(version: 20181123122614) do
     t.integer "scores_for_sign_up", default: 0
     t.string "publisher_type"
     t.bigint "publisher_id"
+    t.integer "invite_limit", default: 0
     t.index ["owner_type", "owner_id"], name: "index_oauth_applications_on_owner_type_and_owner_id"
     t.index ["publisher_type", "publisher_id"], name: "index_oauth_applications_on_publisher_type_and_publisher_id"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true

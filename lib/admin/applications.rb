@@ -3,7 +3,7 @@ ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
                 :application_file, :use_default_application_logo, :background_image_file, :use_default_background_image,
                 :use_default_logo_image, :mail_type_band_text_color, :scores_for_invite, :scores_for_sign_up,
                 :show_application_logo, :show_instance_logo, :provided_text_color, :background_color, :use_default_background_config,
-                :invitation_text, :capabilities_attributes => [:service_id, :_destroy, :id],
+                :invitation_text, :invite_limit, :capabilities_attributes => [:service_id, :_destroy, :id],
                 :mail_bodies_attributes => [:id, :_destroy, :mail_type, :text_color, :button_color,
                                             :button_text, :body_text, :button_text_color, :greetings_text,
                                             :footer_text, :signature_text],
@@ -44,6 +44,7 @@ ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
       f.input :publisher_type, as: :hidden, input_html: { value: 'BeachApiCore::Organisation' }
       f.input :scores_for_sign_up
       f.input :scores_for_invite
+      f.input :invite_limit, label: "Limit of invites per user"
       if f.object.new_record?
         f.input :file, as: :file, label: "Image"
       else
@@ -151,6 +152,9 @@ ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
       row :secret
       row :scores_for_invite
       row :scores_for_sign_up
+      row :limitOfInvitesPerUser do
+        app.invite_limit
+      end
       if app.capabilities.any?
         row :service do
           safe_join(app.capabilities.map do |capability|

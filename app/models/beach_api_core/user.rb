@@ -44,6 +44,7 @@ module BeachApiCore
     has_many :access_levels, through: :user_accesses
     has_many :organisation_accesses, -> { where(keeper_type: 'BeachApiCore::Organisation') },
              inverse_of: :user, class_name: 'BeachApiCore::UserAccess'
+    has_many :invites, class_name: "BeachApiCore::Invite", dependent: :destroy
 
     validates :email,
               presence: true,

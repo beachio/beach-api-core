@@ -15,6 +15,7 @@ module BeachApiCore::Concerns::ApplicationExtension
     has_many :custom_views, class_name: "BeachApiCore::CustomView", dependent: :destroy
     has_many :scores, class_name: "BeachApiCore::Score", dependent: :destroy
     has_many :bots, class_name: "BeachApiCore::Bot"
+    has_many :invites, class_name: "BeachApiCore::Invite", dependent: :destroy
     accepts_nested_attributes_for :services, allow_destroy: true
     accepts_nested_attributes_for :capabilities, allow_destroy: true
     accepts_nested_attributes_for :mail_bodies, allow_destroy: true

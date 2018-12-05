@@ -10,8 +10,9 @@ module BeachApiCore
     has_many :roles, through: :invitation_roles, class_name: 'BeachApiCore::Role'
 
     attr_accessor :first_name, :last_name, :application
-
+    after_create :increase_invites_count
     before_validation :set_invitee, on: :create
+    validate :check_on_limit, on: :create
     before_validation :set_token, on: :create, unless: -> { token.present? }
     after_destroy :destroy_invitee, if: -> { invitee&.invitee? }
 
@@ -32,6 +33,14 @@ module BeachApiCore
         add_scores_to_user(true) if invitee.invitee?
         invitee.active!
         destroy!
+      end
+    end
+
+    def check_on_limit
+      if group.class == BeachApiCore::Team
+        invite = self.user.invites.find_by(:application => self.group.application)
+        self.errors.add :invites_limit, "You reached limit of available invites to this application" if self.group.application.invite_limit != 0 &&
+            !invite.nil? && self.group.application.invite_limit <= invite.quantity
       end
     end
 
@@ -88,6 +97,14 @@ module BeachApiCore
     def check_mail_config
       self.errors.add :wrong, 'application. There are no client_domain setting for current application' if BeachApiCore::Setting.client_domain(keeper: application).nil?
       self.errors.add :wrong, 'application. There are no noreply_from setting for current application' if BeachApiCore::Setting.noreply_from(keeper: application).nil?
+    end
+
+    def increase_invites_count
+      if group.class == BeachApiCore::Team
+        invite = BeachApiCore::Invite.find_by(:user => self.user, :application => self.group.application)
+        invite.nil? ? BeachApiCore::Invite.create(:user => self.user, :application => self.application, :quantity => 1) :
+            invite.update_attribute(:quantity, invite.quantity + 1)
+      end
     end
 
     def set_token
