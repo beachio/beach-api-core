@@ -1,7 +1,9 @@
 module BeachApiCore
   class UserMailer < ApplicationMailer
-    def register_confirm(application, user)
+    def register_confirm(application, user, proxy)
       get_variables(application, user, 1)
+      @path = proxy ? "/v1/users/#{@user.id}/activate_account/#{@user.confirm_email_token}?application_id=#{@application.id}" :
+          "/v1/users/#{@user.id}/confirm?confirmation_token=#{@user.confirm_email_token}&application_id=#{@application.id}"
       mail from: from(:noreply_from), to: @user.email,
            subject: 'Please confirm your account'
     end

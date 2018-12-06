@@ -69,11 +69,11 @@ module BeachApiCore
           render_json_error({ message: "There are no such user" })
         end
       else
-        check = request.format.symbol == :html ? params[:password] == params[:password_confirmation] : true
+        check = request.format.symbol == :html && params[:proxy] ? params[:password] == params[:password_confirmation] : true
         if check
           result = BeachApiCore::UserInteractor::Confirm.call(user: user, token: params[:confirmation_token])
           application = Doorkeeper::Application.find_by(id: params[:application_id])
-          user.update_attribute(:password, params[:password]) if request.format.symbol == :html
+          user.update_attribute(:password, params[:password]) if request.format.symbol == :html && params[:proxy]
           BeachApiCore::Score.create(:application => application, :user => user, :scores => application.scores_for_sign_up) if request.format.symbol == :html
           if result.success?
             if request.format.symbol == :html

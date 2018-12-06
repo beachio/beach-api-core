@@ -26,7 +26,7 @@ BeachApiCore::Engine.routes.draw do
     get "/users/:id/activate_account/:confirmation_token", :to => "users#activate_account", defaults: { format: false }
     put '/users/confirm_user/:id', :to => 'users#force_confirm_user'
     resources :users, only: %i(create index) do
-      post :confirm, on: :member, defaults: { format: false }
+      match :confirm, on: :member, via: [:get, :post], defaults: { format: false }
     end
     resource :password, only: %i(create update), defaults: { format: false }
     get "/password/restore_password/:token", to: "passwords#restore_password",  defaults: { format: false }

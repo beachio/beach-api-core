@@ -4,7 +4,7 @@ module BeachApiCore
     include Concerns::UserRoles
     include Concerns::UserPermissions
 
-    attr_accessor :require_confirmation, :require_current_password, :current_password, :confirmed
+    attr_accessor :require_confirmation, :require_current_password, :current_password, :confirmed, :application_id, :from_admin
 
     has_one :profile, inverse_of: :user, dependent: :destroy, class_name: 'BeachApiCore::Profile'
     has_many :applications, as: :owner, class_name: 'Doorkeeper::Application'
@@ -54,6 +54,7 @@ module BeachApiCore
     validates :username, presence: true, uniqueness: true
     validates :profile, :status, presence: true
     validates :password_confirmation, :password, presence: true, if: :require_confirmation
+    validate  :check_application_for_admin, if: :from_admin, on: [:create]
     before_save :confirm_account, if: :confirmed
     validates :current_password, presence: true, if: :require_current_password
     validate :correct_current_password, if: :require_current_password
@@ -74,6 +75,7 @@ module BeachApiCore
     before_validation :generate_username
     after_initialize :set_defaults
     after_create :set_sex_and_birth_date
+    after_create :send_email_confirmation, if: :from_admin
 
     delegate :first_name, :last_name, :name, to: :profile
 
@@ -137,6 +139,17 @@ module BeachApiCore
       else
         self.profile.update_columns(sex: 'male', birth_date: (Date.today - 25.year))
       end
+    end
+
+    def check_application_for_admin
+      self.errors.add :application_id, "Can't be empty" if self.application_id.nil? || self.application_id.empty? || Doorkeeper::Application.find_by(id: self.application_id).nil?
+    end
+
+    def send_email_confirmation
+      application = Doorkeeper::Application.find_by(id: self.application_id)
+      BeachApiCore::UserMailer.register_confirm(application, self, true).deliver_later if !application.nil? ||
+          !BeachApiCore::Setting.client_domain(keeper: application).nil? ||
+          !BeachApiCore::Setting.noreply_from(keeper: application).nil?
     end
 
     def confirm_account

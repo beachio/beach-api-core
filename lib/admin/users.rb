@@ -2,7 +2,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
   menu priority: 51, parent: 'Users'
 
   permit_params do
-    [:email, :username, :password,
+    [:email, :username, :password, :application_id, :from_admin,
      profile_attributes: custom_fields_params.concat([:id, :first_name, :last_name,
                                                       :sex, :birth_date, :time_zone,
                                                       avatar_attributes: %i(id file)]),
@@ -38,6 +38,9 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       f.input :email
       f.input :username, required: false
       f.input :password, required: true
+      if f.object.new_record?
+        f.input :application_id, as: :select, label: "Create from application", collection: Doorkeeper::Application.all
+      end
       f.fields_for :profile do |p|
         p.object.build_avatar if p.object.avatar.blank?
         p.input :first_name, required: false
@@ -97,7 +100,6 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
       row :email
       row :username
       tag_row :status
-      row :scores
       attributes_table_for user.profile do
         row :first_name
         row :last_name
@@ -171,6 +173,7 @@ ActiveAdmin.register BeachApiCore::User, as: 'User' do
     def set_keepers
       @user = params[:id] ? resource : BeachApiCore::User.new
       @user.profile.keepers = [BeachApiCore::Instance.current]
+      @user.from_admin = true
       @user.assign_attributes permitted_params[:user] if @user.new_record?
     end
   end
