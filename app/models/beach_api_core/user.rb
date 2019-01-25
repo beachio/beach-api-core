@@ -38,6 +38,7 @@ module BeachApiCore
     has_many :chats_users, class_name: 'BeachApiCore::Chat::ChatsUser', inverse_of: :user
     has_many :chats, through: :chats_users
     has_many :scores, class_name: "BeachApiCore::Score", dependent: :destroy
+    has_many :rewards, class_name: "BeachApiCore::Reward", as: :reward_to, dependent: :destroy
     has_many :messages_users, class_name: 'BeachApiCore::Chat::MessagesUser'
     has_many :owned_chats, class_name: 'BeachApiCore::Chat', as: :keeper, inverse_of: :keeper, dependent: :destroy
     has_many :user_accesses, inverse_of: :user, dependent: :destroy
@@ -101,6 +102,14 @@ module BeachApiCore
     
     def token
       Doorkeeper::AccessToken.order("created_at DESC").find_by(resource_owner_id: id).token
+    end
+
+    def find_or_create_application_token(application)
+      Doorkeeper::AccessToken.find_or_create_for(application,
+                                                 id,
+                                                 Doorkeeper::OAuth::Scopes.from_string('password'),
+                                                 Doorkeeper.configuration.access_token_expires_in,
+                                                 Doorkeeper.configuration.refresh_token_enabled?)
     end
 
     def admin?

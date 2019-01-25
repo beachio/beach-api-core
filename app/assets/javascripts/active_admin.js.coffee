@@ -3,6 +3,8 @@
 #= require active_admin/permission
 #= require jquery-ui
 #= require autocomplete-rails
+#= require active_admin/achievement
+#= require active_admin/reward
 
 $ ->
   COUNT = -1;
@@ -10,6 +12,16 @@ $ ->
     keeper = $(e.target).val().split('#')
     $(e.target).parents('.js-keeper_wrapper').find('.js-keeper_type').val(keeper[0])
     $(e.target).parents('.js-keeper_wrapper').find('.js-keeper_id').val(keeper[1])
+
+  $('.js-modes').on 'change', '.js-mode_select', (e) ->
+    mode = $(e.target).val().split('#')
+    $(e.target).parents('.js-mode_wrapper').find('.js-mode_type').val(mode[0])
+    $(e.target).parents('.js-mode_wrapper').find('.js-mode_id').val(mode[1])
+    
+  $('.js-reward_to').on 'change', '.js-reward_to_select', (e) ->
+    mode = $(e.target).val().split('#')
+    $(e.target).parents('.js-reward_to_wrapper').find('.js-reward_to_type').val(mode[0])
+    $(e.target).parents('.js-reward_to_wrapper').find('.js-reward_to_id').val(mode[1])
 
   if ($('#webhook_kind').val() != "scores_achieved")
     $('#webhook_scores_input').hide()
@@ -42,7 +54,7 @@ $ ->
       note_text = " - [INVITATION_FROM_USER] - using this constant in text it will be replaced by the name of the user who sent the invitation."
       note += "<div class='beach_api_core_note beach_api_core_#{index}_note'>#{note_text}</div><br class='beach_api_core_note beach_api_core_#{index}_note'>"
       insert_note_before.prepend(note)
-    else if (body.val() == 'forgot_password' || body.val() == 'confirm_account')
+    else if (body.val() == 'forgot_password' || body.val() == 'confirm_account' || body.val() == 'webhook_reward_achieved')
       note_text = " - [USER_NAME] - using this constant in text it will be replaced with the username to whom the password recovery email will be sent."
       note += "<div class='beach_api_core_note beach_api_core_#{index}_note'>#{note_text}</div><br class='beach_api_core_note beach_api_core_#{index}_note'>"
       if body.val() == 'forgot_password'
@@ -71,23 +83,35 @@ $ ->
     else if type.val() == 'confirm_account'
       body.attr('placeholder', text_for_accept())
 
+  show_hide_button_fields = (type = $('#mail_body_mail_type'), button_color = $('#mail_body_button_color_input'), text_color = $('#mail_body_button_text_color_input') ) ->
+    if type.val() == 'webhook_reward_achieved'
+      button_color.hide()
+      text_color.hide()
+    else
+      button_color.show()
+      text_color.show()
 
   if ($('#mail_body_mail_type').val() != "" && $('#mail_body_mail_type').val() != undefined)
     note_add_func()
+    show_hide_button_fields()
     add_placeholder_text()
 
   $('#mail_body_mail_type').on 'change', (e) ->
     note_add_func()
+    show_hide_button_fields()
     add_placeholder_text()
 
   $('.application_mail_type').each (index) ->
     note_add_func($("#doorkeeper_application_mail_bodies_attributes_#{index}_mail_type"), $("#doorkeeper_application_mail_bodies_attributes_#{index}_greetings_text_input"), index )
     add_placeholder_text($("#doorkeeper_application_mail_bodies_attributes_#{index}_body_text"), $("#doorkeeper_application_mail_bodies_attributes_#{index}_mail_type"))
+    show_hide_button_fields($("#doorkeeper_application_mail_bodies_attributes_#{index}_mail_type"), $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_color_input"), $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_text_color_input"))
+
 
   $('#new_doorkeeper_application, #edit_doorkeeper_application').on 'change', '.application_mail_type', (e) ->
     index = this.id.split('_')[5]
     note_add_func($("#doorkeeper_application_mail_bodies_attributes_#{index}_mail_type"), $("#doorkeeper_application_mail_bodies_attributes_#{index}_greetings_text_input"), index )
     add_placeholder_text($("#doorkeeper_application_mail_bodies_attributes_#{index}_body_text"), $("#doorkeeper_application_mail_bodies_attributes_#{index}_mail_type"), index)
+    show_hide_button_fields($("#doorkeeper_application_mail_bodies_attributes_#{index}_mail_type"), $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_color_input"), $("#doorkeeper_application_mail_bodies_attributes_#{index}_button_text_color_input"))
 
 
   header_text_for_invitation_view = () ->

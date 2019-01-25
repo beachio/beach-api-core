@@ -109,6 +109,20 @@ en:
           remove: "Remove favourite item"
         interactions:
           create: "Create an interaction"
+        giftbit_configs:
+          create: "Create giftbit config with brands"
+          list: "Get list of giftbit configs with brands"
+          update: "Update giftbit config"
+          delete: "Delete giftbit config with brands"
+          remove: "Delete brand from giftbit config"
+          get: "Get giftbit config with brands"
+        webhook_configs:
+          create: "Create webhook config with parameters"
+          list: "Get list of webhook configs with parameters"
+          update: "Update webhook config"
+          delete: "Delete webhook config with parameters"
+          remove: "Delete parameter from webhook config"
+          get: "Get webhook config with parameters"
         invitations:
           create: "Create an invitation"
           list: "Get a list of pending invitations for group"
@@ -411,3 +425,29 @@ en:
         other: "Endpoints"
       plan_option:
         <<: *plan_option
+      beach_api_core/device: &device
+              one: "Device"
+              other: "Devices"
+              downcase: "device"
+      device:
+        <<: *device
+      beach_api_core/giftbit_config: &giftbit_config
+        one: "Giftbit Config"
+        other: "Giftbit Configs"
+        downcase: "giftbit_config"
+        giftbit_brand: "giftbit_brand"
+      giftbit_config:
+        <<: *giftbit_config
+      beach_api_core/webhook_config: &webhook_config
+        one: "Webhook Config"
+        other: "Webhook Configs"
+        downcase: "webhook_config"
+        webhook_parametr: "webhook_parameter"
+      webhook_config:
+        <<: *webhook_config
+      beach_api_core/webhook_parametr: &webhook_parametr
+        one: "Webhook Parameter"
+        other: "Webhook Parameters"
+        downcase: "webhook_parameters"
+      webhook_config:
+        <<: *webhook_parametr

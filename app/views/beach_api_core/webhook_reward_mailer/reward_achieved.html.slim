@@ -1,0 +1,29 @@
+tr
+  td(style="padding-top: 40px;")
+    table(border="0" cellspacing="0" cellpadding="0" width="600" style="width: 600px; padding: 0; margin: 0;")
+      tr
+        td
+          -if @application.logo_url.empty? || @application.logo_url.nil?
+            img(src=image_url('beach_api_core/mailer/account-background.jpg') style="display: block; width: 600px")
+          -else
+            img(src=@application.logo_url style="display: block; width: 600px")
+
+tr
+  td
+    table(width="600px" border="0" cellspacing="0" cellpadding="0" style="padding: 15px 20px; background: #{@application.mail_type_band_color.empty? ? "#ff8000" : @application.mail_type_band_color }; border: 1px solid rgba(0,0,0,0.1); border-bottom: none")
+      tr
+        td(style="color: #{@application.mail_type_band_text_color.nil? || @application.mail_type_band_text_color.empty? ? "white" : @application.mail_type_band_text_color}; text-align: center;")
+          | Webhook Reward Achieved
+tr
+  td
+    table(width="600px" border="0" cellspacing="0" cellpadding="0" style="padding: 15px 20px; background: #fff; border: 1px solid rgba(0,0,0,0.1); border-bottom: none")
+      tr
+        td(style="font-family: sans-serif; font-size: 14px; color: #{@mail_config.nil? || @mail_config.text_color.empty? ? "#30292F" : @mail_config.text_color}; letter-spacing: 0.5px; line-height: 20px;")
+          | #{@mail_config.nil? || @mail_config.greetings_text.nil? || @mail_config.greetings_text.empty? ? "Dear #{@user.display_name}," : @greetings_text}
+      tr
+        td(style="font-family: sans-serif; font-size: 14px; color: #{@mail_config.nil? || @mail_config.text_color.empty? ? "#30292F" : @mail_config.text_color}; letter-spacing: 0.5px; line-height: 20px; padding-top: 20px;")
+          - if @mail_config.nil? || @mail_config.body_text.nil? || @mail_config.body_text.empty?
+            |You get a Reward from #{@application.name}.
+
+          - else
+            | #{@body_text.gsub("\r\n", "<br>").gsub("\n","<br>").html_safe}

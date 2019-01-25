@@ -62,6 +62,18 @@ module BeachApiCore
       service_name
     end
 
+    def admin_or_application_admin(application_id)
+      !Doorkeeper::Application.find(application_id).admins.where(:id => current_user.id).empty? || Doorkeeper::Application.find(application_id).owner_id == current_user.id ? true : admin
+    end
+
+    def application_admin(application_id)
+      !Doorkeeper::Application.find(application_id).admins.where(:id => current_user.id).empty?
+    end
+
+    def admin
+      !BeachApiCore::Instance.current.admins.find_by(id: current_user.id).nil?
+    end
+
     def authenticate_service_for_doorkeeper_application(application_id = nil)
       if !application_id.nil? || !current_application.nil?
         service_name = get_service_name_for_application

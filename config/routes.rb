@@ -28,6 +28,17 @@ BeachApiCore::Engine.routes.draw do
     resources :users, only: %i(create index) do
       match :confirm, on: :member, via: [:get, :post], defaults: { format: false }
     end
+    resources :giftbit_configs
+    get "/giftbit_configs/brand_codes", to: "giftbit_configs#brand_codes"
+    delete "/giftbit_configs/:id/remove_brand/:brand_id", to: "giftbit_configs#remove_brand_from_config"
+    resources :webhook_configs
+    delete "/webhook_configs/:id/remove_parameter/:parameter_id", to: "webhook_configs#remove_parametr_from_config"
+    resources :achievements
+    resources :rewards, except: [:update] do
+      put :confirm_reward
+    end
+    delete "/rewards/cancel_gift/:uuid", :to => "rewards#cancel_gift"
+    put    "/rewards/resend_gift/:uuid", :to => "rewards#resend_gift"
     resource :password, only: %i(create update), defaults: { format: false }
     get "/password/restore_password/:token", to: "passwords#restore_password",  defaults: { format: false }
     get "/password/success", to: "passwords#success_restore",  defaults: { format: false }
