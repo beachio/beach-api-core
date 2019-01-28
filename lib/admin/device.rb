@@ -1,4 +1,4 @@
-custom_device = BeachApiCore::Setting.custom_device(keeper: BeachApiCore::Instance.current)
+custom_device = ENV['CORE_DEVICE']
 if custom_device.nil? || custom_device == 'default'
   ActiveAdmin.register BeachApiCore::Device, as: 'Device' do
     permit_params :name, :application_id
