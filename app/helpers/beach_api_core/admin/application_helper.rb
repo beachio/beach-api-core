@@ -26,6 +26,34 @@ module BeachApiCore::Admin::ApplicationHelper
     end
   end
 
+  def reward_mode(reward_class)
+    if reward_class == "BeachApiCore::GiftbitConfig"
+      "GiftBit"
+    elsif reward_class == "BeachApiCore::WebhookConfig"
+      "Webhook"
+    end
+  end
+
+  def giftbit_brand_list(admin = false)
+    api = ENV['USE_TESTBET'] == 'true' ? "https://api-testbed.giftbit.com/papi/v1/brands?region=2&limit=500" : "https://api.giftbit.com/papi/v1/brands?region=2&limit=500"
+    uri = URI.parse(api)
+    req = Net::HTTP::Get.new(uri)
+    req['Authorization'] = "Bearer #{ENV['GIFTBIT_TOKEN']}"
+    res = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => true) {|http|
+      http.request(req)
+    }
+    body = JSON.parse(res.body)
+    if admin
+      brands = []
+      body['brands'].each do |brand|
+        brands << ["#{brand['name']} - #{brand['brand_code']}", brand['brand_code']]
+      end
+      brands
+    else
+      body
+    end
+  end
+
   def value_for_user(user, field)
     BeachApiCore::ProfileAttribute.find_by(profile: user.profile, profile_custom_field: field)&.value || ''
   end

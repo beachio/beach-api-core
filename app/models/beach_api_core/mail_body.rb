@@ -3,7 +3,8 @@ module BeachApiCore
     belongs_to :application, class_name: 'Doorkeeper::Application'
     enum mail_type: { invitation:       0,
                       confirm_account:  1,
-                      forgot_password:  2
+                      forgot_password:  2,
+                      webhook_reward_achieved: 3
     }
 
     validates  :application, :mail_type, presence: true

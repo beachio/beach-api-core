@@ -16,6 +16,9 @@ module BeachApiCore::Concerns::ApplicationExtension
     has_many :scores, class_name: "BeachApiCore::Score", dependent: :destroy
     has_many :bots, class_name: "BeachApiCore::Bot"
     has_many :invites, class_name: "BeachApiCore::Invite", dependent: :destroy
+    has_many :giftbit_configs, class_name: "BeachApiCore::GiftbitConfig", dependent: :destroy
+    has_many :webhook_configs, class_name: "BeachApiCore::WebhookConfig", dependent: :destroy
+    has_many :achievements, class_name: "BeachApiCore::Achievement", dependent: :destroy
     accepts_nested_attributes_for :services, allow_destroy: true
     accepts_nested_attributes_for :capabilities, allow_destroy: true
     accepts_nested_attributes_for :mail_bodies, allow_destroy: true
