@@ -53,6 +53,19 @@ module BeachApiCore
       end
     end
 
+    def members
+      authorize @team
+      render json: @team.members
+    end
+
+    def delete_member
+      authorize @team
+      @membership = @team.memberships.find_by(group_id: @team.id, member_id: params[:member_id])
+      @membership.destroy
+      
+      render json: @team.members
+    end
+
     private
 
     def team_params

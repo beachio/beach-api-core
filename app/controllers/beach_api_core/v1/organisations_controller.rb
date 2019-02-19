@@ -77,12 +77,14 @@ module BeachApiCore
     def current
       if params[:id].to_i == 0
         doorkeeper_token.update(organisation: nil)
+        result = nil
       else
         get_resource
         authorize @organisation, :show?
         doorkeeper_token.update(organisation: @organisation)
+        result = @organisation
       end
-      render_json_success
+      render json: result
     end
 
     def get_current
