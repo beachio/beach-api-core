@@ -6,12 +6,16 @@ module BeachApiCore
     acts_as_abs_doc_id
     acts_with_options(:current_organisation)
 
-    attributes :id, :email, :joined_at, :assignments
+    attributes :id, :email, :joined_at, :assignments, :membership
 
     has_one :profile, serializer: ProfileSimpleSerializer
 
     def joined_at
-      object.organisation_memberships.find_by(group: current_organisation)&.created_at
+      membership&.created_at
+    end
+
+    def membership
+      object.organisation_memberships.find_by(group: current_organisation)
     end
 
     def assignments
