@@ -11,7 +11,7 @@ module BeachApiCore
     end
 
     def group_admin?
-      record.group.assignments.admins.find_by(user_id: user.id)
+      record.group.assignments.admins.find_by(user_id: user.id) rescue false
     end
   end
 end
