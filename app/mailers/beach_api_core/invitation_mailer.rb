@@ -5,7 +5,6 @@ module BeachApiCore
       @user = invitation.user
       @group_name = invitation.group.name
       @app_name = app_name(invitation)
-      @organisation = organisation(invitation)
       @application = application
       @mail_config = @application.mail_bodies.where(:mail_type => 0).first
 
@@ -31,7 +30,7 @@ module BeachApiCore
                          .gsub("[GROUP_NAME]", @group_name)
                          .gsub("[INVITATION_FROM_USER]", @invitation.user.display_name) unless @mail_config.nil? || @mail_config.button_text.nil? || @mail_config.button_text.empty?
       mail(from: from(:noreply_from), to: @invitation.email,
-           subject: "Invitation to join a #{app_name(invitation)} team")
+           subject: "Invitation to join a #{app_name(invitation)}")
     end
 
     private
