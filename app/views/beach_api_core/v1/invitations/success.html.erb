@@ -52,7 +52,7 @@
           <div>
             <%= image_tag(BeachApiCore::Instance.instance_logo, class:'img-footer')%>
           </div>
-          <label class="header-text" style="color: <%= @config[:provided_text_color] %>">Identity Provided by Mineful</label>
+          <label class="header-text" style="color: <%= @config[:provided_text_color] %>"><%= @config[:provided_by] %></label>
         </div>
     <% end %>
 

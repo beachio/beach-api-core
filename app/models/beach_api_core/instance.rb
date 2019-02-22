@@ -80,7 +80,7 @@ module BeachApiCore
       end
 
       def success_invitation_text
-        "Success! Welcome to the [GROUP_TYPE] [GROUP_NAME]. <br><br> You can now log in with your Mineful ID."
+        "Success! Welcome to the [GROUP_TYPE] [GROUP_NAME]. <br><br> You can now log in with your Beach ID."
       end
 
       def invitation_success_form_radius
@@ -140,7 +140,7 @@ module BeachApiCore
       end
 
       def success_restore_text
-        "Success! Your password has been changed. <br> <br> You can now log in with your Mineful ID"
+        "Success! Your password has been changed. <br> <br> You can now log in with your Beach ID"
       end
 
       def success_restore_border_radius
@@ -180,7 +180,11 @@ module BeachApiCore
       end
 
       def success_confirm_text
-        "Success! Your account has been verified. <br> <br> You can now log in with your Mineful ID."
+        "Success! Your account has been verified. <br> <br> You can now log in with your Beach ID."
+      end
+
+      def provided_by_text
+        "Identity provided by Beach"
       end
 
     end

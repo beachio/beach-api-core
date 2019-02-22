@@ -143,7 +143,8 @@ module BeachApiCore
           show_instance_logo:  application.nil? || application.show_instance_logo.nil? ? BeachApiCore::Instance.show_instance_logo : application.show_instance_logo,
           provided_text_color: application.nil? || application.provided_text_color.empty? || application.provided_text_color.nil? ? BeachApiCore::Instance.provided_text_color : application.provided_text_color,
           application_logo: application.nil? || application.application_logo_url.nil? || application.application_logo_url.empty? ? BeachApiCore::Instance.application_logo : application.application_logo_url,
-          body_style: background
+          body_style: background,
+          provided_by: BeachApiCore::Setting.provided_by_text(keeper: BeachApiCore::Instance.current).nil? ? BeachApiCore::Instance.provided_by_text : BeachApiCore::Setting.provided_by_text(keeper: BeachApiCore::Instance.current)
       }
       @config[:input_style]                 =  custom_view.nil? || custom_view.input_style.nil? || custom_view.input_style.empty? ? BeachApiCore::Instance.input_style : custom_view.input_style.gsub("\n", "")
       @config[:header_text]                 =  custom_view.nil? || custom_view.header_text.nil? || custom_view.header_text.empty? ? BeachApiCore::Instance.confirm_acc_text : custom_view.header_text.gsub("\n", "<br>")
