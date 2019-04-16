@@ -14,6 +14,7 @@ require 'acts_as_strippable_on'
 require 'rails-jquery-autocomplete'
 require 'engine_store'
 require 'paper_trail'
+require 'redis/objects'
 require 'rack/cors'
 
 module BeachApiCore

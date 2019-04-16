@@ -3,6 +3,7 @@ module BeachApiCore
     include Concerns::UserConfirm
     include Concerns::UserRoles
     include Concerns::UserPermissions
+    include Redis::Objects
 
     attr_accessor :require_confirmation, :require_current_password, :current_password, :confirmed, :application_id, :from_admin
 
@@ -80,6 +81,7 @@ module BeachApiCore
 
     delegate :first_name, :last_name, :name, to: :profile
 
+    list :sessions # Redis list
     enum status: %i(active invitee)
     SCORES_MESSAGE = "Your scores was changed."
 
