@@ -81,7 +81,7 @@ module BeachApiCore
 
     delegate :first_name, :last_name, :name, to: :profile
 
-    list :sessions # Redis list
+    set :sessions # Redis set
     enum status: %i(active invitee)
     SCORES_MESSAGE = "Your scores was changed."
 
