@@ -80,6 +80,7 @@ PATH
       rails
       rails-jquery-autocomplete
       redis (< 4)
+      redis-objects
       refile
       rmagick
       sidekiq
