@@ -13,6 +13,16 @@ module BeachApiCore::Concerns::V1::ApipieConcern
     @_apipie_user
   end
 
+  def apipie_plan
+    @_apipie_subscription_plan ||= BeachApiCore::Plan.new(id: fake_id,
+                                                                      name: Faker::Name.title,
+                                                                      stripe_id: Faker::Lorem.word,
+                                                                      amount: Faker::Number.between(1000, 10000),
+                                                                      interval: %w(day month year).sample,
+                                                                      plan_for: %w(organisation user).sample
+    )
+  end
+
   def apipie_asset
     return @_apipie_asset if @_apipie_asset
     @_apipie_asset = BeachApiCore::Asset.new(id: fake_id,

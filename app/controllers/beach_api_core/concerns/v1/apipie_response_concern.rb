@@ -9,6 +9,10 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
     ).as_json
   end
 
+  def apipie_plan_response
+    pretty BeachApiCore::PlanSerializer.new(apipie_plan)
+  end
+
   def apipie_organisation_user_response
     pretty BeachApiCore::OrganisationUserSerializer.new(
       apipie_user, current_organisation: apipie_organisation

@@ -16,6 +16,8 @@ en:
         authorization: "Authorization"
         passwords: "Passwords"
         broadcasts: 'Broadcasts'
+        subscriptions: 'Subscriptions'
+        plans: 'Plans'
       errors:
         forbidden_request: "Forbidden request"
         unauthorized: "Unauthorized"
