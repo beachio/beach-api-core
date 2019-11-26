@@ -92,5 +92,10 @@ BeachApiCore::Engine.routes.draw do
       put :read, on: :member
       resources :messages, only: %i(create index)
     end
+    resources :plans, only: [:index, :create, :show, :destroy]
+    resources :subscriptions, only: [:create, :update, :show, :destroy] do
+      post :create_customer, on: :collection
+      post :invoice_created, on: :collection
+    end
   end
 end

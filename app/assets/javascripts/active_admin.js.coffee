@@ -5,6 +5,8 @@
 #= require autocomplete-rails
 #= require active_admin/achievement
 #= require active_admin/reward
+#= require active_admin/subscription
+
 
 $ ->
   COUNT = -1;

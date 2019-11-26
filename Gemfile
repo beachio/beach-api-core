@@ -15,7 +15,7 @@ gem 'elasticsearch-rails', git: 'https://github.com/elasticsearch/elasticsearch-
 gem 'sidekiq'
 gem 'aws-sdk'
 gem 'doorkeeper', '4.3.2'
-gem 'redis-objects'
+gem 'stripe'
 
 group :development, :test do
   gem 'byebug', platform: :mri

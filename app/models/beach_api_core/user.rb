@@ -47,6 +47,8 @@ module BeachApiCore
     has_many :organisation_accesses, -> { where(keeper_type: 'BeachApiCore::Organisation') },
              inverse_of: :user, class_name: 'BeachApiCore::UserAccess'
     has_many :invites, class_name: "BeachApiCore::Invite", dependent: :destroy
+    has_one :subscription, class_name: "BeachApiCore::Subscription", as: :owner, dependent: :destroy
+    has_many :organisations_subscriptions, class_name: "BeachApiCore::Organisation", foreign_key: :subscription_owner_id
 
     validates :email,
               presence: true,
@@ -78,6 +80,7 @@ module BeachApiCore
     after_initialize :set_defaults
     after_create :set_sex_and_birth_date
     after_create :send_email_confirmation, if: :from_admin
+    before_destroy :destroy_stripe_customer
 
     delegate :first_name, :last_name, :name, to: :profile
 
@@ -92,6 +95,13 @@ module BeachApiCore
             beach_api_core_profiles.first_name ILIKE :term OR beach_api_core_profiles.last_name ILIKE :term",
                  term: "%#{term.downcase}%")
       end
+    end
+
+    def destroy_stripe_customer
+      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+
+      customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+      customer.delete
     end
 
     def confirmed?
@@ -172,7 +182,6 @@ module BeachApiCore
       uniq_number = BeachApiCore::User.maximum(:id).to_i + 1
       self.username = "#{Regexp.last_match[1]}-#{uniq_number}" if email =~ /\A(.*)@/
     end
-
     
   end
 end

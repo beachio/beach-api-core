@@ -3,8 +3,11 @@ module BeachApiCore
     include BeachApiCore::Concerns::AssetConcern
     include BeachApiCore::Concerns::GenerateImageConcern
     validates :name, :application, presence: true
+    validate :check_on_owner_change, on: [:create, :update]
+    validate :check_plan, on: [:create, :update]
 
     belongs_to :application, class_name: 'Doorkeeper::Application'
+    belongs_to :subscription_owner, class_name: "BeachApiCore::User", foreign_key: :subscription_owner_id
     has_many :memberships, as: :group, inverse_of: :group, :dependent => :destroy
     has_many :users, through: :memberships, source: :member, source_type: 'BeachApiCore::User'
     has_many :applications, as: :publisher, class_name: 'Doorkeeper::Application'
@@ -16,7 +19,9 @@ module BeachApiCore
     has_one :organisation_plan, dependent: :destroy
     has_one :plan, through: :organisation_plan
     has_one :logo_image, class_name: 'BeachApiCore::Asset', as: :entity, inverse_of: :entity, dependent: :destroy
-    
+    has_one :subscription, class_name: "BeachApiCore::Subscription", as: :owner, dependent: :destroy
+
+    accepts_nested_attributes_for :subscription
     accepts_nested_attributes_for :logo_image, allow_destroy: true, reject_if: :file_blank?
     accepts_nested_attributes_for :organisation_plan,
                                   allow_destroy: true, reject_if: proc { |attr| attr[:plan_id].blank? }
@@ -30,6 +35,14 @@ module BeachApiCore
 
     def generate_image?
       logo_image.blank? || ((saved_change_to_name? || saved_change_to_logo_properties?) && logo_image.generated?)
+    end
+
+    def check_on_owner_change
+      self.errors.add :subscription_owner, 'can\'t be changed while you have active subscription' if self.subscription_owner_id_changed? && !self.subscription.nil?
+    end
+
+    def check_plan
+      self.errors.add :plan_id, 'can\'t be changed while you haven\'t subscription owner' if self.subscription_owner.nil?
     end
   end
 end

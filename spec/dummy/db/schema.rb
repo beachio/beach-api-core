@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190110100006) do
+ActiveRecord::Schema.define(version: 20190307090616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -380,7 +380,9 @@ ActiveRecord::Schema.define(version: 20190110100006) do
     t.datetime "updated_at", null: false
     t.hstore "logo_properties"
     t.boolean "send_email", default: false
+    t.bigint "subscription_owner_id"
     t.index ["application_id"], name: "index_beach_api_core_organisations_on_application_id"
+    t.index ["subscription_owner_id"], name: "index_beach_api_core_organisations_on_subscription_owner_id"
   end
 
   create_table "beach_api_core_permissions", force: :cascade do |t|
@@ -411,6 +413,14 @@ ActiveRecord::Schema.define(version: 20190110100006) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id"
+    t.integer "amount"
+    t.string "interval"
+    t.integer "interval_amount"
+    t.integer "trial_period_days"
+    t.integer "plan_for"
+    t.integer "users_count"
+    t.integer "amount_per_additional_user"
   end
 
   create_table "beach_api_core_profile_attributes", id: :serial, force: :cascade do |t|
@@ -527,6 +537,15 @@ ActiveRecord::Schema.define(version: 20190110100006) do
     t.index ["name"], name: "index_beach_api_core_settings_on_name"
   end
 
+  create_table "beach_api_core_subscriptions", force: :cascade do |t|
+    t.bigint "plan_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "stripe_subscription_id"
+    t.index ["owner_type", "owner_id"], name: "index_beach_api_core_subscriptions_on_owner_type_and_owner_id"
+    t.index ["plan_id"], name: "index_beach_api_core_subscriptions_on_plan_id"
+  end
+
   create_table "beach_api_core_teams", force: :cascade do |t|
     t.string "name"
     t.bigint "application_id", null: false
@@ -573,6 +592,7 @@ ActiveRecord::Schema.define(version: 20190110100006) do
     t.datetime "updated_at", null: false
     t.integer "status"
     t.string "reset_password_token"
+    t.string "stripe_customer_token"
     t.index ["email"], name: "index_beach_api_core_users_on_email"
     t.index ["username"], name: "index_beach_api_core_users_on_username"
   end

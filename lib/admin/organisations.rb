@@ -1,7 +1,7 @@
 ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
   menu parent: 'Organisations'
 
-  permit_params :name, :application_id, :send_email,
+  permit_params :name, :application_id, :send_email, :subscription_owner_id,
                 logo_image_attributes: %i(id file),
                 organisation_plan_attributes: %i(plan_id)
 
@@ -19,6 +19,7 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
     f.object.build_logo_image if f.object.logo_image.blank?
     f.object.build_organisation_plan if f.object.organisation_plan.blank?
     f.inputs t('active_admin.details', model: t('activerecord.models.organisation.one')) do
+      f.semantic_errors *f.object.errors.keys
       f.input :name
       f.input :application, as: :select, collection: Doorkeeper::Application.all
       li do
@@ -30,6 +31,7 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
           div { image_tag attachment_url(f.object.logo_image, :file, :fill, 150, 150) }
         end
       end
+      f.input :subscription_owner, as: :select, collection: BeachApiCore::User.where.not(:stripe_customer_token => nil).map {|owner| ["#{owner.username} - #{owner.email}", owner.id]}
       f.fields_for :organisation_plan do |p|
         p.input :plan, as: :select, collection: BeachApiCore::Plan.all
       end
@@ -42,6 +44,7 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
     attributes_table do
       row :name
       row :application
+      row :subscription_owner
       if organisation.logo_image.present?
         row :logo do
           image_tag attachment_url(organisation.logo_image, :file, :fill, 150, 150)
