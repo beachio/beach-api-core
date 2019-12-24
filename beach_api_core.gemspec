@@ -51,7 +51,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'aws-sdk'
   s.add_dependency 'activeadmin'
   s.add_dependency 'paper_trail'
-  s.add_dependency 'redis-objects'
   s.add_dependency 'ancestry'
   s.add_dependency 'rack-cors'
   s.add_dependency 'rails-jquery-autocomplete'

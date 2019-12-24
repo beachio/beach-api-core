@@ -80,7 +80,6 @@ PATH
       rails
       rails-jquery-autocomplete
       redis (< 4)
-      redis-objects
       refile
       rmagick
       sidekiq
@@ -851,6 +850,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    json (2.0.2)
     jsonapi-renderer (0.2.0)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
@@ -950,8 +950,6 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     redis (3.3.5)
-    redis-objects (1.3.1)
-      redis (~> 3.3)
     request_store (1.4.1)
       rack (>= 1.4)
     responders (2.4.0)
@@ -1031,12 +1029,17 @@ GEM
     stripe (4.9.0)
       faraday (~> 0.13)
       net-http-persistent (~> 3.0)
+    stripe_event (2.3.0)
+      activesupport (>= 3.1)
+      stripe (>= 2.8, < 6)
     temple (0.8.1)
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    ultrahook (0.1.5)
+      json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5)
@@ -1088,6 +1091,8 @@ DEPENDENCIES
   shoulda-matchers!
   sidekiq
   stripe
+  stripe_event
+  ultrahook
   webmock
 
 RUBY VERSION

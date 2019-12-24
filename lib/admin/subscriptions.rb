@@ -6,7 +6,7 @@ ActiveAdmin.register BeachApiCore::Subscription, as: 'Subscription' do
   form do |f|
 
     f.inputs do
-      f.semantic_errors *f.object.errors.keys
+      #f.semantic_errors *f.object.errors.keys
 
       f.input :plan
       if f.object.new_record?
@@ -31,7 +31,7 @@ ActiveAdmin.register BeachApiCore::Subscription, as: 'Subscription' do
       when 'BeachApiCore::Organisation'
         params[:subscription][:owner_id] = params[:subscription][:organisation_id]
       end
-      create!
+      super
     end
   end
 end

@@ -1,7 +1,7 @@
 ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
   menu parent: 'Organisations'
 
-  permit_params :name, :application_id, :send_email, :subscription_owner_id,
+  permit_params :name, :application_id, :send_email, :email,
                 logo_image_attributes: %i(id file),
                 organisation_plan_attributes: %i(plan_id)
 
@@ -31,7 +31,7 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
           div { image_tag attachment_url(f.object.logo_image, :file, :fill, 150, 150) }
         end
       end
-      f.input :subscription_owner, as: :select, collection: BeachApiCore::User.where.not(:stripe_customer_token => nil).map {|owner| ["#{owner.username} - #{owner.email}", owner.id]}
+      f.input :email
       f.fields_for :organisation_plan do |p|
         p.input :plan, as: :select, collection: BeachApiCore::Plan.all
       end
@@ -44,7 +44,7 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
     attributes_table do
       row :name
       row :application
-      row :subscription_owner
+      row :email
       if organisation.logo_image.present?
         row :logo do
           image_tag attachment_url(organisation.logo_image, :file, :fill, 150, 150)

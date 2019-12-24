@@ -8,6 +8,7 @@ ruby '2.4.1'
 gemspec
 
 gem 'faker'
+gem 'stripe_event'
 gem 'refile', require: 'refile/rails', git: 'https://github.com/manfe/refile.git'
 
 gem 'elasticsearch-model', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
@@ -25,6 +26,10 @@ group :development, :test do
   gem 'rubocop-rspec'
   gem 'rubocop-git'
   gem 'awesome_print'
+end
+
+group :development do
+  gem 'ultrahook'
 end
 
 group :test do

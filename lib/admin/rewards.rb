@@ -36,9 +36,9 @@ ActiveAdmin.register BeachApiCore::Reward, as: 'Reward' do
         reward.gift_uuid.present? && reward.Fulfilled?
   end
 
-  action_item only: :index, priority: 0 do
-    link_to('Run Worker', admin_run_reward_worker_path)
-  end
+  # action_item only: :index, priority: 0 do
+  #   link_to('Run Worker', admin_run_reward_worker_path)
+  # end
 
 
   index do
