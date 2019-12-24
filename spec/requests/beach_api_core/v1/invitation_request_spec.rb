@@ -88,7 +88,7 @@ module BeachApiCore
                },
                headers: bearer_auth
         end.to change(Invitation, :count).by(1)
-                                         .and change(ActionMailer::Base.deliveries, :count).by(1)
+                                         .and change(ActionMailer::Base.deliveries, :count).by(0)
         expect(response.status).to eq 201
       end
     end

@@ -3,7 +3,6 @@ module BeachApiCore
     include Concerns::UserConfirm
     include Concerns::UserRoles
     include Concerns::UserPermissions
-    include Redis::Objects
 
     attr_accessor :require_confirmation, :require_current_password, :current_password, :confirmed, :application_id, :from_admin
 
@@ -35,6 +34,7 @@ module BeachApiCore
 
     has_many :projects, class_name: 'BeachApiCore::Project', inverse_of: :user, dependent: :destroy
     has_many :entities, inverse_of: :user, dependent: :destroy
+    has_many :invoices, class_name: 'BeachApiCore::Invoice', as: :keeper, dependent: :destroy
     has_many :interactions, inverse_of: :user, dependent: :destroy
     has_many :chats_users, class_name: 'BeachApiCore::Chat::ChatsUser', inverse_of: :user
     has_many :chats, through: :chats_users
@@ -84,7 +84,6 @@ module BeachApiCore
 
     delegate :first_name, :last_name, :name, to: :profile
 
-    set :sessions # Redis set
     enum status: %i(active invitee)
     SCORES_MESSAGE = "Your scores was changed."
 

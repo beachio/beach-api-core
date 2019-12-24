@@ -35,7 +35,15 @@ module OrganisationsDoc
   def published_applications; end
 
   api :POST, '/organisations', I18n.t('api.resource_description.descriptions.organisations.create')
-  param_group :organisation
+  param :organisation, Hash, required: true do
+    param :name, String, required: true
+    param :email, String, required: true, desc: "Organisation's email"
+    param :logo_properties, Hash, required: false
+    param :logo_image_attributes, Hash, required: false do
+      param :file, File, required: false, desc: "Postfield file"
+      param :base64, String, required: false, desc: "Encoded Base64 string"
+    end
+  end
   example "\"organisation\": #{apipie_organisation_response}
           \n#{I18n.t('api.resource_description.fail',
                      description: I18n.t('api.resource_description.fails.errors_description'))}"
@@ -77,4 +85,21 @@ module OrganisationsDoc
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "\"organisation\": #{apipie_organisation_response}"
   def get_current; end
+
+  api :GET, 'organisation/:organisation_id/subscription/:id/show_invoices', 'Show invoices subscriptions of organisation'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example "[
+    {
+        \"id\": 12,
+        \"keeper_type\": \"BeachApiCore::Organisation\",
+        \"keeper_id\": 8,
+        \"subscription_id\": 14,
+        \"invoice_url_link\": \"https://pay.stripe.com/invoice/invst_yHsTACRTbcbf1h1eWvhRR\",
+        \"invoice_pdf_link\": \"https://pay.stripe.com/invoice/invst_yHsTACRTbcbf1h1eWvhRR/pdf\",
+        \"created_at\": \"2019-12-16T08:22:18.185Z\",
+        \"updated_at\": \"2019-12-16T08:22:18.185Z\"
+    },
+    {...}
+]"
+  def show_invoices; end
 end

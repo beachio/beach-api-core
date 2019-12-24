@@ -61,4 +61,21 @@ module UsersDoc
   param :confirmation_token, String, required: true
   example "\"user\": #{apipie_user_response}"
   def confirm; end
+
+  api :GET, 'users/:user_id/subscription/:id/show_invoices', 'Show invoices subscriptions of organisation'
+  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
+  example "[
+    {
+        \"id\": 5,
+        \"keeper_type\": \"BeachApiCore::Organisation\",
+        \"keeper_id\": 12,
+        \"subscription_id\": 10,
+        \"invoice_url_link\": \"https://pay.stripe.com/invoice/invst_yHsTACRTbcbf1h1awdWRTasdz31zs\",
+        \"invoice_pdf_link\": \"https://pay.stripe.com/invoice/invst_yHsTACRTbcbf1h1awdWRTasdz31zs/pdf\",
+        \"created_at\": \"2019-12-16T08:22:18.185Z\",
+        \"updated_at\": \"2019-12-16T08:22:18.185Z\"
+    },
+    {...}
+]"
+  def show_invoices; end
 end

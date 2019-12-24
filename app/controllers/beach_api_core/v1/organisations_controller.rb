@@ -94,7 +94,7 @@ module BeachApiCore
     private
 
     def organisation_params
-      params.require(:organisation).permit(:name, logo_properties: logo_params, logo_image_attributes: %i(file base64))
+      params.require(:organisation).permit(:name, :email, logo_properties: logo_params, logo_image_attributes: %i(file base64))
     end
 
     def logo_params
@@ -109,7 +109,7 @@ module BeachApiCore
     def users_by_roles(users)
       return users unless params[:roles].present?
       filtered_users = users.joining { assignments }.where.has do |u|
-        (u.assignments.role_id.in params[:roles]) & (u.assignments.keeper_id == current_organisation.id) &
+        (u.assignments.keeper_id == current_organisation.id) &
           ( u.assignments.keeper_type == 'BeachApiCore::Organisation')
       end
       filtered_users.any? ? filtered_users : users

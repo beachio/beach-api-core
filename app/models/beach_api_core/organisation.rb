@@ -4,12 +4,11 @@ module BeachApiCore
     include BeachApiCore::Concerns::GenerateImageConcern
     validates :name, :application, presence: true
     validate :check_on_owner_change, on: [:create, :update]
-    validate :check_plan, on: [:create, :update]
 
     belongs_to :application, class_name: 'Doorkeeper::Application'
-    belongs_to :subscription_owner, class_name: "BeachApiCore::User", foreign_key: :subscription_owner_id
     has_many :memberships, as: :group, inverse_of: :group, :dependent => :destroy
     has_many :users, through: :memberships, source: :member, source_type: 'BeachApiCore::User'
+    has_many :invoices, class_name: "BeachApiCore::Invoice", as: :keeper, dependent:  :destroy
     has_many :applications, as: :publisher, class_name: 'Doorkeeper::Application'
     has_many :teams, through: :memberships, source: :member, source_type: 'BeachApiCore::Team'
     has_many :invitations, as: :group, inverse_of: :group
@@ -38,11 +37,8 @@ module BeachApiCore
     end
 
     def check_on_owner_change
-      self.errors.add :subscription_owner, 'can\'t be changed while you have active subscription' if self.subscription_owner_id_changed? && !self.subscription.nil?
+      self.errors.add :subscription_owner, 'can\'t be changed while you have active subscription' unless self.subscription.nil?
     end
 
-    def check_plan
-      self.errors.add :plan_id, 'can\'t be changed while you haven\'t subscription owner' if self.subscription_owner.nil?
-    end
   end
 end

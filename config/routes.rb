@@ -42,7 +42,12 @@ BeachApiCore::Engine.routes.draw do
     resource :password, only: %i(create update), defaults: { format: false }
     get "/password/restore_password/:token", to: "passwords#restore_password",  defaults: { format: false }
     get "/password/success", to: "passwords#success_restore",  defaults: { format: false }
-    resource :user, only: %i(show update)
+    resources :users, only: %i(show update) do
+      resources :subscriptions, only: %i(show), controller: "subscriptions" do
+        get :show, on: :collection
+        get :show_invoices, on: :member
+      end
+    end
     resources :services, only: %i(index update) do
       resource :capabilities, only: %i(create destroy)
     end
@@ -57,6 +62,9 @@ BeachApiCore::Engine.routes.draw do
       collection do
         get :users
         get :get_current
+      end
+      resources :subscriptions, only: %i(show), controller: "subscriptions" do
+        get :show_invoices, on: :member
       end
       put :current, on: :member
       get :published_applications, on: :member
@@ -94,7 +102,8 @@ BeachApiCore::Engine.routes.draw do
     end
     resources :plans, only: [:index, :create, :show, :destroy]
     resources :subscriptions, only: [:create, :update, :show, :destroy] do
-      post :create_customer, on: :collection
+      post :create_customer, on: :collection, only: %i(create)
+      post :update_quantity, on: :member
       post :invoice_created, on: :collection
     end
   end
