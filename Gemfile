@@ -15,7 +15,7 @@ gem 'elasticsearch-model', git: 'https://github.com/elasticsearch/elasticsearch-
 gem 'elasticsearch-rails', git: 'https://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'sidekiq'
 gem 'aws-sdk'
-gem 'doorkeeper', '4.3.2'
+gem 'doorkeeper', '5.2.3'
 gem 'stripe'
 
 group :development, :test do
