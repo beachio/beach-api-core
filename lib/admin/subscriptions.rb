@@ -1,7 +1,7 @@
 ActiveAdmin.register BeachApiCore::Subscription, as: 'Subscription' do
   menu priority: 66, parent: 'Services'
 
-  permit_params :plan_id, :owner_type, :owner_id, :user_id, :organisation_id
+  permit_params :plan_id, :owner_type, :owner_id, :user_id, :organisation_id, :cvc, :exp_year, :exp_month, :number
 
   form do |f|
 
@@ -9,6 +9,12 @@ ActiveAdmin.register BeachApiCore::Subscription, as: 'Subscription' do
       #f.semantic_errors *f.object.errors.keys
 
       f.input :plan
+
+      f.input :number, as: :number
+      f.input :exp_month, as: :number
+      f.input :exp_year, as: :number
+      f.input :cvc, as: :number
+
       if f.object.new_record?
         f.input :owner_type,
                 as: :select,
