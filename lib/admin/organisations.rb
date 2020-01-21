@@ -31,7 +31,7 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
           div { image_tag attachment_url(f.object.logo_image, :file, :fill, 150, 150) }
         end
       end
-      f.input :email
+      f.input :email, as: :string
       f.fields_for :organisation_plan do |p|
         p.input :plan, as: :select, collection: BeachApiCore::Plan.all
       end

@@ -1,5 +1,6 @@
 module BeachApiCore
   class Subscription < ApplicationRecord
+    attr_accessor :cvc, :exp_year, :exp_month, :number
     belongs_to :plan, class_name: "BeachApiCore::Plan"
     belongs_to :owner, polymorphic: true
 
@@ -14,9 +15,10 @@ module BeachApiCore
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
     def create_subscription
-      self.errors.add :subscription, "can't be created because you have active subscription" unless self.owner.subscription.nil?
+      self.errors.add :subscription, "can't be created because you have active subscription" unless self.owner.nil? || self.owner.subscription.nil?
       return unless errors.blank?
-      if self.owner.nil? || self.owner.stripe_customer_token.nil?
+      create_customer if self.owner.stripe_customer_token.blank?
+      if self.owner.nil? || self.owner.stripe_customer_token.blank?
         self.errors.add :owner, 'wrong subscription owner'
       else
         begin
@@ -90,9 +92,37 @@ module BeachApiCore
       quantity
     end
 
+    def create_customer
+      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+      client = self.owner
+      unless client.nil?
+        card_token = Stripe::Token.create(
+            {
+                card: {
+                    number: number,
+                    exp_month: exp_month,
+                    exp_year: exp_year,
+                    cvc: cvc
+                }
+            }
+        )
+        customer = Stripe::Customer.create(email: client.email, card: card_token.id)
+        client.update_attribute(:stripe_customer_token, customer.id)
+      end
+    rescue Stripe::CardError => e
+      render_json_error({:message => "Wrong card"})
+    end
+
     private
     def check_subscription_for
-      self.errors.add :plan, "wrong for indicated type" unless self.owner_type.gsub("BeachApiCore::",'').downcase == self.plan.plan_for
+      if self.plan.plan_for == 0
+        type = "organisation"
+      elsif self.plan.plan_for == 1
+        type = "user"
+      end
+      self_plan = self.owner_type.gsub("BeachApiCore::",'').downcase
+
+      self.errors.add :plan, "wrong for indicated type" unless self_plan == self.plan.plan_for || self_plan == type
     end
   end
 
