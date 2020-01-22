@@ -39,7 +39,6 @@ ActiveAdmin.register BeachApiCore::Plan, as: 'Plan' do
         o.input :access_level, as: :select, collection: BeachApiCore::AccessLevel.all,
                 label: t('activerecord.models.access_level.one')
         o.input :users_count
-        o.input :users_count
       end
     end
     f.actions
