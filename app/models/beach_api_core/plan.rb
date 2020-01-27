@@ -1,6 +1,5 @@
 module BeachApiCore
   class Plan < ApplicationRecord
-    require 'stripe'
     validates :name, :plan_for, :interval, :stripe_id, :currency, :amount, presence: true
     validates :users_count, numericality: {less_than_or_equal_to: 10}, if: :organisation?
     validates :amount, numericality: {greater_than: 0}
@@ -19,13 +18,14 @@ module BeachApiCore
     accepts_nested_attributes_for :plan_items, allow_destroy: true
     attr_readonly :plan_for, :interval, :stripe_id, :amount, :amount_per_additional_user, :users_count, :currency
 
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    Stripe.api_key = ENV['LIVE_STRIPE_SECRET_KEY']
 
     def organisation?
       self.plan_for == "organisation"
     end
 
     def delete_stripe_plan
+      set_stripe_key
       begin
         stripe_plan = Stripe::Plan.retrieve(self.stripe_id)
         stripe_product = Stripe::Product.retrieve(stripe_plan.product)
@@ -38,6 +38,7 @@ module BeachApiCore
     end
 
     def create_stripe_plan
+      set_stripe_key
       return unless self.errors.blank?
       trial = self.trial_period_days.nil? ? 0 : self.trial_period_days
 
@@ -72,6 +73,10 @@ module BeachApiCore
       end
     rescue => e
       self.errors.add :stripe_error, e.message
+    end
+
+    def set_stripe_key
+      Stripe.api_key = test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
     end
   end
 end

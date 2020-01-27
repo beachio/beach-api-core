@@ -97,7 +97,7 @@ module BeachApiCore
     end
 
     def destroy_stripe_customer
-      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+      set_stripe_key
 
       customer = Stripe::Customer.retrieve(self.stripe_customer_token)
       customer.delete
@@ -110,7 +110,7 @@ module BeachApiCore
     def display_name
       first_name.present? ? first_name : username
     end
-    
+
     def token
       Doorkeeper::AccessToken.order("created_at DESC").find_by(resource_owner_id: id).token
     end
@@ -181,6 +181,9 @@ module BeachApiCore
       uniq_number = BeachApiCore::User.maximum(:id).to_i + 1
       self.username = "#{Regexp.last_match[1]}-#{uniq_number}" if email =~ /\A(.*)@/
     end
-    
+
+    def set_stripe_key
+      Stripe.api_key = self.subscription.plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+    end
   end
 end

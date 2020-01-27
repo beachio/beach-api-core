@@ -1,7 +1,7 @@
 ActiveAdmin.register BeachApiCore::Plan, as: 'Plan' do
   menu parent: 'Organisations'
 
-  permit_params :name, :amount, :stripe_id, :interval, :plan_for, :amount_per_additional_user, :billing_scheme, :users_count, :trial_period_days, :tiers, :tiers_mode, :currency,
+  permit_params :test, :name, :amount, :stripe_id, :interval, :plan_for, :amount_per_additional_user, :billing_scheme, :users_count, :trial_period_days, :tiers, :tiers_mode, :currency,
                 plan_items_attributes: %i(id access_level_id users_count)
 
   index do
@@ -18,6 +18,7 @@ ActiveAdmin.register BeachApiCore::Plan, as: 'Plan' do
       f.input :name
       f.input :amount
       if f.object.new_record?
+        f.input :test, label:'test mode'
         f.input :stripe_id
         f.input :interval, as: :select, collection: [["Day", "day"], ["Month", "month"], ["Year", "year"]]
         f.input :plan_for, as: :select, collection: [["Organisation","organisation"], ["User","user"]]
@@ -46,6 +47,7 @@ ActiveAdmin.register BeachApiCore::Plan, as: 'Plan' do
 
   show do |_plan|
     attributes_table do
+      row :test
       row :name
       row :stripe_id
       row :amount
