@@ -12,9 +12,10 @@ module BeachApiCore
     before_destroy :cancel_subscription
     attr_accessor :not_change, :user_id, :organisation_id
 
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    Stripe.api_key = ENV['LIVE_STRIPE_SECRET_KEY']
 
     def create_subscription
+      set_stripe_key
       self.errors.add :subscription, "can't be created because you have active subscription" unless self.owner.nil? || self.owner.subscription.nil?
       return unless errors.blank?
       create_customer if self.owner.stripe_customer_token.blank?
@@ -45,6 +46,7 @@ module BeachApiCore
     end
 
     def change_subscription
+      set_stripe_key
       return unless self.plan_id_changed?
       return unless errors.blank?
       begin
@@ -71,6 +73,7 @@ module BeachApiCore
     end
 
     def cancel_subscription
+      set_stripe_key
       begin
         sub = Stripe::Subscription.retrieve(self.stripe_subscription_id)
         if sub.current_period_end > Time.now.to_i
@@ -93,7 +96,7 @@ module BeachApiCore
     end
 
     def create_customer
-      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+      set_stripe_key
       client = self.owner
       unless client.nil?
         card_token = Stripe::Token.create(
@@ -123,6 +126,10 @@ module BeachApiCore
       self_plan = self.owner_type.gsub("BeachApiCore::",'').downcase
 
       self.errors.add :plan, "wrong for indicated type" unless self_plan == self.plan.plan_for || self_plan == type
+    end
+
+    def set_stripe_key
+      Stripe.api_key = self.plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
     end
   end
 
