@@ -99,8 +99,10 @@ module BeachApiCore
     def destroy_stripe_customer
       set_stripe_key
 
-      customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-      customer.delete
+      if self.stripe_customer_token
+        customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+        customer.delete
+      end
     end
 
     def confirmed?
@@ -183,7 +185,7 @@ module BeachApiCore
     end
 
     def set_stripe_key
-      Stripe.api_key = self.subscription.plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+      Stripe.api_key = self.subscription&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
     end
   end
 end

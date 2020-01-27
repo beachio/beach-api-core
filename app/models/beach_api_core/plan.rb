@@ -26,13 +26,15 @@ module BeachApiCore
 
     def delete_stripe_plan
       set_stripe_key
-      begin
-        stripe_plan = Stripe::Plan.retrieve(self.stripe_id)
-        stripe_product = Stripe::Product.retrieve(stripe_plan.product)
-        stripe_plan.delete
-        stripe_product.delete
-      rescue => e
-        self.errors.add e.message unless e.message.match?(/No such plan/)
+      if self.stripe_id.present?
+        begin
+          stripe_plan = Stripe::Plan.retrieve(self.stripe_id)
+          stripe_product = Stripe::Product.retrieve(stripe_plan.product)
+          stripe_plan.delete
+          stripe_product.delete
+        rescue => e
+          self.errors.add e.message unless e.message.match?(/No such plan/)
+        end
       end
       throw(:abort) if self.errors.present?
     end
