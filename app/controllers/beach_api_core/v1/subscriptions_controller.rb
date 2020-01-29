@@ -81,7 +81,8 @@ module BeachApiCore
     end
 
     def create_customer
-      set_stripe_key
+      plan = BeachApiCore::Plan.find(subscription_params[:plan_id])
+      set_stripe_key(plan)
       client = subscription_params[:subscription_for]=="user" ? current_user : BeachApiCore::Organisation.find_by(:id => subscription_params[:owner_id])
       unless client.nil?
         card_token = Stripe::Token.create(
@@ -129,7 +130,7 @@ module BeachApiCore
     def update_quantity
       unless params[:id].nil?
         subs = BeachApiCore::Subscription.find_by(:id => params[:id])
-        Stripe.api_key = subs.plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+        Stripe.api_key = subs&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
         stripe_subs = Stripe::Subscription.retrieve(subs.stripe_subscription_id)
         unless subs.nil? || stripe_subs.nil?
           quantity = subs.get_quantity
@@ -174,8 +175,8 @@ module BeachApiCore
       !current_user.plan.nil?
     end
 
-    def set_stripe_key
-      Stripe.api_key = self.plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+    def set_stripe_key(plan)
+      Stripe.api_key = plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
     end
   end
 end

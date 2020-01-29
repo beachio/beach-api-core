@@ -16,7 +16,7 @@ module BeachApiCore
     before_destroy :delete_stripe_plan
 
     accepts_nested_attributes_for :plan_items, allow_destroy: true
-    attr_readonly :plan_for, :interval, :stripe_id, :amount, :amount_per_additional_user, :users_count, :currency
+    attr_readonly :plan_for, :interval, :stripe_id, :amount, :amount_per_additional_user, :users_count, :currency, :test
 
     Stripe.api_key = ENV['LIVE_STRIPE_SECRET_KEY']
 
@@ -78,7 +78,7 @@ module BeachApiCore
     end
 
     def set_stripe_key
-      Stripe.api_key = test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+      Stripe.api_key = self.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
     end
   end
 end
