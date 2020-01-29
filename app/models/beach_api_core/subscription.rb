@@ -129,7 +129,7 @@ module BeachApiCore
     end
 
     def set_stripe_key
-      Stripe.api_key = self.plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+      Stripe.api_key = self&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
     end
   end
 

@@ -59,7 +59,7 @@ module BeachApiCore
     private
 
     def plan_params
-      params.require(:plan).permit(:name, :amount, :interval, :stripe_id, :plan_for, :currency, :trial_period_days, :amount_per_additional_user, :users_count)
+      params.require(:plan).permit(:name, :amount, :interval, :stripe_id, :plan_for, :currency, :trial_period_days, :amount_per_additional_user, :users_count, :test)
     end
   end
 end

@@ -11,7 +11,7 @@ module BeachApiCore
     def set_quantity
       if self.group_type == "BeachApiCore::Organisation" && !self.group.subscription.nil?
         local_subscription = BeachApiCore::Subscription.find_by(:owner_id => self.group_id, :owner_type => self.group_type)
-        Stripe.api_key = local_subscription.plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+        Stripe.api_key = local_subscription&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
         subscription = Stripe::Subscription.retrieve(local_subscription.stripe_subscription_id)
         Stripe::SubscriptionItem.update(subscription.items.data[0].id,{plan: subscription.items.data[0].plan.id, quantity: subscription.items.data[0].quantity+1})
       end
@@ -20,7 +20,7 @@ module BeachApiCore
     def delete_quantity
       if self.group_type == "BeachApiCore::Organisation" && !self.group.subscription.nil?
         local_subscription = BeachApiCore::Subscription.find_by(:owner_id => self.group_id, :owner_type => self.group_type)
-        Stripe.api_key = local_subscription.plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+        Stripe.api_key = local_subscription&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
         subscription = Stripe::Subscription.retrieve(local_subscription.stripe_subscription_id)
         Stripe::SubscriptionItem.update(subscription.items.data[0].id,{plan: subscription.items.data[0].plan.id, quantity: subscription.items.data[0].quantity-1})
       end
