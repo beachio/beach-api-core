@@ -43,6 +43,22 @@ BeachApiCore::Engine.routes.draw do
     get "/password/restore_password/:token", to: "passwords#restore_password",  defaults: { format: false }
     get "/password/success", to: "passwords#success_restore",  defaults: { format: false }
     resources :users, only: %i(show update) do
+      member do
+        post   :create_customer
+        get    :get_customer
+        put    :update_customer
+        delete :delete_customer
+        post   :add_card
+        get    :all_cards
+        put    :update_card
+        delete :delete_card
+        get    :all_payment_methods
+        put    :update_payment_method
+        post   :add_payment_method
+        delete :detach_payment_method
+        post   :set_default_payment_method
+        get    :subscription
+      end
       resources :subscriptions, only: %i(show), controller: "subscriptions" do
         get :show, on: :collection
         get :show_invoices, on: :member
@@ -59,6 +75,22 @@ BeachApiCore::Engine.routes.draw do
       end
     end
     resources :organisations, except: %i(new edit) do
+      member do
+        post   :create_customer
+        get    :get_customer
+        put    :update_customer
+        delete :delete_customer
+        delete :delete_card
+        get    :all_cards
+        post   :add_card
+        put    :update_card
+        put    :update_payment_method
+        post   :add_payment_method
+        delete :detach_payment_method
+        post   :set_default_payment_method
+        get    :all_payment_methods
+        get    :subscription
+      end
       collection do
         get :users
         get :get_current

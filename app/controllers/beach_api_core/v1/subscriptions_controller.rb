@@ -84,6 +84,7 @@ module BeachApiCore
       plan = BeachApiCore::Plan.find(subscription_params[:plan_id])
       set_stripe_key(plan)
       client = subscription_params[:subscription_for]=="user" ? current_user : BeachApiCore::Organisation.find_by(:id => subscription_params[:owner_id])
+      render_json_error(:message => "Customer already exist") && return if client.stripe_customer_token.present?
       unless client.nil?
         card_token = Stripe::Token.create(
           {
@@ -110,7 +111,7 @@ module BeachApiCore
       keeper = owner_type=="BeachApiCore::User" ? BeachApiCore::User.find_by(:id => params[:user_id]) : BeachApiCore::Organisation.find_by(:id => params[:organisation_id])
       if owner_type=="BeachApiCore::User" && keeper.id == current_user.id
         subs = BeachApiCore::Subscription.find_by(id: params[:id], owner_type: owner_type, :owner_id => keeper.id)
-      elsif owner_type=="BeachApiCore::Organisation" && keeper.organisations.where(:id => params[:organisation_id]).include?(current_user)
+      elsif owner_type=="BeachApiCore::Organisation" && keeper.owners.include?(current_user)
         subs = BeachApiCore::Subscription.find_by(id: params[:id], owner_type: owner_type, :owner_id => keeper.id)
       end
       unless subs.nil?
@@ -123,8 +124,8 @@ module BeachApiCore
       else
         render_json_error(message: "Wrong subscription")
       end
-    rescue
-      render_json_error(message: "Wrong request")
+    rescue => e
+      render_json_error(message: "Wrong request (#{e.message})")
     end
 
     def update_quantity

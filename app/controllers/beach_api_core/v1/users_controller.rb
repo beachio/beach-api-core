@@ -1,10 +1,19 @@
 module BeachApiCore
   class V1::UsersController < BeachApiCore::V1::BaseController
     include ::UsersDoc
+    include BeachApiCore::Concerns::V1::Ownerable
     before_action :doorkeeper_authorize!, only: %i(update show, force_confirm_user)
     before_action :application_authorize!, only: %i(create)
     before_action :authenticate_service_for_doorkeeper_application, only: [:create]
     before_action :authenticate_service_for_application, only: %i(update show)
+    before_action :set_stripe_key, only: %i(get_customer create_customer delete_customer update_customer
+                                          all_cards add_card update_card delete_card
+                                          all_payment_methods add_payment_method update_payment_method
+                                          detach_payment_method set_default_payment_method subscription)
+    before_action :customer_empty?, only: %i(get_customer delete_customer update_customer
+                                          all_cards add_card update_card delete_card
+                                          all_payment_methods add_payment_method update_payment_method
+                                          detach_payment_method set_default_payment_method subscription)
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/user.other')
     end
