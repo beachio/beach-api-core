@@ -2,8 +2,17 @@ module BeachApiCore
   class V1::OrganisationsController < BeachApiCore::V1::BaseController
     include BeachApiCore::Concerns::V1::ResourceConcern
     include OrganisationsDoc
+    include BeachApiCore::Concerns::V1::Ownerable
     before_action :doorkeeper_authorize!
     before_action :authenticate_service_for_application
+    before_action :set_stripe_key, only: %i(get_customer create_customer delete_customer update_customer
+                                          all_cards add_card update_card delete_card
+                                          all_payment_methods add_payment_method update_payment_method
+                                          detach_payment_method set_default_payment_method subscription)
+    before_action :customer_empty?, only: %i(get_customer delete_customer update_customer
+                                          all_cards add_card update_card delete_card
+                                          all_payment_methods add_payment_method update_payment_method
+                                          detach_payment_method set_default_payment_method subscription)
 
     resource_description do
       name I18n.t('activerecord.models.beach_api_core/organisation.other')
@@ -88,7 +97,7 @@ module BeachApiCore
     end
 
     def get_current
-      render_json_success(doorkeeper_token.organisation, :ok, current_user: current_user, root: :organisations)
+      render_json_success(doorkeeper_token.organisation, :ok, current_user: current_user, subscription:current_organisation.subscription, root: :organisations)
     end
 
     private
