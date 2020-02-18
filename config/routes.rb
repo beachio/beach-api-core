@@ -64,6 +64,7 @@ BeachApiCore::Engine.routes.draw do
         get :show_invoices, on: :member
       end
     end
+    resource :user, only: %i(show update)
     resources :services, only: %i(index update) do
       resource :capabilities, only: %i(create destroy)
     end
