@@ -149,11 +149,12 @@ module BeachApiCore::Concerns::V1::Ownerable
   def current_owner
     if self.class.name == "BeachApiCore::V1::UsersController"
       owner = BeachApiCore::User.find(params[:id])
-      render_json_error({:message => "You are not authorized to make this request"}) and return if params[:id]!=current_user.id
+      render_json_error({:message => "You are not authorized to make this request"}) and return if params[:id]!=current_user.id.to_s
       return owner
     else
       owner = BeachApiCore::Organisation.find(params[:id])
-      render_json_error({:message => "You are not authorized to make this request"}) and return unless owner.owners.include?(current_user)
+      render_json_error({:message => "You are not authorized to make this request"}) and return unless owner.owners.include?(current_user) ||
+                                                                                                       owner.assignments.admins.map(&:user_id).include?(current_user.id)
       return owner
     end
   end
