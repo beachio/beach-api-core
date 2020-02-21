@@ -97,7 +97,7 @@ module BeachApiCore
     end
 
     def get_current
-      render_json_success(doorkeeper_token.organisation, :ok, current_user: current_user, subscription:current_organisation.subscription, root: :organisations)
+      render_json_success(doorkeeper_token.organisation, :ok, current_user: current_user, subscription: current_organisation&.subscription, root: :organisations)
     end
 
     private

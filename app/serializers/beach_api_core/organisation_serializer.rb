@@ -6,7 +6,7 @@ module BeachApiCore
     acts_as_abs_doc_id
     acts_with_options(:current_user)
 
-    attributes :id, :name, :logo_url, :logo_properties, :current_user_roles
+    attributes :id, :name, :logo_url, :logo_properties, :current_user_roles, :subscription
 
     def logo_url
       object.logo_image&.file_url
@@ -17,6 +17,10 @@ module BeachApiCore
       Role.joins(:assignments).where.has do |r|
         (r.assignments.user_id == current_user.id) & (r.assignments.keeper == object)
       end.pluck(:name)
+    end
+
+    def subscription
+      object&.subscription
     end
   end
 end
