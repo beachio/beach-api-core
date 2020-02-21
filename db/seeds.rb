@@ -9,7 +9,7 @@ BeachApiCore::Instance.current
 # Create basic roles
 %i(admin developer).each do |name|
   role = BeachApiCore::Role.create(name: name)
-  user = BeachApiCore::User.create(email: Faker::Internet.email, password: 'password')
+  user = BeachApiCore::User.create(email: Faker::Internet.email, password: 'password', confirmed_at: Time.now)
   BeachApiCore::Assignment.create(role: role, keeper: BeachApiCore::Instance.current, user: user)
 end
 

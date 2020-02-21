@@ -139,7 +139,7 @@ module BeachApiCore::Concerns::V1::Ownerable
   end
 
   def set_stripe_key
-    current_owner&.subscription&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+    Stripe.api_key = current_owner&.subscription&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
   end
 
   def customer_empty?
