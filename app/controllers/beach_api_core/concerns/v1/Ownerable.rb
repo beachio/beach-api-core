@@ -125,8 +125,7 @@ module BeachApiCore::Concerns::V1::Ownerable
 
   def subscription
     begin
-      responce = Stripe::Subscription.retrieve(current_owner.subscription.stripe_subscription_id)
-      render_json_success(responce.to_h, :ok)
+      render_json_success(current_owner.subscription, :ok, serializer: BeachApiCore::SubscriptionSerializer, root: :subscription)
     rescue => e
       render_json_error({:message => e.message})
     end
