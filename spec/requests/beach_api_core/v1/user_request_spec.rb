@@ -74,10 +74,10 @@ module BeachApiCore
       include_context 'bearer token authentication'
 
       it_behaves_like 'an authenticated resource' do
-        before { get beach_api_core.v1_user_path }
+        before {get beach_api_core.v1_user_path(oauth_user)}
       end
       it_behaves_like 'an authenticated resource' do
-        before { get beach_api_core.v1_user_path, headers: invalid_bearer_auth }
+        before { get beach_api_core.v1_user_path(oauth_user), headers: invalid_bearer_auth }
       end
 
       context 'when valid' do
@@ -85,7 +85,7 @@ module BeachApiCore
           create :profile_custom_field, keeper: create(:oauth_application)
           create :profile_custom_field, name: :custom_instance_field, keeper: Instance.current
           create :profile_custom_field, name: :custom_application_field, keeper: oauth_application
-          get beach_api_core.v1_user_path, headers: bearer_auth
+          get beach_api_core.v1_user_path(oauth_user), headers: bearer_auth
         end
         it { expect(response.status).to eq 200 }
         it_behaves_like 'valid user response' do
@@ -112,7 +112,7 @@ module BeachApiCore
         let!(:other_preference) { create :user_preference, user: oauth_user }
 
         it 'should return preferences for current application' do
-          get beach_api_core.v1_user_path, headers: bearer_auth
+          get beach_api_core.v1_user_path(oauth_user), headers: bearer_auth
           expect(json_body[:user][:user_preferences].size).to eq 1
           expect(json_body[:user][:user_preferences].first[:id]).to eq current_preference.id
         end
@@ -125,10 +125,10 @@ module BeachApiCore
       include_context 'bearer token authentication'
 
       it_behaves_like 'an authenticated resource' do
-        before { patch beach_api_core.v1_user_path }
+        before { patch beach_api_core.v1_user_path(oauth_user) }
       end
       it_behaves_like 'an authenticated resource' do
-        before { patch beach_api_core.v1_user_path, headers: invalid_bearer_auth }
+        before { patch beach_api_core.v1_user_path(oauth_user), headers: invalid_bearer_auth }
       end
 
 
@@ -137,7 +137,7 @@ module BeachApiCore
           let(:new_email) { Faker::Internet.email }
 
           before do
-            patch beach_api_core.v1_user_path,
+            patch beach_api_core.v1_user_path(oauth_user),
                   params: {
                     user: {
                       email: new_email,
@@ -194,7 +194,7 @@ module BeachApiCore
           let(:new_value1) { Faker::Lorem.word }
           let(:new_value2) { Faker::Lorem.word }
           before do
-            patch beach_api_core.v1_user_path,
+            patch beach_api_core.v1_user_path(oauth_user),
                   params: {
                     user: { profile_attributes: { id: oauth_user.profile.id,
                                                   profile_custom_field1.name => new_value1,
@@ -214,7 +214,7 @@ module BeachApiCore
         context 'should skip not related attribute to keepers ' do
           let(:profile_custom_field) { create :profile_custom_field, keeper: create(:oauth_application) }
           before do
-            patch beach_api_core.v1_user_path,
+            patch beach_api_core.v1_user_path(oauth_user),
                   params: {
                     user: { profile_attributes: { id: oauth_user.profile.id,
                                                   profile_custom_field.name => Faker::Lorem.word } }
@@ -227,7 +227,7 @@ module BeachApiCore
         it 'should update appropriate fields' do
           [{ params: { email: Faker::Internet.email }, key: :email },
            { params: { username: Faker::Internet.user_name }, key: :username }].each do |data|
-            patch beach_api_core.v1_user_path, params: { user: data[:params] }, headers: bearer_auth
+            patch beach_api_core.v1_user_path(oauth_user), params: { user: data[:params] }, headers: bearer_auth
             expect(json_body[:user][data[:key]]).not_to eq oauth_user.send(data[:key])
           end
         end

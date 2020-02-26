@@ -41,7 +41,10 @@ module BeachApiCore
       end
 
       it_behaves_like 'an forbidden resource' do
-        before { get beach_api_core.v1_service_categories_path, headers: bearer_auth }
+        before do
+          headers = bearer_auth
+          get beach_api_core.v1_service_categories_path, headers: headers
+        end
       end
 
       it_behaves_like 'an authenticated resource' do

@@ -25,6 +25,7 @@ module BeachApiCore
     end
 
     def delete_stripe_plan
+      return if Rails.env.test?
       set_stripe_key
       if self.stripe_id.present?
         begin
@@ -40,6 +41,7 @@ module BeachApiCore
     end
 
     def create_stripe_plan
+      return if Rails.env.test?
       set_stripe_key
       return unless self.errors.blank?
       trial = self.trial_period_days.nil? ? 0 : self.trial_period_days

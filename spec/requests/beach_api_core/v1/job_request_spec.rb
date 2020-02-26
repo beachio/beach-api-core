@@ -14,7 +14,7 @@ module BeachApiCore
           params: {
             headers: { 'Authorization' => "Bearer #{access_token.token}" },
             method: 'GET',
-            uri: beach_api_core.v1_user_path
+            uri: beach_api_core.v1_user_path(oauth_user)
           }
         }
       end
