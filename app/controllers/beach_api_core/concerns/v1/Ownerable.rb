@@ -60,7 +60,7 @@ module BeachApiCore::Concerns::V1::Ownerable
 
   def update_card
     begin
-      responce = Stripe::Customer.update_source(current_owner.stripe_customer_token,params[:card_id],card_params.to_h)
+      responce = Stripe::Customer.update_source(current_owner.stripe_customer_token,params[:card_id], update_card_params.to_h)
       render_json_success(responce, :ok)
     rescue => e
       render_json_error({:message => e.message})
@@ -147,9 +147,7 @@ module BeachApiCore::Concerns::V1::Ownerable
 
   def current_owner
     if self.class.name == "BeachApiCore::V1::UsersController"
-      owner = BeachApiCore::User.find(params[:id])
-      render_json_error({:message => "You are not authorized to make this request"}) and return if params[:id]!=current_user.id.to_s
-      return owner
+      return current_user
     else
       owner = BeachApiCore::Organisation.find(params[:id])
       render_json_error({:message => "You are not authorized to make this request"}) and return unless owner.owners.include?(current_user) ||
@@ -161,6 +159,10 @@ module BeachApiCore::Concerns::V1::Ownerable
   def card_params
     params.require(:card_params).permit(:number, :exp_month, :exp_year, :cvc, :address_city, :address_country,
                                         :address_line1, :address_line2, :address_state, :address_zip)
+  end
+
+  def update_card_params
+    params.require(:card_params).permit(:exp_month, :exp_year)
   end
 
   def customer_creation_params

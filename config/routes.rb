@@ -43,15 +43,15 @@ BeachApiCore::Engine.routes.draw do
     get "/password/restore_password/:token", to: "passwords#restore_password",  defaults: { format: false }
     get "/password/success", to: "passwords#success_restore",  defaults: { format: false }
     resources :users, only: %i(show update) do
-      member do
+      collection do
         post   :create_customer
         get    :get_customer
         put    :update_customer
         delete :delete_customer
         post   :add_card
         get    :all_cards
-        put    :update_card
-        delete :delete_card
+        put    "/update_card/:card_id", to: "users#update_card"
+        delete "/delete_card/:card_id", to: "users#delete_card"
         get    :all_payment_methods
         put    :update_payment_method
         post   :add_payment_method
@@ -81,10 +81,10 @@ BeachApiCore::Engine.routes.draw do
         get    :get_customer
         put    :update_customer
         delete :delete_customer
-        delete :delete_card
+        delete "/delete_card/:card_id", to: "organisations#delete_card"
         get    :all_cards
         post   :add_card
-        put    :update_card
+        put    "/update_card/:card_id", to: "organisations#update_card"
         put    :update_payment_method
         post   :add_payment_method
         delete :detach_payment_method

@@ -137,7 +137,7 @@ module UsersDoc
 ]"
   def show_invoices; end
 
-  api :POST, '/users/:user_id/create_customer', 'Create customer'
+  api :POST, '/users/create_customer', 'Create customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :card_params, Hash, required: true do
     param :number, Integer, required: true
@@ -176,7 +176,7 @@ module UsersDoc
   example '"message": "Customer created successfully"'
   def create_customer; end
 
-  api :GET, '/users/:user_id/get_customer', 'Get customer'
+  api :GET, '/users/get_customer', 'Get customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example '
   "customer": {
@@ -249,7 +249,7 @@ module UsersDoc
     }'
   def get_customer; end
 
-  api :PUT, '/users/:user_id/update_customer', 'Update customer'
+  api :PUT, '/users/update_customer', 'Update customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
 
   param :customer_params, Hash do
@@ -366,7 +366,7 @@ module UsersDoc
     "tax_info_verification": null'
   def update_customer; end
 
-  api :DELETE, '/users/:user_id/delete_customer', 'Delete customer'
+  api :DELETE, '/users/delete_customer', 'Delete customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example '
     "id": "cus_Gi39PE79TuCUFz",
@@ -374,7 +374,7 @@ module UsersDoc
     "deleted": true'
   def delete_customer; end
 
-  api :GET, '/users/:user_id/all_cards', "List of all customer's cards"
+  api :GET, '/users/all_cards', "List of all customer's cards"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example '{
     "object": "list",
@@ -435,7 +435,7 @@ module UsersDoc
 }'
   def all_cards; end
 
-  api :POST, '/users/:user_id/add_card', 'Create and add card to customer'
+  api :POST, '/users/add_card', 'Create and add card to customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :card_params
 
@@ -466,7 +466,7 @@ module UsersDoc
 }'
   def add_card; end
 
-  api :PUT, '/users/:user_id/update_card', "Update customer's card"
+  api :PUT, '/users/update_card/:card_id', "Update customer's card"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :card_params, Hash, required: true do
     param :exp_month, Integer
@@ -500,7 +500,7 @@ module UsersDoc
 }'
   def update_card; end
 
-  api :DELETE, '/users/:user_id/delete_card', "Delete customer's card"
+  api :DELETE, '/users/delete_card/:card_id', "Delete customer's card"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :card_id, String, required: true
   example '{
@@ -510,7 +510,7 @@ module UsersDoc
 }'
   def delete_card; end
 
-  api :GET, '/users/:user_id/all_payment_methods', "List of all customer's payment methods"
+  api :GET, '/users/all_payment_methods', "List of all customer's payment methods"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example '{
     "object": "list",
@@ -644,7 +644,7 @@ module UsersDoc
 }'
   def all_payment_methods; end
 
-  api :POST, '/users/:user_id/add_payment_method', 'Create and add payment method to customer'
+  api :POST, '/users/add_payment_method', 'Create and add payment method to customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param_group :card_params
   example '{
@@ -690,7 +690,7 @@ module UsersDoc
 }'
   def add_payment_method; end
 
-  api :PUT, '/users/:user_id/update_payment_method', "Update customer's payment method"
+  api :PUT, '/users/update_payment_method', "Update customer's payment method"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :payment_method_id, String, required: true
   param_group :card
@@ -739,7 +739,7 @@ module UsersDoc
 }'
   def update_payment_method; end
 
-  api :DELETE, '/users/:user_id/detach_payment_method', "Delete and detach customer's payment method"
+  api :DELETE, '/users/detach_payment_method', "Delete and detach customer's payment method"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :payment_method_id, String, required: true
   example '{
@@ -785,7 +785,7 @@ module UsersDoc
 }'
   def detach_payment_method; end
 
-  api :POST, '/users/:user_id/set_default_payment_method', 'Set default payment method to the customer'
+  api :POST, '/users/set_default_payment_method', 'Set default payment method to the customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :payment_method_id, String, required: true
   example '{
@@ -890,7 +890,7 @@ module UsersDoc
 }'
   def set_default_payment_method; end
 
-  api :GET, '/users/:user_id/subscription', 'Get subscription'
+  api :GET, '/users/subscription', 'Get subscription'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example '{
     "id": 3,

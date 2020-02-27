@@ -490,7 +490,7 @@ module OrganisationsDoc
 }'
   def add_card; end
 
-  api :PUT, '/organisations/:organisation_id/update_card', "Update customer's card"
+  api :PUT, '/organisations/:organisation_id/update_card/:card_id', "Update customer's card"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :card_params, Hash, required: true do
     param :exp_month, Integer
@@ -524,7 +524,7 @@ module OrganisationsDoc
 }'
   def update_card; end
 
-  api :DELETE, '/organisations/:organisation_id/delete_card', "Delete customer's card"
+  api :DELETE, '/organisations/:organisation_id/delete_card/:card_id', "Delete customer's card"
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :card_id, String, required: true
   example '{
