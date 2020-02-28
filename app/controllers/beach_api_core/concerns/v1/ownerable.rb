@@ -138,7 +138,7 @@ module BeachApiCore::Concerns::V1::Ownerable
   end
 
   def set_stripe_key
-    Stripe.api_key = current_owner&.subscription&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+    Stripe.api_key = stripe_in_test_mode? ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
   end
 
   def customer_empty?
@@ -149,10 +149,15 @@ module BeachApiCore::Concerns::V1::Ownerable
     if self.class.name == "BeachApiCore::V1::UsersController"
       return current_user
     else
-      owner = BeachApiCore::Organisation.find(params[:id])
-      render_json_error({:message => "You are not authorized to make this request"}) and return unless owner.owners.include?(current_user) ||
-                                                                                                       owner.assignments.admins.map(&:user_id).include?(current_user.id)
-      return owner
+      return organisation_as_owner
+    end
+  end
+
+  def stripe_in_test_mode?
+    if self.class.name == "BeachApiCore::V1::UsersController"
+      return doorkeeper_token.application.test_stripe
+    else
+      return organisation_as_owner.application.test_stripe
     end
   end
 
@@ -177,9 +182,16 @@ module BeachApiCore::Concerns::V1::Ownerable
   end
 
   def customer_params
-    params.require(:customer_params).permit(:description, :email, :metadata, :name, :phone, :balance,
+    params.require(:customer_params).permit(:description, :default_source, :email, :metadata, :name, :phone, :balance,
                                             address:[:line1, :city, :country, :line2, :postal_code, :state],
                                             invoice_settings:[:custom_fields, :default_payment_method, :footer],
                                             shipping:[:address,:name,:phone])
+  end
+
+  def organisation_as_owner
+    owner = BeachApiCore::Organisation.find(params[:id])
+    render_json_error({:message => "You are not authorized to make this request"}) and return unless owner.owners.include?(current_user) ||
+        owner.assignments.admins.map(&:user_id).include?(current_user.id)
+    return owner
   end
 end

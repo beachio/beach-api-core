@@ -1,7 +1,7 @@
 ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
   permit_params :name, :redirect_uri, :owner_id, :owner_type, :publisher_id, :publisher_type, :mail_type_band_color, :file,
                 :application_file, :use_default_application_logo, :background_image_file, :use_default_background_image,
-                :anonymous_mode,
+                :anonymous_mode, :test_stripe,
                 :use_default_logo_image, :mail_type_band_text_color, :scores_for_invite, :scores_for_sign_up,
                 :show_application_logo, :show_instance_logo, :provided_text_color, :background_color, :use_default_background_config,
                 :invitation_text, :invite_limit, :capabilities_attributes => [:service_id, :_destroy, :id],
@@ -44,6 +44,7 @@ ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
               collection: BeachApiCore::Organisation.all , allow_blank: true, include_blank: true
       f.input :anonymous_mode if defined?(CoinstashCore)
       f.input :publisher_type, as: :hidden, input_html: { value: 'BeachApiCore::Organisation' }
+      f.input :test_stripe, label:'stripe test mode'
       f.input :scores_for_sign_up
       f.input :scores_for_invite
       f.input :invite_limit, label: "Limit of invites per user"
@@ -152,6 +153,7 @@ ActiveAdmin.register Doorkeeper::Application, as: 'Application' do
       row :redirect_uri
       row :uid
       row :secret
+      row :test_stripe
       row :scores_for_invite
       row :scores_for_sign_up
       if defined?(CoinstashCore)

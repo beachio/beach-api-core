@@ -144,7 +144,7 @@ module OrganisationsDoc
   example "\"organisation\": #{apipie_organisation_response}"
   def get_current; end
 
-  api :GET, 'organisations/:organisation_id/subscriptions/:id/show_invoices', 'Show invoices subscriptions of organisation'
+  api :GET, '/organisations/:organisation_id/subscriptions/:id/show_invoices', 'Show invoices subscriptions of organisation'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example "[
     {
@@ -161,7 +161,7 @@ module OrganisationsDoc
 ]"
   def show_invoices; end
 
-  api :POST, 'organisations/:organisation_id/create_customer', 'Create customer'
+  api :POST, '/organisations/:organisation_id/create_customer', 'Create customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   param :card_params, Hash, required: true do
     param :number, Integer, required: true
@@ -200,7 +200,7 @@ module OrganisationsDoc
   example '"message": "Customer created successfully"'
   def create_customer; end
 
-  api :GET, 'organisations/:organisation_id/get_customer', 'Get customer'
+  api :GET, '/organisations/:organisation_id/get_customer', 'Get customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example '
   "customer": {
@@ -273,7 +273,7 @@ module OrganisationsDoc
     }'
   def get_customer; end
 
-  api :PUT, 'organisations/:organisation_id/update_customer', 'Update customer'
+  api :PUT, '/organisations/:organisation_id/update_customer', 'Update customer'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
 
   param :customer_params, Hash do

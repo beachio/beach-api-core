@@ -11,6 +11,7 @@ module ApplicationsDoc
   header 'Authorization', 'Bearer access_token', required: true
   param :application, Hash, required: true do
     param :name, String, required: true
+    param :test_stripe, [true, false], required: false
     param :redirect_uri, String, required: true
     param :mail_type_band_color, String, required: false, desc: "valid CSS hex color code"
     param :mail_type_band_text_color, String, required: false, desc: "valid CSS hex color code"
@@ -30,6 +31,7 @@ module ApplicationsDoc
   header 'Authorization', 'Bearer access_token', required: true
   param :application, Hash, required: true do
     param :name, String
+    param :test_stripe, [true, false], required: false
     param :mail_type_band_color, String, required: false, desc: "valid CSS hex color code"
     param :mail_type_band_text_color, String, required: false, desc: "valid CSS hex color code"
     param :scores_for_invite, Integer, required: false
