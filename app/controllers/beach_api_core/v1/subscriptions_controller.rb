@@ -19,7 +19,8 @@ module BeachApiCore
         params[:subscription].delete(:subscription_for)
         params[:subscription].delete(:organisation_id)
         result = SubscriptionCreate.call(params: subscription_params,
-                                         owner: keeper)
+                                         owner: keeper,
+                                         owner_stripe_mode: owner_stripe_mode(keeper))
         if result.success?
           render_json_success(result.subscription,:ok, serializer: BeachApiCore::SubscriptionSerializer, root: :subscription)
         else
@@ -33,10 +34,8 @@ module BeachApiCore
       if subs.nil?
         render_json_error({message: "Not Found"})
       else
-        if admin || current_user.subscription.id == subs.id
-          result = BeachApiCore::SubscriptionUpdate.call(:subscription => subs, :params => subscription_update_params)
-          keeper = subs.keeper_type=="BeachApiCore::Organisation" ? BeachApiCore::Organisation.find_by(:id => subs.keeper_id) : BeachApiCore::User.find_by(:id => subs.keeper_id)
-          keeper.invoices.create(:invoice_url_link => invoice.hosted_invoice_url, :invoice_pdf_link => invoice.invoice_pdf)
+        if access_to_subscription(subs)
+          result = BeachApiCore::SubscriptionUpdate.call(:subscription => subs, :params => subscription_update_params, owner_stripe_mode: owner_stripe_mode(subs.owner))
           if result.success?
             render_json_success(result.subscription, result.status, serializer: BeachApiCore::SubscriptionSerializer, root: :subscription)
           else
@@ -54,7 +53,7 @@ module BeachApiCore
       if subs.nil?
         render_json_error({message: "Not Found"})
       else
-        if admin || current_user.subscription.id == subs.id
+        if access_to_subscription(subs)
           render_json_success(subs,:ok, serializer: BeachApiCore::SubscriptionSerializer, root: :subscription)
         else
           render_json_error({message: "Wrong Access"})
@@ -68,7 +67,7 @@ module BeachApiCore
       if subs.nil?
         render_json_error({message: "Not Found"})
       else
-       if admin || current_user.subscription.id == subs.id
+       if access_to_subscription(subs)
          if subs.destroy
            head :no_content
          else
@@ -160,6 +159,10 @@ module BeachApiCore
 
     private
 
+    def owner_stripe_mode(keeper)
+      return subscription_params[:subscription_for] == "user" ? doorkeeper_token.application.test_stripe : keeper.application.test_stripe
+    end
+
     def subscription_params
       params.require(:subscription).permit(:plan_id, :subscription_for, :owner_id)
     end
@@ -178,6 +181,13 @@ module BeachApiCore
 
     def set_stripe_key(plan)
       Stripe.api_key = plan.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+    end
+
+    def access_to_subscription(subscription)
+       subscription.owner_type == 'BeachApiCore::Organisation' ?
+           subscription.owner.owners.include?(current_user) :
+           current_user&.subscription&.id == subscription.id
+
     end
   end
 end

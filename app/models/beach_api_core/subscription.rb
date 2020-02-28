@@ -8,9 +8,10 @@ module BeachApiCore
     validate :check_subscription_for, on: [:create, :update]
     validate :create_subscription, on: [:create]
     validate :change_subscription, on: [:update]
+    validate :plan_and_application_in_one_mode, on: [:create, :update]
 
     before_destroy :cancel_subscription
-    attr_accessor :not_change, :user_id, :organisation_id
+    attr_accessor :not_change, :user_id, :organisation_id, :owner_stripe_mode
 
     Stripe.api_key = ENV['LIVE_STRIPE_SECRET_KEY']
 
@@ -117,6 +118,11 @@ module BeachApiCore
     end
 
     private
+
+    def plan_and_application_in_one_mode
+      self.errors.add :plan, "stripe modes mismatch with application stripe mode" unless self.plan.test == owner_stripe_mode
+    end
+
     def check_subscription_for
       if self.plan.plan_for == 0
         type = "organisation"
