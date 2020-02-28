@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module BeachApiCore
   describe 'V1::Application', type: :request do
-    APPLICATION_KEYS = %i(id logo_url mail_type_band_color mail_type_band_text_color name created_at).freeze
+    APPLICATION_KEYS = %i(id logo_url mail_type_band_color mail_type_band_text_color name created_at test_stripe).freeze
 
     describe 'when index' do
       include_context 'signed up developer'
