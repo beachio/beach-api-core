@@ -7,7 +7,7 @@ module SubscriptionsDoc
   param :subscription, Hash, required: true do
     param :plan_id, Integer, required: true
     param :subscription_for, %w(organisation user), required: true
-    param :organisation_id, Integer, required: false, desc: "Required only in case of subscription for organisation"
+    param :owner_id, Integer, required: false, desc: "Required only in case of subscription for organisation"
   end
   example '
   {

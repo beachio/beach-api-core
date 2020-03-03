@@ -13,8 +13,8 @@ module BeachApiCore
       unless subscription_params[:owner_id].nil?
         keeper = subscription_params[:subscription_for] == "user" ? current_user : BeachApiCore::Organisation.find_by(:id => subscription_params[:owner_id])
       end
-      if keeper.nil?
-        render_json_error({message: "Failed subscription creation"})
+      if keeper.nil? || subscription_params[:subscription_for] != "user" && !organisation_user_have_access?(keeper)
+        render_json_error({message: keeper.nil? ? "Failed subscription creation" : "Wrong access"})
       else
         params[:subscription].delete(:subscription_for)
         params[:subscription].delete(:organisation_id)
@@ -110,7 +110,7 @@ module BeachApiCore
       keeper = owner_type=="BeachApiCore::User" ? BeachApiCore::User.find_by(:id => params[:user_id]) : BeachApiCore::Organisation.find_by(:id => params[:organisation_id])
       if owner_type=="BeachApiCore::User" && keeper.id == current_user.id
         subs = BeachApiCore::Subscription.find_by(id: params[:id], owner_type: owner_type, :owner_id => keeper.id)
-      elsif owner_type=="BeachApiCore::Organisation" && keeper.owners.include?(current_user)
+      elsif owner_type=="BeachApiCore::Organisation" && organisation_user_have_access?(keeper)
         subs = BeachApiCore::Subscription.find_by(id: params[:id], owner_type: owner_type, :owner_id => keeper.id)
       end
       unless subs.nil?
@@ -185,9 +185,13 @@ module BeachApiCore
 
     def access_to_subscription(subscription)
        subscription.owner_type == 'BeachApiCore::Organisation' ?
-           subscription.owner.owners.include?(current_user) :
+           organisation_user_have_access?(subscription.owner) :
            current_user&.subscription&.id == subscription.id
 
+    end
+
+    def organisation_user_have_access?(organisation)
+      organisation.owners.include?(current_user) || organisation.assignments.admins.map(&:user_id).include?(current_user.id)
     end
   end
 end
