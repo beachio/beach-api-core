@@ -116,7 +116,7 @@ module BeachApiCore
       unless subs.nil?
         invoices = BeachApiCore::Invoice.where(subscription_id: subs.id)
         if invoices.empty?
-          render_json_error(message: "Invoices not found")
+          render_json_success( {message: "Invoices not found"})
         else
           render_json_success(invoices)
         end
