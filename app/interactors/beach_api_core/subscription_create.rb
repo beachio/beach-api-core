@@ -5,7 +5,7 @@ module BeachApiCore
     def call
       context.subscription = Subscription.new context.params
       context.subscription.owner = context.owner
-      context.subscription.owner_stripe_mode = context.owner_stripe_mode
+      context.subscription.application_id = context.application_id
       if context.subscription.save
         context.status = :created
       else

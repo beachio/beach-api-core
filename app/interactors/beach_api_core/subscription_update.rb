@@ -3,7 +3,6 @@ class BeachApiCore::SubscriptionUpdate
 
   def call
     context.subscription.assign_attributes context.params
-    context.subscription.owner_stripe_mode = context.owner_stripe_mode
     if context.subscription.save
       context.status = :ok
     else

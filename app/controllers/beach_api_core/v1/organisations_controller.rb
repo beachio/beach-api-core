@@ -86,7 +86,6 @@ module BeachApiCore
     def current
       if params[:id].to_i == 0
         doorkeeper_token.update(organisation: nil)
-        p doorkeeper_token.organisation
         result = nil
       else
         get_resource
@@ -98,7 +97,6 @@ module BeachApiCore
     end
 
     def get_current
-      p doorkeeper_token.organisation
       render_json_success(doorkeeper_token.organisation, :ok, current_user: current_user, subscription: current_organisation&.subscription, root: :organisations)
     end
 

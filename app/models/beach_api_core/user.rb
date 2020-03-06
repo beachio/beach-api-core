@@ -48,6 +48,7 @@ module BeachApiCore
              inverse_of: :user, class_name: 'BeachApiCore::UserAccess'
     has_many :invites, class_name: "BeachApiCore::Invite", dependent: :destroy
     has_one :subscription, class_name: "BeachApiCore::Subscription", as: :owner, dependent: :destroy
+    has_many :user_stripe_tokens, class_name: 'BeachApiCore::UserStripeToken', dependent: :destroy
     has_many :organisations_subscriptions, class_name: "BeachApiCore::Organisation", foreign_key: :subscription_owner_id
 
     validates :email,
@@ -80,7 +81,6 @@ module BeachApiCore
     after_initialize :set_defaults
     after_create :set_sex_and_birth_date
     after_create :send_email_confirmation, if: :from_admin
-    before_destroy :destroy_stripe_customer
 
     delegate :first_name, :last_name, :name, to: :profile
 
@@ -93,15 +93,6 @@ module BeachApiCore
           .where("beach_api_core_users.email ILIKE :term OR beach_api_core_users.username ILIKE :term OR \
             beach_api_core_profiles.first_name ILIKE :term OR beach_api_core_profiles.last_name ILIKE :term",
                  term: "%#{term.downcase}%")
-      end
-    end
-
-    def destroy_stripe_customer
-      set_stripe_key
-
-      if self.stripe_customer_token
-        customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-        customer.delete
       end
     end
 
@@ -135,6 +126,18 @@ module BeachApiCore
 
     def scientist?
       role?(BeachApiCore::Role.scientist)
+    end
+
+    def stripe_token(application_id)
+      self.user_stripe_tokens.find_by(:application_id => application_id)
+    end
+
+    def create_stripe_customer(customer_token, application_id)
+      UserStripeToken.create(stripe_customer_token: customer_token, application_id: application_id, user_id: self.id)
+    end
+
+    def destroy_stripe_customer(customer_token, application_id)
+      UserStripeToken.find_by(user_id: self.id, stripe_customer_token: customer_token, application_id: application_id)&.destroy
     end
 
     private

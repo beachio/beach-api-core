@@ -26,17 +26,6 @@ module SubscriptionsDoc
   }'
   def create; end
 
-  api :POST, '/subscriptions/create_customer', 'create_customer'
-  header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  param :card_params, Hash, required: true do
-    param :number, Integer, required: true
-    param :cvc, Integer, required: true
-    param :exp_month, Integer, required: true
-    param :exp_year, Integer, required: true
-  end
-  example '"message": "Customer created successfully"'
-  def create_customer; end
-
   api :GET, '/subscriptions/:id', 'Show subscription'
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
   example '

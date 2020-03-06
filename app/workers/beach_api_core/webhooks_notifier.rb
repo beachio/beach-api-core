@@ -8,7 +8,7 @@ module BeachApiCore
       if kind == 'scores_achieved'
         user = BeachApiCore::User.find(model_id)
         token = doorkeeper_token(doorkeeper_token_id)
-        scores = user.scores.find_by(:applicaiton_id => token.application_id).nil? ? 0 : user.scores.find_by(:applicaiton_id => token.application_id).scores
+        scores = user.scores.find_by(:application_id => token.application_id).nil? ? 0 : user.scores.find_by(:application_id => token.application_id).scores
         webhooks = Webhook.where(kind: Webhook.kinds[kind], :parametrs => "{\"scores\": #{parametrs.nil? ? scores : parametrs}}")
       else
         webhooks = Webhook.where(kind: Webhook.kinds[kind])

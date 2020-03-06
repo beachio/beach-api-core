@@ -2,8 +2,7 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
   menu parent: 'Organisations'
 
   permit_params :name, :application_id, :send_email, :email,
-                logo_image_attributes: %i(id file),
-                organisation_plan_attributes: %i(plan_id)
+                logo_image_attributes: %i(id file)
 
   index do
     id_column
@@ -17,7 +16,6 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
 
   form do |f|
     f.object.build_logo_image if f.object.logo_image.blank?
-    f.object.build_organisation_plan if f.object.organisation_plan.blank?
     f.inputs t('active_admin.details', model: t('activerecord.models.organisation.one')) do
       f.semantic_errors *f.object.errors.keys
       f.input :name
@@ -32,9 +30,6 @@ ActiveAdmin.register BeachApiCore::Organisation, as: 'Organisation' do
         end
       end
       f.input :email, as: :string
-      f.fields_for :organisation_plan do |p|
-        p.input :plan, as: :select, collection: BeachApiCore::Plan.all
-      end
       f.input :send_email
     end
     f.actions

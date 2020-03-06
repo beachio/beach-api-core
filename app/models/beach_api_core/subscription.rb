@@ -3,7 +3,9 @@ module BeachApiCore
     attr_accessor :cvc, :exp_year, :exp_month, :number
     belongs_to :plan, class_name: "BeachApiCore::Plan"
     belongs_to :owner, polymorphic: true
+    belongs_to :application, class_name: 'Doorkeeper::Application'
 
+    before_validation :set_application
     validates :owner_type, :owner_id, :plan_id, presence: true
     validate :check_subscription_for, on: [:create, :update]
     validate :create_subscription, on: [:create]
@@ -11,22 +13,25 @@ module BeachApiCore
     validate :plan_and_application_in_one_mode, on: [:create, :update]
 
     before_destroy :cancel_subscription
-    attr_accessor :not_change, :user_id, :organisation_id, :owner_stripe_mode
+    attr_accessor :user_id, :organisation_id, :owner_stripe_mode
 
     Stripe.api_key = ENV['LIVE_STRIPE_SECRET_KEY']
 
     def create_subscription
+      return unless errors.blank?
       set_stripe_key
       self.errors.add :subscription, "can't be created because you have active subscription" unless self.owner.nil? || self.owner.subscription.nil?
       return unless errors.blank?
-      create_customer if self.owner.stripe_customer_token.blank?
-      if self.owner.nil? || self.owner.stripe_customer_token.blank?
+      token = organisation_is_owner? ? self.owner.stripe_customer_token : self.owner.stripe_token(self.application.id)&.stripe_customer_token
+      token = create_customer if token.blank?
+      return unless errors.blank?
+      if self.owner.nil? || token.blank?
         self.errors.add :owner, 'wrong subscription owner'
       else
         begin
           subs = Stripe::Subscription.create(
             {
-              customer: self.owner.stripe_customer_token,
+              customer: token,
               items: [
                 {
                   plan: self.plan.stripe_id,
@@ -35,9 +40,9 @@ module BeachApiCore
               ]
             }
           )
-          Stripe::Subscription.update(subs.id, {quantity: self.get_quantity}) if self.owner_type == "BeachApiCore::Organisation"
+          Stripe::Subscription.update(subs.id, {quantity: self.get_quantity}) if organisation_is_owner?
           self.stripe_subscription_id = subs.id
-          if self.owner_type == 'BeachApiCore::Organisation' && !not_change
+          if organisation_is_owner?
             self.owner.organisation_plan.nil? ? BeachApiCore::OrganisationPlan.create(:plan_id => self.plan_id, organisation_id: self.owner_id) : self.owner.organisation_plan.update_attribute(:plan_id, self.plan_id)
           end
         rescue => e
@@ -64,8 +69,8 @@ module BeachApiCore
             ]
           }
         )
-        Stripe::Subscription.update(subs.id, {quantity: self.get_quantity}) if self.owner_type == "BeachApiCore::Organisation"
-        if owner_type == 'BeachApiCore::Organisation' && !not_change
+        Stripe::Subscription.update(subscription.id, {quantity: self.get_quantity}) if organisation_is_owner?
+        if organisation_is_owner?
           self.owner.organisation_plan.nil? ? BeachApiCore::OrganisationPlan.create(:plan_id => self.plan_id, organisation_id: self.owner_id) : self.owner.organisation_plan.update_attribute(:plan_id, self.plan_id)
         end
       rescue => e
@@ -81,14 +86,14 @@ module BeachApiCore
           invoice = Stripe::Invoice.retrieve(sub.latest_invoice)
           time_left = sub.current_period_end - Time.now.to_i
           refund_sum = (time_left * invoice.amount_due)/(sub.current_period_end-sub.current_period_start)
-          Stripe::Refund.create({charge: invoice.charge, amount: refund_sum})
+          Stripe::Refund.create({charge: invoice.charge, amount: refund_sum}) if invoice.charge.present? && refund_sum > 0
         end
         sub.delete
       rescue => e
         self.errors.add :error, e.message unless e.message.match?(/No such subscription:/)
       end
       throw(:abort) if self.errors.present?
-      BeachApiCore::OrganisationPlan.find_by(:organisation_id => self.owner_id, :plan_id => self.plan_id).destroy if self.owner_type == "BeachApiCore::Organisation" && !self.owner.plan.nil?
+      BeachApiCore::OrganisationPlan.find_by(:organisation_id => self.owner_id, :plan_id => self.plan_id).destroy if organisation_is_owner? && !self.owner.plan.nil?
     end
 
     def get_quantity
@@ -99,7 +104,7 @@ module BeachApiCore
     def create_customer
       set_stripe_key
       client = self.owner
-      unless client.nil?
+      if client.present? && card_data_present?
         card_token = Stripe::Token.create(
             {
                 card: {
@@ -111,7 +116,10 @@ module BeachApiCore
             }
         )
         customer = Stripe::Customer.create(email: client.email, card: card_token.id)
-        client.update_attribute(:stripe_customer_token, customer.id)
+        organisation_is_owner? ? client.update_attribute(:stripe_customer_token, customer.id) : client.create_stripe_customer(customer.id, self.application_id)
+        customer.id
+      elsif !card_data_present?
+        self.errors.add :stripe_customer, "not exists"
       end
     rescue Stripe::CardError => e
       render_json_error({:message => "Wrong card"})
@@ -120,10 +128,15 @@ module BeachApiCore
     private
 
     def plan_and_application_in_one_mode
-      self.errors.add :plan, "stripe modes mismatch with application stripe mode" unless self.plan.test == owner_stripe_mode
+      self.errors.add :plan, "stripe modes mismatch with application stripe mode" unless self.plan.test == self.application.test_stripe
+    end
+
+    def organisation_is_owner?
+      self.owner_type == 'BeachApiCore::Organisation'
     end
 
     def check_subscription_for
+      return unless errors.blank?
       if self.plan.plan_for == 0
         type = "organisation"
       elsif self.plan.plan_for == 1
@@ -136,6 +149,14 @@ module BeachApiCore
 
     def set_stripe_key
       Stripe.api_key = self&.plan&.test ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+    end
+
+    def set_application
+      self.application = self.owner.application if organisation_is_owner?
+    end
+
+    def card_data_present?
+       number.present? && exp_month.present? && exp_year.present? && cvc.present?
     end
   end
 

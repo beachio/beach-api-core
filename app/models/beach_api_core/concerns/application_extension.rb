@@ -19,6 +19,8 @@ module BeachApiCore::Concerns::ApplicationExtension
     has_many :giftbit_configs, class_name: "BeachApiCore::GiftbitConfig", dependent: :destroy
     has_many :webhook_configs, class_name: "BeachApiCore::WebhookConfig", dependent: :destroy
     has_many :achievements, class_name: "BeachApiCore::Achievement", dependent: :destroy
+    has_many :subscriptions, class_name: "BeachApiCore::Subscription", dependent: :destroy
+    has_many :user_stripe_tokens, class_name: 'BeachApiCore::UserStripeToken', dependent: :destroy
     accepts_nested_attributes_for :services, allow_destroy: true
     accepts_nested_attributes_for :capabilities, allow_destroy: true
     accepts_nested_attributes_for :mail_bodies, allow_destroy: true

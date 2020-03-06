@@ -10,7 +10,7 @@ module BeachApiCore
     end
 
     def create
-      unless subscription_params[:owner_id].nil?
+      if subscription_params[:subscription_for] == "user" || subscription_params[:owner_id].present?
         keeper = subscription_params[:subscription_for] == "user" ? current_user : BeachApiCore::Organisation.find_by(:id => subscription_params[:owner_id])
       end
       if keeper.nil? || subscription_params[:subscription_for] != "user" && !organisation_user_have_access?(keeper)
@@ -20,7 +20,7 @@ module BeachApiCore
         params[:subscription].delete(:organisation_id)
         result = SubscriptionCreate.call(params: subscription_params,
                                          owner: keeper,
-                                         owner_stripe_mode: owner_stripe_mode(keeper))
+                                         application_id: doorkeeper_token.application_id)
         if result.success?
           render_json_success(result.subscription,:ok, serializer: BeachApiCore::SubscriptionSerializer, root: :subscription)
         else
@@ -35,7 +35,7 @@ module BeachApiCore
         render_json_error({message: "Not Found"})
       else
         if access_to_subscription(subs)
-          result = BeachApiCore::SubscriptionUpdate.call(:subscription => subs, :params => subscription_update_params, owner_stripe_mode: owner_stripe_mode(subs.owner))
+          result = BeachApiCore::SubscriptionUpdate.call(:subscription => subs, :params => subscription_update_params)
           if result.success?
             render_json_success(result.subscription, result.status, serializer: BeachApiCore::SubscriptionSerializer, root: :subscription)
           else
@@ -49,7 +49,7 @@ module BeachApiCore
 
 
     def show
-      subs = BeachApiCore::Subscription.find_by(id: params[:id])
+      subs = BeachApiCore::Subscription.find_by(id: params[:id], application_id: doorkeeper_token.application_id)
       if subs.nil?
         render_json_error({message: "Not Found"})
       else
@@ -63,7 +63,7 @@ module BeachApiCore
     end
 
     def destroy
-      subs = BeachApiCore::Subscription.find_by(id: params[:id])
+      subs = BeachApiCore::Subscription.find_by(id: params[:id], application_id: doorkeeper_token.application_id)
       if subs.nil?
         render_json_error({message: "Not Found"})
       else
@@ -79,32 +79,6 @@ module BeachApiCore
       end
     end
 
-    def create_customer
-      plan = BeachApiCore::Plan.find(subscription_params[:plan_id])
-      set_stripe_key(plan)
-      client = subscription_params[:subscription_for]=="user" ? current_user : BeachApiCore::Organisation.find_by(:id => subscription_params[:owner_id])
-      render_json_error(:message => "Customer already exist") && return if client.stripe_customer_token.present?
-      unless client.nil?
-        card_token = Stripe::Token.create(
-          {
-            card: {
-              number: card_params[:number],
-              exp_month: card_params[:exp_month],
-              exp_year: card_params[:exp_year],
-              cvc: card_params[:cvc]
-            }
-          }
-        )
-        customer = Stripe::Customer.create(email: client.email, card: card_token.id)
-        client.update_attribute(:stripe_customer_token, customer.id)
-        render_json_success(:message => "Customer created successfully")
-      else
-        render_json_error(:message => "User or organisation not found")
-      end
-    rescue Stripe::CardError => e
-      render_json_error({:message => "Wrong card"})
-    end
-
     def show_invoices
       owner_type = params[:user_id].present? ? "BeachApiCore::User" : "BeachApiCore::Organisation"
       keeper = owner_type=="BeachApiCore::User" ? BeachApiCore::User.find_by(:id => params[:user_id]) : BeachApiCore::Organisation.find_by(:id => params[:organisation_id])
@@ -115,11 +89,7 @@ module BeachApiCore
       end
       unless subs.nil?
         invoices = BeachApiCore::Invoice.where(subscription_id: subs.id)
-        if invoices.empty?
-          render_json_success( {message: "Invoices not found"})
-        else
-          render_json_success(invoices)
-        end
+        render_json_success(invoices)
       else
         render_json_error(message: "Wrong subscription")
       end
@@ -159,9 +129,6 @@ module BeachApiCore
 
     private
 
-    def owner_stripe_mode(keeper)
-      return subscription_params[:subscription_for] == "user" ? doorkeeper_token.application.test_stripe : keeper.application.test_stripe
-    end
 
     def subscription_params
       params.require(:subscription).permit(:plan_id, :subscription_for, :owner_id)
