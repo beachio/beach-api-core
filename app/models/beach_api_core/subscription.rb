@@ -6,7 +6,7 @@ module BeachApiCore
     belongs_to :application, class_name: 'Doorkeeper::Application'
 
     before_validation :set_application
-    validates :owner_type, :owner_id, :plan_id, presence: true
+    validates :owner_type, :owner_id, :plan_id, :application_id, presence: true
     validate :check_subscription_for, on: [:create, :update]
     validate :create_subscription, on: [:create]
     validate :change_subscription, on: [:update]
@@ -128,6 +128,7 @@ module BeachApiCore
     private
 
     def plan_and_application_in_one_mode
+      return unless errors.blank?
       self.errors.add :plan, "stripe modes mismatch with application stripe mode" unless self.plan.test == self.application.test_stripe
     end
 
