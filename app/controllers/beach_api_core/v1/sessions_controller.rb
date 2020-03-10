@@ -15,6 +15,7 @@ module BeachApiCore
                                                                      root: :user,
                                                                      keepers: [BeachApiCore::Instance.current,
                                                                                current_organisation].compact,
+                                                                     host_url: "#{request.protocol}#{request.host_with_port}",
                                                                      current_user: result.user,  current_application: current_application),
                               access_token: result.access_token&.token }, result.status)
       else

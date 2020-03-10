@@ -14,6 +14,7 @@ module BeachApiCore
       if result.success?
         render_json_success(result.user, :ok,
                             serializer: BeachApiCore::UserSimpleSerializer,
+                            host_url: "#{request.protocol}#{request.host_with_port}",
                             root: :user)
       else
         render_json_error({ message: result.message }, result.status)
@@ -31,6 +32,7 @@ module BeachApiCore
         else
           render_json_success(result.user, :ok,
                               serializer: BeachApiCore::UserSimpleSerializer,
+                              host_url: "#{request.protocol}#{request.host_with_port}",
                               root: :user)
         end
       else

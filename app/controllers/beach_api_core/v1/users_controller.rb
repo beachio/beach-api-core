@@ -24,6 +24,7 @@ module BeachApiCore
         render_json_success({ user: BeachApiCore::UserSerializer.new(result.user, root: :user),
                               access_token: result.access_token&.token }, result.status,
                             keepers: [Instance.current],
+                            host_url: "#{request.protocol}#{request.host_with_port}",
                             current_user: result.user,
                             root: :user)
       else
@@ -36,6 +37,7 @@ module BeachApiCore
                           keepers: current_keepers,
                           current_user: current_user,
                           current_application: current_application,
+                          host_url: "#{request.protocol}#{request.host_with_port}",
                           root: :user)
     end
 
@@ -57,6 +59,7 @@ module BeachApiCore
       if result.success?
         render_json_success(current_user, result.status,
                             keepers: current_keepers,
+                            host_url: "#{request.protocol}#{request.host_with_port}",
                             current_user: current_user,
                             current_application: current_application,
                             root: :user)
@@ -90,6 +93,7 @@ module BeachApiCore
             else
               render_json_success(result.user, :ok,
                                   serializer: BeachApiCore::UserSimpleSerializer,
+                                  host_url: "#{request.protocol}#{request.host_with_port}",
                                   root: :user)
             end
           else

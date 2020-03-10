@@ -5,7 +5,7 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
 
   def apipie_user_response
     pretty BeachApiCore::UserSerializer.new(
-      apipie_user, keepers: [BeachApiCore::Instance.current], current_user: apipie_user
+      apipie_user, keepers: [BeachApiCore::Instance.current], host_url: "http://example.com", current_user: apipie_user
     ).as_json
   end
 
