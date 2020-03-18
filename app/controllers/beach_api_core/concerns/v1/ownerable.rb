@@ -10,7 +10,7 @@ module BeachApiCore::Concerns::V1::Ownerable
     render_json_error({:message => "customer already exist"}) && return if customer_token(current_owner).present?
     unless current_owner.nil?
       card_token = Stripe::Token.create({card: card_params.to_h})
-      customer = Stripe::Customer.create({email: current_owner.email, card: card_token.id}.merge(customer_creation_params.to_h))
+      customer = Stripe::Customer.create({email: customer_email, card: card_token.id}.merge(customer_creation_params.to_h))
       is_organisation?(current_owner) ? current_owner.update(:stripe_customer_token => customer.id) : current_owner.create_stripe_customer( customer.id, doorkeeper_token.application_id)
       render_json_success(:message => "Customer created successfully")
     else
@@ -21,12 +21,18 @@ module BeachApiCore::Concerns::V1::Ownerable
   end
 
   def delete_customer
+    token = customer_token(current_owner)
     begin
-      responce = Stripe::Customer.delete(customer_token(current_owner))
-      is_organisation?(current_owner) ? current_owner.update_attribute('stripe_customer_token',nil) : current_owner.destroy_stripe_customer(customer_token(current_owner), doorkeeper_token.application_id)
+      responce = Stripe::Customer.delete(token)
+      is_organisation?(current_owner) ? current_owner.update_attribute('stripe_customer_token',nil) : current_owner.destroy_stripe_customer(token, doorkeeper_token.application_id)
       render_json_success(responce, :ok)
     rescue => e
-      render_json_error({:message => e.message})
+      if e.message == "No such customer: #{token}"
+        is_organisation?(current_owner) ? current_owner.update_attribute('stripe_customer_token',nil) : current_owner.destroy_stripe_customer(token, doorkeeper_token.application_id)
+        render_json_success(responce, :ok)
+      else
+        render_json_error({:message => e.message})
+      end
     end
   end
 
@@ -196,6 +202,14 @@ module BeachApiCore::Concerns::V1::Ownerable
     render_json_error({:message => "You are not authorized to make this request"}) and return unless owner.owners.include?(current_user) ||
         owner.assignments.admins.map(&:user_id).include?(current_user.id)
     return owner
+  end
+
+  def customer_email
+    if is_organisation?(current_owner)
+      current_owner.email.blank? ? current_user.email : current_owner.email
+    else
+      current_user.email
+    end
   end
 
   def is_organisation?(owner)

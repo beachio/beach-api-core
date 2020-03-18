@@ -52,6 +52,9 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
 }
 
 form fieldset > ol > li.boolean label {
+  &[for="doorkeeper_application_test_stripe"] {
+    width: 80% !important;
+  }
   width: auto;
 }
 

@@ -19,7 +19,8 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                                                                       stripe_id: Faker::Lorem.word,
                                                                       amount: Faker::Number.between(1000, 10000),
                                                                       interval: %w(day month year).sample,
-                                                                      plan_for: %w(organisation user).sample
+                                                                      plan_for: %w(organisation user).sample,
+                                                                      currency: "usd"
     )
   end
 

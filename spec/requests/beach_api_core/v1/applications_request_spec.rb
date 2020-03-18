@@ -127,7 +127,7 @@ module BeachApiCore
           before do
             patch beach_api_core.v1_application_path(another_oauth_application),
                   params: { application: { name: Faker::App.name } },
-                  headers: developer_bearer_auth
+                  headers: bearer_auth
           end
         end
       end

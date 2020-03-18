@@ -14,7 +14,9 @@ module BeachApiCore
       Stripe.api_key = self.application.test_stripe ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
       begin
         Stripe::Customer.delete(self.stripe_customer_token)
-      rescue; end
+      rescue => e
+        raise if e.message != "No such customer: #{self.stripe_customer_token}"
+      end
     end
   end
 end

@@ -27,6 +27,7 @@ module BeachApiCore::Concerns::ApplicationExtension
     accepts_nested_attributes_for :custom_views, allow_destroy: true
     attr_accessor :use_default_logo_image, :file, :use_default_application_logo, :application_file, :background_image_file, :use_default_background_image
     validate :css_hex_color
+    validate :stripe_data, on: [:update], if: :test_stripe_changed?
     after_validation :upload_file_to_s3, :upload_application_logo_to_s3, :upload_background_image_to_s3
     after_destroy :clear_s3
     def policy_class
@@ -121,6 +122,23 @@ module BeachApiCore::Concerns::ApplicationExtension
            ENV['AWS_ACCESS_KEY_ID'].nil? || ENV['AWS_ACCESS_KEY_ID'].empty? ||
            ENV['AWS_SECRET_ACCESS_KEY'].nil? || ENV['AWS_SECRET_ACCESS_KEY'].empty? ||
            ENV['S3_REGION'].nil? || ENV['S3_REGION'].empty?
+    end
+
+
+    def stripe_data
+      self.errors.add :test_stripe, 'can\'t be changed because there are active subscriptions' unless self.subscriptions.empty?
+      return unless self.errors.blank?
+      Stripe.api_key = self.test_stripe_was ? ENV['TEST_STRIPE_SECRET_KEY'] : ENV['LIVE_STRIPE_SECRET_KEY']
+      self.organisations.where.not(:stripe_customer_token => nil).each do |organisation|
+        begin
+          Stripe::Customer.delete(organisation.stripe_customer_token)
+        rescue => e
+          raise if e.message != "No such customer: #{organisation.stripe_customer_token}"
+        end
+      end
+      return unless self.errors.blank?
+      self.organisations.update_all(:stripe_customer_token => nil)
+      self.user_stripe_tokens.destroy_all
     end
   end
 end

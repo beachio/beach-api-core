@@ -25,24 +25,9 @@ module PlansDoc
     param :tiers, Array, required: false, desc: 'Required if billing_scheme = "tiered" :: Add tiers for plan'
     param :tiers_mode, %w(graduated),required: false, desc: 'Required if billing_scheme = "tiered" :: Add mode of tiers for plan'
     param :currency, String, required: true, desc: 'Add currency for plan'
+    param :test, [true, false], required: false, desc: 'Set Stripe mode for plan. By default false'
   end
-  example "{
-      \"plan\":{
-          \"amount\": 1999,
-          \"name\": \"Pllan for organisations\",
-          \"interval\": \"month\",
-          \"stripe_id\": \"Pllan_for_organisation\",
-          \"plan_for\": \"organisation\",
-          \"billing_scheme\": \"tiered\",
-          \"tiers\": [{\"unit_amount\":0, \"up_to\":5, \"flat_amount\": 700},{\"unit_amount\":300, \"up_to\":\"inf\"}],
-          \"users_count\": 10,
-          \"amount_per_additional_user\": 100,
-          \"trial_period_days\": 3,
-          \"currency\": \"usd\",
-          \"tiers_mode\": \"graduated\"
-      }
-  }
-  \"plan\": #{apipie_plan_response}"
+  example "\"plan\": #{apipie_plan_response}"
   def create; end
 
   api :DELETE, '/plans/:id', "Remove plan"

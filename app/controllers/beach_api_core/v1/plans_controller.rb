@@ -10,7 +10,7 @@ module BeachApiCore
     end
 
     def index
-      render_json_success(Plan.all, :ok,
+      render_json_success(Plan.where(test: doorkeeper_token.application.test_stripe), :ok,
                           each_serializer: PlanSerializer,
                           root: :plans)
     end
