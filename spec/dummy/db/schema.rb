@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20200730112800) do
   end
 
   create_table "beach_api_core_activities", force: :cascade do |t|
-    t.string "kind"
+    t.integer "kind"
     t.bigint "user_id"
     t.string "affected_type"
     t.bigint "affected_id"
@@ -395,7 +395,7 @@ ActiveRecord::Schema.define(version: 20200730112800) do
   create_table "beach_api_core_notifications", force: :cascade do |t|
     t.bigint "user_id"
     t.text "message"
-    t.string "kind"
+    t.integer "kind"
     t.boolean "sent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

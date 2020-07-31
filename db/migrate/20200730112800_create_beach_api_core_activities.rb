@@ -1,7 +1,7 @@
 class CreateBeachApiCoreActivities < ActiveRecord::Migration[5.1]
   def change
     create_table :beach_api_core_activities do |t|
-      t.string :kind
+      t.integer :kind
       t.references :user, foreign_key: { to_table: :beach_api_core_users }
       t.references :affected, polymorphic: true, index: { name: 'index_activities_on_affected_type_and_affected_id' }
       t.references :origin, polymorphic: true
