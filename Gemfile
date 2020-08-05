@@ -26,6 +26,7 @@ group :development, :test do
   gem 'rubocop-rspec'
   gem 'rubocop-git'
   gem 'awesome_print'
+  gem 'rspec-json_expectations'
 end
 
 group :development do

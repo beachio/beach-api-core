@@ -8,18 +8,14 @@ module BeachApiCore
     end
 
     def index
-      @notifications = Article.all
+      @notifications = BeachApiCore::Notification.all
+      render json: @notifications
     end
 
     def destroy
-      @notification = Article.find(params[:id])
-  
-      if @notification.destroy
-        render_json_success(@notification, :ok, root: :notification)
-      else
-        render_json_error({ message: "Could not remove notification"},
-                          :bad_request)
-      end
+      @notification = BeachApiCore::Notification.find(params[:id])
+      @notification.destroy
+      head :no_content
     end
   end
 end

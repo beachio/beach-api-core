@@ -139,7 +139,7 @@ BeachApiCore::Engine.routes.draw do
       post :update_quantity, on: :member
       post :invoice_created, on: :collection
     end
-    resources :notifications, only: [:index, :destroy]
+    resources :notifications, only: [:index, :destroy], defaults: {format: :json}
     mount StripeEvent::Engine, at: "/stripe-events"
   end
 end

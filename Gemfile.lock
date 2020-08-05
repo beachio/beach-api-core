@@ -965,6 +965,7 @@ GEM
     rspec-expectations (3.8.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
+    rspec-json_expectations (2.2.0)
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
@@ -1084,6 +1085,7 @@ DEPENDENCIES
   poltergeist
   rack-cors
   refile!
+  rspec-json_expectations
   rspec-rails
   rubocop
   rubocop-git

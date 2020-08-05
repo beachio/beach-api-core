@@ -2,20 +2,22 @@ require 'rails_helper'
 
 module BeachApiCore
   RSpec.describe V1::NotificationsController, type: :controller do
+    routes { BeachApiCore::Engine.routes }
+
     describe "GET index" do
       it "returns notification list" do
-        _notification = Notification.create
+        notification = BeachApiCore::Notification.create
         get :index
-        # expect(response).to have_http_status(:success)
         expect(response.status).to eq(200)
+        expect(response.body).to include_json([{id: notification.id}])
       end
     end
 
     describe "DELETE destroy" do
       it "delete notification" do
-        delete :destroy
-        # expect(response).to have_http_status(:success)
-        expect(response.status).to eq(200)
+        notification = Notification.create
+        delete :destroy, params: {id: notification.id}
+        expect(BeachApiCore::Notification.all).to be_empty
       end
     end
   end
