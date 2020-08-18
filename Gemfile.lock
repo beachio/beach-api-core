@@ -959,12 +959,13 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rmagick (3.0.0)
+    rmagick (4.1.2)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
+    rspec-json_expectations (2.2.0)
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
@@ -1084,6 +1085,7 @@ DEPENDENCIES
   poltergeist
   rack-cors
   refile!
+  rspec-json_expectations
   rspec-rails
   rubocop
   rubocop-git
@@ -1099,4 +1101,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.17.3
+   2.1.4

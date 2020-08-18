@@ -71,6 +71,17 @@ module BeachApiCore
         expect(oauth_user.organisations.first).to eq Organisation.last
         expect(Organisation.last.owners).to include(oauth_user)
       end
+
+      it 'should create a notification record', current: true do
+        expect(Notification.count).to eq(0)
+        post beach_api_core.v1_organisations_path,
+             params: { organisation: { name: Faker::Job.title } },
+             headers: bearer_auth
+        expect(Notification.count).to eq(1)
+        notification = Notification.first
+        expect(notification.message).to include("Organisation", "was created")
+        expect(notification.user_id).to eq(oauth_user.id)
+      end
     end
 
     describe 'when update' do

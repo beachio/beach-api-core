@@ -124,7 +124,7 @@ BeachApiCore::Engine.routes.draw do
     resources :settings, only: %i(update)
     resources :emails, only: %i(create)
     resources :jobs, only: %i(create show destroy)
-    resources :projects, only: %i(create show update destroy)
+    resources :projects, only: %i(create show update destroy index)
     resources :broadcasts, only: %i(create)
     resources :interactions, only: %i(create)
     resources :channels, only: %i(index)
@@ -139,6 +139,7 @@ BeachApiCore::Engine.routes.draw do
       post :update_quantity, on: :member
       post :invoice_created, on: :collection
     end
+    resources :notifications, only: [:index, :destroy], defaults: {format: :json}
     mount StripeEvent::Engine, at: "/stripe-events"
   end
 end

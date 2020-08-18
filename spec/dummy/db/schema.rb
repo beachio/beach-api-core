@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181205063212) do
+ActiveRecord::Schema.define(version: 20200813131110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,49 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_beach_api_core_access_levels_on_name"
+  end
+
+  create_table "beach_api_core_achievement_brands", force: :cascade do |t|
+    t.bigint "achievement_id"
+    t.bigint "giftbit_brand_id"
+    t.index ["achievement_id"], name: "index_beach_api_core_achievement_brands_on_achievement_id"
+    t.index ["giftbit_brand_id"], name: "index_beach_api_core_achievement_brands_on_giftbit_brand_id"
+  end
+
+  create_table "beach_api_core_achievements", force: :cascade do |t|
+    t.bigint "application_id"
+    t.string "achievement_name"
+    t.integer "points_required"
+    t.integer "max_rewards"
+    t.integer "reward_expiry", default: 0
+    t.boolean "reward_issue_requires_approval", default: false
+    t.boolean "notify_by_email", default: false
+    t.string "mode_type"
+    t.bigint "mode_id"
+    t.boolean "notify_via_broadcasts", default: false
+    t.integer "available_for", default: 0
+    t.bigint "giftbit_config_id"
+    t.boolean "use_all_config_brands", default: false
+    t.index ["application_id"], name: "index_beach_api_core_achievements_on_application_id"
+    t.index ["giftbit_config_id"], name: "index_beach_api_core_achievements_on_giftbit_config_id"
+    t.index ["mode_type", "mode_id"], name: "index_beach_api_core_achievements_on_mode_type_and_mode_id"
+  end
+
+  create_table "beach_api_core_activities", force: :cascade do |t|
+    t.integer "kind", null: false
+    t.bigint "user_id", null: false
+    t.string "affected_type"
+    t.bigint "affected_id"
+    t.string "origin_type"
+    t.bigint "origin_id"
+    t.string "destination_type"
+    t.bigint "destination_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["affected_type", "affected_id"], name: "index_activities_on_affected_type_and_affected_id"
+    t.index ["destination_type", "destination_id"], name: "index_activities_on_destination_type_and_destination_id"
+    t.index ["origin_type", "origin_id"], name: "index_beach_api_core_activities_on_origin_type_and_origin_id"
+    t.index ["user_id"], name: "index_beach_api_core_activities_on_user_id"
   end
 
   create_table "beach_api_core_assets", id: :serial, force: :cascade do |t|
@@ -140,6 +183,14 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.index ["application_id"], name: "index_beach_api_core_custom_views_on_application_id"
   end
 
+  create_table "beach_api_core_device_scores", force: :cascade do |t|
+    t.bigint "device_id"
+    t.bigint "application_id"
+    t.integer "scores", default: 0
+    t.index ["application_id"], name: "index_beach_api_core_device_scores_on_application_id"
+    t.index ["device_id"], name: "index_beach_api_core_device_scores_on_device_id"
+  end
+
   create_table "beach_api_core_devices", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -189,6 +240,25 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.index ["favouritable_type", "favouritable_id"], name: "indexfavourites_on_favouritable_type_and_favouritable_id"
     t.index ["user_id", "favouritable_id", "favouritable_type"], name: "index_favourites_on_user_id_and_f_id_and_f_type", unique: true
     t.index ["user_id"], name: "index_beach_api_core_favourites_on_user_id"
+  end
+
+  create_table "beach_api_core_giftbit_brands", force: :cascade do |t|
+    t.bigint "giftbit_config_id"
+    t.string "gift_name"
+    t.integer "amount"
+    t.string "brand_code"
+    t.string "giftbit_email_template"
+    t.string "email_subject"
+    t.text "email_body"
+    t.index ["giftbit_config_id"], name: "index_beach_api_core_giftbit_brands_on_giftbit_config_id"
+  end
+
+  create_table "beach_api_core_giftbit_configs", force: :cascade do |t|
+    t.bigint "application_id"
+    t.string "giftbit_token"
+    t.string "config_name"
+    t.string "email_to_notify"
+    t.index ["application_id"], name: "index_beach_api_core_giftbit_configs_on_application_id"
   end
 
   create_table "beach_api_core_instances", force: :cascade do |t|
@@ -278,6 +348,7 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.integer "subscription_id"
     t.string "invoice_url_link"
     t.string "invoice_pdf_link"
+    t.boolean "payment_successfull"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -321,6 +392,16 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.index ["member_type", "member_id"], name: "index_beach_api_core_memberships_on_member_type_and_member_id"
   end
 
+  create_table "beach_api_core_notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "message"
+    t.integer "kind", null: false
+    t.boolean "sent", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_beach_api_core_notifications_on_user_id"
+  end
+
   create_table "beach_api_core_organisation_plans", force: :cascade do |t|
     t.bigint "organisation_id"
     t.bigint "plan_id"
@@ -337,8 +418,10 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.datetime "updated_at", null: false
     t.hstore "logo_properties"
     t.boolean "send_email", default: false
+    t.string "email"
     t.string "stripe_customer_token"
     t.index ["application_id"], name: "index_beach_api_core_organisations_on_application_id"
+    t.index ["email"], name: "index_beach_api_core_organisations_on_email"
   end
 
   create_table "beach_api_core_permissions", force: :cascade do |t|
@@ -374,13 +457,11 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.string "interval"
     t.integer "interval_amount"
     t.integer "trial_period_days"
-    t.integer "plan_for"
+    t.string "plan_for"
     t.integer "users_count"
     t.integer "amount_per_additional_user"
-    t.json "tiers", default: [], array: true
-    t.string "billing_scheme"
     t.string "currency"
-    t.string "tiers_mode"
+    t.boolean "test", default: false, null: false
   end
 
   create_table "beach_api_core_profile_attributes", id: :serial, force: :cascade do |t|
@@ -434,8 +515,26 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.bigint "organisation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "options", default: {}
     t.index ["organisation_id"], name: "index_beach_api_core_projects_on_organisation_id"
     t.index ["user_id"], name: "index_beach_api_core_projects_on_user_id"
+  end
+
+  create_table "beach_api_core_rewards", force: :cascade do |t|
+    t.bigint "achievement_id"
+    t.string "reward_to_type"
+    t.bigint "reward_to_id"
+    t.boolean "confirmed", default: false
+    t.string "gift_uuid"
+    t.string "campaign_uuid"
+    t.string "shortlink"
+    t.integer "status", default: 0
+    t.bigint "giftbit_brand_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["achievement_id"], name: "index_beach_api_core_rewards_on_achievement_id"
+    t.index ["giftbit_brand_id"], name: "index_beach_api_core_rewards_on_giftbit_brand_id"
+    t.index ["reward_to_type", "reward_to_id"], name: "index_beach_api_core_rewards_on_reward_to_type_and_reward_to_id"
   end
 
   create_table "beach_api_core_roles", force: :cascade do |t|
@@ -480,6 +579,17 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.index ["name"], name: "index_beach_api_core_settings_on_name"
   end
 
+  create_table "beach_api_core_subscriptions", force: :cascade do |t|
+    t.bigint "plan_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "stripe_subscription_id"
+    t.bigint "application_id"
+    t.index ["application_id"], name: "index_beach_api_core_subscriptions_on_application_id"
+    t.index ["owner_type", "owner_id"], name: "index_beach_api_core_subscriptions_on_owner_type_and_owner_id"
+    t.index ["plan_id"], name: "index_beach_api_core_subscriptions_on_plan_id"
+  end
+
   create_table "beach_api_core_teams", force: :cascade do |t|
     t.string "name"
     t.bigint "application_id", null: false
@@ -517,6 +627,14 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.index ["user_id"], name: "index_beach_api_core_user_preferences_on_user_id"
   end
 
+  create_table "beach_api_core_user_stripe_tokens", force: :cascade do |t|
+    t.string "stripe_customer_token", null: false
+    t.bigint "user_id"
+    t.bigint "application_id"
+    t.index ["application_id"], name: "index_beach_api_core_user_stripe_tokens_on_application_id"
+    t.index ["user_id"], name: "index_beach_api_core_user_stripe_tokens_on_user_id"
+  end
+
   create_table "beach_api_core_users", id: :serial, force: :cascade do |t|
     t.string "email", null: false
     t.string "username", null: false
@@ -528,6 +646,22 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.string "reset_password_token"
     t.index ["email"], name: "index_beach_api_core_users_on_email"
     t.index ["username"], name: "index_beach_api_core_users_on_username"
+  end
+
+  create_table "beach_api_core_webhook_configs", force: :cascade do |t|
+    t.bigint "application_id"
+    t.string "uri"
+    t.integer "request_method", default: 0
+    t.text "request_body"
+    t.string "config_name"
+    t.index ["application_id"], name: "index_beach_api_core_webhook_configs_on_application_id"
+  end
+
+  create_table "beach_api_core_webhook_parametrs", force: :cascade do |t|
+    t.bigint "webhook_config_id"
+    t.string "name"
+    t.string "value"
+    t.index ["webhook_config_id"], name: "index_beach_api_core_webhook_parametrs_on_webhook_config_id"
   end
 
   create_table "beach_api_core_webhooks", force: :cascade do |t|
@@ -601,6 +735,7 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.string "publisher_type"
     t.bigint "publisher_id"
     t.integer "invite_limit", default: 0
+    t.boolean "test_stripe", default: false
     t.index ["owner_type", "owner_id"], name: "index_oauth_applications_on_owner_type_and_owner_id"
     t.index ["publisher_type", "publisher_id"], name: "index_oauth_applications_on_publisher_type_and_publisher_id"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
@@ -626,6 +761,7 @@ ActiveRecord::Schema.define(version: 20181205063212) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
+  add_foreign_key "beach_api_core_activities", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_atoms", "beach_api_core_atoms", column: "atom_parent_id"
   add_foreign_key "beach_api_core_chat_chats_users", "beach_api_core_chats", column: "chat_id"
   add_foreign_key "beach_api_core_chat_chats_users", "beach_api_core_users", column: "user_id"
@@ -642,6 +778,7 @@ ActiveRecord::Schema.define(version: 20181205063212) do
   add_foreign_key "beach_api_core_invitation_tokens", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_invitations", "beach_api_core_users", column: "invitee_id"
   add_foreign_key "beach_api_core_jobs", "oauth_applications", column: "application_id"
+  add_foreign_key "beach_api_core_notifications", "beach_api_core_users", column: "user_id"
   add_foreign_key "beach_api_core_project_keepers", "beach_api_core_projects", column: "project_id"
   add_foreign_key "beach_api_core_projects", "beach_api_core_organisations", column: "organisation_id"
   add_foreign_key "beach_api_core_projects", "beach_api_core_users", column: "user_id"

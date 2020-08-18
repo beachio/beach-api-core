@@ -7,6 +7,7 @@ require 'refile/file_double'
 require 'pundit/rspec'
 require 'sidekiq/testing'
 require 'webmock/rspec'
+require 'rspec/json_expectations'
 
 Rails.backtrace_cleaner.remove_silencers!
 

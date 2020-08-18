@@ -39,6 +39,5 @@ module BeachApiCore
     def check_on_owner_change
       self.errors.add :subscription_owner, 'can\'t be changed while you have active subscription' unless self.subscription.nil?
     end
-
   end
 end

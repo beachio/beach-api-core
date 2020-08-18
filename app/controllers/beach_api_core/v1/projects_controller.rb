@@ -44,6 +44,15 @@ module BeachApiCore
       end
     end
 
+    def index
+      if current_user
+        @projects = current_scope.projects
+        render json: @projects
+      else
+        render json: []
+      end
+    end
+
     private
 
     def resource_scope
