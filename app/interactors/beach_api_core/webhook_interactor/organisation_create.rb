@@ -7,7 +7,6 @@ module BeachApiCore::WebhookInteractor
       context.event = 'created'
       context.organisation.assign_attributes(application: context.application)
       context.organisation.memberships.build member: context.user, owner: true
-
     end
 
     def call

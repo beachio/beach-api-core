@@ -28,8 +28,6 @@ module BeachApiCore
     before_save -> { generate_image(:logo_image, color: logo_properties && logo_properties['color']) },
                 if: proc { generate_image? }
 
-    after_create :add_create_notification
-
     def owners
       users.where(Membership.table_name => { owner: true })
     end
@@ -40,15 +38,6 @@ module BeachApiCore
 
     def check_on_owner_change
       self.errors.add :subscription_owner, 'can\'t be changed while you have active subscription' unless self.subscription.nil?
-    end
-
-    def add_create_notification
-      for owner in self.owners
-        BeachApiCore::Notification.create(message: "Organisation was created",
-                                          user_id: owner.id,
-                                          kind: :ws,
-                                          sent: false)
-      end
     end
   end
 end
