@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20200813131110) do
   end
 
   create_table "beach_api_core_activities", force: :cascade do |t|
-    t.integer "kind"
-    t.bigint "user_id"
+    t.integer "kind", null: false
+    t.bigint "user_id", null: false
     t.string "affected_type"
     t.bigint "affected_id"
     t.string "origin_type"
@@ -393,10 +393,10 @@ ActiveRecord::Schema.define(version: 20200813131110) do
   end
 
   create_table "beach_api_core_notifications", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.text "message"
-    t.integer "kind"
-    t.boolean "sent"
+    t.integer "kind", null: false
+    t.boolean "sent", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_beach_api_core_notifications_on_user_id"
