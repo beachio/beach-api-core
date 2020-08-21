@@ -160,6 +160,12 @@ en:
           get: "Get project info (scoped by organisation)"
           update: "Update an existing owned project"
           destroy: "Destroy an existing owned project"
+        notifications:
+          create: "Create a new notification"
+          get: "Get notification"
+          update: "Update an existing notification"
+          destroy: "Destroy an existing notification"
+          list: "Get list of notifications"
         roles:
           list: "Get list of available roles"
         service_categories:
@@ -340,6 +346,10 @@ en:
         downcase: "role"
       role:
         <<: *role
+      beach_api_core/notification: &notification
+        one: "Notification"
+        other: "Notifications"
+        downcase: "notification"
       beach_api_core/service_category: &service_category
         one: "Service Category"
         other: "Service Categories"
