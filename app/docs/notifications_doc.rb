@@ -4,7 +4,7 @@ module NotificationsDoc
 
   api :GET, '/notifications', I18n.t('api.resource_description.descriptions.notifications.list')
   header 'HTTP_AUTHORIZATION', 'Bearer access_token', required: true
-  example "\"notification\": [#{apipie_notification_response}, ...]"
+  example "\"notifications\": [#{apipie_notification_response}, ...]"
   def index; end
 
   api :DELETE, '/notifications/:id', I18n.t('api.resource_description.descriptions.notifications.destroy')
