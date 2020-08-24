@@ -118,4 +118,8 @@ module BeachApiCore::Concerns::V1::ApipieResponseConcern
   def apipie_device_response
     pretty BeachApiCore::DeviceSerializer.new(apipie_device)
   end
+
+  def apipie_notification_response
+    pretty BeachApiCore::NotificationSerializer.new(apipie_notification)
+  end
 end

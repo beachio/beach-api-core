@@ -227,6 +227,14 @@ module BeachApiCore::Concerns::V1::ApipieConcern
                             interaction_keepers: [apipie_message_interaction_keeper])
   end
 
+  def apipie_notification
+    @_apipie_notification ||= BeachApiCore::Notification.new(id: fake_id,
+                                                             user: apipie_user,
+                                                             message: "Project 'Awesome project' was created",
+                                                             kind: 'email',
+                                                             sent: false)
+  end
+
   def pretty(serializer)
     JSON.pretty_generate serializer.as_json
   end

@@ -13,7 +13,7 @@ module BeachApiCore
         notification = BeachApiCore::Notification.create(user: oauth_user, kind: :ws)
         get :index
         expect(response.status).to eq(200)
-        expect(response.body).to include_json([{ id: notification.id }])
+        expect(json_body[:notifications]).to include_json([{ id: notification.id }])
       end
     end
 
@@ -21,6 +21,8 @@ module BeachApiCore
       it 'delete notification' do
         notification = BeachApiCore::Notification.create(user: oauth_user, kind: :ws)
         delete :destroy, params: { id: notification.id }
+        expect(response.status).to eq(200)
+        expect(json_body[:notification]).to include_json(id: notification.id)
         expect(BeachApiCore::Notification.all).to be_empty
       end
     end
