@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Here is your daily summary of activity</h1>
+    <p>
+      <% @dict.each do |project, nots| %>
+        Project <%= project.name %>.
+        <br>
+        <% nots.each do |type, count| %>
+          <% case type
+            when "create_proj" %>
+            * Project was created
+          <% when "update_proj" %>
+            * Project was updated <%= count %> times
+          <% when "create_chart" %>
+            * Added <%= count %> chart(s)
+          <% when "update_chart" %>
+            * Charts was updated <%= count %> times
+          <% when "destroy_chart" %>
+            * <%= count %> chart(s) was destroyed
+          <% end %>
+          <br>
+        <% end %>
+        <br>
+      <% end %>
+    </p>
+  </body>
+</html>

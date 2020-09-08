@@ -5,18 +5,10 @@ module BeachApiCore
 
     def daily_notifications
       @user = params[:user]
-      @application = @user.applications.first
-      mail from: 'danespamblyat@yandex.ru', to: 'rozanov61@ya.ru',
-           subject: 'Its without footer'
-    end
+      @dict = params[:dict]
 
-    def dict
-      BeachApiCore::Notification
-        .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
-        .joins(:user)
-        .group_by(&:user)
-        .map { |k, v| [k, v.group_by(&:notify_type).map { |a, b| [a, b.length] }.to_h] }
-        .to_h
+      mail from: from(:noreply_from), to: @user.email,
+           subject: 'Daily notifications'
     end
   end
 end
