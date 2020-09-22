@@ -399,7 +399,7 @@ ActiveRecord::Schema.define(version: 20200907144910) do
     t.boolean "sent", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "project_id", null: false
+    t.uuid "project_id"
     t.integer "notify_type", null: false
     t.index ["project_id"], name: "index_beach_api_core_notifications_on_project_id"
     t.index ["user_id"], name: "index_beach_api_core_notifications_on_user_id"
