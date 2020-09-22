@@ -6,14 +6,14 @@
   <body>
     <h1>Here is your daily summary of activity</h1>
     <p>
-      <% @dict.each do |project, nots| %>
-        Project <%= project.name %>.
+      <% @notifications_by_project.each do |project, notifications| %>
+        Project <%= project %>.
         <br>
-        <% nots.each do |type, count| %>
+        <% notifications.each do |type, count| %>
           <% case type
-            when "create_proj" %>
+            when "create_project" %>
             * Project was created
-          <% when "update_proj" %>
+          <% when "update_project" %>
             * Project was updated <%= count %> times
           <% when "create_chart" %>
             * Added <%= count %> chart(s)

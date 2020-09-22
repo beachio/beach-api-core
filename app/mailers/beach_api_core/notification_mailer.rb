@@ -4,10 +4,10 @@ module BeachApiCore
     layout 'notification_mailer'
 
     def daily_notifications
-      @user = params[:user]
-      @dict = params[:dict]
+      @notifications_by_project = params[:notifications_by_project]
 
-      mail from: from(:noreply_from), to: @user.email,
+      mail from: 'notifications@beach.io',
+           to: params[:email],
            subject: 'Daily notifications'
     end
   end

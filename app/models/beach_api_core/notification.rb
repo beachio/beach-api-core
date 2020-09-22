@@ -14,16 +14,23 @@ module BeachApiCore
     }
 
     def self.mailing
-      self
-      .where(kind: 'email')
-      .joins(%i(user project))
-      .group_by(&:user).transform_values do |user|
-        user.group_by(&:project).transform_values do |project|
-          project.group_by(&:notify_type).transform_values &:length
-        end
-      end
-      .each do |user, dict|
-        BeachApiCore::NotificationMailer.with(user: user, dict: dict).daily_notifications.deliver_now!
+      notifications = BeachApiCore::Notification.where(kind: 'email', sent: false)
+      user_ids = notifications.map(&:user_id).uniq
+      project_ids = notifications.map(&:project_id).uniq
+      users = BeachApiCore::User.where(id: user_ids).map {|u| [u.id, u.email]}.to_h
+      projects = VulcanCore::Project.where(id: project_ids).map {|p| [p.id, p.name]}.to_h
+
+      notifications.inject({}) do |memo, n| 
+        user = users[n.user_id]
+        project = projects[n.project_id]
+
+        memo[user] ||= {}
+        memo[user][project] ||= {}
+        memo[user][project][n.notify_type] ||= 0
+        memo[user][project][n.notify_type] += 1
+        memo
+      end.each do |email, notifications_by_project|
+        BeachApiCore::NotificationMailer.with(email: email, notifications_by_project: notifications_by_project).daily_notifications.deliver_now!
       end
     end
   end
