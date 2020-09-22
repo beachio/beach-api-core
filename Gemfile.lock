@@ -1096,6 +1096,7 @@ DEPENDENCIES
   stripe_event
   ultrahook
   webmock
+  whenever
 
 RUBY VERSION
    ruby 2.4.1p111

@@ -17,7 +17,8 @@ module BeachApiCore::NotificationInteractor
           message: "#{context.title} was created",
           user: context.user,
           kind: :email,
-          sent: false
+          sent: false,
+          notify_type: :create_organisation
         })
     end
   end

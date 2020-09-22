@@ -17,6 +17,7 @@ gem 'sidekiq'
 gem 'aws-sdk'
 gem 'doorkeeper', '4.3.2'
 gem 'stripe'
+gem 'whenever'
 
 group :development, :test do
   gem 'byebug', platform: :mri
