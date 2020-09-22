@@ -1,8 +1,10 @@
 class AddNotifyTypeAndProjectToNotifications < ActiveRecord::Migration[5.1]
   def change
     change_table :beach_api_core_notifications do |t|
-      t.references :project, foreign_key: { to_table: :vulcan_core_projects }, type: :uuid
+      t.uuid :project_id, null: false
       t.integer :notify_type, null: false
     end
+
+    add_index :beach_api_core_notifications, :project_id
   end
 end
