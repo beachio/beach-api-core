@@ -14,7 +14,11 @@ module BeachApiCore
     }
 
     def self.mailing
-      notifications = BeachApiCore::Notification.where(kind: 'email', sent: false)
+      users_with_notifications =
+        BeachApiCore::User.joins(:profile)
+                          .where('beach_api_core_profiles.notifications_enabled': true)
+                          .select(:id, :status).map(&:id)
+      notifications = BeachApiCore::Notification.where(kind: 'email', sent: false, user_id: users_with_notifications)
       user_ids = notifications.map(&:user_id).uniq
       project_ids = notifications.map(&:project_id).uniq
       users = BeachApiCore::User.where(id: user_ids).map {|u| [u.id, u.email]}.to_h

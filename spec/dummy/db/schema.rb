@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200907144910) do
+ActiveRecord::Schema.define(version: 20200923102840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -499,6 +499,7 @@ ActiveRecord::Schema.define(version: 20200907144910) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "additional_store"
+    t.boolean "notifications_enabled", default: false, null: false
     t.index ["user_id"], name: "index_beach_api_core_profiles_on_user_id"
   end
 

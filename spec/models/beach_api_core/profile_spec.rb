@@ -8,6 +8,10 @@ module BeachApiCore
       expect(subject).to be_valid
     end
 
+    it 'should have notifications disabled by default' do
+      expect(subject.notifications_enabled).to be_falsey
+    end
+
     it 'should have relations' do
       should have_many(:profile_attributes).dependent(:destroy)
     end
