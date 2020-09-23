@@ -175,7 +175,8 @@ module BeachApiCore
 
     def user_update_params
       profile_attributes = custom_profile_fields.concat([:id, :first_name,
-                                                         :last_name, :sex, :birth_date, :current_age,
+                                                         :last_name, :sex, :birth_date,
+                                                         :current_age, :notifications_enabled,
                                                          avatar_attributes: %i(file base64)])
       params.require(:user).permit(:email, :username, :current_password, :password, :password_confirmation,
                                    profile_attributes: profile_attributes,

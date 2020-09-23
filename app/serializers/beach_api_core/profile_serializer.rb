@@ -6,7 +6,7 @@ module BeachApiCore
     acts_as_abs_doc_id
     acts_with_options(:keepers, :host_url)
 
-    attributes :id, :first_name, :last_name, :birth_date, :sex, :time_zone, :avatar_url
+    attributes :id, :first_name, :last_name, :birth_date, :sex, :time_zone, :avatar_url, :notifications_enabled
 
     def attributes(*)
       result = super
