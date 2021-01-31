@@ -14,9 +14,13 @@ module BeachApiCore
 
     def current_user_roles
       return [] unless current_user
-      Role.joins(:assignments).where.has do |r|
-        (r.assignments.user_id == current_user.id) & (r.assignments.keeper == object)
-      end.pluck(:name)
+      # Role.joins(:assignments).where.has do |r|
+      #   (r.assignments.user_id == current_user.id) & (r.assignments.keeper == object)
+      # end.pluck(:name)
+      Role.joins(:assignments).where(assignments: {
+        user_id: current_user.id,
+        keeper_id: object.id
+      }).pluck(:name)
     end
 
     def subscription
