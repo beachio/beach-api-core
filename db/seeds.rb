@@ -15,8 +15,9 @@ ActiveRecord::Base.transaction do
   end
 
   admin = BeachApiCore::User.joins(:roles).where(roles: {name: 'admin'}).first
-
   application = Doorkeeper::Application.create(name: Faker::Company.name, redirect_uri: Faker::Internet.redirect_uri, owner: BeachApiCore::Instance.current.developers.first, publisher: admin)
+  admin.teams << BeachApiCore::Team.create(application: application, name: 'Test')
+
   service_categories = [{:name => "General", :services => []},
                         {:name => "Developer Tools", services: [{:title => "Teams", :description => 'Manage Teams and Groups of Users'},
                                                                 {:title => "Organisations", :description => 'Managing Organisations settings'},
