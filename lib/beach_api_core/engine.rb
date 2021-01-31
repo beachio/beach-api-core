@@ -1,6 +1,6 @@
 require 'versionist'
 require 'doorkeeper'
-require 'baby_squeel'
+# require 'baby_squeel'
 require 'active_model_serializers'
 require 'pundit'
 require 'interactor'

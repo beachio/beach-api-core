@@ -61,10 +61,8 @@ PATH
       acts_as_downcasable_on
       acts_as_strippable_on
       ancestry
-      api-ai-ruby
       apipie-rails
       aws-sdk
-      baby_squeel
       bcrypt
       doorkeeper (= 4.3.2)
       draper
@@ -748,10 +746,6 @@ GEM
       aws-sigv4 (~> 1.0)
     aws-sigv2 (1.0.1)
     aws-sigv4 (1.0.3)
-    baby_squeel (1.3.1)
-      activerecord (>= 4.2.0)
-      join_dependency (~> 0.1.2)
-      polyamorous (~> 1.3)
     bcrypt (3.1.12)
     bourbon (5.1.0)
       sass (~> 3.4)
@@ -842,8 +836,6 @@ GEM
       rails (>= 4.2, < 5.3)
     jaro_winkler (1.5.1)
     jmespath (1.4.0)
-    join_dependency (0.1.4)
-      activerecord (>= 4.2.0)
     jquery-rails (4.3.3)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
