@@ -10,6 +10,8 @@ module BeachApiCore
     has_many :invitations, as: :group, inverse_of: :group
 
     def owners
+      # user_ids = organisation&.owners&.pluck(:id)
+      # members_ids = members.where(Membership.table_name => { owner: true }).select(:id)
       User.where.has do |u|
         (u.id.in organisation&.owners&.select(:id)).or(
           u.id.in(members.where(Membership.table_name => { owner: true }).select(:id))
