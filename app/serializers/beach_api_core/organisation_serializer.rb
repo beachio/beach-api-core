@@ -19,7 +19,7 @@ module BeachApiCore
       # end.pluck(:name)
       Role.joins(:assignments).where(assignments: {
         user_id: current_user.id,
-        keeper_id: object.id
+        keeper: object
       }).pluck(:name)
     end
 
