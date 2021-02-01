@@ -3,7 +3,7 @@ module BeachApiCore
     include BeachApiCore::Concerns::OrganisationRestrictionMailerConcern
     include BeachApiCore::Concerns::ApplicationMailerConcern
 
-    add_template_helper(BeachApiCore::Concerns::ApplicationMailerConcern)
+    helper(BeachApiCore::Concerns::ApplicationMailerConcern)
     BeachApiCore.configure if  BeachApiCore.company_names.nil?
     layout 'mailer'
   end
