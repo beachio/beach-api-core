@@ -35,12 +35,12 @@ module BeachApiCore
       attr_accessor :elasticsearch_enabled
     end
 
-    initializer :beach_api_core do
-      if defined?(ActiveAdmin)
-        ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'admin'))
-        ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'active_admin', 'views'))
-      end
-    end
+    # initializer :beach_api_core do
+    #   if defined?(ActiveAdmin)
+    #     ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'admin'))
+    #     ActiveAdmin.application.load_paths.unshift(File.join(config.root, 'lib', 'active_admin', 'views'))
+    #   end
+    # end
 
     config.generators do |g|
       g.test_framework :rspec, fixture: false
