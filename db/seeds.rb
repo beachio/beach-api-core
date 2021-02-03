@@ -1,6 +1,7 @@
 BeachApiCore::Role.destroy_all
 BeachApiCore::Instance.destroy_all
 BeachApiCore::User.destroy_all
+BeachApiCore::Assignment.destroy_all
 Doorkeeper::Application.destroy_all
 
 ActiveRecord::Base.transaction do
