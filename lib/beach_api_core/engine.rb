@@ -38,13 +38,13 @@ module BeachApiCore
     initializer :beach_api_core do
       # config.autoload_paths << File.expand_path("lib", __dir__)
 
-      if defined?(ActiveAdmin)
-        models = File.join(config.root, 'lib', 'admin')
-        ActiveAdmin.application.load_paths.push(models) unless ActiveAdmin.application.load_paths.include?(models)
+      # if defined?(ActiveAdmin)
+      #   models = File.join(config.root, 'lib', 'admin')
+      #   ActiveAdmin.application.load_paths.push(models) unless ActiveAdmin.application.load_paths.include?(models)
 
-        views = File.join(config.root, 'lib', 'active_admin', 'views')
-        ActiveAdmin.application.load_paths.push(views) unless ActiveAdmin.application.load_paths.include?(views)
-      end
+      #   views = File.join(config.root, 'lib', 'active_admin', 'views')
+      #   ActiveAdmin.application.load_paths.push(views) unless ActiveAdmin.application.load_paths.include?(views)
+      # end
     end
 
     config.generators do |g|
@@ -58,6 +58,6 @@ module BeachApiCore
       @elasticsearch_enabled = ENV['ELASTICSEARCH_ENABLED'] == 'true'
     end
   end
-  Doorkeeper = ::Doorkeeper
-  Apipie = ::Apipie
+  # Doorkeeper = ::Doorkeeper
+  # Apipie = ::Apipie
 end
