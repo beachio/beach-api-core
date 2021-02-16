@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user, class: 'BeachApiCore::User' do
-    sequence(:email) { |n| Faker::Internet.email(name: Faker::Internet.user_name }
+    sequence(:email) { |n| Faker::Internet.email(name: Faker::Internet.user_name) }
     password { Faker::Internet.password(min_length: 6) }
     confirmed_at { Time.now }
 
