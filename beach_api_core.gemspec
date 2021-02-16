@@ -1,5 +1,5 @@
 # $LOAD_PATH.push File.expand_path('../lib', __FILE__)
-prepend_to_load_path File.join(File.dirname(__FILE__), 'lib')
+# prepend_to_load_path File.join(File.dirname(__FILE__), 'lib')
 
 # Maintain your gem's version:
 require 'beach_api_core/version'
