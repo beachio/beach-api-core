@@ -51,6 +51,7 @@ module BeachApiCore
       g.assets false
       g.helper false
     end
+
     config.after_initialize do
       @elasticsearch_enabled = ENV['ELASTICSEARCH_ENABLED'] == 'true'
     end
