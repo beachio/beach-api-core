@@ -36,6 +36,8 @@ module BeachApiCore
     end
 
     initializer :beach_api_core do
+      config.autoload_paths << File.expand_path("lib", __dir__)
+
       if defined?(ActiveAdmin)
         models = File.join(config.root, 'lib', 'admin')
         ActiveAdmin.application.load_paths.push(models) unless ActiveAdmin.application.load_paths.include?(models)
