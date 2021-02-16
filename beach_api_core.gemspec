@@ -1,7 +1,8 @@
 # $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
-require 'beach_api_core/version'
+# require 'beach_api_core/version'
+require_relative "lib/beach_api_core/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
