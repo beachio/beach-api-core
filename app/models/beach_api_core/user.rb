@@ -128,6 +128,10 @@ module BeachApiCore
       role?(BeachApiCore::Role.scientist)
     end
 
+    def avatar_url
+      self.profile.avatar.blank? ? nil : self.profile.avatar.file_url
+    end
+
     def stripe_token(application_id)
       self.user_stripe_tokens.find_by(:application_id => application_id)
     end

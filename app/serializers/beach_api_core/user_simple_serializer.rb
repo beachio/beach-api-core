@@ -9,7 +9,7 @@ module BeachApiCore
     attributes :id, :email, :username, :first_name, :last_name, :avatar_url
 
     def avatar_url
-      host_url + object.profile.avatar.file_url rescue nil
+      defined?(host_url) ? object.profile.avatar.file_url : host_url + object.profile.avatar.file_url
     end
   end
 end
