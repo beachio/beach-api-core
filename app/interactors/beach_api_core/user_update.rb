@@ -2,6 +2,9 @@ class BeachApiCore::UserUpdate
   include Interactor
 
   before do
+    # Normalize keys to strings for consistent nested access
+    context.params = context.params.to_h.deep_stringify_keys
+
     if context.params.include?('password')
       context.user.assign_attributes(require_confirmation: true, require_current_password: true)
     end

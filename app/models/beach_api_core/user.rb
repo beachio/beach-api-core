@@ -68,7 +68,7 @@ module BeachApiCore
     acts_as_downcasable_on :email, :username
     acts_as_strippable_on :email, :username
 
-    accepts_nested_attributes_for :profile
+    accepts_nested_attributes_for :profile, update_only: true
     accepts_nested_attributes_for :organisation_memberships,
                                   allow_destroy: true, reject_if: proc { |attr| attr[:group_id].blank? }
     accepts_nested_attributes_for :team_memberships, allow_destroy: true
